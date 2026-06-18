@@ -48,6 +48,8 @@ th{background:#0f8f46;color:white}
 .hidden{display:none}
 .kpi b{font-size:20px}
 .small{font-size:12px;color:var(--muted)}
+.phase-list{margin:0;padding-left:18px;line-height:1.6}
+.warn{border-left:4px solid var(--yellow)}
 @media(max-width:760px){
   .container{padding:9px}
   header h1{font-size:24px}
@@ -61,7 +63,7 @@ th{background:#0f8f46;color:white}
 <body>
 <header>
   <h1>🏆 Cartola de Ermida</h1>
-  <p>Campeonato automático com grupos, repescagem e mata-mata</p>
+  <p>Campeonato automático com grupos, repescagem e mata-mata — calendário até a rodada 38</p>
 </header>
 
 <div class="container">
@@ -103,7 +105,7 @@ th{background:#0f8f46;color:white}
 
   <section id="aba-rodadas" class="aba hidden">
     <div class="card">
-      <h2>Jogos da Rodada</h2>
+      <h2>Jogos da Rodada - Fase 1</h2>
       <div class="tabs" id="tabsGruposRodadas"></div>
       <select id="selRodada" onchange="mostrarRodada()"></select>
       <div id="boxRodadas"></div>
@@ -112,13 +114,13 @@ th{background:#0f8f46;color:white}
 
   <section id="aba-fase2" class="aba hidden">
     <div class="card">
-      <h2>Fase 2 - Projeção</h2>
-      <p class="small">Montagem automática com base na classificação da Fase 1 após a rodada 16.</p>
+      <h2>Fase 2 - Projeção após a Rodada 18</h2>
+      <p class="small">Montagem automática com base na classificação final da Fase 1, agora nas rodadas 1 a 18.</p>
       <div class="grid" id="boxFase2"></div>
     </div>
     <div class="card">
       <h2>Confrontos da Fase 2</h2>
-      <p class="small">Ordem padrão para grupos de 4 times, rodadas 17 a 22.</p>
+      <p class="small">Ordem padrão para grupos de 4 times. Como a Fase 1 termina na rodada 18, a Fase 2 vai da rodada 19 à 24.</p>
       <div id="boxConfrontosFase2"></div>
     </div>
   </section>
@@ -127,13 +129,26 @@ th{background:#0f8f46;color:white}
     <div class="card">
       <h2>Mapa das Fases</h2>
       <div class="grid">
-        <div class="box"><h3>Fase 1</h3><p>Rodadas 1 a 16<br>4 grupos de 9 times.</p></div>
-        <div class="box"><h3>Fase 2</h3><p>Rodadas 17 a 22<br>Grupos Principais + Repescagem 1.</p></div>
-        <div class="box"><h3>Fase 3</h3><p>Rodadas 23 a 28<br>Quartas de Grupos + Repescagem 2.</p></div>
-        <div class="box"><h3>Fase 4</h3><p>Rodadas 29 a 34<br>Repescagem Final.</p></div>
-        <div class="box"><h3>Fase Final</h3><p>Rodadas 35 a 37<br>2 grupos de 3 times.</p></div>
-        <div class="box"><h3>Grande Final</h3><p>Rodada 38<br>Final e disputa de 3º lugar.</p></div>
+        <div class="box"><h3>Fase 1</h3><p>Rodadas 1 a 18<br>4 grupos de 9 times.<br>Cada time faz 16 jogos e tem 2 folgas.</p></div>
+        <div class="box"><h3>Fase 2</h3><p>Rodadas 19 a 24<br>Grupos Principais + Repescagem 1.<br>Grupos de 4 em turno e returno.</p></div>
+        <div class="box"><h3>Fase 3</h3><p>Rodadas 25 a 30<br>Nova fase de grupos com classificados e repescagem.<br>Grupos de 4 em turno e returno.</p></div>
+        <div class="box"><h3>Fase 4</h3><p>Rodadas 31 a 34<br>Repescagem Final compacta.<br>Turno único nas rodadas 31 a 33 e decisão na rodada 34.</p></div>
+        <div class="box"><h3>Fase Final</h3><p>Rodadas 35 a 37<br>2 grupos de 3 times em turno único.<br>Cada time faz 2 jogos e tem 1 folga.</p></div>
+        <div class="box"><h3>Grande Final</h3><p>Rodada 38<br>Final e disputa de 3º lugar em jogo único.</p></div>
       </div>
+    </div>
+
+    <div class="card">
+      <h2>Conferência do Calendário</h2>
+      <div class="grid">
+        <div class="box"><h3>Fase 1</h3><p>18 rodadas usadas.<br>36 times × 16 jogos ÷ 2 = <b>288 jogos</b>.</p></div>
+        <div class="box"><h3>Fase 2</h3><p>6 rodadas usadas.<br>8 grupos de 4, turno e returno = <b>96 jogos</b>.</p></div>
+        <div class="box"><h3>Fase 3</h3><p>6 rodadas usadas.<br>4 grupos de 4, turno e returno = <b>48 jogos</b>.</p></div>
+        <div class="box"><h3>Fase 4</h3><p>4 rodadas usadas.<br>Rodadas 31 a 33 em grupos + rodada 34 decisiva.</p></div>
+        <div class="box"><h3>Fase Final</h3><p>3 rodadas usadas.<br>2 grupos de 3 = <b>6 jogos</b>.</p></div>
+        <div class="box"><h3>Final</h3><p>1 rodada usada.<br>Rodada 38 fecha o campeonato.</p></div>
+      </div>
+      <p class="small">Conta de rodadas: 18 + 6 + 6 + 4 + 3 + 1 = 38.</p>
     </div>
   </section>
 
@@ -162,7 +177,9 @@ th{background:#0f8f46;color:white}
 
       <div class="box">
         <h3>Fase 1 - Classificatória</h3>
-        <p>Rodadas 1 a 16. São 4 grupos com 9 times.</p>
+        <p>Rodadas <b>1 a 18</b>. São 4 grupos com 9 times.</p>
+        <p>Em cada rodada, cada grupo tem 4 jogos e 1 time de folga.</p>
+        <p>Ao final das 18 rodadas, cada time terá feito <b>16 jogos</b> e terá tido <b>2 folgas</b>.</p>
         <p>1º ao 4º avançam para os Grupos Principais.</p>
         <p>5º ao 8º vão para a Repescagem 1.</p>
         <p>9º colocado é eliminado.</p>
@@ -170,34 +187,37 @@ th{background:#0f8f46;color:white}
 
       <div class="box">
         <h3>Fase 2 - Grupos Principais e Repescagem 1</h3>
-        <p>Rodadas 17 a 22. Cada grupo de 4 times joga em turno e returno.</p>
+        <p>Rodadas <b>19 a 24</b>. Cada grupo de 4 times joga em turno e returno.</p>
         <p><b>Grupos Principais:</b> os 2 primeiros avançam para a Fase 3. 3º e 4º vão para Repescagem 2.</p>
         <p><b>Repescagem 1:</b> apenas o campeão de cada grupo avança para Repescagem 2.</p>
       </div><br>
 
       <div class="box">
-        <h3>Fase 3 - Quartas de Grupos e Repescagem 2</h3>
-        <p>Rodadas 23 a 28.</p>
-        <p><b>Quartas de Grupos:</b> 2 grupos de 4. Top 2 avançam direto para a Fase Final. 3º e 4º vão para Repescagem Final.</p>
-        <p><b>Repescagem 2:</b> 2 grupos de 4. Top 2 avançam para a Repescagem Final.</p>
+        <h3>Fase 3 - Grupos e Repescagem 2</h3>
+        <p>Rodadas <b>25 a 30</b>.</p>
+        <p>Grupos de 4 times em turno e returno.</p>
+        <p>Os melhores avançam direto para a Fase Final ou seguem para a Repescagem Final, conforme chaveamento definido pela organização.</p>
       </div><br>
 
       <div class="box">
         <h3>Fase 4 - Repescagem Final</h3>
-        <p>Rodadas 29 a 34. São 2 grupos de 4 times em turno e returno.</p>
-        <p>Apenas o campeão de cada grupo avança para a Fase Final.</p>
+        <p>Rodadas <b>31 a 34</b>.</p>
+        <p>Formato compacto para caber no calendário até a rodada 38.</p>
+        <p>Rodadas 31 a 33: 2 grupos de 4 times em turno único.</p>
+        <p>Rodada 34: decisão da repescagem para definir os últimos classificados da Fase Final.</p>
       </div><br>
 
       <div class="box">
         <h3>Fase Final</h3>
-        <p>Rodadas 35 a 37. São 2 grupos de 3 times em turno único.</p>
+        <p>Rodadas <b>35 a 37</b>. São 2 grupos de 3 times em turno único.</p>
         <p>1º lugar de cada grupo vai para a Grande Final.</p>
         <p>2º lugar de cada grupo vai para a disputa de 3º lugar.</p>
       </div><br>
 
       <div class="box">
         <h3>Grande Final</h3>
-        <p>Rodada 38. Jogo único para decidir o campeão da Liga Cartola de Ermida.</p>
+        <p>Rodada <b>38</b>. Jogo único para decidir o campeão da Liga Cartola de Ermida.</p>
+        <p>Também pode haver disputa de 3º lugar na mesma rodada.</p>
       </div>
     </div>
   </section>
@@ -206,7 +226,8 @@ th{background:#0f8f46;color:white}
 
 <script>
 const LIMITE_EMPATE = 5;
-const FASE1_FINAL = 16;
+const FASE1_FINAL = 18;
+const FASE2_INICIO = 19;
 let historico;
 let grupoAtual = "A";
 
@@ -217,15 +238,28 @@ const grupos = {
   D:{1:"Framos F.C",2:"Gabiru cabuloso",3:"CHARLLOTTTE F.C.",4:"SemFreio LEFC1988",5:"JUNA FUTEBOL CLUBE",6:"Epidemia Sport Clube",7:"Mão C.F",8:"Maria Gol De Costas",9:"A76 FC"}
 };
 
+// Fase 1 corrigida: 18 rodadas.
+// Cada grupo tem 9 times; por rodada são 4 jogos e 1 folga.
+// Em 18 rodadas, cada time faz 16 jogos e folga 2 vezes.
 const jogosFase1 = {
-  1:[[1,2],[3,4],[5,6],[7,8]],2:[[9,1],[2,3],[4,5],[6,7]],
-  3:[[8,9],[1,3],[2,5],[4,6]],4:[[1,4],[2,7],[3,8],[5,9]],
-  5:[[1,6],[2,8],[3,7],[4,9]],6:[[1,7],[5,8],[2,6],[3,9]],
-  7:[[1,5],[2,4],[6,8],[7,9]],8:[[1,8],[3,5],[4,7],[6,9]],
-  9:[[2,9],[3,6],[4,8],[5,7]],10:[[2,1],[4,3],[6,5],[8,7]],
-  11:[[1,9],[3,2],[5,4],[7,6]],12:[[9,8],[3,1],[5,2],[6,4]],
-  13:[[4,1],[7,2],[8,3],[9,5]],14:[[6,1],[8,2],[7,3],[9,4]],
-  15:[[7,1],[8,5],[6,2],[9,3]],16:[[5,1],[4,2],[8,6],[9,7]]
+  1:[[1,2],[3,4],[5,6],[7,8]],
+  2:[[9,1],[2,3],[4,5],[6,7]],
+  3:[[8,9],[1,3],[2,5],[4,6]],
+  4:[[1,4],[2,7],[3,8],[5,9]],
+  5:[[1,6],[2,8],[3,7],[4,9]],
+  6:[[1,7],[5,8],[2,6],[3,9]],
+  7:[[1,5],[2,4],[6,8],[7,9]],
+  8:[[1,8],[3,5],[4,7],[6,9]],
+  9:[[2,9],[3,6],[4,8],[5,7]],
+  10:[[2,1],[4,3],[6,5],[8,7]],
+  11:[[1,9],[3,2],[5,4],[7,6]],
+  12:[[9,8],[3,1],[5,2],[6,4]],
+  13:[[4,1],[7,2],[8,3],[9,5]],
+  14:[[6,1],[8,2],[7,3],[9,4]],
+  15:[[7,1],[8,5],[6,2],[9,3]],
+  16:[[5,1],[4,2],[8,6],[9,7]],
+  17:[[8,1],[5,3],[7,4],[9,6]],
+  18:[[9,2],[6,3],[8,4],[7,5]]
 };
 
 const jogos4 = [
@@ -281,7 +315,7 @@ function atualizarTabs(){
 
 function pontosTime(nome, rodada){
   const lista = historico.rodadas[String(rodada)] || [];
-  const t = lista.find(x => x.time.trim() === nome.trim());
+  const t = lista.find(x => String(x.time).trim() === String(nome).trim());
   return t ? Number(t.pontos) : 0;
 }
 
@@ -437,7 +471,7 @@ function renderFase2(){
 
     let html=`<div class="box"><h3>${nome}</h3>`;
     jogos4.forEach((rodada,idx)=>{
-      html+=`<p><b>Rodada ${17+idx}</b><br>`;
+      html+=`<p><b>Rodada ${FASE2_INICIO+idx}</b><br>`;
       rodada.forEach(([a,b])=>{
         html+=`${times[a-1].time} x ${times[b-1].time}<br>`;
       });
