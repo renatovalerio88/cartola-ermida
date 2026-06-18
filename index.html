@@ -5,13 +5,13 @@
 <title>Cartola de Ermida</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-:root{--bg:#0b1020;--card:#111827;--card2:#0f172a;--line:#263244;--green:#22c55e;--yellow:#fbbf24;--red:#ef4444;--blue:#60a5fa;--gold:#fde68a;--text:#f8fafc;--muted:#b6c2d1}
+:root{--bg:#071318;--card:#0e1c22;--card2:#10252c;--line:#24424c;--green:#00c853;--yellow:#ffb300;--red:#ff5252;--blue:#4dd0e1;--gold:#f5d76e;--text:#f7fbfc;--muted:#a9c0c7}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:linear-gradient(135deg,#0f172a,#064e3b 65%,#22c55e);padding:22px 14px;text-align:center}header h1{margin:0;font-size:28px}header p{margin:6px 0 0;color:#d9f99d;font-size:14px}
+header{background:linear-gradient(135deg,#061014,#064e3b 65%,#00c853);padding:22px 14px;text-align:center}header h1{margin:0;font-size:28px}header p{margin:6px 0 0;color:#d9f99d;font-size:14px}
 .container{max-width:1180px;margin:auto;padding:12px}.nav,.tabs{display:flex;gap:7px;overflow-x:auto;padding:10px 0}.nav{position:sticky;top:0;background:var(--bg);z-index:5}
-button{border:0;border-radius:999px;padding:9px 12px;background:#1e293b;color:white;font-weight:700;white-space:nowrap;font-size:13px}button.active{background:var(--green)}
+button{border:0;border-radius:999px;padding:9px 12px;background:#12303a;color:white;font-weight:700;white-space:nowrap;font-size:13px}button.active{background:var(--green);color:#052012}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}h2{margin:0 0 10px;color:var(--gold);font-size:20px}h3{margin:0 0 8px;color:var(--blue);font-size:16px}
-select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}table{width:100%;border-collapse:collapse;background:var(--card2);border-radius:12px;overflow:hidden;font-size:13px}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}th{background:#0f8f46;color:white}
+select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}table{width:100%;border-collapse:collapse;background:var(--card2);border-radius:12px;overflow:hidden;font-size:13px}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}th{background:#008a3d;color:white}
 .pos-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}.rank-cell{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.dot-ok{background:var(--green)}.dot-rep{background:var(--yellow)}.dot-bad{background:var(--red)}
 .legend{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}.details{display:none;background:#0b1220;color:#dbeafe}.details td{font-size:12px;color:#cbd5e1}.clickable{cursor:pointer}
 .match{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}.match.compact{padding:8px 10px}.match-head{font-size:11px;color:var(--muted);margin-bottom:5px}.match-line{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}.team-left{text-align:left}.team-right{text-align:right}.score-pill{background:#111827;border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-weight:800;white-space:nowrap}.score{font-weight:800;font-size:15px}.result{font-size:12px;color:var(--muted);margin-top:6px}.win{color:#86efac;font-weight:bold}
@@ -30,7 +30,7 @@ select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}
 
 .flow{display:grid;gap:10px;margin-top:10px}.flow-row{display:grid;grid-template-columns:88px 1fr;gap:10px;align-items:stretch}.flow-num{background:#0b1220;border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}.flow-num b{display:block;font-size:22px;color:var(--gold)}.flow-card{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:10px}.flow-card h3{margin-bottom:4px}.flow-arrow{text-align:center;color:var(--muted);font-size:18px;margin:-4px 0}.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.path-card{border:1px solid var(--line);border-radius:12px;padding:9px;background:#0b1220}.path-card.main{border-left:4px solid var(--green)}.path-card.rep{border-left:4px solid var(--yellow)}.origin-compact{display:grid;gap:4px;margin-top:8px}.origin-compact-row{display:grid;grid-template-columns:auto 1fr;gap:7px;align-items:start;padding:4px 0;border-top:1px solid #1f2a3d}.origin-compact-row:first-child{border-top:0}.origin-compact-name{font-weight:800;font-size:13px;line-height:1.2}.origin-compact-meta{font-size:10.5px;color:var(--muted);line-height:1.2}.pill-line{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.mini-pill{background:#0b1220;border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-size:11px;color:var(--muted)}
 
-.livebar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0b1220;border:1px solid var(--line);border-radius:14px;padding:9px 10px;margin:8px 0 12px}.livebar strong{font-size:13px}.livebar small{color:var(--muted);font-size:11px}.refresh-btn{background:#0f766e;border:1px solid #14b8a6;padding:8px 10px}.refresh-btn.loading{opacity:.65}.flow-intro{background:#0b1220;border:1px solid var(--line);border-radius:16px;padding:12px;margin:10px 0}.flow-counter{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px}.flow-step{min-width:74px;text-align:center;background:#111827;border:1px solid var(--line);border-radius:14px;padding:8px}.flow-step b{display:block;color:var(--gold);font-size:20px}.flow-step span{font-size:10.5px;color:var(--muted)}.bracket-map{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.lane{border:1px solid var(--line);border-radius:16px;padding:10px;background:var(--card2)}.lane.main{border-top:4px solid var(--green)}.lane.rep{border-top:4px solid var(--yellow)}.lane-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.lane-title h3{margin:0}.stage-card{background:#0b1220;border:1px solid #1f2a3d;border-radius:14px;padding:10px;margin:8px 0}.stage-card h4{margin:0 0 5px;color:var(--text);font-size:14px}.stage-card p{margin:4px 0}.stage-card .count{display:inline-block;background:#111827;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:11px;color:var(--gold);font-weight:800}.stage-arrow{text-align:center;color:var(--muted);font-size:18px;margin:0}.merge-card{border:1px solid var(--line);border-radius:16px;padding:12px;background:linear-gradient(135deg,#0b1220,#102033);margin-top:12px;text-align:center}.merge-card h3{margin:0 0 6px}.merge-grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-top:10px}.merge-side{background:#0b1220;border:1px solid var(--line);border-radius:14px;padding:10px}.merge-plus{font-size:24px;color:var(--gold);font-weight:900}.simple-rule{display:grid;grid-template-columns:22px 1fr;gap:7px;align-items:start;margin:5px 0;font-size:12px;color:var(--muted)}
+.livebar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0b1220;border:1px solid var(--line);border-radius:14px;padding:9px 10px;margin:8px 0 12px}.livebar strong{font-size:13px}.livebar small{color:var(--muted);font-size:11px}.refresh-btn{background:#008a64;border:1px solid #00c853;padding:8px 10px}.refresh-btn.loading{opacity:.65}.flow-intro{background:#0b1220;border:1px solid var(--line);border-radius:16px;padding:12px;margin:10px 0}.flow-counter{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px}.flow-step{min-width:74px;text-align:center;background:#111827;border:1px solid var(--line);border-radius:14px;padding:8px}.flow-step b{display:block;color:var(--gold);font-size:20px}.flow-step span{font-size:10.5px;color:var(--muted)}.bracket-map{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.lane{border:1px solid var(--line);border-radius:16px;padding:10px;background:var(--card2)}.lane.main{border-top:4px solid var(--green)}.lane.rep{border-top:4px solid var(--yellow)}.lane-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.lane-title h3{margin:0}.stage-card{background:#0b1220;border:1px solid #1f2a3d;border-radius:14px;padding:10px;margin:8px 0}.stage-card h4{margin:0 0 5px;color:var(--text);font-size:14px}.stage-card p{margin:4px 0}.stage-card .count{display:inline-block;background:#111827;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:11px;color:var(--gold);font-weight:800}.stage-arrow{text-align:center;color:var(--muted);font-size:18px;margin:0}.merge-card{border:1px solid var(--line);border-radius:16px;padding:12px;background:linear-gradient(135deg,#0b1220,#102033);margin-top:12px;text-align:center}.merge-card h3{margin:0 0 6px}.merge-grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-top:10px}.merge-side{background:#0b1220;border:1px solid var(--line);border-radius:14px;padding:10px}.merge-plus{font-size:24px;color:var(--gold);font-weight:900}.simple-rule{display:grid;grid-template-columns:22px 1fr;gap:7px;align-items:start;margin:5px 0;font-size:12px;color:var(--muted)}
 
 /* Ajuste de contraste da Repescagem */
 .path-card.rep{background:#211806;border-color:#6b4f12;color:var(--text)}
@@ -72,7 +72,8 @@ select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}
     <button onclick="abrirAba('fase2',this)">Fase 2</button>
     <button onclick="abrirAba('fase3',this)">Fase 3</button>
     <button onclick="abrirAba('fase4',this)">Fase 4</button>
-    <button onclick="abrirAba('fasefinal',this)">Fase Final</button>
+    <button onclick="abrirAba('fasefinal',this)">Fase 5</button>
+    <button onclick="abrirAba('grandefinal',this)">Grande Final</button>
     <button onclick="abrirAba('fluxograma',this)">Fluxograma</button>
     <button onclick="abrirAba('regulamento',this)">Regulamento</button>
   </div>
@@ -92,7 +93,11 @@ select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}
   </section>
 
   <section id="aba-fasefinal" class="aba hidden">
-    <div class="card fase-page" data-fase="final"><div class="phase-title"><div><h2>Fase Final</h2><p class="small">Aqui os caminhos se misturam: 4 vindos dos grupos + 2 vindos da repescagem.</p></div><span class="badge future">R35 a R38</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div><div id="boxGrandeFinalExtra"></div></div>
+    <div class="card fase-page" data-fase="final"><div class="phase-title"><div><h2>Fase 5 · Fase Final</h2><p class="small">Aqui os caminhos se misturam: 4 vindos dos grupos + 2 vindos da repescagem.</p></div><span class="badge future">R35 a R37</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+  </section>
+
+  <section id="aba-grandefinal" class="aba hidden">
+    <div class="card fase-page" data-fase="grande"><div class="phase-title"><div><h2>Grande Final</h2><p class="small">Rodada 38: decisão do título e disputa de 3º lugar.</p></div><span class="badge future">R38</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-fluxograma" class="aba hidden">
@@ -148,7 +153,7 @@ select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}
         <p class="small">Depois da Fase 4, sobram 6 times: 4 vindos dos grupos + 2 da repescagem.</p>
       </div><br>
       <div class="box">
-        <h3>Fase Final · Rodadas 35 a 37</h3>
+        <h3>Fase 5 · Rodadas 35 a 37</h3>
         <p><b>6 times</b> em <b>2 grupos de 3</b>.</p>
         <p>Agora sim mistura tudo: <b>4 classificados dos grupos</b> + <b>2 classificados da repescagem</b>.</p>
         <p>🟢 1º de cada grupo vai para a Grande Final.<br>🟡 2º de cada grupo disputa o 3º lugar.<br>🔴 3º é eliminado.</p>
@@ -170,6 +175,7 @@ select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}
 const LIMITE_EMPATE = 5;
 const FASE1_FINAL = 18;
 let historico, grupoAtual="A", faseSelecionada="fase3", grupoFaseAtual="";
+let historicoMeta={ultimaAtualizacao:null, fonte:""};
 const grupos={
  A:{1:"MT10M1T0",2:"RJ Clube",3:"S.C. Finha Paulista",4:"DP-SC",5:"Kayser Football",6:"GALOBERA F.C",7:"Legione Romanista",8:"Jafeth G.D.F.C.",9:"Sport Club Prexeca Bangers"},
  B:{1:"Forward F. Club",2:"Seu Cuca Futebol",3:"Ardam Cabubu",4:"Galo de Rio Doce FC",5:"PELUDÃO13",6:"Galo Doido BH 93",7:"D1OS",8:"JACB FC",9:"Digdigie94"},
@@ -185,8 +191,28 @@ function fmtBR(n){return fmt(n).replace(".",",")}
 function notaJogo(ta,tb,pa,pb){const dif=Math.abs(pa-pb);if(dif<=LIMITE_EMPATE)return `(Empate por diferença de ${fmtBR(dif)} pts)`;return `(${pa>pb?ta:tb} venceu por ${fmtBR(dif)} pts)`}
 function abrirAba(nome,btn){document.querySelectorAll(".aba").forEach(a=>a.classList.add("hidden"));document.getElementById("aba-"+nome).classList.remove("hidden");document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
 async function carregar(){historico=await buscarHistorico();montarControles();renderTudo();marcarAtualizacao("Dados atualizados")}
-async function buscarHistorico(){return fetch("historico_cartola.json?v="+Date.now(),{cache:"no-store"}).then(r=>r.json())}
-function marcarAtualizacao(txt){const d=new Date();if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent=txt;if(document.getElementById("ultimaAtualizacao"))ultimaAtualizacao.textContent="Última busca: "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit",second:"2-digit"})}
+async function buscarHistorico(){
+  const resp=await fetch("historico_cartola.json?v="+Date.now(),{cache:"no-store"});
+  const lastModified=resp.headers.get("last-modified");
+  const data=await resp.json();
+  historicoMeta.ultimaAtualizacao=data.ultima_atualizacao||data.atualizado_em||data.gerado_em||data.updated_at||lastModified||null;
+  historicoMeta.fonte=(data.ultima_atualizacao||data.atualizado_em||data.gerado_em||data.updated_at)?"json":"servidor";
+  return data;
+}
+function formatarDataArquivo(valor){
+  if(!valor)return "horário real do arquivo indisponível";
+  const d=new Date(valor);
+  if(!isNaN(d.getTime()))return d.toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"});
+  return valor;
+}
+function marcarAtualizacao(txt){
+  const busca=new Date();
+  if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent=txt;
+  if(document.getElementById("ultimaAtualizacao")){
+    const origem=historicoMeta.fonte==="json"?"JSON":"servidor";
+    ultimaAtualizacao.innerHTML=`Arquivo atualizado (${origem}): ${formatarDataArquivo(historicoMeta.ultimaAtualizacao)}<br>Busca nesta página: ${busca.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}`;
+  }
+}
 async function atualizarDados(){try{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.add("loading");btnAtualizar.textContent="Atualizando..."}historico=await buscarHistorico();renderTudo();marcarAtualizacao("Dados atualizados")}catch(e){if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent="Não foi possível atualizar"}finally{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.remove("loading");btnAtualizar.textContent="🔄 Atualizar"}}}
 function montarControles(){["tabsGruposRodadas"].forEach(id=>{const box=document.getElementById(id);Object.keys(grupos).forEach(g=>{const b=document.createElement("button");b.textContent="Grupo "+g;b.onclick=()=>{grupoAtual=g;atualizarTabs();renderTudo()};box.appendChild(b)})});for(let r=1;r<=FASE1_FINAL;r++){selRodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`}selRodada.value=FASE1_FINAL;montarTabsFase2();montarPaginasFases();atualizarTabs()}
 function atualizarTabs(){document.querySelectorAll("#tabsGrupos button,#tabsGruposRodadas button").forEach(b=>b.classList.toggle("active",b.textContent.endsWith(grupoAtual)))}
@@ -215,7 +241,7 @@ function montarTabsFase2(){Object.keys(fase2Times()).forEach((nome,i)=>{const b=
 function renderMiniClassificacao(lista,titulo,statusFn){return `<h3>${titulo}</h3><table class="phase-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th></tr></thead><tbody>${lista.map((t,i)=>{const pos=i+1;const st=statusFn?statusFn(pos):["",""];return `<tr><td><span class="rank-cell">${st[0]?`<span class="pos-dot ${st[0]}"></span>`:""}<span>${pos}</span></span></td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td></tr>`}).join("")}</tbody></table>`}
 function statusFase2(nome,pos){if(nome.startsWith("GP"))return pos<=2?["dot-ok","Avança"]:["dot-rep","Vai para repescagem"];return pos===1?["dot-ok","Avança"]:["dot-bad","Eliminado"]}
 function statusPadrao(pos){return pos<=2?["dot-ok","Avança"]:["dot-bad","Eliminado"]}
-function renderConfrontosRodada(times,inicio,agenda,rodadaEscolhida,titulo){const idx=rodadaEscolhida-inicio;const rodada=agenda[idx]||[];let html=`<div class="section-gap"></div><h3>${titulo}</h3><div class="scoreboard"><div class="scoreboard-title">Rodada ${rodadaEscolhida}</div>`;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time||"A definir",tb=times[b-1]?.time||"A definir",tem=temRodada(rodadaEscolhida);const pa=tem?pontosTime(ta,rodadaEscolhida):0,pb=tem?pontosTime(tb,rodadaEscolhida):0;let st=tem?simbolosJogo(pa,pb):{a:"draw",b:"draw",res:"A jogar"};const centro=tem?`${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}`:`<span class="score-x">x</span>`;html+=`<div class="score-game-wrap"><div class="score-game" title="${st.res}">${tem?dotStatus(st.a):'<span></span>'}<span class="score-team ${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${centro}</span><span class="score-team right ${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${tem?dotStatus(st.b):'<span></span>'}</div>${tem?`<div class="score-note">${notaJogo(ta,tb,pa,pb)}</div>`:`<div class="score-note">(jogo ainda não disputado)</div>`}</div>`});html+=`<div class="legend"><span><span class="status-dot status-win">✓</span> Vitória</span><span><span class="status-dot status-draw">=</span> Empate</span><span><span class="status-dot status-loss">×</span> Derrota</span></div></div>`;return html}
+function renderConfrontosRodada(times,inicio,agenda,rodadaEscolhida,titulo){const idx=rodadaEscolhida-inicio;const rodada=agenda[idx]||[];let html=`<div class="section-gap"></div><h3>${titulo}</h3><div class="scoreboard"><div class="scoreboard-title">Rodada ${rodadaEscolhida}</div>`;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time||"A definir",tb=times[b-1]?.time||"A definir",tem=temRodada(rodadaEscolhida);const pa=tem?pontosTime(ta,rodadaEscolhida):0,pb=tem?pontosTime(tb,rodadaEscolhida):0;let st=tem?simbolosJogo(pa,pb):{a:"draw",b:"draw",res:"A jogar"};const centro=tem?`${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}`:'<span class="score-x">x</span>';html+=`<div class="score-game-wrap"><div class="score-game" title="${st.res}">${tem?dotStatus(st.a):'<span></span>'}<span class="score-team ${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${centro}</span><span class="score-team right ${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${tem?dotStatus(st.b):'<span></span>'}</div>${tem?`<div class="score-note">${notaJogo(ta,tb,pa,pb)}</div>`:`<div class="score-note">(jogo ainda não disputado)</div>`}</div>`});html+=`<div class="legend"><span><span class="status-dot status-win">✓</span> Vitória</span><span><span class="status-dot status-draw">=</span> Empate</span><span><span class="status-dot status-loss">×</span> Derrota</span></div></div>`;return html}
 function renderFase2(){const f=fase2Times(),times=f[grupoFaseAtual]||Object.values(f)[0],nome=grupoFaseAtual||Object.keys(f)[0];document.querySelectorAll("#tabsFase2 button").forEach(b=>b.classList.toggle("active",b.textContent===nomeFase2(nome)));if(!selFase2Rodada.options.length){for(let r=19;r<=24;r++)selFase2Rodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`;selFase2Rodada.value=19}const ate=Number(selFase2Rodada.value||19);const lista=calcGrupoTimesAte(times,19,jogos4,ate);const subt=nome.startsWith("GP")?"2 verdes avançam; 2 amarelos seguem para a repescagem.":"1 verde avança; vermelhos são eliminados.";const nomeVisivel=nomeFase2(nome);boxFase2Detalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${nomeVisivel}</h3><p class="small">${subt}</p></div><span class="badge future">R19-R24</span></div>${listaOrigem(times,nome)}</div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>statusFase2(nome,pos))}<div class="legend"><span><i class="pos-dot dot-ok"></i>Classificado</span>${nome.startsWith("GP")?`<span><i class="pos-dot dot-rep"></i>Repescagem</span>`:`<span><i class="pos-dot dot-bad"></i>Eliminado</span>`}</div>${!temRodada(19)?'<div class="muted-card">Ainda sem resultados da Fase 2. Quando o JSON tiver as rodadas 19 a 24, a classificação será atualizada pela rodada escolhida.</div>':''}${renderConfrontosRodada(times,19,jogos4,ate,"Jogos da rodada")}`}
 function melhoresSegundos(gruposStand){return Object.values(gruposStand).map(lista=>lista[1]).filter(Boolean).sort((a,b)=>b.pts-a.pts||b.v-a.v||b.saldo-a.saldo||b.pf-a.pf)}
 function fase3Times(){const f2=fase2Times(),st={};Object.keys(f2).forEach(n=>st[n]=calcGrupoTimes(f2[n],19,jogos4));return {
@@ -235,7 +261,7 @@ function statusFase3(nome,pos){if(nome.startsWith("Grupo"))return pos<=2?["dot-o
 function statusFase4(nome,pos){return pos===1?["dot-ok","Fase Final"]:["dot-bad","Eliminado"]}
 function statusFinal(nome,pos){return pos===1?["dot-ok","Final"]:pos===2?["dot-rep","3º lugar"]:["dot-bad","Eliminado"]}
 function statusGrande(nome,pos){return pos===1?["dot-ok","Vencedor"]:["dot-bad","Perdedor"]}
-const faseConfigs={fase3:{label:"Fase 3",inicio:25,agenda:jogos4,desc:"Caminho dos grupos protegido + Repescagem 2",get:fase3Times,status:statusFase3},fase4:{label:"Fase 4",inicio:31,agenda:jogos4TurnoUnico,desc:"Repescagem Final: últimos 2 lugares na Fase Final",get:fase4Times,status:statusFase4},final:{label:"Fase Final",inicio:35,agenda:jogos3,desc:"4 dos grupos + 2 da repescagem",get:faseFinalTimes,status:statusFinal},grande:{label:"Grande Final",inicio:38,agenda:[[[1,2]]],desc:"Final e disputa de 3º lugar",get:finalTimes,status:statusGrande}};
+const faseConfigs={fase3:{label:"Fase 3",inicio:25,agenda:jogos4,desc:"Caminho dos grupos protegido + Repescagem 2",get:fase3Times,status:statusFase3},fase4:{label:"Fase 4",inicio:31,agenda:jogos4TurnoUnico,desc:"Repescagem Final: últimos 2 lugares na Fase Final",get:fase4Times,status:statusFase4},final:{label:"Fase 5",inicio:35,agenda:jogos3,desc:"4 dos Grupos + 2 da Repescagem",get:faseFinalTimes,status:statusFinal},grande:{label:"Grande Final",inicio:38,agenda:[[[1,2]]],desc:"Final e disputa de 3º lugar",get:finalTimes,status:statusGrande}};
 function montarTabsFases(){Object.entries(faseConfigs).forEach(([k,c],i)=>{const b=document.createElement("button");b.textContent=c.label;b.onclick=()=>{faseSelecionada=k;grupoFaseAtual="";renderFases()};tabsFases.appendChild(b)})}
 function renderFases(){if(!historico)return;renderFluxoFases();document.querySelectorAll("#tabsFases button").forEach(b=>b.classList.toggle("active",b.textContent===faseConfigs[faseSelecionada].label));const cfg=faseConfigs[faseSelecionada],grps=cfg.get(),nomes=Object.keys(grps);if(!grupoFaseAtual||!grps[grupoFaseAtual])grupoFaseAtual=nomes[0];tabsFaseGrupos.innerHTML="";nomes.forEach(n=>{const b=document.createElement("button");b.textContent=n;b.classList.toggle("active",n===grupoFaseAtual);b.onclick=()=>{grupoFaseAtual=n;renderFases()};tabsFaseGrupos.appendChild(b)});const fim=cfg.inicio+cfg.agenda.length-1;const atual=Number(selFaseRodada.value||cfg.inicio);selFaseRodada.innerHTML="";for(let r=cfg.inicio;r<=fim;r++)selFaseRodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`;selFaseRodada.value=(atual>=cfg.inicio&&atual<=fim)?atual:cfg.inicio;const ate=Number(selFaseRodada.value);const times=grps[grupoFaseAtual];const lista=calcGrupoTimesAte(times,cfg.inicio,cfg.agenda,ate);const legend=grupoFaseAtual.includes("Repescagem")?`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Possível vaga/melhor 2º</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`:`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Repescagem/3º lugar</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`;boxFaseDetalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${cfg.label} · ${grupoFaseAtual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">R${cfg.inicio}${cfg.agenda.length>1?`-R${fim}`:""}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||"A definir"}</span>`).join("")}</div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>cfg.status(grupoFaseAtual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,"Jogos da rodada")}`}
 function renderFluxoFases(){if(!document.getElementById("boxFluxoFases"))return;boxFluxoFases.innerHTML=`
@@ -247,7 +273,7 @@ function renderFluxoFases(){if(!document.getElementById("boxFluxoFases"))return;
       <div class="flow-step"><b>32</b><span>Fase 2</span></div>
       <div class="flow-step"><b>20</b><span>Fase 3</span></div>
       <div class="flow-step"><b>12</b><span>Fase 4</span></div>
-      <div class="flow-step"><b>6</b><span>Final</span></div>
+      <div class="flow-step"><b>6</b><span>Fase 5</span></div>
       <div class="flow-step"><b>2</b><span>decidem</span></div>
       <div class="flow-step"><b>🏆</b><span>campeão</span></div>
     </div>
@@ -320,7 +346,7 @@ function renderFluxoFases(){if(!document.getElementById("boxFluxoFases"))return;
   </div>
 
   <div class="merge-card">
-    <h3>Fase Final · Rodadas 35 a 37</h3>
+    <h3>Fase 5 · Rodadas 35 a 37</h3>
     <p class="small">Aqui os caminhos finalmente se encontram.</p>
     <div class="merge-grid">
       <div class="merge-side"><b>4 times</b><br><span class="small">vindos do Caminho dos Grupos</span></div>
@@ -337,7 +363,7 @@ function renderFluxoFases(){if(!document.getElementById("boxFluxoFases"))return;
   </div>`}
 function renderStats(){const todos=[];Object.keys(grupos).forEach(g=>calcularGrupo(g,FASE1_FINAL).forEach(t=>todos.push({...t,grupo:g})));const melhorCampanha=[...todos].sort((a,b)=>b.pts-a.pts||b.saldo-a.saldo)[0],melhorAtaque=[...todos].sort((a,b)=>b.pf-a.pf)[0],melhorDefesa=[...todos].sort((a,b)=>a.pc-b.pc)[0],maiorSaldo=[...todos].sort((a,b)=>b.saldo-a.saldo)[0];boxStats.innerHTML=`<div class="box kpi"><span class="small">🏆 Melhor campanha</span><br><b>${melhorCampanha.time}</b><p>${melhorCampanha.pts} pts - Grupo ${melhorCampanha.grupo}</p></div><div class="box kpi"><span class="small">🔥 Melhor ataque</span><br><b>${melhorAtaque.time}</b><p>${fmt(melhorAtaque.pf)} pontos feitos</p></div><div class="box kpi"><span class="small">🛡️ Melhor defesa</span><br><b>${melhorDefesa.time}</b><p>${fmt(melhorDefesa.pc)} pontos sofridos</p></div><div class="box kpi"><span class="small">📈 Maior saldo</span><br><b>${maiorSaldo.time}</b><p>${fmt(maiorSaldo.saldo)}</p></div>`}
 function cfgRodadasLabel(cfg){const fim=cfg.inicio+cfg.agenda.length-1;return `R${cfg.inicio}${cfg.agenda.length>1?`-R${fim}`:""}`}
-const estadoPaginasFases={fase3:{grupo:""},fase4:{grupo:""},final:{grupo:""}};
+const estadoPaginasFases={fase3:{grupo:""},fase4:{grupo:""},final:{grupo:""},grande:{grupo:""}};
 function montarPaginasFases(){
   document.querySelectorAll('.fase-page').forEach(page=>{
     const key=page.dataset.fase,cfg=faseConfigs[key]; if(!cfg)return;
@@ -346,7 +372,7 @@ function montarPaginasFases(){
     renderPaginaFase(key);
   })
 }
-function renderPaginasFases(){['fase3','fase4','final'].forEach(renderPaginaFase);renderGrandeFinalExtra()}
+function renderPaginasFases(){['fase3','fase4','final','grande'].forEach(renderPaginaFase)}
 function renderPaginaFase(key){
   if(!historico)return; const page=document.querySelector(`.fase-page[data-fase="${key}"]`); if(!page)return; const cfg=faseConfigs[key];
   const grps=cfg.get(), nomes=Object.keys(grps); if(!estadoPaginasFases[key].grupo||!grps[estadoPaginasFases[key].grupo])estadoPaginasFases[key].grupo=nomes[0];
@@ -355,7 +381,6 @@ function renderPaginaFase(key){
   const sel=page.querySelector('.fase-select-rodada'), ate=Number(sel.value||cfg.inicio), times=grps[atual], lista=calcGrupoTimesAte(times,cfg.inicio,cfg.agenda,ate);
   const legend=atual.includes('Repescagem')?`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Possível vaga/melhor 2º</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`:`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Repescagem/3º lugar</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`;
   page.querySelector('.fase-box-detalhe').innerHTML=`<div class="info-block"><div class="phase-title"><div><h3>${cfg.label} · ${atual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">${cfgRodadasLabel(cfg)}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||'A definir'}</span>`).join('')}</div></div><div class="info-block"><h3>Classificação</h3>${renderMiniClassificacao(lista,'',pos=>cfg.status(atual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}</div><div class="info-block light">${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,'Jogos da rodada')}</div>`;
-  if(key==='final')renderGrandeFinalExtra();
 }
 function renderGrandeFinalExtra(){
   const box=document.getElementById('boxGrandeFinalExtra'); if(!box||!historico)return; const grps=finalTimes();
@@ -365,14 +390,14 @@ function renderGrandeFinalExtra(){
 }
 function renderFluxogramaNovo(){
   const box=document.getElementById('boxFluxogramaNovo'); if(!box)return;
-  box.innerHTML=`<div class="flow-intro"><h3>Visão rápida</h3><p class="small">O caminho dos grupos fica protegido. A repescagem só cruza com os grupos na Fase Final.</p><div class="flow-counter"><div class="flow-step"><b>36</b><span>começam</span></div><div class="flow-step"><b>32</b><span>Fase 2</span></div><div class="flow-step"><b>20</b><span>Fase 3</span></div><div class="flow-step"><b>12</b><span>Fase 4</span></div><div class="flow-step"><b>6</b><span>Final</span></div><div class="flow-step"><b>2</b><span>decidem</span></div><div class="flow-step"><b>🏆</b><span>campeão</span></div></div></div>
+  box.innerHTML=`<div class="flow-intro"><h3>Visão rápida</h3><p class="small">O caminho dos grupos fica protegido. A repescagem só cruza com os grupos na Fase Final.</p><div class="flow-counter"><div class="flow-step"><b>36</b><span>começam</span></div><div class="flow-step"><b>32</b><span>Fase 2</span></div><div class="flow-step"><b>20</b><span>Fase 3</span></div><div class="flow-step"><b>12</b><span>Fase 4</span></div><div class="flow-step"><b>6</b><span>Fase 5</span></div><div class="flow-step"><b>2</b><span>decidem</span></div><div class="flow-step"><b>🏆</b><span>campeão</span></div></div></div>
   <div class="bracket-scroll"><div class="bracket-board">
     <div class="bracket-col"><div class="bracket-title">Fase 1</div><div class="bracket-node main"><h4>1º ao 4º</h4><p>16 times entram nos Grupos</p></div><div class="bracket-node rep"><h4>5º ao 8º</h4><p>16 times entram na Repescagem</p></div><div class="bracket-node"><h4>9º</h4><p>4 eliminados</p></div></div>
-    <div class="bracket-col"><div class="bracket-title">Fase 2</div><div class="bracket-node main"><h4>Grupos</h4><p>16 → 8 seguem<br>8 descem para repescagem</p></div><div class="bracket-node rep"><h4>Repescagem</h4><p>16 → 4 seguem<br>12 eliminados</p></div></div>
-    <div class="bracket-col"><div class="bracket-title">Fase 3</div><div class="bracket-node main"><h4>Grupos</h4><p>8 → 4 garantidos na Final<br>4 vão à Repescagem Final</p></div><div class="bracket-node rep"><h4>Repescagem 2</h4><p>12 → 4 seguem<br>8 eliminados</p></div></div>
-    <div class="bracket-col"><div class="bracket-title">Fase 4</div><div class="bracket-node main"><h4>4 aguardam</h4><p>Vêm do caminho dos grupos</p></div><div class="bracket-node rep"><h4>Repescagem Final</h4><p>8 → 2 seguem<br>6 eliminados</p></div></div>
-    <div class="bracket-col"><div class="bracket-title">Fase Final</div><div class="bracket-node final"><h4>6 times</h4><p>4 dos grupos + 2 da repescagem</p></div><div class="bracket-node final"><h4>2 grupos de 3</h4><p>1º vai à Final<br>2º disputa 3º</p></div></div>
-    <div class="bracket-col"><div class="bracket-title">Rodada 38</div><div class="bracket-node final"><h4>Grande Final</h4><p>2 finalistas decidem o título</p></div><div class="bracket-node"><h4>3º lugar</h4><p>2º de cada grupo final</p></div><div class="bracket-node final"><h4>🏆 Campeão</h4><p>Vencedor da final</p></div></div>
+    <div class="bracket-col"><div class="bracket-title">Fase 2</div><div class="bracket-node main"><h4>Grupos</h4><p>1º e 2º avançam<br>3º e 4º vão à repescagem</p></div><div class="bracket-node rep"><h4>Repescagem</h4><p>só o 1º avança<br>2º, 3º e 4º eliminados</p></div></div>
+    <div class="bracket-col"><div class="bracket-title">Fase 3</div><div class="bracket-node main"><h4>Grupos</h4><p>1º e 2º vão à Fase 5<br>3º e 4º vão à Repescagem Final</p></div><div class="bracket-node rep"><h4>Repescagem 2</h4><p>campeões + melhor campanha avançam<br>demais eliminados</p></div></div>
+    <div class="bracket-col"><div class="bracket-title">Fase 4</div><div class="bracket-node main"><h4>4 aguardam</h4><p>Vêm do caminho dos grupos</p></div><div class="bracket-node rep"><h4>Repescagem Final</h4><p>2 vagas para a Fase 5<br>restante eliminado</p></div></div>
+    <div class="bracket-col"><div class="bracket-title">Fase 5</div><div class="bracket-node final"><h4>6 times</h4><p>4 dos Grupos + 2 da Repescagem</p></div><div class="bracket-node final"><h4>2 grupos de 3</h4><p>1º vai à Final<br>2º disputa 3º</p></div></div>
+    <div class="bracket-col"><div class="bracket-title">Grande Final</div><div class="bracket-node final"><h4>Grande Final</h4><p>2 finalistas decidem o título</p></div><div class="bracket-node"><h4>3º lugar</h4><p>2º de cada grupo final</p></div><div class="bracket-node final"><h4>🏆 Campeão</h4><p>Vencedor da final</p></div></div>
   </div></div>`;
 }
 
