@@ -6,60 +6,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root{
-  --bg:#07111f;--card:#101b2d;--card2:#142238;--line:#27364e;
-  --green:#16a34a;--yellow:#f59e0b;--red:#dc2626;--blue:#38bdf8;--gold:#ffd166;
-  --text:#f8fafc;--muted:#aab6c8;
+  --bg:#07111f;--card:#101b2d;--card2:#0e1726;--line:#243247;
+  --green:#16a34a;--yellow:#f59e0b;--red:#dc2626;--blue:#38bdf8;
+  --gold:#ffd166;--text:#f8fafc;--muted:#aab6c8;
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:linear-gradient(135deg,#020617,#064e3b 60%,#16a34a);padding:28px 16px;text-align:center}
-header h1{margin:0;font-size:34px}
-header p{margin:8px 0 0;color:#d9f99d}
-.container{max-width:1200px;margin:auto;padding:16px}
-.nav{display:flex;gap:8px;overflow-x:auto;padding:12px 0;position:sticky;top:0;background:var(--bg);z-index:5}
-.nav button,.group-tabs button{
-  border:0;border-radius:999px;padding:10px 14px;background:#1e293b;color:white;font-weight:bold;white-space:nowrap
+header{background:linear-gradient(135deg,#020617,#064e3b 60%,#16a34a);padding:22px 14px;text-align:center}
+header h1{margin:0;font-size:28px}
+header p{margin:6px 0 0;color:#d9f99d;font-size:14px}
+.container{max-width:1180px;margin:auto;padding:12px}
+.nav,.tabs{display:flex;gap:7px;overflow-x:auto;padding:10px 0}
+.nav{position:sticky;top:0;background:var(--bg);z-index:5}
+button{
+  border:0;border-radius:999px;padding:9px 12px;background:#1e293b;color:white;
+  font-weight:700;white-space:nowrap;font-size:13px
 }
-.nav button.active,.group-tabs button.active{background:var(--green)}
-.group-tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 8px 22px #0007}
-.card h2{margin-top:0;color:var(--gold)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.kpi{background:var(--card2);border-radius:14px;padding:14px;border:1px solid var(--line)}
-.kpi small{color:var(--muted)} .kpi b{font-size:24px;color:white}
-table{width:100%;border-collapse:collapse;background:#0e1726;border-radius:14px;overflow:hidden}
-th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
-th{background:#0f8f46}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:bold}
+button.active{background:var(--green)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}
+h2{margin:0 0 10px;color:var(--gold);font-size:20px}
+h3{margin:0 0 8px;color:var(--blue);font-size:16px}
+select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}
+table{width:100%;border-collapse:collapse;background:var(--card2);border-radius:12px;overflow:hidden;font-size:13px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{background:#0f8f46;color:white}
+.pos-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.dot-ok{background:var(--green)}.dot-rep{background:var(--yellow)}.dot-bad{background:var(--red)}
+.legend{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.details{display:none;background:#0b1220;color:#dbeafe}
+.details td{font-size:12px;color:#cbd5e1}
+.clickable{cursor:pointer}
+.match{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}
+.match-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:4px 0}
+.score{font-weight:800;font-size:15px}
+.result{font-size:12px;color:var(--muted);margin-top:6px}
+.win{color:#86efac;font-weight:bold}
+.badge{display:inline-block;padding:3px 7px;border-radius:999px;font-size:11px;font-weight:bold}
 .ok{background:var(--green)}.rep{background:var(--yellow);color:#111}.bad{background:var(--red)}.emp{background:#64748b}
-.classifica{background:#103b25}.repescagem{background:#3d3211}.eliminado{background:#3a1616}
-select{padding:10px;border-radius:10px;border:0;margin:8px 0 14px}
-.match{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;background:#0e1726;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
-.match .score{font-size:18px;font-weight:bold}
-.vencedor{color:#86efac;font-weight:bold}
-.mobile-list{display:none}
-.team-card{background:#0e1726;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
-.team-card .top{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.team-card .pos{font-size:22px;font-weight:bold;color:var(--gold)}
-.team-card .pts{font-size:24px;font-weight:bold}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.phase-box{background:#0e1726;border:1px solid var(--line);border-radius:16px;padding:12px}
-.phase-box h3{margin-top:0;color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.box{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px}
 .hidden{display:none}
+.kpi b{font-size:20px}
+.small{font-size:12px;color:var(--muted)}
 @media(max-width:760px){
-  header h1{font-size:26px}
-  .desktop-table{display:none}
-  .mobile-list{display:block}
-  .match{grid-template-columns:1fr}
-  .container{padding:10px}
+  .container{padding:9px}
+  header h1{font-size:24px}
+  th,td{padding:7px 4px;font-size:12px}
+  .hide-mobile{display:none}
+  h2{font-size:18px}
 }
 </style>
 </head>
-<body>
 
+<body>
 <header>
   <h1>🏆 Cartola de Ermida</h1>
-  <p>Grupos, confrontos e classificação automática</p>
+  <p>Campeonato automático com grupos, repescagem e mata-mata</p>
 </header>
 
 <div class="container">
@@ -67,71 +69,144 @@ select{padding:10px;border-radius:10px;border:0;margin:8px 0 14px}
   <div class="nav">
     <button class="active" onclick="abrirAba('classificacao',this)">Classificação</button>
     <button onclick="abrirAba('rodadas',this)">Rodadas</button>
-    <button onclick="abrirAba('fases',this)">Próximas fases</button>
-    <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
+    <button onclick="abrirAba('fase2',this)">Fase 2</button>
+    <button onclick="abrirAba('fases',this)">Fases</button>
+    <button onclick="abrirAba('stats',this)">Estatísticas</button>
     <button onclick="abrirAba('regulamento',this)">Regulamento</button>
   </div>
 
-  <div id="aba-classificacao" class="aba">
+  <section id="aba-classificacao" class="aba">
     <div class="card">
-      <h2>Classificação por Grupo</h2>
-      <div class="group-tabs" id="groupTabs"></div>
-      <label>Ver classificação após:</label><br>
-      <select id="classificacaoRodada" onchange="renderTudo()"></select>
+      <h2>Classificação - Fase 1</h2>
+      <div class="tabs" id="tabsGrupos"></div>
+      <label class="small">Classificação após:</label><br>
+      <select id="selClassificacao" onchange="renderTudo()"></select>
 
-      <div class="desktop-table">
-        <table>
-          <thead>
-            <tr><th>Pos</th><th>Time</th><th>J</th><th>V</th><th>E</th><th>D</th><th>Pts</th><th>PF</th><th>PC</th><th>Saldo</th><th>Status</th></tr>
-          </thead>
-          <tbody id="tabelaGrupo"></tbody>
-        </table>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th>
+            <th class="hide-mobile">PF</th><th class="hide-mobile">PC</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyClassificacao"></tbody>
+      </table>
+
+      <div class="legend">
+        <span><i class="pos-dot dot-ok"></i>Grupos principais</span>
+        <span><i class="pos-dot dot-rep"></i>Repescagem</span>
+        <span><i class="pos-dot dot-bad"></i>Eliminado</span>
       </div>
-
-      <div class="mobile-list" id="cardsGrupo"></div>
+      <p class="small">Toque no time para ver E, D, PF, PC e status.</p>
     </div>
-  </div>
+  </section>
 
-  <div id="aba-rodadas" class="aba hidden">
+  <section id="aba-rodadas" class="aba hidden">
     <div class="card">
       <h2>Jogos da Rodada</h2>
-      <div class="group-tabs" id="groupTabsRodadas"></div>
-      <select id="rodadaSelect" onchange="mostrarRodada()"></select>
-      <div id="jogosRodada"></div>
+      <div class="tabs" id="tabsGruposRodadas"></div>
+      <select id="selRodada" onchange="mostrarRodada()"></select>
+      <div id="boxRodadas"></div>
     </div>
-  </div>
+  </section>
 
-  <div id="aba-fases" class="aba hidden">
+  <section id="aba-fase2" class="aba hidden">
     <div class="card">
-      <h2>Projeção das Próximas Fases</h2>
-      <p>Baseada na classificação atual da Fase 1.</p>
-      <div class="stats" id="proximasFases"></div>
+      <h2>Fase 2 - Projeção</h2>
+      <p class="small">Montagem automática com base na classificação da Fase 1 após a rodada 16.</p>
+      <div class="grid" id="boxFase2"></div>
     </div>
-  </div>
-
-  <div id="aba-estatisticas" class="aba hidden">
     <div class="card">
-      <h2>Estatísticas da Fase 1</h2>
-      <div class="stats" id="estatisticasBox"></div>
+      <h2>Confrontos da Fase 2</h2>
+      <p class="small">Ordem padrão para grupos de 4 times, rodadas 17 a 22.</p>
+      <div id="boxConfrontosFase2"></div>
     </div>
-  </div>
+  </section>
 
-  <div id="aba-regulamento" class="aba hidden">
+  <section id="aba-fases" class="aba hidden">
+    <div class="card">
+      <h2>Mapa das Fases</h2>
+      <div class="grid">
+        <div class="box"><h3>Fase 1</h3><p>Rodadas 1 a 16<br>4 grupos de 9 times.</p></div>
+        <div class="box"><h3>Fase 2</h3><p>Rodadas 17 a 22<br>Grupos Principais + Repescagem 1.</p></div>
+        <div class="box"><h3>Fase 3</h3><p>Rodadas 23 a 28<br>Quartas de Grupos + Repescagem 2.</p></div>
+        <div class="box"><h3>Fase 4</h3><p>Rodadas 29 a 34<br>Repescagem Final.</p></div>
+        <div class="box"><h3>Fase Final</h3><p>Rodadas 35 a 37<br>2 grupos de 3 times.</p></div>
+        <div class="box"><h3>Grande Final</h3><p>Rodada 38<br>Final e disputa de 3º lugar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aba-stats" class="aba hidden">
+    <div class="card">
+      <h2>Estatísticas - Fase 1</h2>
+      <div class="grid" id="boxStats"></div>
+    </div>
+  </section>
+
+  <section id="aba-regulamento" class="aba hidden">
     <div class="card">
       <h2>Regulamento</h2>
-      <p><b>Fase 1:</b> 4 grupos de 9 times, turno e returno, rodadas 1 a 18.</p>
-      <p><b>Empate:</b> diferença de até 5 pontos no confronto.</p>
-      <p><b>Vitória:</b> diferença acima de 5 pontos.</p>
-      <p><span class="badge ok">1º ao 4º</span> avançam para Grupos Principais.</p>
-      <p><span class="badge rep">5º ao 8º</span> vão para Repescagem 1.</p>
-      <p><span class="badge bad">9º</span> eliminado.</p>
+
+      <div class="box">
+        <h3>Regra dos confrontos</h3>
+        <p>Vitória vale <b>3 pontos</b>. Empate vale <b>1 ponto</b> para cada time.</p>
+        <p>Qualquer jogo com diferença de até <b>5 pontos Cartola</b> termina empatado.</p>
+        <p>Diferença acima de 5 pontos define o vencedor.</p>
+      </div><br>
+
+      <div class="box">
+        <h3>Critérios de desempate</h3>
+        <p>1. Pontos<br>2. Vitórias<br>3. Saldo de pontos Cartola<br>4. Pontos Cartola feitos</p>
+      </div><br>
+
+      <div class="box">
+        <h3>Fase 1 - Classificatória</h3>
+        <p>Rodadas 1 a 16. São 4 grupos com 9 times.</p>
+        <p>1º ao 4º avançam para os Grupos Principais.</p>
+        <p>5º ao 8º vão para a Repescagem 1.</p>
+        <p>9º colocado é eliminado.</p>
+      </div><br>
+
+      <div class="box">
+        <h3>Fase 2 - Grupos Principais e Repescagem 1</h3>
+        <p>Rodadas 17 a 22. Cada grupo de 4 times joga em turno e returno.</p>
+        <p><b>Grupos Principais:</b> os 2 primeiros avançam para a Fase 3. 3º e 4º vão para Repescagem 2.</p>
+        <p><b>Repescagem 1:</b> apenas o campeão de cada grupo avança para Repescagem 2.</p>
+      </div><br>
+
+      <div class="box">
+        <h3>Fase 3 - Quartas de Grupos e Repescagem 2</h3>
+        <p>Rodadas 23 a 28.</p>
+        <p><b>Quartas de Grupos:</b> 2 grupos de 4. Top 2 avançam direto para a Fase Final. 3º e 4º vão para Repescagem Final.</p>
+        <p><b>Repescagem 2:</b> 2 grupos de 4. Top 2 avançam para a Repescagem Final.</p>
+      </div><br>
+
+      <div class="box">
+        <h3>Fase 4 - Repescagem Final</h3>
+        <p>Rodadas 29 a 34. São 2 grupos de 4 times em turno e returno.</p>
+        <p>Apenas o campeão de cada grupo avança para a Fase Final.</p>
+      </div><br>
+
+      <div class="box">
+        <h3>Fase Final</h3>
+        <p>Rodadas 35 a 37. São 2 grupos de 3 times em turno único.</p>
+        <p>1º lugar de cada grupo vai para a Grande Final.</p>
+        <p>2º lugar de cada grupo vai para a disputa de 3º lugar.</p>
+      </div><br>
+
+      <div class="box">
+        <h3>Grande Final</h3>
+        <p>Rodada 38. Jogo único para decidir o campeão da Liga Cartola de Ermida.</p>
+      </div>
     </div>
-  </div>
+  </section>
 
 </div>
 
 <script>
 const LIMITE_EMPATE = 5;
+const FASE1_FINAL = 16;
 let historico;
 let grupoAtual = "A";
 
@@ -142,7 +217,7 @@ const grupos = {
   D:{1:"Framos F.C",2:"Gabiru cabuloso",3:"CHARLLOTTTE F.C.",4:"SemFreio LEFC1988",5:"JUNA FUTEBOL CLUBE",6:"Epidemia Sport Clube",7:"Mão C.F",8:"Maria Gol De Costas",9:"A76 FC"}
 };
 
-const jogos = {
+const jogosFase1 = {
   1:[[1,2],[3,4],[5,6],[7,8]],2:[[9,1],[2,3],[4,5],[6,7]],
   3:[[8,9],[1,3],[2,5],[4,6]],4:[[1,4],[2,7],[3,8],[5,9]],
   5:[[1,6],[2,8],[3,7],[4,9]],6:[[1,7],[5,8],[2,6],[3,9]],
@@ -150,131 +225,248 @@ const jogos = {
   9:[[2,9],[3,6],[4,8],[5,7]],10:[[2,1],[4,3],[6,5],[8,7]],
   11:[[1,9],[3,2],[5,4],[7,6]],12:[[9,8],[3,1],[5,2],[6,4]],
   13:[[4,1],[7,2],[8,3],[9,5]],14:[[6,1],[8,2],[7,3],[9,4]],
-  15:[[7,1],[8,5],[6,2],[9,3]],16:[[5,1],[4,2],[8,6],[9,7]],
-  17:[[8,1],[5,3],[7,4],[9,6]],18:[[9,2],[6,3],[8,4],[7,5]]
+  15:[[7,1],[8,5],[6,2],[9,3]],16:[[5,1],[4,2],[8,6],[9,7]]
 };
 
+const jogos4 = [
+  [[1,4],[2,3]],
+  [[1,3],[2,4]],
+  [[1,2],[3,4]],
+  [[4,1],[3,2]],
+  [[3,1],[4,2]],
+  [[2,1],[4,3]]
+];
+
 function fmt(n){return Number(n||0).toFixed(2)}
+
 function abrirAba(nome,btn){
-  document.querySelectorAll(".aba").forEach(x=>x.classList.add("hidden"));
+  document.querySelectorAll(".aba").forEach(a=>a.classList.add("hidden"));
   document.getElementById("aba-"+nome).classList.remove("hidden");
-  document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
 }
-function pontosTime(nome, rodada){
-  const lista = historico.rodadas[String(rodada)] || [];
-  const t = lista.find(x => x.time.trim() === nome.trim());
-  return t ? Number(t.pontos) : 0;
-}
-function base(nome){return {time:nome,j:0,v:0,e:0,d:0,pts:0,pf:0,pc:0,saldo:0}}
 
 async function carregar(){
   historico = await fetch("historico_cartola.json").then(r=>r.json());
   montarControles();
   renderTudo();
 }
+
 function montarControles(){
-  ["groupTabs","groupTabsRodadas"].forEach(id=>{
+  ["tabsGrupos","tabsGruposRodadas"].forEach(id=>{
     const box=document.getElementById(id);
     Object.keys(grupos).forEach(g=>{
       const b=document.createElement("button");
       b.textContent="Grupo "+g;
-      b.onclick=()=>{grupoAtual=g; atualizarBotoes(); renderTudo(); mostrarRodada();}
+      b.onclick=()=>{grupoAtual=g; atualizarTabs(); renderTudo();}
       box.appendChild(b);
     });
   });
-  Object.keys(jogos).forEach(r=>{
-    classificacaoRodada.innerHTML += `<option value="${r}">Rodada ${r}</option>`;
-    rodadaSelect.innerHTML += `<option value="${r}">Rodada ${r}</option>`;
-  });
-  classificacaoRodada.value=18; rodadaSelect.value=18;
-  atualizarBotoes();
+
+  for(let r=1;r<=FASE1_FINAL;r++){
+    selClassificacao.innerHTML += `<option value="${r}">Rodada ${r}</option>`;
+    selRodada.innerHTML += `<option value="${r}">Rodada ${r}</option>`;
+  }
+
+  selClassificacao.value=FASE1_FINAL;
+  selRodada.value=FASE1_FINAL;
+  atualizarTabs();
 }
-function atualizarBotoes(){
-  document.querySelectorAll(".group-tabs button").forEach(b=>{
+
+function atualizarTabs(){
+  document.querySelectorAll(".tabs button").forEach(b=>{
     b.classList.toggle("active", b.textContent.endsWith(grupoAtual));
   });
 }
 
-function calcularGrupo(g, ate=18){
-  const stats={}; Object.values(grupos[g]).forEach(n=>stats[n]=base(n));
-  Object.entries(jogos).forEach(([rodada,lista])=>{
-    rodada=Number(rodada); if(rodada>ate) return;
-    lista.forEach(([a,b])=>{
-      const ta=grupos[g][a], tb=grupos[g][b];
-      const pa=pontosTime(ta,rodada), pb=pontosTime(tb,rodada), dif=Math.abs(pa-pb);
+function pontosTime(nome, rodada){
+  const lista = historico.rodadas[String(rodada)] || [];
+  const t = lista.find(x => x.time.trim() === nome.trim());
+  return t ? Number(t.pontos) : 0;
+}
+
+function base(nome){return {time:nome,j:0,v:0,e:0,d:0,pts:0,pf:0,pc:0,saldo:0}}
+
+function calcularGrupo(grupo, ateRodada){
+  const stats={};
+  Object.values(grupos[grupo]).forEach(nome=>stats[nome]=base(nome));
+
+  Object.entries(jogosFase1).forEach(([rodada,partidas])=>{
+    rodada=Number(rodada);
+    if(rodada>ateRodada) return;
+
+    partidas.forEach(([a,b])=>{
+      const ta=grupos[grupo][a], tb=grupos[grupo][b];
+      const pa=pontosTime(ta,rodada), pb=pontosTime(tb,rodada);
+      const dif=Math.abs(pa-pb);
+
       stats[ta].j++; stats[tb].j++;
-      stats[ta].pf+=pa; stats[ta].pc+=pb; stats[tb].pf+=pb; stats[tb].pc+=pa;
-      if(dif<=LIMITE_EMPATE){stats[ta].e++;stats[tb].e++;stats[ta].pts++;stats[tb].pts++}
-      else if(pa>pb){stats[ta].v++;stats[tb].d++;stats[ta].pts+=3}
-      else{stats[tb].v++;stats[ta].d++;stats[tb].pts+=3}
+      stats[ta].pf+=pa; stats[ta].pc+=pb;
+      stats[tb].pf+=pb; stats[tb].pc+=pa;
+
+      if(dif<=LIMITE_EMPATE){
+        stats[ta].e++; stats[tb].e++;
+        stats[ta].pts++; stats[tb].pts++;
+      }else if(pa>pb){
+        stats[ta].v++; stats[tb].d++;
+        stats[ta].pts+=3;
+      }else{
+        stats[tb].v++; stats[ta].d++;
+        stats[tb].pts+=3;
+      }
     });
   });
+
   return Object.values(stats).map(t=>{t.saldo=t.pf-t.pc;return t})
-    .sort((a,b)=>b.pts-a.pts||b.v-a.v||b.saldo-a.saldo||b.pf-a.pf);
+    .sort((a,b)=>b.pts-a.pts || b.v-a.v || b.saldo-a.saldo || b.pf-a.pf);
 }
 
 function renderTudo(){
   renderClassificacao();
   mostrarRodada();
-  renderFases();
+  renderFase2();
   renderStats();
 }
-function statusLinha(i){
-  if(i<4)return ["classifica","Grupos","ok"];
-  if(i<8)return ["repescagem","Repescagem","rep"];
-  return ["eliminado","Eliminado","bad"];
+
+function statusInfo(pos){
+  if(pos<=4) return ["dot-ok","Grupos principais"];
+  if(pos<=8) return ["dot-rep","Repescagem"];
+  return ["dot-bad","Eliminado"];
 }
+
 function renderClassificacao(){
-  const lista=calcularGrupo(grupoAtual,Number(classificacaoRodada.value));
-  tabelaGrupo.innerHTML=""; cardsGrupo.innerHTML="";
+  const lista=calcularGrupo(grupoAtual,Number(selClassificacao.value));
+  tbodyClassificacao.innerHTML="";
+
   lista.forEach((t,i)=>{
-    const [classe,status,badge]=statusLinha(i);
-    tabelaGrupo.innerHTML+=`<tr class="${classe}"><td>${i+1}</td><td><b>${t.time}</b></td><td>${t.j}</td><td>${t.v}</td><td>${t.e}</td><td>${t.d}</td><td><b>${t.pts}</b></td><td>${fmt(t.pf)}</td><td>${fmt(t.pc)}</td><td>${fmt(t.saldo)}</td><td><span class="badge ${badge}">${status}</span></td></tr>`;
-    cardsGrupo.innerHTML+=`<div class="team-card ${classe}">
-      <div class="top"><div><span class="pos">${i+1}º</span> <b>${t.time}</b></div><div class="pts">${t.pts} pts</div></div>
-      <p>J ${t.j} | V ${t.v} | E ${t.e} | D ${t.d}</p>
-      <p>PF ${fmt(t.pf)} | PC ${fmt(t.pc)} | Saldo ${fmt(t.saldo)}</p>
-      <span class="badge ${badge}">${status}</span>
-    </div>`;
+    const pos=i+1;
+    const [dot,status]=statusInfo(pos);
+    const id=`det-${grupoAtual}-${pos}`;
+
+    tbodyClassificacao.innerHTML += `
+      <tr class="clickable" onclick="toggleDetalhe('${id}')">
+        <td><span class="pos-dot ${dot}"></span>${pos}</td>
+        <td><b>${t.time}</b></td>
+        <td><b>${t.pts}</b></td>
+        <td>${t.j}</td>
+        <td>${t.v}</td>
+        <td>${fmt(t.saldo)}</td>
+        <td class="hide-mobile">${fmt(t.pf)}</td>
+        <td class="hide-mobile">${fmt(t.pc)}</td>
+      </tr>
+      <tr id="${id}" class="details">
+        <td colspan="8">
+          <b>${t.time}</b><br>
+          Empates: ${t.e} | Derrotas: ${t.d}<br>
+          Pontos feitos: ${fmt(t.pf)} | Pontos contra: ${fmt(t.pc)} | Saldo: ${fmt(t.saldo)}<br>
+          Status: ${status}
+        </td>
+      </tr>`;
   });
 }
+
+function toggleDetalhe(id){
+  const el=document.getElementById(id);
+  el.style.display = el.style.display==="table-row" ? "none" : "table-row";
+}
+
 function mostrarRodada(){
-  const r=Number(rodadaSelect.value), box=jogosRodada; box.innerHTML="";
-  jogos[r].forEach(([a,b])=>{
+  const r=Number(selRodada.value);
+  const partidas=jogosFase1[r];
+  boxRodadas.innerHTML="";
+
+  partidas.forEach(([a,b])=>{
     const ta=grupos[grupoAtual][a], tb=grupos[grupoAtual][b];
-    const pa=pontosTime(ta,r), pb=pontosTime(tb,r), dif=Math.abs(pa-pb);
-    let ca="",cb="",res="",badge="";
-    if(dif<=LIMITE_EMPATE){res=`Empate — diferença ${fmt(dif)}`;badge=`<span class="badge emp">+1 / +1</span>`}
-    else if(pa>pb){ca="vencedor";res=`${ta} venceu — diferença ${fmt(dif)}`;badge=`<span class="badge ok">+3 / +0</span>`}
-    else{cb="vencedor";res=`${tb} venceu — diferença ${fmt(dif)}`;badge=`<span class="badge ok">+0 / +3</span>`}
-    box.innerHTML+=`<div class="match"><div class="${ca}">${ta}<br><span class="score">${fmt(pa)}</span></div><b>x</b><div class="${cb}">${tb}<br><span class="score">${fmt(pb)}</span></div><small>${res}<br>${badge}</small></div>`;
+    const pa=pontosTime(ta,r), pb=pontosTime(tb,r);
+    const dif=Math.abs(pa-pb);
+
+    let res="", ca="", cb="", badge="";
+    if(dif<=LIMITE_EMPATE){
+      res=`Empate por diferença de ${fmt(dif)}`;
+      badge=`<span class="badge emp">+1 / +1</span>`;
+    }else if(pa>pb){
+      ca="win"; res=`Vitória ${ta} por ${fmt(dif)}`;
+      badge=`<span class="badge ok">+3 / +0</span>`;
+    }else{
+      cb="win"; res=`Vitória ${tb} por ${fmt(dif)}`;
+      badge=`<span class="badge ok">+0 / +3</span>`;
+    }
+
+    boxRodadas.innerHTML += `
+      <div class="match">
+        <div class="match-row ${ca}"><span>${ta}</span><span class="score">${fmt(pa)}</span></div>
+        <div class="match-row ${cb}"><span>${tb}</span><span class="score">${fmt(pb)}</span></div>
+        <div class="result">${res} ${badge}</div>
+      </div>`;
   });
 }
-function renderFases(){
-  proximasFases.innerHTML="";
-  Object.keys(grupos).forEach(g=>{
-    const lista=calcularGrupo(g,18);
-    proximasFases.innerHTML+=`<div class="phase-box"><h3>Grupo ${g}</h3>
-      <p><b>Grupos:</b><br>${lista.slice(0,4).map(x=>x.time).join("<br>")}</p>
-      <p><b>Repescagem:</b><br>${lista.slice(4,8).map(x=>x.time).join("<br>")}</p>
-      <p><b>Eliminado:</b><br>${lista[8].time}</p>
-    </div>`;
+
+function fase2Times(){
+  const A=calcularGrupo("A",FASE1_FINAL);
+  const B=calcularGrupo("B",FASE1_FINAL);
+  const C=calcularGrupo("C",FASE1_FINAL);
+  const D=calcularGrupo("D",FASE1_FINAL);
+
+  return {
+    "GP1":[A[0],B[1],C[2],D[3]],
+    "GP2":[A[1],B[2],C[3],D[0]],
+    "GP3":[A[2],B[3],C[0],D[1]],
+    "GP4":[A[3],B[0],C[1],D[2]],
+
+    "RP1":[A[4],B[5],C[6],D[7]],
+    "RP2":[A[5],B[6],C[7],D[4]],
+    "RP3":[A[6],B[7],C[4],D[5]],
+    "RP4":[A[7],B[4],C[5],D[6]]
+  };
+}
+
+function renderFase2(){
+  const f=fase2Times();
+  boxFase2.innerHTML="";
+  boxConfrontosFase2.innerHTML="";
+
+  Object.entries(f).forEach(([nome,times])=>{
+    const tipo=nome.startsWith("GP")?"Grupos principais":"Repescagem 1";
+
+    boxFase2.innerHTML += `
+      <div class="box">
+        <h3>${nome}</h3>
+        <p class="small">${tipo}</p>
+        ${times.map((t,i)=>`${i+1}. ${t.time}`).join("<br>")}
+      </div>`;
+
+    let html=`<div class="box"><h3>${nome}</h3>`;
+    jogos4.forEach((rodada,idx)=>{
+      html+=`<p><b>Rodada ${17+idx}</b><br>`;
+      rodada.forEach(([a,b])=>{
+        html+=`${times[a-1].time} x ${times[b-1].time}<br>`;
+      });
+      html+=`</p>`;
+    });
+    html+=`</div><br>`;
+    boxConfrontosFase2.innerHTML+=html;
   });
 }
+
 function renderStats(){
   const todos=[];
-  Object.keys(grupos).forEach(g=>calcularGrupo(g,18).forEach(t=>todos.push({...t,grupo:g})));
+  Object.keys(grupos).forEach(g=>{
+    calcularGrupo(g,FASE1_FINAL).forEach(t=>todos.push({...t,grupo:g}));
+  });
+
   const melhorCampanha=[...todos].sort((a,b)=>b.pts-a.pts||b.saldo-a.saldo)[0];
   const melhorAtaque=[...todos].sort((a,b)=>b.pf-a.pf)[0];
   const melhorDefesa=[...todos].sort((a,b)=>a.pc-b.pc)[0];
   const maiorSaldo=[...todos].sort((a,b)=>b.saldo-a.saldo)[0];
-  estatisticasBox.innerHTML=`
-    <div class="kpi"><small>🏆 Melhor campanha</small><br><b>${melhorCampanha.time}</b><p>${melhorCampanha.pts} pts — Grupo ${melhorCampanha.grupo}</p></div>
-    <div class="kpi"><small>🔥 Melhor ataque</small><br><b>${melhorAtaque.time}</b><p>${fmt(melhorAtaque.pf)} pontos feitos</p></div>
-    <div class="kpi"><small>🛡️ Melhor defesa</small><br><b>${melhorDefesa.time}</b><p>${fmt(melhorDefesa.pc)} pontos sofridos</p></div>
-    <div class="kpi"><small>📈 Maior saldo</small><br><b>${maiorSaldo.time}</b><p>${fmt(maiorSaldo.saldo)}</p></div>`;
+
+  boxStats.innerHTML=`
+    <div class="box kpi"><span class="small">🏆 Melhor campanha</span><br><b>${melhorCampanha.time}</b><p>${melhorCampanha.pts} pts - Grupo ${melhorCampanha.grupo}</p></div>
+    <div class="box kpi"><span class="small">🔥 Melhor ataque</span><br><b>${melhorAtaque.time}</b><p>${fmt(melhorAtaque.pf)} pontos feitos</p></div>
+    <div class="box kpi"><span class="small">🛡️ Melhor defesa</span><br><b>${melhorDefesa.time}</b><p>${fmt(melhorDefesa.pc)} pontos sofridos</p></div>
+    <div class="box kpi"><span class="small">📈 Maior saldo</span><br><b>${maiorSaldo.time}</b><p>${fmt(maiorSaldo.saldo)}</p></div>
+  `;
 }
+
 carregar();
 </script>
 </body>
