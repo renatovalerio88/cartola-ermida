@@ -4,267 +4,208 @@
 <meta charset="UTF-8">
 <title>Cartola de Ermida</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <style>
-body{
-  font-family: Arial, sans-serif;
-  margin:0;
-  background:#f3f4f6;
-  color:#111;
-}
-
-header{
-  background:#111827;
-  color:white;
-  padding:20px;
-  text-align:center;
-}
-
-.container{
-  max-width:1100px;
-  margin:20px auto;
-  padding:0 15px;
-}
-
-.card{
-  background:white;
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:20px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-h2{
-  margin-top:0;
-}
-
-select{
-  padding:8px;
-  font-size:16px;
-  margin-bottom:12px;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  background:white;
-}
-
-th,td{
-  padding:9px;
-  border-bottom:1px solid #ddd;
-  text-align:left;
-}
-
-th{
-  background:#0c8f42;
-  color:white;
-}
-
-tr.wecam{
-  background:#fff3bf;
-  font-weight:bold;
-}
-
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:8px;
-  background:#e5e7eb;
-  font-size:13px;
-}
-
-.top1{background:#ffe066;}
-.top2{background:#dee2e6;}
-.top3{background:#ffd8a8;}
-
-@media(max-width:700px){
-  table{font-size:13px;}
-  th,td{padding:6px;}
-}
+body{margin:0;font-family:Arial,sans-serif;background:#08111f;color:#fff}
+header{background:linear-gradient(135deg,#04121f,#0f8f46);padding:28px;text-align:center}
+header h1{margin:0;font-size:34px}
+.container{max-width:1200px;margin:auto;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:#111c2e;border:1px solid #263650;border-radius:16px;padding:18px;box-shadow:0 4px 14px #0006}
+h2{margin-top:0;color:#ffd166}
+table{width:100%;border-collapse:collapse;background:#0e1726;border-radius:12px;overflow:hidden}
+th,td{padding:10px;border-bottom:1px solid #27364e;text-align:left}
+th{background:#0f8f46;color:#fff}
+tr.classifica{background:#143d25}
+tr.repescagem{background:#3d3514}
+tr.eliminado{background:#3a1d1d}
+.badge{padding:4px 8px;border-radius:10px;font-weight:bold;font-size:12px}
+.ok{background:#1fa463}.rep{background:#c99700}.bad{background:#c0392b}
+.match{display:flex;justify-content:space-between;gap:10px;padding:10px;border-bottom:1px solid #27364e}
+.vencedor{color:#7CFF9B;font-weight:bold}
+select{padding:10px;border-radius:10px;border:0;margin-bottom:15px}
+small{color:#b8c2d6}
 </style>
 </head>
-
 <body>
 
 <header>
   <h1>🏆 Cartola de Ermida</h1>
-  <p>Classificação e pontuação rodada por rodada</p>
+  <p>Grupo A — turno e returno</p>
 </header>
 
 <div class="container">
-
-  <div class="card">
-    <h2>Resumo</h2>
-    <div id="resumo">Carregando...</div>
+  <div class="grid">
+    <div class="card"><h2>Resumo</h2><div id="resumo">Carregando...</div></div>
+    <div class="card"><h2>Regras Grupo A</h2>
+      <p>9 times, todos contra todos em turno e returno.</p>
+      <p><span class="badge ok">1º ao 4º</span> próxima fase grupos</p>
+      <p><span class="badge rep">5º ao 8º</span> repescagem</p>
+      <p><span class="badge bad">9º</span> eliminado</p>
+    </div>
   </div>
 
   <div class="card">
-    <h2>Classificação Geral</h2>
+    <h2>Classificação Grupo A</h2>
     <table>
       <thead>
         <tr>
-          <th>Pos</th>
-          <th>Time</th>
-          <th>Cartoleiro</th>
-          <th>Total</th>
-          <th>Média</th>
+          <th>Pos</th><th>Time</th><th>J</th><th>V</th><th>E</th><th>D</th><th>Pts</th><th>PF</th><th>PC</th><th>Saldo</th><th>Status</th>
         </tr>
       </thead>
-      <tbody id="tabelaGeral"></tbody>
+      <tbody id="tabelaGrupo"></tbody>
     </table>
   </div>
 
   <div class="card">
-    <h2>Pontuação por Rodada</h2>
-
-    <label>Escolha a rodada:</label><br>
-    <select id="selectRodada" onchange="mostrarRodada()"></select>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Pos</th>
-          <th>Time</th>
-          <th>Cartoleiro</th>
-          <th>Pontos</th>
-        </tr>
-      </thead>
-      <tbody id="tabelaRodada"></tbody>
-    </table>
+    <h2>Jogos por Rodada</h2>
+    <select id="rodadaSelect" onchange="mostrarRodada()"></select>
+    <div id="jogosRodada"></div>
   </div>
-
 </div>
 
 <script>
-let historico = null;
+const grupoA = {
+  1:"MT10M1T0",
+  2:"RJ Clube",
+  3:"S.C. Finha Paulista",
+  4:"DP-SC",
+  5:"Kayser Football",
+  6:"GALOBERA F.C",
+  7:"Legione Romanista",
+  8:"Jafeth G.D.F.C.",
+  9:"Sport Club Prexeca Bangers"
+};
 
-function formatar(num){
-  return Number(num || 0).toFixed(2);
-}
+const tabelaJogos = {
+  1:[[1,2],[3,4],[5,6],[7,8]],
+  2:[[9,1],[2,3],[4,5],[6,7]],
+  3:[[8,9],[1,3],[2,5],[4,6]],
+  4:[[1,4],[2,7],[3,8],[5,9]],
+  5:[[1,6],[2,8],[3,7],[4,9]],
+  6:[[1,7],[5,8],[2,6],[3,9]],
+  7:[[1,5],[2,4],[6,8],[7,9]],
+  8:[[1,8],[3,5],[4,7],[6,9]],
+  9:[[2,9],[3,6],[4,8],[5,7]],
+  10:[[2,1],[4,3],[6,5],[8,7]],
+  11:[[1,9],[3,2],[5,4],[7,6]],
+  12:[[9,8],[3,1],[5,2],[6,4]],
+  13:[[4,1],[7,2],[8,3],[9,5]],
+  14:[[6,1],[8,2],[7,3],[9,4]],
+  15:[[7,1],[8,5],[6,2],[9,3]],
+  16:[[5,1],[4,2],[8,6],[9,7]],
+  17:[[8,1],[5,3],[7,4],[9,6]],
+  18:[[9,2],[6,3],[8,4],[7,5]]
+};
+
+let historico;
+
+function fmt(n){return Number(n||0).toFixed(2)}
 
 async function carregar(){
-  const resposta = await fetch("historico_cartola.json");
-  historico = await resposta.json();
-
-  montarResumo();
-  montarSelectRodadas();
-  montarClassificacaoGeral();
+  historico = await fetch("historico_cartola.json").then(r=>r.json());
+  montarSelect();
+  calcularGrupo();
   mostrarRodada();
 }
 
-function montarResumo(){
-  const rodadas = Object.keys(historico.rodadas);
-  const ultima = Math.max(...rodadas.map(Number));
-  const totalTimes = historico.rodadas[ultima].length;
-
-  document.getElementById("resumo").innerHTML = `
-    <p><strong>Liga:</strong> ${historico.liga}</p>
-    <p><strong>Rodadas carregadas:</strong> ${rodadas.length}</p>
-    <p><strong>Última rodada:</strong> ${ultima}</p>
-    <p><strong>Times:</strong> ${totalTimes}</p>
-  `;
+function pontosTime(nome, rodada){
+  const lista = historico.rodadas[String(rodada)] || [];
+  const t = lista.find(x => x.time.trim() === nome.trim());
+  return t ? Number(t.pontos) : 0;
 }
 
-function montarSelectRodadas(){
-  const select = document.getElementById("selectRodada");
-  const rodadas = Object.keys(historico.rodadas).map(Number).sort((a,b)=>a-b);
-
-  select.innerHTML = "";
-
-  rodadas.forEach(r => {
-    const option = document.createElement("option");
-    option.value = r;
-    option.textContent = "Rodada " + r;
-    select.appendChild(option);
+function montarSelect(){
+  const s = document.getElementById("rodadaSelect");
+  Object.keys(tabelaJogos).forEach(r=>{
+    const o=document.createElement("option");
+    o.value=r;
+    o.textContent=`Rodada ${r}`;
+    s.appendChild(o);
   });
-
-  select.value = Math.max(...rodadas);
+  s.value = 18;
 }
 
-function montarClassificacaoGeral(){
-  const mapa = {};
+function baseTime(nome){
+  return {time:nome,j:0,v:0,e:0,d:0,pts:0,pf:0,pc:0,saldo:0};
+}
 
-  Object.values(historico.rodadas).forEach(rodada => {
-    rodada.forEach(t => {
-      if(!mapa[t.time_id]){
-        mapa[t.time_id] = {
-          time_id: t.time_id,
-          time: t.time,
-          cartoleiro: t.cartoleiro,
-          total: 0,
-          jogos: 0
-        };
-      }
+function calcularGrupo(){
+  const stats = {};
+  Object.values(grupoA).forEach(nome => stats[nome]=baseTime(nome));
 
-      mapa[t.time_id].total += Number(t.pontos || 0);
-      mapa[t.time_id].jogos += 1;
+  Object.entries(tabelaJogos).forEach(([rodada,jogos])=>{
+    jogos.forEach(([a,b])=>{
+      const ta = grupoA[a], tb = grupoA[b];
+      const pa = pontosTime(ta, rodada);
+      const pb = pontosTime(tb, rodada);
+
+      stats[ta].j++; stats[tb].j++;
+      stats[ta].pf += pa; stats[ta].pc += pb;
+      stats[tb].pf += pb; stats[tb].pc += pa;
+
+      if(pa > pb){stats[ta].v++;stats[tb].d++;stats[ta].pts+=3}
+      else if(pb > pa){stats[tb].v++;stats[ta].d++;stats[tb].pts+=3}
+      else{stats[ta].e++;stats[tb].e++;stats[ta].pts++;stats[tb].pts++}
     });
   });
 
-  const lista = Object.values(mapa)
-    .map(t => ({
-      ...t,
-      media: t.total / t.jogos
-    }))
-    .sort((a,b) => b.total - a.total);
+  const lista = Object.values(stats).map(t=>{
+    t.saldo = t.pf - t.pc;
+    return t;
+  }).sort((a,b)=>
+    b.pts-a.pts || b.v-a.v || b.saldo-a.saldo || b.pf-a.pf
+  );
 
-  const tbody = document.getElementById("tabelaGeral");
-  tbody.innerHTML = "";
+  document.getElementById("resumo").innerHTML = `
+    <p><b>Liga:</b> ${historico.liga}</p>
+    <p><b>Grupo:</b> A</p>
+    <p><b>Rodadas:</b> 18</p>
+    <p><b>Times:</b> 9</p>
+  `;
 
-  lista.forEach((t, i) => {
-    const tr = document.createElement("tr");
+  const tbody=document.getElementById("tabelaGrupo");
+  tbody.innerHTML="";
+  lista.forEach((t,i)=>{
+    let classe = i<4 ? "classifica" : i<8 ? "repescagem" : "eliminado";
+    let status = i<4 ? "Grupos" : i<8 ? "Repescagem" : "Eliminado";
+    let badge = i<4 ? "ok" : i<8 ? "rep" : "bad";
 
-    if(t.time_id == 40995){
-      tr.classList.add("wecam");
-    }
-
-    let badge = "";
-    if(i === 0) badge = `<span class="badge top1">🥇</span>`;
-    if(i === 1) badge = `<span class="badge top2">🥈</span>`;
-    if(i === 2) badge = `<span class="badge top3">🥉</span>`;
-
-    tr.innerHTML = `
-      <td>${i + 1} ${badge}</td>
-      <td>${t.time}</td>
-      <td>${t.cartoleiro}</td>
-      <td>${formatar(t.total)}</td>
-      <td>${formatar(t.media)}</td>
-    `;
-
-    tbody.appendChild(tr);
+    tbody.innerHTML += `
+      <tr class="${classe}">
+        <td>${i+1}</td>
+        <td><b>${t.time}</b></td>
+        <td>${t.j}</td><td>${t.v}</td><td>${t.e}</td><td>${t.d}</td>
+        <td><b>${t.pts}</b></td>
+        <td>${fmt(t.pf)}</td><td>${fmt(t.pc)}</td><td>${fmt(t.saldo)}</td>
+        <td><span class="badge ${badge}">${status}</span></td>
+      </tr>`;
   });
 }
 
 function mostrarRodada(){
-  const rodada = document.getElementById("selectRodada").value;
+  const r = document.getElementById("rodadaSelect").value;
+  const box = document.getElementById("jogosRodada");
+  box.innerHTML = "";
 
-  const lista = [...historico.rodadas[rodada]]
-    .sort((a,b) => b.pontos - a.pontos);
+  tabelaJogos[r].forEach(([a,b])=>{
+    const ta=grupoA[a], tb=grupoA[b];
+    const pa=pontosTime(ta,r), pb=pontosTime(tb,r);
 
-  const tbody = document.getElementById("tabelaRodada");
-  tbody.innerHTML = "";
+    const ca = pa>pb ? "vencedor" : "";
+    const cb = pb>pa ? "vencedor" : "";
+    const res = pa>pb ? `${ta} venceu` : pb>pa ? `${tb} venceu` : "Empate";
 
-  lista.forEach((t, i) => {
-    const tr = document.createElement("tr");
-
-    if(t.time_id == 40995){
-      tr.classList.add("wecam");
-    }
-
-    tr.innerHTML = `
-      <td>${i + 1}</td>
-      <td>${t.time}</td>
-      <td>${t.cartoleiro}</td>
-      <td>${formatar(t.pontos)}</td>
-    `;
-
-    tbody.appendChild(tr);
+    box.innerHTML += `
+      <div class="match">
+        <span class="${ca}">${ta} <b>${fmt(pa)}</b></span>
+        <span>x</span>
+        <span class="${cb}"><b>${fmt(pb)}</b> ${tb}</span>
+        <small>${res}</small>
+      </div>`;
   });
 }
 
 carregar();
 </script>
-
 </body>
 </html>
