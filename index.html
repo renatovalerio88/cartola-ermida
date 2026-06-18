@@ -5,69 +5,25 @@
 <title>Cartola de Ermida</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-:root{
-  --bg:#07111f;--card:#101b2d;--card2:#0e1726;--line:#243247;
-  --green:#16a34a;--yellow:#f59e0b;--red:#dc2626;--blue:#38bdf8;
-  --gold:#ffd166;--text:#f8fafc;--muted:#aab6c8;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:linear-gradient(135deg,#020617,#064e3b 60%,#16a34a);padding:22px 14px;text-align:center}
-header h1{margin:0;font-size:28px}
-header p{margin:6px 0 0;color:#d9f99d;font-size:14px}
-.container{max-width:1180px;margin:auto;padding:12px}
-.nav,.tabs{display:flex;gap:7px;overflow-x:auto;padding:10px 0}
-.nav{position:sticky;top:0;background:var(--bg);z-index:5}
-button{
-  border:0;border-radius:999px;padding:9px 12px;background:#1e293b;color:white;
-  font-weight:700;white-space:nowrap;font-size:13px
-}
-button.active{background:var(--green)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}
-h2{margin:0 0 10px;color:var(--gold);font-size:20px}
-h3{margin:0 0 8px;color:var(--blue);font-size:16px}
-select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}
-table{width:100%;border-collapse:collapse;background:var(--card2);border-radius:12px;overflow:hidden;font-size:13px}
-th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
-th{background:#0f8f46;color:white}
-.pos-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
-.dot-ok{background:var(--green)}.dot-rep{background:var(--yellow)}.dot-bad{background:var(--red)}
-.legend{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-.details{display:none;background:#0b1220;color:#dbeafe}
-.details td{font-size:12px;color:#cbd5e1}
-.clickable{cursor:pointer}
-.match{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}
-.match-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:4px 0}
-.score{font-weight:800;font-size:15px}
-.result{font-size:12px;color:var(--muted);margin-top:6px}
-.win{color:#86efac;font-weight:bold}
-.badge{display:inline-block;padding:3px 7px;border-radius:999px;font-size:11px;font-weight:bold}
-.ok{background:var(--green)}.rep{background:var(--yellow);color:#111}.bad{background:var(--red)}.emp{background:#64748b}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-.box{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px}
-.hidden{display:none}
-.kpi b{font-size:20px}
-.small{font-size:12px;color:var(--muted)}
-.phase-list{margin:0;padding-left:18px;line-height:1.6}
-.warn{border-left:4px solid var(--yellow)}
-@media(max-width:760px){
-  .container{padding:9px}
-  header h1{font-size:24px}
-  th,td{padding:7px 4px;font-size:12px}
-  .hide-mobile{display:none}
-  h2{font-size:18px}
-}
+:root{--bg:#07111f;--card:#101b2d;--card2:#0e1726;--line:#243247;--green:#16a34a;--yellow:#f59e0b;--red:#dc2626;--blue:#38bdf8;--gold:#ffd166;--text:#f8fafc;--muted:#aab6c8}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(135deg,#020617,#064e3b 60%,#16a34a);padding:22px 14px;text-align:center}header h1{margin:0;font-size:28px}header p{margin:6px 0 0;color:#d9f99d;font-size:14px}
+.container{max-width:1180px;margin:auto;padding:12px}.nav,.tabs{display:flex;gap:7px;overflow-x:auto;padding:10px 0}.nav{position:sticky;top:0;background:var(--bg);z-index:5}
+button{border:0;border-radius:999px;padding:9px 12px;background:#1e293b;color:white;font-weight:700;white-space:nowrap;font-size:13px}button.active{background:var(--green)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}h2{margin:0 0 10px;color:var(--gold);font-size:20px}h3{margin:0 0 8px;color:var(--blue);font-size:16px}
+select{padding:9px;border-radius:10px;border:0;margin:6px 0 10px;max-width:100%}table{width:100%;border-collapse:collapse;background:var(--card2);border-radius:12px;overflow:hidden;font-size:13px}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}th{background:#0f8f46;color:white}
+.pos-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.dot-ok{background:var(--green)}.dot-rep{background:var(--yellow)}.dot-bad{background:var(--red)}
+.legend{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}.details{display:none;background:#0b1220;color:#dbeafe}.details td{font-size:12px;color:#cbd5e1}.clickable{cursor:pointer}
+.match{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}.match.compact{padding:8px 10px}.match-head{font-size:11px;color:var(--muted);margin-bottom:5px}.match-line{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}.team-left{text-align:left}.team-right{text-align:right}.score-pill{background:#111827;border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-weight:800;white-space:nowrap}.score{font-weight:800;font-size:15px}.result{font-size:12px;color:var(--muted);margin-top:6px}.win{color:#86efac;font-weight:bold}
+.badge{display:inline-block;padding:3px 7px;border-radius:999px;font-size:11px;font-weight:bold}.ok{background:var(--green)}.rep{background:var(--yellow);color:#111}.bad{background:var(--red)}.emp{background:#64748b}.future{background:#334155}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.box{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px}.hidden{display:none}.kpi b{font-size:20px}.small{font-size:12px;color:var(--muted)}.phase-title{display:flex;justify-content:space-between;gap:10px;align-items:start}.phase-title p{margin:0}.mini-list{line-height:1.55;font-size:13px}.section-gap{height:10px}.warn{border-left:4px solid var(--yellow)}
+.phase-table th:nth-child(2),.phase-table td:nth-child(2){width:100%}.phase-actions{display:flex;gap:8px;overflow-x:auto;margin:2px 0 8px}.phase-actions button{font-size:12px;padding:8px 10px}.muted-card{background:#0b1220;border:1px dashed var(--line);border-radius:12px;padding:10px;color:var(--muted);font-size:12px;margin-bottom:10px}
+@media(max-width:760px){.container{padding:9px}header h1{font-size:24px}th,td{padding:7px 4px;font-size:12px}.hide-mobile{display:none}h2{font-size:18px}.match-line{grid-template-columns:1fr;gap:3px}.team-right{text-align:left}.score-pill{width:max-content}.match.compact{padding:9px}.phase-title{display:block}}
 </style>
 </head>
-
 <body>
-<header>
-  <h1>🏆 Cartola de Ermida</h1>
-  <p>Campeonato automático com grupos, repescagem e mata-mata — calendário até a rodada 38</p>
-</header>
-
+<header><h1>🏆 Cartola de Ermida</h1><p>Campeonato automático com grupos, repescagem e mata-mata — calendário até a rodada 38</p></header>
 <div class="container">
-
   <div class="nav">
     <button class="active" onclick="abrirAba('classificacao',this)">Classificação</button>
     <button onclick="abrirAba('rodadas',this)">Rodadas</button>
@@ -77,430 +33,68 @@ th{background:#0f8f46;color:white}
     <button onclick="abrirAba('regulamento',this)">Regulamento</button>
   </div>
 
-  <section id="aba-classificacao" class="aba">
-    <div class="card">
-      <h2>Classificação - Fase 1</h2>
-      <div class="tabs" id="tabsGrupos"></div>
-      <label class="small">Classificação após:</label><br>
-      <select id="selClassificacao" onchange="renderTudo()"></select>
+  <section id="aba-classificacao" class="aba"><div class="card"><h2>Classificação - Fase 1</h2><div class="tabs" id="tabsGrupos"></div><label class="small">Classificação após:</label><br><select id="selClassificacao" onchange="renderTudo()"></select><table><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th><th class="hide-mobile">PF</th><th class="hide-mobile">PC</th></tr></thead><tbody id="tbodyClassificacao"></tbody></table><div class="legend"><span><i class="pos-dot dot-ok"></i>Grupos principais</span><span><i class="pos-dot dot-rep"></i>Repescagem</span><span><i class="pos-dot dot-bad"></i>Eliminado</span></div><p class="small">Toque no time para ver E, D, PF, PC e status.</p></div></section>
 
-      <table>
-        <thead>
-          <tr>
-            <th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th>
-            <th class="hide-mobile">PF</th><th class="hide-mobile">PC</th>
-          </tr>
-        </thead>
-        <tbody id="tbodyClassificacao"></tbody>
-      </table>
-
-      <div class="legend">
-        <span><i class="pos-dot dot-ok"></i>Grupos principais</span>
-        <span><i class="pos-dot dot-rep"></i>Repescagem</span>
-        <span><i class="pos-dot dot-bad"></i>Eliminado</span>
-      </div>
-      <p class="small">Toque no time para ver E, D, PF, PC e status.</p>
-    </div>
-  </section>
-
-  <section id="aba-rodadas" class="aba hidden">
-    <div class="card">
-      <h2>Jogos da Rodada - Fase 1</h2>
-      <div class="tabs" id="tabsGruposRodadas"></div>
-      <select id="selRodada" onchange="mostrarRodada()"></select>
-      <div id="boxRodadas"></div>
-    </div>
-  </section>
+  <section id="aba-rodadas" class="aba hidden"><div class="card"><h2>Jogos da Rodada - Fase 1</h2><div class="tabs" id="tabsGruposRodadas"></div><select id="selRodada" onchange="mostrarRodada()"></select><div id="boxRodadas"></div></div></section>
 
   <section id="aba-fase2" class="aba hidden">
-    <div class="card">
-      <h2>Fase 2 - Projeção após a Rodada 18</h2>
-      <p class="small">Montagem automática com base na classificação final da Fase 1, agora nas rodadas 1 a 18.</p>
-      <div class="grid" id="boxFase2"></div>
-    </div>
-    <div class="card">
-      <h2>Confrontos da Fase 2</h2>
-      <p class="small">Ordem padrão para grupos de 4 times. Como a Fase 1 termina na rodada 18, a Fase 2 vai da rodada 19 à 24.</p>
-      <div id="boxConfrontosFase2"></div>
-    </div>
+    <div class="card"><div class="phase-title"><div><h2>Fase 2</h2><p class="small">Escolha um grupo. A classificação fica primeiro; os confrontos ficam embaixo.</p></div><span class="badge future">R19 a R24</span></div><div class="tabs" id="tabsFase2"></div><div id="boxFase2Detalhe"></div></div>
   </section>
 
   <section id="aba-fases" class="aba hidden">
-    <div class="card">
-      <h2>Mapa das Fases</h2>
-      <div class="grid">
-        <div class="box"><h3>Fase 1</h3><p>Rodadas 1 a 18<br>4 grupos de 9 times.<br>Cada time faz 16 jogos e tem 2 folgas.</p></div>
-        <div class="box"><h3>Fase 2</h3><p>Rodadas 19 a 24<br>Grupos Principais + Repescagem 1.<br>Grupos de 4 em turno e returno.</p></div>
-        <div class="box"><h3>Fase 3</h3><p>Rodadas 25 a 30<br>Nova fase de grupos com classificados e repescagem.<br>Grupos de 4 em turno e returno.</p></div>
-        <div class="box"><h3>Fase 4</h3><p>Rodadas 31 a 34<br>Repescagem Final compacta.<br>Turno único nas rodadas 31 a 33 e decisão na rodada 34.</p></div>
-        <div class="box"><h3>Fase Final</h3><p>Rodadas 35 a 37<br>2 grupos de 3 times em turno único.<br>Cada time faz 2 jogos e tem 1 folga.</p></div>
-        <div class="box"><h3>Grande Final</h3><p>Rodada 38<br>Final e disputa de 3º lugar em jogo único.</p></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Conferência do Calendário</h2>
-      <div class="grid">
-        <div class="box"><h3>Fase 1</h3><p>18 rodadas usadas.<br>36 times × 16 jogos ÷ 2 = <b>288 jogos</b>.</p></div>
-        <div class="box"><h3>Fase 2</h3><p>6 rodadas usadas.<br>8 grupos de 4, turno e returno = <b>96 jogos</b>.</p></div>
-        <div class="box"><h3>Fase 3</h3><p>6 rodadas usadas.<br>4 grupos de 4, turno e returno = <b>48 jogos</b>.</p></div>
-        <div class="box"><h3>Fase 4</h3><p>4 rodadas usadas.<br>Rodadas 31 a 33 em grupos + rodada 34 decisiva.</p></div>
-        <div class="box"><h3>Fase Final</h3><p>3 rodadas usadas.<br>2 grupos de 3 = <b>6 jogos</b>.</p></div>
-        <div class="box"><h3>Final</h3><p>1 rodada usada.<br>Rodada 38 fecha o campeonato.</p></div>
-      </div>
-      <p class="small">Conta de rodadas: 18 + 6 + 6 + 4 + 3 + 1 = 38.</p>
-    </div>
+    <div class="card"><div class="phase-title"><div><h2>Fases seguintes</h2><p class="small">Mesmo layout da Fase 2: grupo selecionado, classificação e confrontos logo abaixo.</p></div><span class="badge future">até R38</span></div><div class="tabs" id="tabsFases"></div><div class="tabs" id="tabsFaseGrupos"></div><div id="boxFaseDetalhe"></div></div>
+    <div class="card"><h2>Mapa rápido</h2><div class="grid"><div class="box"><h3>Fase 1</h3><p>R1 a R18<br>16 jogos por time.</p></div><div class="box"><h3>Fase 2</h3><p>R19 a R24<br>GP + RP1.</p></div><div class="box"><h3>Fase 3</h3><p>R25 a R30<br>Quartas + RP2.</p></div><div class="box"><h3>Fase 4</h3><p>R31 a R34<br>Repescagem Final compacta.</p></div><div class="box"><h3>Fase Final</h3><p>R35 a R37<br>2 grupos de 3.</p></div><div class="box"><h3>Final</h3><p>R38<br>Final e 3º lugar.</p></div></div><p class="small">Conta: 18 + 6 + 6 + 4 + 3 + 1 = 38 rodadas.</p></div>
   </section>
 
-  <section id="aba-stats" class="aba hidden">
-    <div class="card">
-      <h2>Estatísticas - Fase 1</h2>
-      <div class="grid" id="boxStats"></div>
-    </div>
-  </section>
+  <section id="aba-stats" class="aba hidden"><div class="card"><h2>Estatísticas - Fase 1</h2><div class="grid" id="boxStats"></div></div></section>
 
-  <section id="aba-regulamento" class="aba hidden">
-    <div class="card">
-      <h2>Regulamento</h2>
-
-      <div class="box">
-        <h3>Regra dos confrontos</h3>
-        <p>Vitória vale <b>3 pontos</b>. Empate vale <b>1 ponto</b> para cada time.</p>
-        <p>Qualquer jogo com diferença de até <b>5 pontos Cartola</b> termina empatado.</p>
-        <p>Diferença acima de 5 pontos define o vencedor.</p>
-      </div><br>
-
-      <div class="box">
-        <h3>Critérios de desempate</h3>
-        <p>1. Pontos<br>2. Vitórias<br>3. Saldo de pontos Cartola<br>4. Pontos Cartola feitos</p>
-      </div><br>
-
-      <div class="box">
-        <h3>Fase 1 - Classificatória</h3>
-        <p>Rodadas <b>1 a 18</b>. São 4 grupos com 9 times.</p>
-        <p>Em cada rodada, cada grupo tem 4 jogos e 1 time de folga.</p>
-        <p>Ao final das 18 rodadas, cada time terá feito <b>16 jogos</b> e terá tido <b>2 folgas</b>.</p>
-        <p>1º ao 4º avançam para os Grupos Principais.</p>
-        <p>5º ao 8º vão para a Repescagem 1.</p>
-        <p>9º colocado é eliminado.</p>
-      </div><br>
-
-      <div class="box">
-        <h3>Fase 2 - Grupos Principais e Repescagem 1</h3>
-        <p>Rodadas <b>19 a 24</b>. Cada grupo de 4 times joga em turno e returno.</p>
-        <p><b>Grupos Principais:</b> os 2 primeiros avançam para a Fase 3. 3º e 4º vão para Repescagem 2.</p>
-        <p><b>Repescagem 1:</b> apenas o campeão de cada grupo avança para Repescagem 2.</p>
-      </div><br>
-
-      <div class="box">
-        <h3>Fase 3 - Grupos e Repescagem 2</h3>
-        <p>Rodadas <b>25 a 30</b>.</p>
-        <p>Grupos de 4 times em turno e returno.</p>
-        <p>Os melhores avançam direto para a Fase Final ou seguem para a Repescagem Final, conforme chaveamento definido pela organização.</p>
-      </div><br>
-
-      <div class="box">
-        <h3>Fase 4 - Repescagem Final</h3>
-        <p>Rodadas <b>31 a 34</b>.</p>
-        <p>Formato compacto para caber no calendário até a rodada 38.</p>
-        <p>Rodadas 31 a 33: 2 grupos de 4 times em turno único.</p>
-        <p>Rodada 34: decisão da repescagem para definir os últimos classificados da Fase Final.</p>
-      </div><br>
-
-      <div class="box">
-        <h3>Fase Final</h3>
-        <p>Rodadas <b>35 a 37</b>. São 2 grupos de 3 times em turno único.</p>
-        <p>1º lugar de cada grupo vai para a Grande Final.</p>
-        <p>2º lugar de cada grupo vai para a disputa de 3º lugar.</p>
-      </div><br>
-
-      <div class="box">
-        <h3>Grande Final</h3>
-        <p>Rodada <b>38</b>. Jogo único para decidir o campeão da Liga Cartola de Ermida.</p>
-        <p>Também pode haver disputa de 3º lugar na mesma rodada.</p>
-      </div>
-    </div>
-  </section>
-
+  <section id="aba-regulamento" class="aba hidden"><div class="card"><h2>Regulamento</h2><div class="box"><h3>Regra dos confrontos</h3><p>Vitória vale <b>3 pontos</b>. Empate vale <b>1 ponto</b> para cada time.</p><p>Qualquer jogo com diferença de até <b>5 pontos Cartola</b> termina empatado. Diferença acima de 5 pontos define vencedor.</p></div><br><div class="box"><h3>Critérios de desempate</h3><p>1. Pontos<br>2. Vitórias<br>3. Saldo de pontos Cartola<br>4. Pontos Cartola feitos</p></div><br><div class="box"><h3>Fase 1 - Classificatória</h3><p>Rodadas <b>1 a 18</b>. São 4 grupos com 9 times. Cada time faz <b>16 jogos</b> e tem <b>2 folgas</b>.</p><p>1º ao 4º vão aos Grupos Principais. 5º ao 8º vão para Repescagem 1. 9º é eliminado.</p></div><br><div class="box"><h3>Fase 2</h3><p>Rodadas <b>19 a 24</b>. Grupos de 4 em turno e returno.</p><p><b>GP:</b> top 2 avançam; 3º e 4º vão para RP2. <b>RP1:</b> campeão avança para RP2.</p></div><br><div class="box"><h3>Fase 3</h3><p>Rodadas <b>25 a 30</b>. Quartas de Grupos + Repescagem 2, grupos de 4 em turno e returno.</p></div><br><div class="box"><h3>Fase 4</h3><p>Rodadas <b>31 a 34</b>. Repescagem Final compacta para caber no calendário.</p></div><br><div class="box"><h3>Fase Final e Grande Final</h3><p>Rodadas <b>35 a 37</b>: 2 grupos de 3 em turno único. Rodada <b>38</b>: final e 3º lugar.</p></div></div></section>
 </div>
 
 <script>
 const LIMITE_EMPATE = 5;
 const FASE1_FINAL = 18;
-const FASE2_INICIO = 19;
-let historico;
-let grupoAtual = "A";
-
-const grupos = {
-  A:{1:"MT10M1T0",2:"RJ Clube",3:"S.C. Finha Paulista",4:"DP-SC",5:"Kayser Football",6:"GALOBERA F.C",7:"Legione Romanista",8:"Jafeth G.D.F.C.",9:"Sport Club Prexeca Bangers"},
-  B:{1:"Forward F. Club",2:"Seu Cuca Futebol",3:"Ardam Cabubu",4:"Galo de Rio Doce FC",5:"PELUDÃO13",6:"Galo Doido BH 93",7:"D1OS",8:"JACB FC",9:"Digdigie94"},
-  C:{1:"CruzeiroKiller",2:"Branes25",3:"WECAM",4:"CAMARASSO",5:"Jack Golden",6:"SANTASTICO GLORIOSO I",7:"SardoGalo 13",8:"Campista F. C",9:"Clube de Regatas Sô"},
-  D:{1:"Framos F.C",2:"Gabiru cabuloso",3:"CHARLLOTTTE F.C.",4:"SemFreio LEFC1988",5:"JUNA FUTEBOL CLUBE",6:"Epidemia Sport Clube",7:"Mão C.F",8:"Maria Gol De Costas",9:"A76 FC"}
+let historico, grupoAtual="A", faseSelecionada="fase3", grupoFaseAtual="";
+const grupos={
+ A:{1:"MT10M1T0",2:"RJ Clube",3:"S.C. Finha Paulista",4:"DP-SC",5:"Kayser Football",6:"GALOBERA F.C",7:"Legione Romanista",8:"Jafeth G.D.F.C.",9:"Sport Club Prexeca Bangers"},
+ B:{1:"Forward F. Club",2:"Seu Cuca Futebol",3:"Ardam Cabubu",4:"Galo de Rio Doce FC",5:"PELUDÃO13",6:"Galo Doido BH 93",7:"D1OS",8:"JACB FC",9:"Digdigie94"},
+ C:{1:"CruzeiroKiller",2:"Branes25",3:"WECAM",4:"CAMARASSO",5:"Jack Golden",6:"SANTASTICO GLORIOSO I",7:"SardoGalo 13",8:"Campista F. C",9:"Clube de Regatas Sô"},
+ D:{1:"Framos F.C",2:"Gabiru cabuloso",3:"CHARLLOTTTE F.C.",4:"SemFreio LEFC1988",5:"JUNA FUTEBOL CLUBE",6:"Epidemia Sport Clube",7:"Mão C.F",8:"Maria Gol De Costas",9:"A76 FC"}
 };
-
-// Fase 1 corrigida: 18 rodadas.
-// Cada grupo tem 9 times; por rodada são 4 jogos e 1 folga.
-// Em 18 rodadas, cada time faz 16 jogos e folga 2 vezes.
-const jogosFase1 = {
-  1:[[1,2],[3,4],[5,6],[7,8]],
-  2:[[9,1],[2,3],[4,5],[6,7]],
-  3:[[8,9],[1,3],[2,5],[4,6]],
-  4:[[1,4],[2,7],[3,8],[5,9]],
-  5:[[1,6],[2,8],[3,7],[4,9]],
-  6:[[1,7],[5,8],[2,6],[3,9]],
-  7:[[1,5],[2,4],[6,8],[7,9]],
-  8:[[1,8],[3,5],[4,7],[6,9]],
-  9:[[2,9],[3,6],[4,8],[5,7]],
-  10:[[2,1],[4,3],[6,5],[8,7]],
-  11:[[1,9],[3,2],[5,4],[7,6]],
-  12:[[9,8],[3,1],[5,2],[6,4]],
-  13:[[4,1],[7,2],[8,3],[9,5]],
-  14:[[6,1],[8,2],[7,3],[9,4]],
-  15:[[7,1],[8,5],[6,2],[9,3]],
-  16:[[5,1],[4,2],[8,6],[9,7]],
-  17:[[8,1],[5,3],[7,4],[9,6]],
-  18:[[9,2],[6,3],[8,4],[7,5]]
-};
-
-const jogos4 = [
-  [[1,4],[2,3]],
-  [[1,3],[2,4]],
-  [[1,2],[3,4]],
-  [[4,1],[3,2]],
-  [[3,1],[4,2]],
-  [[2,1],[4,3]]
-];
-
+const jogosFase1={1:[[1,2],[3,4],[5,6],[7,8]],2:[[9,1],[2,3],[4,5],[6,7]],3:[[8,9],[1,3],[2,5],[4,6]],4:[[1,4],[2,7],[3,8],[5,9]],5:[[1,6],[2,8],[3,7],[4,9]],6:[[1,7],[5,8],[2,6],[3,9]],7:[[1,5],[2,4],[6,8],[7,9]],8:[[1,8],[3,5],[4,7],[6,9]],9:[[2,9],[3,6],[4,8],[5,7]],10:[[2,1],[4,3],[6,5],[8,7]],11:[[1,9],[3,2],[5,4],[7,6]],12:[[9,8],[3,1],[5,2],[6,4]],13:[[4,1],[7,2],[8,3],[9,5]],14:[[6,1],[8,2],[7,3],[9,4]],15:[[7,1],[8,5],[6,2],[9,3]],16:[[5,1],[4,2],[8,6],[9,7]],17:[[8,1],[5,3],[7,4],[9,6]],18:[[9,2],[6,3],[8,4],[7,5]]};
+const jogos4=[[[1,4],[2,3]],[[1,3],[2,4]],[[1,2],[3,4]],[[4,1],[3,2]],[[3,1],[4,2]],[[2,1],[4,3]]];
+const jogos3=[[[1,2]],[[1,3]],[[2,3]]];
+const jogos4TurnoUnico=[[[1,4],[2,3]],[[1,3],[2,4]],[[1,2],[3,4]]];
 function fmt(n){return Number(n||0).toFixed(2)}
-
-function abrirAba(nome,btn){
-  document.querySelectorAll(".aba").forEach(a=>a.classList.add("hidden"));
-  document.getElementById("aba-"+nome).classList.remove("hidden");
-  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-}
-
-async function carregar(){
-  historico = await fetch("historico_cartola.json").then(r=>r.json());
-  montarControles();
-  renderTudo();
-}
-
-function montarControles(){
-  ["tabsGrupos","tabsGruposRodadas"].forEach(id=>{
-    const box=document.getElementById(id);
-    Object.keys(grupos).forEach(g=>{
-      const b=document.createElement("button");
-      b.textContent="Grupo "+g;
-      b.onclick=()=>{grupoAtual=g; atualizarTabs(); renderTudo();}
-      box.appendChild(b);
-    });
-  });
-
-  for(let r=1;r<=FASE1_FINAL;r++){
-    selClassificacao.innerHTML += `<option value="${r}">Rodada ${r}</option>`;
-    selRodada.innerHTML += `<option value="${r}">Rodada ${r}</option>`;
-  }
-
-  selClassificacao.value=FASE1_FINAL;
-  selRodada.value=FASE1_FINAL;
-  atualizarTabs();
-}
-
-function atualizarTabs(){
-  document.querySelectorAll(".tabs button").forEach(b=>{
-    b.classList.toggle("active", b.textContent.endsWith(grupoAtual));
-  });
-}
-
-function pontosTime(nome, rodada){
-  const lista = historico.rodadas[String(rodada)] || [];
-  const t = lista.find(x => String(x.time).trim() === String(nome).trim());
-  return t ? Number(t.pontos) : 0;
-}
-
+function abrirAba(nome,btn){document.querySelectorAll(".aba").forEach(a=>a.classList.add("hidden"));document.getElementById("aba-"+nome).classList.remove("hidden");document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
+async function carregar(){historico=await fetch("historico_cartola.json").then(r=>r.json());montarControles();renderTudo()}
+function montarControles(){["tabsGrupos","tabsGruposRodadas"].forEach(id=>{const box=document.getElementById(id);Object.keys(grupos).forEach(g=>{const b=document.createElement("button");b.textContent="Grupo "+g;b.onclick=()=>{grupoAtual=g;atualizarTabs();renderTudo()};box.appendChild(b)})});for(let r=1;r<=FASE1_FINAL;r++){selClassificacao.innerHTML+=`<option value="${r}">Rodada ${r}</option>`;selRodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`}selClassificacao.value=FASE1_FINAL;selRodada.value=FASE1_FINAL;montarTabsFase2();montarTabsFases();atualizarTabs()}
+function atualizarTabs(){document.querySelectorAll("#tabsGrupos button,#tabsGruposRodadas button").forEach(b=>b.classList.toggle("active",b.textContent.endsWith(grupoAtual)))}
+function pontosTime(nome,rodada){const lista=(historico.rodadas&&historico.rodadas[String(rodada)])||[];const t=lista.find(x=>String(x.time).trim()===String(nome).trim());return t?Number(t.pontos):0}
+function temRodada(r){return !!(historico.rodadas&&historico.rodadas[String(r)])}
 function base(nome){return {time:nome,j:0,v:0,e:0,d:0,pts:0,pf:0,pc:0,saldo:0}}
-
-function calcularGrupo(grupo, ateRodada){
-  const stats={};
-  Object.values(grupos[grupo]).forEach(nome=>stats[nome]=base(nome));
-
-  Object.entries(jogosFase1).forEach(([rodada,partidas])=>{
-    rodada=Number(rodada);
-    if(rodada>ateRodada) return;
-
-    partidas.forEach(([a,b])=>{
-      const ta=grupos[grupo][a], tb=grupos[grupo][b];
-      const pa=pontosTime(ta,rodada), pb=pontosTime(tb,rodada);
-      const dif=Math.abs(pa-pb);
-
-      stats[ta].j++; stats[tb].j++;
-      stats[ta].pf+=pa; stats[ta].pc+=pb;
-      stats[tb].pf+=pb; stats[tb].pc+=pa;
-
-      if(dif<=LIMITE_EMPATE){
-        stats[ta].e++; stats[tb].e++;
-        stats[ta].pts++; stats[tb].pts++;
-      }else if(pa>pb){
-        stats[ta].v++; stats[tb].d++;
-        stats[ta].pts+=3;
-      }else{
-        stats[tb].v++; stats[ta].d++;
-        stats[tb].pts+=3;
-      }
-    });
-  });
-
-  return Object.values(stats).map(t=>{t.saldo=t.pf-t.pc;return t})
-    .sort((a,b)=>b.pts-a.pts || b.v-a.v || b.saldo-a.saldo || b.pf-a.pf);
-}
-
-function renderTudo(){
-  renderClassificacao();
-  mostrarRodada();
-  renderFase2();
-  renderStats();
-}
-
-function statusInfo(pos){
-  if(pos<=4) return ["dot-ok","Grupos principais"];
-  if(pos<=8) return ["dot-rep","Repescagem"];
-  return ["dot-bad","Eliminado"];
-}
-
-function renderClassificacao(){
-  const lista=calcularGrupo(grupoAtual,Number(selClassificacao.value));
-  tbodyClassificacao.innerHTML="";
-
-  lista.forEach((t,i)=>{
-    const pos=i+1;
-    const [dot,status]=statusInfo(pos);
-    const id=`det-${grupoAtual}-${pos}`;
-
-    tbodyClassificacao.innerHTML += `
-      <tr class="clickable" onclick="toggleDetalhe('${id}')">
-        <td><span class="pos-dot ${dot}"></span>${pos}</td>
-        <td><b>${t.time}</b></td>
-        <td><b>${t.pts}</b></td>
-        <td>${t.j}</td>
-        <td>${t.v}</td>
-        <td>${fmt(t.saldo)}</td>
-        <td class="hide-mobile">${fmt(t.pf)}</td>
-        <td class="hide-mobile">${fmt(t.pc)}</td>
-      </tr>
-      <tr id="${id}" class="details">
-        <td colspan="8">
-          <b>${t.time}</b><br>
-          Empates: ${t.e} | Derrotas: ${t.d}<br>
-          Pontos feitos: ${fmt(t.pf)} | Pontos contra: ${fmt(t.pc)} | Saldo: ${fmt(t.saldo)}<br>
-          Status: ${status}
-        </td>
-      </tr>`;
-  });
-}
-
-function toggleDetalhe(id){
-  const el=document.getElementById(id);
-  el.style.display = el.style.display==="table-row" ? "none" : "table-row";
-}
-
-function mostrarRodada(){
-  const r=Number(selRodada.value);
-  const partidas=jogosFase1[r];
-  boxRodadas.innerHTML="";
-
-  partidas.forEach(([a,b])=>{
-    const ta=grupos[grupoAtual][a], tb=grupos[grupoAtual][b];
-    const pa=pontosTime(ta,r), pb=pontosTime(tb,r);
-    const dif=Math.abs(pa-pb);
-
-    let res="", ca="", cb="", badge="";
-    if(dif<=LIMITE_EMPATE){
-      res=`Empate por diferença de ${fmt(dif)}`;
-      badge=`<span class="badge emp">+1 / +1</span>`;
-    }else if(pa>pb){
-      ca="win"; res=`Vitória ${ta} por ${fmt(dif)}`;
-      badge=`<span class="badge ok">+3 / +0</span>`;
-    }else{
-      cb="win"; res=`Vitória ${tb} por ${fmt(dif)}`;
-      badge=`<span class="badge ok">+0 / +3</span>`;
-    }
-
-    boxRodadas.innerHTML += `
-      <div class="match">
-        <div class="match-row ${ca}"><span>${ta}</span><span class="score">${fmt(pa)}</span></div>
-        <div class="match-row ${cb}"><span>${tb}</span><span class="score">${fmt(pb)}</span></div>
-        <div class="result">${res} ${badge}</div>
-      </div>`;
-  });
-}
-
-function fase2Times(){
-  const A=calcularGrupo("A",FASE1_FINAL);
-  const B=calcularGrupo("B",FASE1_FINAL);
-  const C=calcularGrupo("C",FASE1_FINAL);
-  const D=calcularGrupo("D",FASE1_FINAL);
-
-  return {
-    "GP1":[A[0],B[1],C[2],D[3]],
-    "GP2":[A[1],B[2],C[3],D[0]],
-    "GP3":[A[2],B[3],C[0],D[1]],
-    "GP4":[A[3],B[0],C[1],D[2]],
-
-    "RP1":[A[4],B[5],C[6],D[7]],
-    "RP2":[A[5],B[6],C[7],D[4]],
-    "RP3":[A[6],B[7],C[4],D[5]],
-    "RP4":[A[7],B[4],C[5],D[6]]
-  };
-}
-
-function renderFase2(){
-  const f=fase2Times();
-  boxFase2.innerHTML="";
-  boxConfrontosFase2.innerHTML="";
-
-  Object.entries(f).forEach(([nome,times])=>{
-    const tipo=nome.startsWith("GP")?"Grupos principais":"Repescagem 1";
-
-    boxFase2.innerHTML += `
-      <div class="box">
-        <h3>${nome}</h3>
-        <p class="small">${tipo}</p>
-        ${times.map((t,i)=>`${i+1}. ${t.time}`).join("<br>")}
-      </div>`;
-
-    let html=`<div class="box"><h3>${nome}</h3>`;
-    jogos4.forEach((rodada,idx)=>{
-      html+=`<p><b>Rodada ${FASE2_INICIO+idx}</b><br>`;
-      rodada.forEach(([a,b])=>{
-        html+=`${times[a-1].time} x ${times[b-1].time}<br>`;
-      });
-      html+=`</p>`;
-    });
-    html+=`</div><br>`;
-    boxConfrontosFase2.innerHTML+=html;
-  });
-}
-
-function renderStats(){
-  const todos=[];
-  Object.keys(grupos).forEach(g=>{
-    calcularGrupo(g,FASE1_FINAL).forEach(t=>todos.push({...t,grupo:g}));
-  });
-
-  const melhorCampanha=[...todos].sort((a,b)=>b.pts-a.pts||b.saldo-a.saldo)[0];
-  const melhorAtaque=[...todos].sort((a,b)=>b.pf-a.pf)[0];
-  const melhorDefesa=[...todos].sort((a,b)=>a.pc-b.pc)[0];
-  const maiorSaldo=[...todos].sort((a,b)=>b.saldo-a.saldo)[0];
-
-  boxStats.innerHTML=`
-    <div class="box kpi"><span class="small">🏆 Melhor campanha</span><br><b>${melhorCampanha.time}</b><p>${melhorCampanha.pts} pts - Grupo ${melhorCampanha.grupo}</p></div>
-    <div class="box kpi"><span class="small">🔥 Melhor ataque</span><br><b>${melhorAtaque.time}</b><p>${fmt(melhorAtaque.pf)} pontos feitos</p></div>
-    <div class="box kpi"><span class="small">🛡️ Melhor defesa</span><br><b>${melhorDefesa.time}</b><p>${fmt(melhorDefesa.pc)} pontos sofridos</p></div>
-    <div class="box kpi"><span class="small">📈 Maior saldo</span><br><b>${maiorSaldo.time}</b><p>${fmt(maiorSaldo.saldo)}</p></div>
-  `;
-}
-
+function aplicaJogo(stats,ta,tb,pa,pb){const dif=Math.abs(pa-pb);stats[ta].j++;stats[tb].j++;stats[ta].pf+=pa;stats[ta].pc+=pb;stats[tb].pf+=pb;stats[tb].pc+=pa;if(dif<=LIMITE_EMPATE){stats[ta].e++;stats[tb].e++;stats[ta].pts++;stats[tb].pts++}else if(pa>pb){stats[ta].v++;stats[tb].d++;stats[ta].pts+=3}else{stats[tb].v++;stats[ta].d++;stats[tb].pts+=3}}
+function ordenar(lista){return lista.map(t=>{t.saldo=t.pf-t.pc;return t}).sort((a,b)=>b.pts-a.pts||b.v-a.v||b.saldo-a.saldo||b.pf-a.pf)}
+function calcularGrupo(g,ate){const stats={};Object.values(grupos[g]).forEach(nome=>stats[nome]=base(nome));Object.entries(jogosFase1).forEach(([rodada,partidas])=>{rodada=Number(rodada);if(rodada>ate)return;partidas.forEach(([a,b])=>{const ta=grupos[g][a],tb=grupos[g][b];aplicaJogo(stats,ta,tb,pontosTime(ta,rodada),pontosTime(tb,rodada))})});return ordenar(Object.values(stats))}
+function calcGrupoTimes(times,inicio,agenda){const stats={};times.forEach(t=>stats[t.time]=base(t.time));agenda.forEach((rodada,idx)=>{const r=inicio+idx;if(!temRodada(r))return;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time,tb=times[b-1]?.time;if(ta&&tb)aplicaJogo(stats,ta,tb,pontosTime(ta,r),pontosTime(tb,r))})});return ordenar(Object.values(stats))}
+function statusInfo(pos){if(pos<=4)return["dot-ok","Grupos principais"];if(pos<=8)return["dot-rep","Repescagem"];return["dot-bad","Eliminado"]}
+function renderTudo(){renderClassificacao();mostrarRodada();renderFase2();renderFases();renderStats()}
+function renderClassificacao(){const lista=calcularGrupo(grupoAtual,Number(selClassificacao.value));tbodyClassificacao.innerHTML="";lista.forEach((t,i)=>{const pos=i+1,[dot,status]=statusInfo(pos),id=`det-${grupoAtual}-${pos}`;tbodyClassificacao.innerHTML+=`<tr class="clickable" onclick="toggleDetalhe('${id}')"><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td><td class="hide-mobile">${fmt(t.pf)}</td><td class="hide-mobile">${fmt(t.pc)}</td></tr><tr id="${id}" class="details"><td colspan="8"><b>${t.time}</b><br>Empates: ${t.e} | Derrotas: ${t.d}<br>Pontos feitos: ${fmt(t.pf)} | Pontos contra: ${fmt(t.pc)} | Saldo: ${fmt(t.saldo)}<br>Status: ${status}</td></tr>`})}
+function toggleDetalhe(id){const el=document.getElementById(id);el.style.display=el.style.display==="table-row"?"none":"table-row"}
+function mostrarRodada(){const r=Number(selRodada.value),partidas=jogosFase1[r];boxRodadas.innerHTML="";partidas.forEach(([a,b])=>{const ta=grupos[grupoAtual][a],tb=grupos[grupoAtual][b],pa=pontosTime(ta,r),pb=pontosTime(tb,r),dif=Math.abs(pa-pb);let res="",ca="",cb="",badge="";if(dif<=LIMITE_EMPATE){res=`Empate · dif. ${fmt(dif)}`;badge=`<span class="badge emp">+1 / +1</span>`}else if(pa>pb){ca="win";res=`${ta} venceu · dif. ${fmt(dif)}`;badge=`<span class="badge ok">+3</span>`}else{cb="win";res=`${tb} venceu · dif. ${fmt(dif)}`;badge=`<span class="badge ok">+3</span>`}boxRodadas.innerHTML+=`<div class="match compact"><div class="match-line"><span class="team-left ${ca}">${ta}</span><span class="score-pill">${fmt(pa)} x ${fmt(pb)}</span><span class="team-right ${cb}">${tb}</span></div><div class="result">${res} ${badge}</div></div>`})}
+function fase2Times(){const A=calcularGrupo("A",FASE1_FINAL),B=calcularGrupo("B",FASE1_FINAL),C=calcularGrupo("C",FASE1_FINAL),D=calcularGrupo("D",FASE1_FINAL);return {GP1:[A[0],B[1],C[2],D[3]],GP2:[A[1],B[2],C[3],D[0]],GP3:[A[2],B[3],C[0],D[1]],GP4:[A[3],B[0],C[1],D[2]],RP1:[A[4],B[5],C[6],D[7]],RP2:[A[5],B[6],C[7],D[4]],RP3:[A[6],B[7],C[4],D[5]],RP4:[A[7],B[4],C[5],D[6]]}}
+function montarTabsFase2(){Object.keys(fase2Times()).forEach((nome,i)=>{const b=document.createElement("button");b.textContent=nome;b.onclick=()=>{grupoFaseAtual=nome;renderFase2()};tabsFase2.appendChild(b);if(i===0)grupoFaseAtual=nome})}
+function renderMiniClassificacao(lista,titulo){return `<h3>${titulo}</h3><table class="phase-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th></tr></thead><tbody>${lista.map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td></tr>`).join("")}</tbody></table>`}
+function renderConfrontos(times,inicio,agenda,titulo){let html=`<div class="section-gap"></div><h3>${titulo}</h3>`;agenda.forEach((rodada,idx)=>{const r=inicio+idx;rodada.forEach(([a,b],j)=>{const ta=times[a-1]?.time||"A definir",tb=times[b-1]?.time||"A definir",pa=pontosTime(ta,r),pb=pontosTime(tb,r),tem=temRodada(r);let meio=tem?`${fmt(pa)} x ${fmt(pb)}`:"x",res="A jogar";if(tem){const dif=Math.abs(pa-pb);res=dif<=LIMITE_EMPATE?`Empate · dif. ${fmt(dif)}`:(pa>pb?`${ta} venceu · dif. ${fmt(dif)}`:`${tb} venceu · dif. ${fmt(dif)}`)}html+=`<div class="match compact"><div class="match-head">Rodada ${r}${rodada.length>1?` · Jogo ${j+1}`:""}</div><div class="match-line"><span class="team-left">${ta}</span><span class="score-pill">${meio}</span><span class="team-right">${tb}</span></div><div class="result">${res}</div></div>`})});return html}
+function renderFase2(){const f=fase2Times(),times=f[grupoFaseAtual]||Object.values(f)[0],nome=grupoFaseAtual||Object.keys(f)[0];document.querySelectorAll("#tabsFase2 button").forEach(b=>b.classList.toggle("active",b.textContent===nome));const lista=calcGrupoTimes(times,19,jogos4);const subt=nome.startsWith("GP")?"Top 2 avançam; 3º e 4º vão para RP2.":"Campeão avança para RP2.";boxFase2Detalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${nome}</h3><p class="small">${subt}</p></div><span class="badge future">R19-R24</span></div><div class="mini-list">${times.map((t,i)=>`${i+1}. ${t.time}`).join("<br>")}</div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação")}${!temRodada(19)?'<div class="muted-card">Ainda sem resultados da Fase 2. A tabela começa zerada e será preenchida automaticamente quando o JSON tiver as rodadas 19 a 24.</div>':''}${renderConfrontos(times,19,jogos4,"Confrontos")}`}
+function fase3Times(){const f2=fase2Times(),nomes=Object.keys(f2),stand={};nomes.forEach(n=>stand[n]=calcGrupoTimes(f2[n],19,jogos4));const gp=["GP1","GP2","GP3","GP4"],rp=["RP1","RP2","RP3","RP4"];return {QG1:[stand.GP1[0],stand.GP2[1],stand.GP3[0],stand.GP4[1]],QG2:[stand.GP1[1],stand.GP2[0],stand.GP3[1],stand.GP4[0]],R2A:[stand.GP1[2],stand.GP2[3],stand.GP3[2],stand.GP4[3]],R2B:[stand.GP1[3],stand.GP2[2],stand.GP3[3],stand.GP4[2]],R2C:[stand.RP1[0],stand.RP2[0],stand.RP3[0],stand.RP4[0]]}}
+function fase4Times(){const f3=fase3Times(),st={};Object.keys(f3).forEach(n=>st[n]=calcGrupoTimes(f3[n],25,jogos4));return {RF1:[st.QG1[2],st.QG2[3],st.R2A[0],st.R2B[1]],RF2:[st.QG1[3],st.QG2[2],st.R2A[1],st.R2B[0]],RF3:[st.R2C[0],st.R2C[1],st.R2C[2],st.R2C[3]]}}
+function faseFinalTimes(){const f3=fase3Times(),s3={};Object.keys(f3).forEach(n=>s3[n]=calcGrupoTimes(f3[n],25,jogos4));const f4=fase4Times(),s4={};Object.keys(f4).forEach(n=>s4[n]=calcGrupoTimes(f4[n],31,jogos4TurnoUnico));return {SF1:[s3.QG1[0],s3.QG2[1],s4.RF1[0]],SF2:[s3.QG1[1],s3.QG2[0],s4.RF2[0]]}}
+function finalTimes(){const ff=faseFinalTimes(),s={};Object.keys(ff).forEach(n=>s[n]=calcGrupoTimes(ff[n],35,jogos3));return {FINAL:[s.SF1[0],s.SF2[0]],TERCEIRO:[s.SF1[1],s.SF2[1]]}}
+const faseConfigs={fase3:{label:"Fase 3",inicio:25,agenda:jogos4,desc:"Quartas de Grupos + Repescagem 2",get:fase3Times},fase4:{label:"Fase 4",inicio:31,agenda:jogos4TurnoUnico,desc:"Repescagem Final compacta",get:fase4Times},final:{label:"Fase Final",inicio:35,agenda:jogos3,desc:"2 grupos de 3 em turno único",get:faseFinalTimes},grande:{label:"Grande Final",inicio:38,agenda:[[[1,2]]],desc:"Final e disputa de 3º lugar",get:finalTimes}};
+function montarTabsFases(){Object.entries(faseConfigs).forEach(([k,c],i)=>{const b=document.createElement("button");b.textContent=c.label;b.onclick=()=>{faseSelecionada=k;grupoFaseAtual="";renderFases()};tabsFases.appendChild(b)})}
+function renderFases(){if(!historico)return;document.querySelectorAll("#tabsFases button").forEach(b=>b.classList.toggle("active",b.textContent===faseConfigs[faseSelecionada].label));const cfg=faseConfigs[faseSelecionada],grps=cfg.get(),nomes=Object.keys(grps);if(!grupoFaseAtual||!grps[grupoFaseAtual])grupoFaseAtual=nomes[0];tabsFaseGrupos.innerHTML="";nomes.forEach(n=>{const b=document.createElement("button");b.textContent=n;b.classList.toggle("active",n===grupoFaseAtual);b.onclick=()=>{grupoFaseAtual=n;renderFases()};tabsFaseGrupos.appendChild(b)});const times=grps[grupoFaseAtual];const lista=calcGrupoTimes(times,cfg.inicio,cfg.agenda);boxFaseDetalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${cfg.label} · ${grupoFaseAtual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">R${cfg.inicio}${cfg.agenda.length>1?`-R${cfg.inicio+cfg.agenda.length-1}`:""}</span></div><div class="mini-list">${times.map((t,i)=>`${i+1}. ${t?.time||"A definir"}`).join("<br>")}</div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação")}${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção automática. Quando as rodadas desta fase entrarem no JSON, a classificação será calculada com resultados reais.</div>':''}${renderConfrontos(times,cfg.inicio,cfg.agenda,"Confrontos")}`}
+function renderStats(){const todos=[];Object.keys(grupos).forEach(g=>calcularGrupo(g,FASE1_FINAL).forEach(t=>todos.push({...t,grupo:g})));const melhorCampanha=[...todos].sort((a,b)=>b.pts-a.pts||b.saldo-a.saldo)[0],melhorAtaque=[...todos].sort((a,b)=>b.pf-a.pf)[0],melhorDefesa=[...todos].sort((a,b)=>a.pc-b.pc)[0],maiorSaldo=[...todos].sort((a,b)=>b.saldo-a.saldo)[0];boxStats.innerHTML=`<div class="box kpi"><span class="small">🏆 Melhor campanha</span><br><b>${melhorCampanha.time}</b><p>${melhorCampanha.pts} pts - Grupo ${melhorCampanha.grupo}</p></div><div class="box kpi"><span class="small">🔥 Melhor ataque</span><br><b>${melhorAtaque.time}</b><p>${fmt(melhorAtaque.pf)} pontos feitos</p></div><div class="box kpi"><span class="small">🛡️ Melhor defesa</span><br><b>${melhorDefesa.time}</b><p>${fmt(melhorDefesa.pc)} pontos sofridos</p></div><div class="box kpi"><span class="small">📈 Maior saldo</span><br><b>${maiorSaldo.time}</b><p>${fmt(maiorSaldo.saldo)}</p></div>`}
 carregar();
 </script>
 </body>
