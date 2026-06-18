@@ -1,10 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Cartola de Ermida</title>
+<meta charset="UTF-8">
+<title>Cartola de Ermida</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  margin:0;
+  background:#f3f4f6;
+  color:#111;
+}
+
+header{
+  background:#111827;
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+
+.container{
+  max-width:1100px;
+  margin:20px auto;
+  padding:0 15px;
+}
+
+.card{
+  background:white;
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+h2{
+  margin-top:0;
+}
+
+select{
+  padding:8px;
+  font-size:16px;
+  margin-bottom:12px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+}
+
+th,td{
+  padding:9px;
+  border-bottom:1px solid #ddd;
+  text-align:left;
+}
+
+th{
+  background:#0c8f42;
+  color:white;
+}
+
+tr.wecam{
+  background:#fff3bf;
+  font-weight:bold;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:8px;
+  background:#e5e7eb;
+  font-size:13px;
+}
+
+.top1{background:#ffe066;}
+.top2{background:#dee2e6;}
+.top3{background:#ffd8a8;}
+
+@media(max-width:700px){
+  table{font-size:13px;}
+  th,td{padding:6px;}
+}
+</style>
 </head>
+
 <body>
+
+<header>
   <h1>🏆 Cartola de Ermida</h1>
-  <p>Site em construção.</p>
+  <p>Classificação e pontuação rodada por rodada</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Resumo</h2>
+    <div id="resumo">Carregando...</div>
+  </div>
+
+  <div class="card">
+    <h2>Classificação Geral</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Pos</th>
+          <th>Time</th>
+          <th>Cartoleiro</th>
+          <th>Total</th>
+          <th>Média</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaGeral"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Pontuação por Rodada</h2>
+
+    <label>Escolha a rodada:</label><br>
+    <select id="selectRodada" onchange="mostrarRodada()"></select>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Pos</th>
+          <th>Time</th>
+          <th>Cartoleiro</th>
+          <th>Pontos</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaRodada"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+let historico = null;
+
+function formatar(num){
+  return Number(num || 0).toFixed(2);
+}
+
+async function carregar(){
+  const resposta = await fetch("historico_cartola.json");
+  historico = await resposta.json();
+
+  montarResumo();
+  montarSelectRodadas();
+  montarClassificacaoGeral();
+  mostrarRodada();
+}
+
+function montarResumo(){
+  const rodadas = Object.keys(historico.rodadas);
+  const ultima = Math.max(...rodadas.map(Number));
+  const totalTimes = historico.rodadas[ultima].length;
+
+  document.getElementById("resumo").innerHTML = `
+    <p><strong>Liga:</strong> ${historico.liga}</p>
+    <p><strong>Rodadas carregadas:</strong> ${rodadas.length}</p>
+    <p><strong>Última rodada:</strong> ${ultima}</p>
+    <p><strong>Times:</strong> ${totalTimes}</p>
+  `;
+}
+
+function montarSelectRodadas(){
+  const select = document.getElementById("selectRodada");
+  const rodadas = Object.keys(historico.rodadas).map(Number).sort((a,b)=>a-b);
+
+  select.innerHTML = "";
+
+  rodadas.forEach(r => {
+    const option = document.createElement("option");
+    option.value = r;
+    option.textContent = "Rodada " + r;
+    select.appendChild(option);
+  });
+
+  select.value = Math.max(...rodadas);
+}
+
+function montarClassificacaoGeral(){
+  const mapa = {};
+
+  Object.values(historico.rodadas).forEach(rodada => {
+    rodada.forEach(t => {
+      if(!mapa[t.time_id]){
+        mapa[t.time_id] = {
+          time_id: t.time_id,
+          time: t.time,
+          cartoleiro: t.cartoleiro,
+          total: 0,
+          jogos: 0
+        };
+      }
+
+      mapa[t.time_id].total += Number(t.pontos || 0);
+      mapa[t.time_id].jogos += 1;
+    });
+  });
+
+  const lista = Object.values(mapa)
+    .map(t => ({
+      ...t,
+      media: t.total / t.jogos
+    }))
+    .sort((a,b) => b.total - a.total);
+
+  const tbody = document.getElementById("tabelaGeral");
+  tbody.innerHTML = "";
+
+  lista.forEach((t, i) => {
+    const tr = document.createElement("tr");
+
+    if(t.time_id == 40995){
+      tr.classList.add("wecam");
+    }
+
+    let badge = "";
+    if(i === 0) badge = `<span class="badge top1">🥇</span>`;
+    if(i === 1) badge = `<span class="badge top2">🥈</span>`;
+    if(i === 2) badge = `<span class="badge top3">🥉</span>`;
+
+    tr.innerHTML = `
+      <td>${i + 1} ${badge}</td>
+      <td>${t.time}</td>
+      <td>${t.cartoleiro}</td>
+      <td>${formatar(t.total)}</td>
+      <td>${formatar(t.media)}</td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+function mostrarRodada(){
+  const rodada = document.getElementById("selectRodada").value;
+
+  const lista = [...historico.rodadas[rodada]]
+    .sort((a,b) => b.pontos - a.pontos);
+
+  const tbody = document.getElementById("tabelaRodada");
+  tbody.innerHTML = "";
+
+  lista.forEach((t, i) => {
+    const tr = document.createElement("tr");
+
+    if(t.time_id == 40995){
+      tr.classList.add("wecam");
+    }
+
+    tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${t.time}</td>
+      <td>${t.cartoleiro}</td>
+      <td>${formatar(t.pontos)}</td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+carregar();
+</script>
+
 </body>
 </html>

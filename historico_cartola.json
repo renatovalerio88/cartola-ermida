@@ -1,0 +1,4577 @@
+{
+  "liga": "Cartola de Ermida",
+  "rodadas": {
+    "1": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 1,
+        "pontos": 87.16
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 1,
+        "pontos": 73.76
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 1,
+        "pontos": 58.16
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 1,
+        "pontos": 57.96
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 1,
+        "pontos": 68.85
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 1,
+        "pontos": 64.56
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 1,
+        "pontos": 58.16
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 1,
+        "pontos": 77.3
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 1,
+        "pontos": 53.46
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 1,
+        "pontos": 68.16
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 1,
+        "pontos": 69.76
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 1,
+        "pontos": 74.06
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 1,
+        "pontos": 56.96
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 1,
+        "pontos": 58.86
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 1,
+        "pontos": 47.3
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 1,
+        "pontos": 59.25
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 1,
+        "pontos": 67.57
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 1,
+        "pontos": 55.56
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 1,
+        "pontos": 57.95
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 1,
+        "pontos": 69.06
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 1,
+        "pontos": 53.96
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 1,
+        "pontos": 62.26
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 1,
+        "pontos": 63.16
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 1,
+        "pontos": 49.06
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 1,
+        "pontos": 73.3
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 1,
+        "pontos": 76.01
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 1,
+        "pontos": 77.61
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 1,
+        "pontos": 56.4
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 1,
+        "pontos": 68.46
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 1,
+        "pontos": 68.96
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 1,
+        "pontos": 50.91
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 1,
+        "pontos": 41.86
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 1,
+        "pontos": 66.4
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 1,
+        "pontos": 71.11
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 1,
+        "pontos": 41.85
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 1,
+        "pontos": 39.21
+      }
+    ],
+    "2": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 2,
+        "pontos": 87.58
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 2,
+        "pontos": 87.41
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 2,
+        "pontos": 91.4
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 2,
+        "pontos": 78.1
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 2,
+        "pontos": 70.48
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 2,
+        "pontos": 81.88
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 2,
+        "pontos": 59.98
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 2,
+        "pontos": 44.81
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 2,
+        "pontos": 83.6
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 2,
+        "pontos": 69.78
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 2,
+        "pontos": 72.4
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 2,
+        "pontos": 77.98
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 2,
+        "pontos": 79.98
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 2,
+        "pontos": 87.54
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 2,
+        "pontos": 65.2
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 2,
+        "pontos": 78.5
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 2,
+        "pontos": 54.8
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 2,
+        "pontos": 54.6
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 2,
+        "pontos": 77.68
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 2,
+        "pontos": 73.58
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 2,
+        "pontos": 51.4
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 2,
+        "pontos": 59.58
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 2,
+        "pontos": 83.88
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 2,
+        "pontos": 63.4
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 2,
+        "pontos": 85.18
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 2,
+        "pontos": 78.78
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 2,
+        "pontos": 58.88
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 2,
+        "pontos": 72.08
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 2,
+        "pontos": 72.39
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 2,
+        "pontos": 78.88
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 2,
+        "pontos": 46.49
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 2,
+        "pontos": 51.38
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 2,
+        "pontos": 56.3
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 2,
+        "pontos": 79.48
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 2,
+        "pontos": 75.7
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 2,
+        "pontos": 56.38
+      }
+    ],
+    "3": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 3,
+        "pontos": 101.46
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 3,
+        "pontos": 89.96
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 3,
+        "pontos": 78.96
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 3,
+        "pontos": 84.44
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 3,
+        "pontos": 90.56
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 3,
+        "pontos": 96.46
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 3,
+        "pontos": 88.56
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 3,
+        "pontos": 81.06
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 3,
+        "pontos": 77.06
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 3,
+        "pontos": 89.41
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 3,
+        "pontos": 98.16
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 3,
+        "pontos": 93.46
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 3,
+        "pontos": 83.36
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 3,
+        "pontos": 82.26
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 3,
+        "pontos": 77.56
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 3,
+        "pontos": 94.44
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 3,
+        "pontos": 82.54
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 3,
+        "pontos": 89.04
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 3,
+        "pontos": 94.26
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 3,
+        "pontos": 92.12
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 3,
+        "pontos": 88.66
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 3,
+        "pontos": 73.46
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 3,
+        "pontos": 71.46
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 3,
+        "pontos": 109.66
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 3,
+        "pontos": 83.5
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 3,
+        "pontos": 66.06
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 3,
+        "pontos": 73.54
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 3,
+        "pontos": 93.7
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 3,
+        "pontos": 76.66
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 3,
+        "pontos": 74.71
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 3,
+        "pontos": 88.14
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 3,
+        "pontos": 64.81
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 3,
+        "pontos": 90.94
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 3,
+        "pontos": 75.54
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 3,
+        "pontos": 45.3
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 3,
+        "pontos": 60.29
+      }
+    ],
+    "4": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 4,
+        "pontos": 107.85
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 4,
+        "pontos": 97.85
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 4,
+        "pontos": 51.15
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 4,
+        "pontos": 69.75
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 4,
+        "pontos": 76.95
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 4,
+        "pontos": 74.15
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 4,
+        "pontos": 78.15
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 4,
+        "pontos": 79.9
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 4,
+        "pontos": 64.75
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 4,
+        "pontos": 70.95
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 4,
+        "pontos": 76.96
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 4,
+        "pontos": 58.45
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 4,
+        "pontos": 77.23
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 4,
+        "pontos": 88.6
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 4,
+        "pontos": 59.05
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 4,
+        "pontos": 67.26
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 4,
+        "pontos": 90.55
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 4,
+        "pontos": 65.16
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 4,
+        "pontos": 76.06
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 4,
+        "pontos": 79.75
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 4,
+        "pontos": 44.08
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 4,
+        "pontos": 60.35
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 4,
+        "pontos": 80.16
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 4,
+        "pontos": 45.16
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 4,
+        "pontos": 63.85
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 4,
+        "pontos": 49.35
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 4,
+        "pontos": 46.56
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 4,
+        "pontos": 37.9
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 4,
+        "pontos": 58.48
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 4,
+        "pontos": 60.1
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 4,
+        "pontos": 82.66
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 4,
+        "pontos": 44.03
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 4,
+        "pontos": 63.73
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 4,
+        "pontos": 63.65
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 4,
+        "pontos": 63.4
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 4,
+        "pontos": 77.66
+      }
+    ],
+    "5": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 5,
+        "pontos": 93.92
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 5,
+        "pontos": 78.92
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 5,
+        "pontos": 99.76
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 5,
+        "pontos": 76.69
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 5,
+        "pontos": 93.82
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 5,
+        "pontos": 73.52
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 5,
+        "pontos": 82.42
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 5,
+        "pontos": 86.02
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 5,
+        "pontos": 81.57
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 5,
+        "pontos": 86.92
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 5,
+        "pontos": 86.47
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 5,
+        "pontos": 74.42
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 5,
+        "pontos": 101.24
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 5,
+        "pontos": 90.69
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 5,
+        "pontos": 92.75
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 5,
+        "pontos": 81.9
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 5,
+        "pontos": 84.54
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 5,
+        "pontos": 57.17
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 5,
+        "pontos": 73.02
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 5,
+        "pontos": 55.65
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 5,
+        "pontos": 69.91
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 5,
+        "pontos": 68.62
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 5,
+        "pontos": 86.81
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 5,
+        "pontos": 88.2
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 5,
+        "pontos": 67.67
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 5,
+        "pontos": 68.47
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 5,
+        "pontos": 75.14
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 5,
+        "pontos": 81.65
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 5,
+        "pontos": 114.59
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 5,
+        "pontos": 63.34
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 5,
+        "pontos": 79.61
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 5,
+        "pontos": 68.34
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 5,
+        "pontos": 74.71
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 5,
+        "pontos": 56.01
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 5,
+        "pontos": 69.86
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 5,
+        "pontos": 70.54
+      }
+    ],
+    "6": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 6,
+        "pontos": 72.4
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 6,
+        "pontos": 68.7
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 6,
+        "pontos": 87.51
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 6,
+        "pontos": 44.3
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 6,
+        "pontos": 60.17
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 6,
+        "pontos": 45.71
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 6,
+        "pontos": 60.0
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 6,
+        "pontos": 80.75
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 6,
+        "pontos": 82.91
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 6,
+        "pontos": 62.76
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 6,
+        "pontos": 45.06
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 6,
+        "pontos": 70.41
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 6,
+        "pontos": 65.01
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 6,
+        "pontos": 53.19
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 6,
+        "pontos": 73.31
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 6,
+        "pontos": 69.21
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 6,
+        "pontos": 76.81
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 6,
+        "pontos": 73.05
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 6,
+        "pontos": 68.92
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 6,
+        "pontos": 66.85
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 6,
+        "pontos": 57.85
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 6,
+        "pontos": 74.71
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 6,
+        "pontos": 51.29
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 6,
+        "pontos": 67.5
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 6,
+        "pontos": 57.59
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 6,
+        "pontos": 60.9
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 6,
+        "pontos": 56.09
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 6,
+        "pontos": 82.81
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 6,
+        "pontos": 51.7
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 6,
+        "pontos": 53.7
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 6,
+        "pontos": 44.3
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 6,
+        "pontos": 72.71
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 6,
+        "pontos": 33.79
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 6,
+        "pontos": 39.17
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 6,
+        "pontos": 38.65
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 6,
+        "pontos": 58.35
+      }
+    ],
+    "7": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 7,
+        "pontos": 86.41
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 7,
+        "pontos": 94.17
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 7,
+        "pontos": 68.67
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 7,
+        "pontos": 68.77
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 7,
+        "pontos": 70.11
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 7,
+        "pontos": 68.96
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 7,
+        "pontos": 86.27
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 7,
+        "pontos": 77.57
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 7,
+        "pontos": 65.07
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 7,
+        "pontos": 63.37
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 7,
+        "pontos": 54.17
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 7,
+        "pontos": 83.27
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 7,
+        "pontos": 46.47
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 7,
+        "pontos": 70.37
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 7,
+        "pontos": 60.17
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 7,
+        "pontos": 62.37
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 7,
+        "pontos": 67.41
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 7,
+        "pontos": 69.07
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 7,
+        "pontos": 86.86
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 7,
+        "pontos": 86.1
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 7,
+        "pontos": 53.27
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 7,
+        "pontos": 59.47
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 7,
+        "pontos": 59.42
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 7,
+        "pontos": 76.82
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 7,
+        "pontos": 50.92
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 7,
+        "pontos": 60.37
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 7,
+        "pontos": 68.57
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 7,
+        "pontos": 53.77
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 7,
+        "pontos": 61.97
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 7,
+        "pontos": 42.11
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 7,
+        "pontos": 76.37
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 7,
+        "pontos": 62.52
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 7,
+        "pontos": 54.37
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 7,
+        "pontos": 37.97
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 7,
+        "pontos": 45.22
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 7,
+        "pontos": 46.83
+      }
+    ],
+    "8": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 8,
+        "pontos": 71.15
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 8,
+        "pontos": 89.5
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 8,
+        "pontos": 78.45
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 8,
+        "pontos": 80.95
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 8,
+        "pontos": 66.7
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 8,
+        "pontos": 84.15
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 8,
+        "pontos": 67.5
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 8,
+        "pontos": 82.95
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 8,
+        "pontos": 89.0
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 8,
+        "pontos": 62.18
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 8,
+        "pontos": 65.95
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 8,
+        "pontos": 72.4
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 8,
+        "pontos": 92.35
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 8,
+        "pontos": 66.05
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 8,
+        "pontos": 73.4
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 8,
+        "pontos": 74.54
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 8,
+        "pontos": 81.22
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 8,
+        "pontos": 55.16
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 8,
+        "pontos": 35.14
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 8,
+        "pontos": 82.7
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 8,
+        "pontos": 59.34
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 8,
+        "pontos": 66.9
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 8,
+        "pontos": 83.7
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 8,
+        "pontos": 72.15
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 8,
+        "pontos": 65.3
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 8,
+        "pontos": 91.8
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 8,
+        "pontos": 50.4
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 8,
+        "pontos": 63.95
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 8,
+        "pontos": 72.05
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 8,
+        "pontos": 52.42
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 8,
+        "pontos": 73.85
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 8,
+        "pontos": 78.85
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 8,
+        "pontos": 70.31
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 8,
+        "pontos": 74.44
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 8,
+        "pontos": 73.54
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 8,
+        "pontos": 58.95
+      }
+    ],
+    "9": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 9,
+        "pontos": 101.74
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 9,
+        "pontos": 76.58
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 9,
+        "pontos": 73.35
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 9,
+        "pontos": 104.66
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 9,
+        "pontos": 105.84
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 9,
+        "pontos": 82.28
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 9,
+        "pontos": 75.26
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 9,
+        "pontos": 93.56
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 9,
+        "pontos": 82.24
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 9,
+        "pontos": 106.06
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 9,
+        "pontos": 89.26
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 9,
+        "pontos": 80.34
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 9,
+        "pontos": 91.14
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 9,
+        "pontos": 84.56
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 9,
+        "pontos": 79.63
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 9,
+        "pontos": 67.43
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 9,
+        "pontos": 76.18
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 9,
+        "pontos": 68.73
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 9,
+        "pontos": 99.56
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 9,
+        "pontos": 96.18
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 9,
+        "pontos": 83.38
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 9,
+        "pontos": 92.34
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 9,
+        "pontos": 89.14
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 9,
+        "pontos": 72.58
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 9,
+        "pontos": 100.88
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 9,
+        "pontos": 76.63
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 9,
+        "pontos": 68.73
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 9,
+        "pontos": 60.26
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 9,
+        "pontos": 75.86
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 9,
+        "pontos": 91.26
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 9,
+        "pontos": 80.56
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 9,
+        "pontos": 74.29
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 9,
+        "pontos": 73.96
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 9,
+        "pontos": 73.61
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 9,
+        "pontos": 88.36
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 9,
+        "pontos": 64.63
+      }
+    ],
+    "10": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 10,
+        "pontos": 65.37
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 10,
+        "pontos": 40.07
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 10,
+        "pontos": 55.27
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 10,
+        "pontos": 47.18
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 10,
+        "pontos": 46.17
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 10,
+        "pontos": 59.87
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 10,
+        "pontos": 65.47
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 10,
+        "pontos": 56.37
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 10,
+        "pontos": 62.97
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 10,
+        "pontos": 48.69
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 10,
+        "pontos": 39.77
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 10,
+        "pontos": 59.47
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 10,
+        "pontos": 58.07
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 10,
+        "pontos": 64.98
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 10,
+        "pontos": 69.27
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 10,
+        "pontos": 43.07
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 10,
+        "pontos": 57.97
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 10,
+        "pontos": 62.09
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 10,
+        "pontos": 42.57
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 10,
+        "pontos": 62.27
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 10,
+        "pontos": 47.37
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 10,
+        "pontos": 35.87
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 10,
+        "pontos": 50.57
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 10,
+        "pontos": 62.67
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 10,
+        "pontos": 39.85
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 10,
+        "pontos": 61.27
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 10,
+        "pontos": 56.98
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 10,
+        "pontos": 54.85
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 10,
+        "pontos": 63.17
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 10,
+        "pontos": 68.97
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 10,
+        "pontos": 40.35
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 10,
+        "pontos": 38.07
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 10,
+        "pontos": 71.47
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 10,
+        "pontos": 34.07
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 10,
+        "pontos": 62.97
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 10,
+        "pontos": 31.98
+      }
+    ],
+    "11": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 11,
+        "pontos": 104.06
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 11,
+        "pontos": 92.06
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 11,
+        "pontos": 97.56
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 11,
+        "pontos": 108.36
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 11,
+        "pontos": 95.56
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 11,
+        "pontos": 94.16
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 11,
+        "pontos": 92.91
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 11,
+        "pontos": 83.46
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 11,
+        "pontos": 76.96
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 11,
+        "pontos": 67.31
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 11,
+        "pontos": 90.68
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 11,
+        "pontos": 97.36
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 11,
+        "pontos": 94.41
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 11,
+        "pontos": 79.81
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 11,
+        "pontos": 90.06
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 11,
+        "pontos": 93.06
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 11,
+        "pontos": 98.16
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 11,
+        "pontos": 111.46
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 11,
+        "pontos": 69.76
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 11,
+        "pontos": 78.08
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 11,
+        "pontos": 99.26
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 11,
+        "pontos": 103.36
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 11,
+        "pontos": 64.66
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 11,
+        "pontos": 99.78
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 11,
+        "pontos": 71.08
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 11,
+        "pontos": 85.36
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 11,
+        "pontos": 103.96
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 11,
+        "pontos": 93.76
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 11,
+        "pontos": 66.28
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 11,
+        "pontos": 92.46
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 11,
+        "pontos": 54.98
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 11,
+        "pontos": 67.26
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 11,
+        "pontos": 55.63
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 11,
+        "pontos": 68.01
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 11,
+        "pontos": 64.31
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 11,
+        "pontos": 56.84
+      }
+    ],
+    "12": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 12,
+        "pontos": 73.41
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 12,
+        "pontos": 70.2
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 12,
+        "pontos": 101.51
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 12,
+        "pontos": 70.55
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 12,
+        "pontos": 84.0
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 12,
+        "pontos": 72.3
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 12,
+        "pontos": 66.65
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 12,
+        "pontos": 83.3
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 12,
+        "pontos": 57.1
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 12,
+        "pontos": 76.55
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 12,
+        "pontos": 73.35
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 12,
+        "pontos": 71.95
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 12,
+        "pontos": 64.3
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 12,
+        "pontos": 69.45
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 12,
+        "pontos": 78.3
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 12,
+        "pontos": 55.05
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 12,
+        "pontos": 66.3
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 12,
+        "pontos": 77.7
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 12,
+        "pontos": 57.96
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 12,
+        "pontos": 79.65
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 12,
+        "pontos": 85.2
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 12,
+        "pontos": 70.1
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 12,
+        "pontos": 59.7
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 12,
+        "pontos": 61.5
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 12,
+        "pontos": 76.0
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 12,
+        "pontos": 70.65
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 12,
+        "pontos": 90.5
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 12,
+        "pontos": 70.25
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 12,
+        "pontos": 48.9
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 12,
+        "pontos": 53.0
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 12,
+        "pontos": 54.15
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 12,
+        "pontos": 72.95
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 12,
+        "pontos": 60.35
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 12,
+        "pontos": 78.25
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 12,
+        "pontos": 63.4
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 12,
+        "pontos": 74.99
+      }
+    ],
+    "13": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 13,
+        "pontos": 126.49
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 13,
+        "pontos": 90.04
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 13,
+        "pontos": 99.09
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 13,
+        "pontos": 119.14
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 13,
+        "pontos": 110.74
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 13,
+        "pontos": 139.59
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 13,
+        "pontos": 94.04
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 13,
+        "pontos": 116.89
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 13,
+        "pontos": 108.59
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 13,
+        "pontos": 100.27
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 13,
+        "pontos": 126.79
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 13,
+        "pontos": 116.39
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 13,
+        "pontos": 98.14
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 13,
+        "pontos": 120.29
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 13,
+        "pontos": 117.29
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 13,
+        "pontos": 120.04
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 13,
+        "pontos": 108.04
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 13,
+        "pontos": 105.34
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 13,
+        "pontos": 87.54
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 13,
+        "pontos": 95.09
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 13,
+        "pontos": 116.54
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 13,
+        "pontos": 121.99
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 13,
+        "pontos": 124.11
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 13,
+        "pontos": 111.99
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 13,
+        "pontos": 108.19
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 13,
+        "pontos": 92.14
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 13,
+        "pontos": 93.04
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 13,
+        "pontos": 105.79
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 13,
+        "pontos": 97.88
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 13,
+        "pontos": 109.99
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 13,
+        "pontos": 90.49
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 13,
+        "pontos": 81.14
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 13,
+        "pontos": 85.18
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 13,
+        "pontos": 80.04
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 13,
+        "pontos": 103.74
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 13,
+        "pontos": 85.96
+      }
+    ],
+    "14": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 14,
+        "pontos": 54.13
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 14,
+        "pontos": 52.88
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 14,
+        "pontos": 72.13
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 14,
+        "pontos": 56.08
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 14,
+        "pontos": 61.18
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 14,
+        "pontos": 66.64
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 14,
+        "pontos": 66.25
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 14,
+        "pontos": 62.73
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 14,
+        "pontos": 80.63
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 14,
+        "pontos": 68.45
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 14,
+        "pontos": 72.64
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 14,
+        "pontos": 52.68
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 14,
+        "pontos": 50.58
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 14,
+        "pontos": 46.18
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 14,
+        "pontos": 70.05
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 14,
+        "pontos": 73.35
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 14,
+        "pontos": 49.28
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 14,
+        "pontos": 73.93
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 14,
+        "pontos": 73.85
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 14,
+        "pontos": 61.05
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 14,
+        "pontos": 68.45
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 14,
+        "pontos": 69.03
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 14,
+        "pontos": 65.26
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 14,
+        "pontos": 52.14
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 14,
+        "pontos": 63.98
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 14,
+        "pontos": 47.93
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 14,
+        "pontos": 45.94
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 14,
+        "pontos": 75.95
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 14,
+        "pontos": 51.14
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 14,
+        "pontos": 78.28
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 14,
+        "pontos": 60.88
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 14,
+        "pontos": 43.24
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 14,
+        "pontos": 57.15
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 14,
+        "pontos": 52.55
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 14,
+        "pontos": 51.63
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 14,
+        "pontos": 38.16
+      }
+    ],
+    "15": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 15,
+        "pontos": 69.83
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 15,
+        "pontos": 85.77
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 15,
+        "pontos": 54.98
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 15,
+        "pontos": 54.72
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 15,
+        "pontos": 50.03
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 15,
+        "pontos": 53.85
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 15,
+        "pontos": 67.78
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 15,
+        "pontos": 45.05
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 15,
+        "pontos": 74.65
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 15,
+        "pontos": 69.15
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 15,
+        "pontos": 43.63
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 15,
+        "pontos": 50.72
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 15,
+        "pontos": 49.08
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 15,
+        "pontos": 42.03
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 15,
+        "pontos": 48.33
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 15,
+        "pontos": 49.23
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 15,
+        "pontos": 47.67
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 15,
+        "pontos": 57.53
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 15,
+        "pontos": 70.67
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 15,
+        "pontos": 55.3
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 15,
+        "pontos": 38.82
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 15,
+        "pontos": 64.2
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 15,
+        "pontos": 69.77
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 15,
+        "pontos": 48.72
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 15,
+        "pontos": 56.97
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 15,
+        "pontos": 49.99
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 15,
+        "pontos": 66.9
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 15,
+        "pontos": 39.13
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 15,
+        "pontos": 41.85
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 15,
+        "pontos": 36.62
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 15,
+        "pontos": 81.8
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 15,
+        "pontos": 79.84
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 15,
+        "pontos": 60.87
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 15,
+        "pontos": 38.65
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 15,
+        "pontos": 31.76
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 15,
+        "pontos": 37.75
+      }
+    ],
+    "16": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 16,
+        "pontos": 79.7
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 16,
+        "pontos": 67.18
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 16,
+        "pontos": 66.84
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 16,
+        "pontos": 67.08
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 16,
+        "pontos": 64.58
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 16,
+        "pontos": 71.7
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 16,
+        "pontos": 83.09
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 16,
+        "pontos": 75.54
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 16,
+        "pontos": 74.8
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 16,
+        "pontos": 86.18
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 16,
+        "pontos": 78.98
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 16,
+        "pontos": 70.35
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 16,
+        "pontos": 73.54
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 16,
+        "pontos": 85.2
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 16,
+        "pontos": 67.99
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 16,
+        "pontos": 74.24
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 16,
+        "pontos": 81.85
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 16,
+        "pontos": 91.84
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 16,
+        "pontos": 66.98
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 16,
+        "pontos": 70.58
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 16,
+        "pontos": 92.53
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 16,
+        "pontos": 62.44
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 16,
+        "pontos": 63.55
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 16,
+        "pontos": 87.73
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 16,
+        "pontos": 79.68
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 16,
+        "pontos": 87.8
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 16,
+        "pontos": 74.45
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 16,
+        "pontos": 53.6
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 16,
+        "pontos": 64.45
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 16,
+        "pontos": 81.14
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 16,
+        "pontos": 60.65
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 16,
+        "pontos": 54.89
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 16,
+        "pontos": 60.2
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 16,
+        "pontos": 65.95
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 16,
+        "pontos": 71.0
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 16,
+        "pontos": 82.69
+      }
+    ],
+    "17": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 17,
+        "pontos": 41.82
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 17,
+        "pontos": 67.82
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 17,
+        "pontos": 70.22
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 17,
+        "pontos": 107.62
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 17,
+        "pontos": 72.12
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 17,
+        "pontos": 68.32
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 17,
+        "pontos": 85.72
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 17,
+        "pontos": 46.47
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 17,
+        "pontos": 66.82
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 17,
+        "pontos": 72.62
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 17,
+        "pontos": 98.97
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 17,
+        "pontos": 70.52
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 17,
+        "pontos": 55.57
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 17,
+        "pontos": 70.62
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 17,
+        "pontos": 97.16
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 17,
+        "pontos": 56.57
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 17,
+        "pontos": 65.12
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 17,
+        "pontos": 65.22
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 17,
+        "pontos": 80.52
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 17,
+        "pontos": 82.82
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 17,
+        "pontos": 97.32
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 17,
+        "pontos": 74.52
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 17,
+        "pontos": 62.02
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 17,
+        "pontos": 77.62
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 17,
+        "pontos": 67.12
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 17,
+        "pontos": 71.17
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 17,
+        "pontos": 64.5
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 17,
+        "pontos": 68.12
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 17,
+        "pontos": 73.95
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 17,
+        "pontos": 62.62
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 17,
+        "pontos": 67.25
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 17,
+        "pontos": 89.82
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 17,
+        "pontos": 76.42
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 17,
+        "pontos": 58.81
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 17,
+        "pontos": 54.07
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 17,
+        "pontos": 50.0
+      }
+    ],
+    "18": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 18,
+        "pontos": 114.6
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 18,
+        "pontos": 107.25
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 18,
+        "pontos": 115.35
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 18,
+        "pontos": 110.55
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 18,
+        "pontos": 110.5
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 18,
+        "pontos": 98.4
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 18,
+        "pontos": 114.9
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 18,
+        "pontos": 112.1
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 18,
+        "pontos": 94.65
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 18,
+        "pontos": 108.0
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 18,
+        "pontos": 91.16
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 18,
+        "pontos": 98.8
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 18,
+        "pontos": 130.55
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 18,
+        "pontos": 106.6
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 18,
+        "pontos": 97.1
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 18,
+        "pontos": 136.65
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 18,
+        "pontos": 93.85
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 18,
+        "pontos": 114.45
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 18,
+        "pontos": 127.25
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 18,
+        "pontos": 47.64
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 18,
+        "pontos": 123.6
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 18,
+        "pontos": 105.55
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 18,
+        "pontos": 78.8
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 18,
+        "pontos": 60.24
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 18,
+        "pontos": 94.85
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 18,
+        "pontos": 107.35
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 18,
+        "pontos": 115.15
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 18,
+        "pontos": 111.0
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 18,
+        "pontos": 114.3
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 18,
+        "pontos": 97.55
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 18,
+        "pontos": 76.1
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 18,
+        "pontos": 108.3
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 18,
+        "pontos": 58.64
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 18,
+        "pontos": 118.6
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 18,
+        "pontos": 110.1
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 18,
+        "pontos": 80.9
+      }
+    ]
+  }
+}
