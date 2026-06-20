@@ -213,7 +213,7 @@ async function buscarHistorico(){
 
 async function buscarParciais(){
   try{
-    const resp=await fetch("parciais_cartola.json?v="+Date.now(),{cache:"no-store"});
+    const resp=await fetch("rodada_atual_cartola.json?v="+Date.now(),{cache:"no-store"});
     if(!resp.ok)return null;
     return await resp.json();
   }catch(e){
@@ -228,26 +228,75 @@ function formatarDataArquivo(valor){
 }
 function marcarAtualizacao(txt){
   const busca=new Date();
-  if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent=txt;
+
+  if(document.getElementById("statusAtualizacao")){
+    let statusTxt=txt;
+
+    if(parciaisCartola){
+      if(parciaisCartola.mercado_aberto){
+        statusTxt=`Dados atualizados · Mercado aberto · Rodada Cartola ${parciaisCartola.rodada_cartola}`;
+      }else if(parciaisCartola.rodada_em_andamento){
+        statusTxt=`Dados atualizados · Rodada ${parciaisCartola.rodada_dados} em andamento`;
+      }else{
+        statusTxt=`Dados atualizados · Rodada ${parciaisCartola.rodada_dados}`;
+      }
+    }
+
+    statusAtualizacao.textContent=statusTxt;
+  }
+
   if(document.getElementById("ultimaAtualizacao")){
     const origem=historicoMeta.fonte==="json"?"JSON":"servidor";
-    const parcialTxt=parciaisCartola?.ultima_atualizacao ? `<br>Parciais ao vivo: ${formatarDataArquivo(parciaisCartola.ultima_atualizacao)}` : "";
-    ultimaAtualizacao.innerHTML=`Histórico publicado (${origem}): ${formatarDataArquivo(historicoMeta.ultimaAtualizacao)}${parcialTxt}<br>Atualização da tela: ${busca.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}`;
+
+    let rodadaTxt="";
+    if(parciaisCartola){
+      const mercadoTxt=parciaisCartola.mercado_aberto
+        ? "Mercado aberto — sem parciais ao vivo"
+        : "Rodada fechada/em andamento — dados da rodada atual disponíveis";
+
+      rodadaTxt =
+        `<br>Cartola: rodada ${parciaisCartola.rodada_cartola} · Dados usados: rodada ${parciaisCartola.rodada_dados}` +
+        `<br>Status: ${mercadoTxt}` +
+        `<br>Rodada atual publicada: ${formatarDataArquivo(parciaisCartola.ultima_atualizacao)}`;
+    }
+
+    ultimaAtualizacao.innerHTML=
+      `Histórico publicado (${origem}): ${formatarDataArquivo(historicoMeta.ultimaAtualizacao)}` +
+      rodadaTxt +
+      `<br>Atualização da tela: ${busca.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}`;
   }
 }
 async function atualizarDados(){try{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.add("loading");btnAtualizar.textContent="Atualizando..."}historico=await buscarHistorico();parciaisCartola=await buscarParciais();renderTudo();marcarAtualizacao("Dados atualizados")}catch(e){if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent="Não foi possível atualizar"}finally{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.remove("loading");btnAtualizar.textContent="🔄 Atualizar"}}}
 function montarControles(){["tabsGruposRodadas"].forEach(id=>{const box=document.getElementById(id);Object.keys(grupos).forEach(g=>{const b=document.createElement("button");b.textContent="Grupo "+g;b.onclick=()=>{grupoAtual=g;atualizarTabs();renderTudo()};box.appendChild(b)})});for(let r=1;r<=FASE1_FINAL;r++){selRodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`}selRodada.value=FASE1_FINAL;montarTabsFase2();montarPaginasFases();atualizarTabs()}
 function atualizarTabs(){document.querySelectorAll("#tabsGrupos button,#tabsGruposRodadas button").forEach(b=>b.classList.toggle("active",b.textContent.endsWith(grupoAtual)))}
 function pontosTime(nome,rodada){
-  if(parciaisCartola && Number(parciaisCartola.rodada)===Number(rodada) && Array.isArray(parciaisCartola.times)){
+  if(
+    parciaisCartola &&
+    Number(parciaisCartola.rodada_dados)===Number(rodada) &&
+    Array.isArray(parciaisCartola.times)
+  ){
     const p=parciaisCartola.times.find(x=>String(x.time).trim()===String(nome).trim());
     if(p && p.pontos!==undefined && p.pontos!==null)return Number(p.pontos);
   }
+
   const lista=(historico.rodadas&&historico.rodadas[String(rodada)])||[];
   const t=lista.find(x=>String(x.time).trim()===String(nome).trim());
-  return t?Number(t.pontos):0
+  return t?Number(t.pontos):0;
 }
-function temRodada(r){return !!(historico.rodadas&&historico.rodadas[String(r)])}
+function temRodada(r){
+  if(historico.rodadas && historico.rodadas[String(r)])return true;
+
+  if(
+    parciaisCartola &&
+    Number(parciaisCartola.rodada_dados)===Number(r) &&
+    Array.isArray(parciaisCartola.times) &&
+    parciaisCartola.times.length
+  ){
+    return true;
+  }
+
+  return false;
+}
 function base(nome){return {time:nome,j:0,v:0,e:0,d:0,pts:0,pf:0,pc:0,saldo:0}}
 function aplicaJogo(stats,ta,tb,pa,pb){const dif=Math.abs(pa-pb);stats[ta].j++;stats[tb].j++;stats[ta].pf+=pa;stats[ta].pc+=pb;stats[tb].pf+=pb;stats[tb].pc+=pa;if(dif<=LIMITE_EMPATE){stats[ta].e++;stats[tb].e++;stats[ta].pts++;stats[tb].pts++}else if(pa>pb){stats[ta].v++;stats[tb].d++;stats[ta].pts+=3}else{stats[tb].v++;stats[ta].d++;stats[tb].pts+=3}}
 function ordenar(lista){return lista.map(t=>{t.saldo=t.pf-t.pc;return t}).sort((a,b)=>b.pts-a.pts||b.v-a.v||b.saldo-a.saldo||b.pf-a.pf)}
