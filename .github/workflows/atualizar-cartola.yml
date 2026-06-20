@@ -37,7 +37,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add historico_cartola.json histórico_cartola.json || true
+          git add historico_cartola.json
 
           git commit -m "Atualiza histórico Cartola" || echo "Nada para atualizar"
 
