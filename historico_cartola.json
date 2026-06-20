@@ -1,5 +1,6 @@
 {
   "liga": "Cartola de Ermida",
+  "ultima_atualizacao": "20/06/2026 14:34:08",
   "rodadas": {
     "1": [
       {
@@ -4572,6 +4573,279 @@
         "rodada": 18,
         "pontos": 80.9
       }
-    ]
+    ],
+    "19": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 19,
+        "pontos": 114.6
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 19,
+        "pontos": 107.25
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 19,
+        "pontos": 115.35
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 19,
+        "pontos": 110.55
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 19,
+        "pontos": 110.5
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 19,
+        "pontos": 98.4
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 19,
+        "pontos": 114.9
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 19,
+        "pontos": 112.1
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 19,
+        "pontos": 94.65
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 19,
+        "pontos": 108.0
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 19,
+        "pontos": 91.16
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 19,
+        "pontos": 98.8
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 19,
+        "pontos": 130.55
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 19,
+        "pontos": 106.6
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 19,
+        "pontos": 97.1
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 19,
+        "pontos": 136.65
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 19,
+        "pontos": 93.85
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 19,
+        "pontos": 114.45
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 19,
+        "pontos": 127.25
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 19,
+        "pontos": 47.64
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 19,
+        "pontos": 123.6
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 19,
+        "pontos": 105.55
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 19,
+        "pontos": 78.8
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 19,
+        "pontos": 60.24
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 19,
+        "pontos": 94.85
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 19,
+        "pontos": 107.35
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 19,
+        "pontos": 115.15
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 19,
+        "pontos": 111.0
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 19,
+        "pontos": 114.3
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 19,
+        "pontos": 97.55
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 19,
+        "pontos": 76.1
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 19,
+        "pontos": 108.3
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 19,
+        "pontos": 58.64
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 19,
+        "pontos": 118.6
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 19,
+        "pontos": 110.1
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 19,
+        "pontos": 80.9
+      }
+    ],
+    "20": [],
+    "21": [],
+    "22": [],
+    "23": [],
+    "24": [],
+    "25": [],
+    "26": [],
+    "27": [],
+    "28": [],
+    "29": [],
+    "30": [],
+    "31": [],
+    "32": [],
+    "33": [],
+    "34": [],
+    "35": [],
+    "36": [],
+    "37": [],
+    "38": []
   }
 }
