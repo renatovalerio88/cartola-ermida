@@ -7,6 +7,7 @@ SLUG_LIGA = "cartola-de-ermida"
 ARQUIVO_HISTORICO = "historico_cartola.json"
 
 URL_LIGA = f"https://api.cartola.globo.com/auth/liga/{SLUG_LIGA}?orderBy=campeonato"
+URL_STATUS = "https://api.cartola.globo.com/mercado/status"
 
 
 def buscar_json(url):
@@ -46,8 +47,33 @@ def salvar_historico(historico):
         json.dump(historico, arquivo, ensure_ascii=False, indent=2)
 
 
-print("Buscando dados da liga...")
+print("Buscando status do mercado...")
+status = buscar_json(URL_STATUS)
 
+rodada_status = int(status.get("rodada_atual", 0) or 0)
+mercado_status = int(status.get("status_mercado", 0) or 0)
+
+print(f"Rodada do Cartola/status: {rodada_status}")
+print(f"Status do mercado: {mercado_status}")
+
+# status_mercado:
+# 1 = mercado aberto
+# 2 = mercado fechado / rodada em andamento
+# 3 = mercado em manutenção ou outro estado
+#
+# Se mercado está aberto, normalmente o Cartola já aponta para a próxima rodada.
+# Então a última rodada fechada é rodada_atual - 1.
+if mercado_status == 1:
+    rodada_para_salvar = rodada_status - 1
+else:
+    rodada_para_salvar = rodada_status
+
+if rodada_para_salvar <= 0:
+    raise Exception("Não foi possível determinar a rodada correta para salvar.")
+
+print(f"Rodada que será salva no histórico: {rodada_para_salvar}")
+
+print("Buscando dados da liga...")
 dados_liga = buscar_json(URL_LIGA)
 
 historico = carregar_historico()
@@ -58,21 +84,8 @@ times = dados_liga.get("times", [])
 if not times:
     raise Exception("Nenhum time encontrado na API da liga.")
 
-rodadas_detectadas = []
-
-for time_liga in times:
-    rodada_time_id = time_liga.get("rodada_time_id")
-    if rodada_time_id:
-        rodadas_detectadas.append(int(rodada_time_id))
-
-if not rodadas_detectadas:
-    raise Exception("Não foi possível detectar a rodada.")
-
-rodada_atual = max(set(rodadas_detectadas), key=rodadas_detectadas.count)
-
-print(f"Rodada detectada: {rodada_atual}")
-
-historico["rodadas"][str(rodada_atual)] = []
+historico.setdefault("rodadas", {})
+historico["rodadas"][str(rodada_para_salvar)] = []
 
 for time_liga in times:
     pontos = time_liga.get("pontos", {}).get("rodada", 0)
@@ -82,14 +95,31 @@ for time_liga in times:
         "time_id": time_liga.get("time_id"),
         "time": str(time_liga.get("nome", "")).strip(),
         "cartoleiro": str(time_liga.get("nome_cartola", "")).strip(),
-        "rodada": rodada_atual,
+        "rodada": rodada_para_salvar,
         "pontos": round(float(pontos or 0), 2),
         "patrimonio": round(float(patrimonio or 0), 2)
     }
 
-    historico["rodadas"][str(rodada_atual)].append(registro)
+    historico["rodadas"][str(rodada_para_salvar)].append(registro)
 
     print(f"OK - {registro['time']} : {registro['pontos']}")
+
+# Limpeza de rodadas futuras vazias ou falsas
+# Mantém apenas rodadas até a rodada correta.
+rodadas_para_apagar = []
+
+for rodada_txt, lista in historico["rodadas"].items():
+    try:
+        numero = int(rodada_txt)
+    except ValueError:
+        continue
+
+    if numero > rodada_para_salvar:
+        rodadas_para_apagar.append(rodada_txt)
+
+for rodada_txt in rodadas_para_apagar:
+    print(f"Removendo rodada futura/falsa: {rodada_txt}")
+    del historico["rodadas"][rodada_txt]
 
 salvar_historico(historico)
 
