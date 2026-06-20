@@ -27,6 +27,8 @@ jobs:
           find . -maxdepth 4 -type f
 
       - name: Executar atualização
+        env:
+          CARTOLA_TOKEN: ${{ secrets.CARTOLA_TOKEN }}
         run: |
           ARQUIVO=$(find . -name "atualizar_cartola.py" | head -n 1)
           echo "Arquivo encontrado: $ARQUIVO"
