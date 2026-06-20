@@ -34,13 +34,21 @@ jobs:
           echo "Arquivo encontrado: $ARQUIVO"
           python "$ARQUIVO"
 
-      - name: Salvar histórico
+          echo "---------------------"
+          echo "Atualizando rodada atual"
+          echo "---------------------"
+
+          ARQUIVO_RODADA=$(find . -name "atualizar_rodada_atual.py" | head -n 1)
+          echo "Arquivo encontrado: $ARQUIVO_RODADA"
+          python "$ARQUIVO_RODADA"
+
+      - name: Salvar histórico e rodada atual
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add historico_cartola.json
+          git add historico_cartola.json rodada_atual_cartola.json
 
-          git commit -m "Atualiza histórico Cartola" || echo "Nada para atualizar"
+          git commit -m "Atualiza dados Cartola" || echo "Nada para atualizar"
 
           git push
