@@ -1,0 +1,29 @@
+name: Atualizar Cartola
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Criar arquivo de teste
+        run: |
+          echo "{\"ultima_atualizacao\":\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\",\"status\":\"ok\"}" > automacao_teste.json
+
+      - name: Salvar alteração no GitHub
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add automacao_teste.json
+          git commit -m "Teste de automação Cartola" || echo "Nada para atualizar"
+          git push
