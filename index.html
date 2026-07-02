@@ -115,6 +115,274 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   margin:6px 0;
 }
 
+/* =========================================================
+   Versão mobile/profissional dos confrontos
+   - PC mantém estrutura atual.
+   - Celular usa placar compacto, em linha quando couber.
+   ========================================================= */
+.scoreboard.pro-card,
+.meu-time-games{
+  background:#0b1220;
+  border:1px solid #263247;
+  border-radius:16px;
+  overflow:hidden;
+}
+.score-game-wrap{
+  transition:background .15s ease,border-color .15s ease;
+}
+.score-game-wrap:hover{
+  background:#111827;
+}
+.score-team.meu-time-label{
+  color:#fde68a;
+  font-weight:900;
+}
+.score-subtitle{
+  font-size:11px;
+  color:#94a3b8;
+  margin:0 0 8px;
+}
+.mobile-score-legend{
+  display:none;
+}
+.match-status-line{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  color:#94a3b8;
+  margin:-2px 0 8px;
+  padding-left:26px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.match-status-line .saldo{
+  color:#fde68a;
+  font-weight:800;
+}
+@media(max-width:760px){
+  body{
+    font-size:13px;
+  }
+  header{
+    padding:16px 10px 12px;
+  }
+  header h1{
+    font-size:21px;
+  }
+  header p{
+    font-size:11px;
+    line-height:1.35;
+  }
+  .top-status{
+    margin-top:10px;
+    padding:9px 10px;
+    border-radius:14px;
+    font-size:10.5px;
+    text-align:left;
+  }
+  .container{
+    padding:8px;
+  }
+  .nav{
+    top:0;
+    padding:7px 0 8px;
+    gap:6px;
+  }
+  button{
+    padding:8px 10px;
+    font-size:12px;
+  }
+  .card{
+    padding:10px;
+    border-radius:16px;
+    margin-bottom:14px;
+  }
+  h2{
+    font-size:17px;
+    margin-bottom:9px;
+  }
+  h3{
+    font-size:14px;
+    margin-bottom:8px;
+  }
+  .info-block{
+    padding:10px;
+    border-radius:15px;
+    margin:10px 0;
+  }
+  .phase-filter{
+    padding:7px 8px;
+    border-radius:13px;
+    margin:8px 0 10px;
+  }
+  .phase-filter label{
+    font-size:11px;
+  }
+  select{
+    padding:8px;
+    font-size:12px;
+  }
+
+  /* Tabelas mais leves no celular */
+  table{
+    font-size:11.5px;
+    border-radius:12px;
+  }
+  th,td{
+    padding:6px 4px;
+  }
+  th{
+    font-size:9.5px;
+  }
+  .badge{
+    padding:3px 6px;
+    font-size:9.5px;
+  }
+
+  /* Placar estilo app esportivo */
+  .scoreboard{
+    padding:8px;
+    border-radius:16px;
+    margin:6px 0;
+  }
+  .scoreboard-title{
+    font-size:11px;
+    padding:8px 9px;
+    margin-bottom:6px;
+    border-radius:12px;
+  }
+  .score-game-wrap{
+    border-top:1px solid #1f2a3d;
+    padding:0;
+  }
+  .score-game{
+    grid-template-columns:12px minmax(0,1fr) auto minmax(0,1fr) 12px;
+    gap:4px;
+    padding:8px 0 3px;
+    font-size:11.2px;
+    line-height:1.15;
+  }
+  .score-team{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-weight:800;
+  }
+  .score-team.right{
+    text-align:right;
+  }
+  .score-center{
+    padding:3px 6px;
+    border-radius:10px;
+    font-size:11px;
+    min-width:60px;
+    text-align:center;
+  }
+  .score-x{
+    margin:0 2px;
+  }
+  .status-dot{
+    width:12px;
+    height:12px;
+    flex-basis:12px;
+    font-size:0;
+  }
+  .score-note{
+    font-size:9.5px;
+    padding-left:18px;
+    margin:0 0 7px;
+    color:#9fb0c7;
+  }
+  .match-status-line{
+    font-size:9.5px;
+    padding-left:18px;
+    margin:0 0 7px;
+  }
+  .legend{
+    font-size:10px;
+    gap:8px;
+    margin-top:8px;
+  }
+  .mobile-score-legend{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:8px 0 0;
+    color:#94a3b8;
+    font-size:10px;
+  }
+  .mobile-score-legend span{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+  }
+
+  /* Meu Time: cards ainda mais compactos */
+  .meu-time-games .scoreboard-title{
+    background:linear-gradient(90deg,#14532d,#14532d);
+  }
+  .meu-time-games .score-game{
+    padding-top:9px;
+  }
+
+  /* Layout antigo .match, caso ainda apareça em algum ponto */
+  .match{
+    padding:8px;
+    border-radius:13px;
+    margin-bottom:7px;
+  }
+  .match-head{
+    font-size:10px;
+  }
+  .match-line{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+    gap:5px;
+    align-items:center;
+  }
+  .team-left,.team-right{
+    text-align:left;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:11px;
+    font-weight:800;
+  }
+  .team-right{
+    text-align:right;
+  }
+  .score-pill{
+    padding:3px 6px;
+    font-size:11px;
+    border-radius:10px;
+  }
+  .result{
+    font-size:9.5px;
+  }
+}
+@media(max-width:390px){
+  .score-game{
+    grid-template-columns:10px minmax(0,1fr) auto minmax(0,1fr) 10px;
+    gap:3px;
+    font-size:10.5px;
+  }
+  .score-center{
+    min-width:54px;
+    padding:3px 5px;
+    font-size:10.5px;
+  }
+  .score-note,.match-status-line{
+    font-size:9px;
+  }
+  header h1{
+    font-size:20px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -708,8 +976,19 @@ function renderTabelaMeuTime(lista, meuTime, statusFn){
   `;
 }
 
+function saldoTexto(pa,pb){
+  const dif = Math.abs(Number(pa||0)-Number(pb||0));
+  return fmtBR(dif);
+}
+
+function resumoResultadoCurto(ta,tb,pa,pb){
+  const dif=Math.abs(pa-pb);
+  if(dif<=LIMITE_EMPATE)return `Empate · saldo ${fmtBR(dif)}`;
+  return `${pa>pb?ta:tb} venceu · saldo ${fmtBR(dif)}`;
+}
+
 function jogosDoMeuTime(times, inicio, agenda, meuTime){
-  let html = "";
+  let html = `<div class="scoreboard meu-time-games"><div class="scoreboard-title">⚽ Jogos do time</div>`;
 
   agenda.forEach((rodadaAgenda, idx)=>{
     const rodada = inicio + idx;
@@ -723,22 +1002,39 @@ function jogosDoMeuTime(times, inicio, agenda, meuTime){
       const tem = temRodada(rodada);
       const pa = tem ? pontosTime(ta, rodada) : 0;
       const pb = tem ? pontosTime(tb, rodada) : 0;
+      const st = tem ? simbolosJogo(pa,pb) : {a:"draw",b:"draw",res:"A jogar"};
+      const centro = tem ? `${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}` : '<span class="score-x">x</span>';
+      const note = tem ? resumoResultadoCurto(ta,tb,pa,pb) : "Jogo ainda não disputado";
+      const rodadaLabel = `Rodada ${rodada}`;
 
       html += `
-        <div class="match">
-          <div class="match-head">Rodada ${rodada}</div>
-          <div class="match-line">
-            <div class="team-left"><b>${ta}</b></div>
-            <div class="score-pill">${tem ? `${fmt(pa)} x ${fmt(pb)}` : "x"}</div>
-            <div class="team-right"><b>${tb}</b></div>
+        <div class="score-game-wrap">
+          <div class="score-game" title="${rodadaLabel} · ${st.res}">
+            ${tem?dotStatus(st.a):'<span></span>'}
+            <span class="score-team ${ta===meuTime?'meu-time-label ':''}${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span>
+            <span class="score-center">${centro}</span>
+            <span class="score-team right ${tb===meuTime?'meu-time-label ':''}${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>
+            ${tem?dotStatus(st.b):'<span></span>'}
           </div>
-          <div class="result">${tem ? notaJogo(ta,tb,pa,pb) : "Jogo ainda não disputado"}</div>
+          <div class="match-status-line">${rodadaLabel} · ${note}</div>
         </div>
       `;
     });
   });
 
-  return html || `<div class="muted-card">Nenhum jogo encontrado para este time nesta fase.</div>`;
+  html += `
+    <div class="mobile-score-legend">
+      <span><span class="status-dot status-win"></span> vitória</span>
+      <span><span class="status-dot status-draw"></span> empate</span>
+      <span><span class="status-dot status-loss"></span> derrota</span>
+    </div>
+  </div>`;
+
+  if(!html.includes("score-game-wrap")){
+    return `<div class="muted-card">Nenhum jogo encontrado para este time nesta fase.</div>`;
+  }
+
+  return html;
 }
 
 function renderMeuTime(){
