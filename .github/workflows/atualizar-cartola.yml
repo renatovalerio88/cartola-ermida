@@ -2,6 +2,8 @@ name: Atualizar Cartola
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
 
 permissions:
   contents: write
@@ -19,16 +21,52 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Conferir arquivos
+      - name: Verificar status do mercado
+        id: mercado
         run: |
-          pwd
-          ls -la
-          echo "Arquivos encontrados:"
-          find . -maxdepth 4 -type f
+          python - <<'PY'
+          import json
+          import urllib.request
+          import os
+
+          url = "https://api.cartola.globo.com/mercado/status"
+
+          req = urllib.request.Request(
+              url,
+              headers={
+                  "Accept": "application/json",
+                  "User-Agent": "Mozilla/5.0",
+              }
+          )
+
+          with urllib.request.urlopen(req) as resposta:
+              dados = json.loads(resposta.read().decode("utf-8"))
+
+          rodada = int(dados.get("rodada_atual", 0) or 0)
+          status = int(dados.get("status_mercado", 0) or 0)
+
+          print(f"Rodada atual: {rodada}")
+          print(f"Status mercado: {status}")
+
+          # 1 = mercado aberto
+          # diferente de 1 = mercado fechado, rodada em andamento ou manutenção
+          deve_atualizar = status != 1
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+              out.write(f"rodada={rodada}\n")
+              out.write(f"status={status}\n")
+              out.write(f"deve_atualizar={'true' if deve_atualizar else 'false'}\n")
+          PY
+
+      - name: Mostrar decisão
+        run: |
+          echo "Rodada: ${{ steps.mercado.outputs.rodada }}"
+          echo "Status mercado: ${{ steps.mercado.outputs.status }}"
+          echo "Deve atualizar automaticamente: ${{ steps.mercado.outputs.deve_atualizar }}"
+          echo "Tipo de execução: ${{ github.event_name }}"
 
       - name: Executar atualização
-        env:
-          CARTOLA_TOKEN: ${{ secrets.CARTOLA_TOKEN }}
+        if: github.event_name == 'workflow_dispatch' || steps.mercado.outputs.deve_atualizar == 'true'
         run: |
           ARQUIVO=$(find . -name "atualizar_cartola.py" | head -n 1)
           echo "Arquivo encontrado: $ARQUIVO"
@@ -43,6 +81,7 @@ jobs:
           python "$ARQUIVO_RODADA"
 
       - name: Salvar histórico e rodada atual
+        if: github.event_name == 'workflow_dispatch' || steps.mercado.outputs.deve_atualizar == 'true'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
@@ -52,3 +91,9 @@ jobs:
           git commit -m "Atualiza dados Cartola" || echo "Nada para atualizar"
 
           git push
+
+      - name: Nenhuma atualização necessária
+        if: github.event_name != 'workflow_dispatch' && steps.mercado.outputs.deve_atualizar != 'true'
+        run: |
+          echo "Mercado aberto. Atualização automática ignorada."
+          echo "Nenhum arquivo foi alterado."
