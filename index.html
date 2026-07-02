@@ -384,9 +384,13 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 }
 
 /* Versão 1.0: cards clean de resumo, perfil e estatísticas */
-.top-status div:nth-child(4){
+.top-status div:nth-child(4),
+.top-status div:nth-child(5){
   color:#94a3b8;
 }
+.meutime-picker{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.meutime-picker select{min-width:220px;flex:1}
+.clear-team-btn{font-size:12px;padding:8px 10px;background:#0b1220;border-color:#475569;color:#cbd5e1}
 .meu-summary{
   display:block;
 }
@@ -567,8 +571,9 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   <div class="top-status">
     <div id="topLinha1">Carregando dados...</div>
     <div id="topLinha2">Aguarde alguns segundos.</div>
-    <div id="topLinha3">API Cartola: carregando...</div>
-    <div id="topLinha4">Site: carregando...</div>
+    <div id="topLinha3">Seu time: escolha na aba Meu Time</div>
+    <div id="topLinha4">API Cartola: carregando...</div>
+    <div id="topLinha5">Site: carregando...</div>
   </div>
 </header>
 <div class="container">
@@ -592,9 +597,10 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
     <div class="card">
       <h2>Meu Time</h2>
 
-      <div class="phase-filter">
+      <div class="phase-filter meutime-picker">
         <label>Escolha seu time:</label>
-        <select id="selMeuTime" onchange="renderMeuTime()"></select>
+        <select id="selMeuTime" onchange="trocarMeuTime()"></select>
+        <button type="button" class="clear-team-btn" onclick="limparMeuTimeSalvo()">Limpar</button>
       </div>
 
       <div id="boxMeuTime"></div>
@@ -818,8 +824,9 @@ function marcarAtualizacao(txt){
     const aoVivo = !!parciaisCartola?.rodada_em_andamento;
     topLinha1.innerHTML = `${aoVivo?'<span class="live-pill"><span class="live-dot"></span>AO VIVO</span>':''}Cartola: Rodada ${rodadaCartola} · Dados usados: Rodada ${rodadaDados}`;
     topLinha2.textContent = statusTxt;
-    topLinha3.textContent = `Última atualização API Cartola: ${formatarDataArquivo(dataCartola)}`;
-    if(document.getElementById("topLinha4"))topLinha4.textContent = `Última atualização do site: ${siteHora}`;
+    atualizarLinhaMeuTimeTopo();
+    topLinha4.textContent = `Última atualização API Cartola: ${formatarDataArquivo(dataCartola)}`;
+    if(document.getElementById("topLinha5"))topLinha5.textContent = `Última atualização do site: ${siteHora}`;
   }
 
   if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent=txt;
@@ -1125,12 +1132,25 @@ function preencherSelectMeuTime(){
       opt.textContent = nome;
       sel.appendChild(opt);
     });
-  }
 
-  const salvo = localStorage.getItem("cartolaMeuTime");
-  if(salvo && Array.from(sel.options).some(o=>o.value===salvo)){
-    sel.value = salvo;
+    const salvo = localStorage.getItem("cartolaMeuTime");
+    if(salvo && Array.from(sel.options).some(o=>o.value===salvo)){
+      sel.value = salvo;
+    }
   }
+}
+
+function trocarMeuTime(){
+  const sel=document.getElementById("selMeuTime");
+  if(sel && sel.value)localStorage.setItem("cartolaMeuTime", sel.value);
+  renderTudo();
+}
+
+function limparMeuTimeSalvo(){
+  localStorage.removeItem("cartolaMeuTime");
+  const sel=document.getElementById("selMeuTime");
+  if(sel && sel.options.length)sel.selectedIndex=0;
+  renderTudo();
 }
 
 function faseAtualNumero(){
@@ -1589,6 +1609,53 @@ function rankingLigaReal(){
   });
   return Object.values(mapa).sort((a,b)=>b.vitorias-a.vitorias||b.premio-a.premio||a.time.localeCompare(b.time,'pt-BR'));
 }
+function premioTradicionalTime(nome){
+  const pos=rankingTradicional().findIndex(t=>t.time===nome);
+  const premios=[600,480,415,360,295,240];
+  return pos>=0 && pos<premios.length ? premios[pos] : 0;
+}
+function premioTurnoTime(nome){
+  let total=0;
+  const t1=rankingSomaRodadas(1,19);
+  const t2=rankingSomaRodadas(20,38);
+  if(t1[0]?.time===nome)total+=100;
+  if(t2.length && t2[0]?.time===nome)total+=100;
+  return total;
+}
+function premioLigaRealTime(nome){
+  const r=rankingLigaReal().find(t=>t.time===nome);
+  return r?Number(r.premio||0):0;
+}
+function premioMensalTime(nome){
+  // Preparado para quando o JSON tiver data do primeiro jogo da rodada.
+  // Sem calendário/data confiável no histórico atual, fica zerado para não mostrar prêmio falso.
+  return 0;
+}
+function premioMataMataTime(nome){
+  // Entra somente quando a última fase terminar.
+  return 0;
+}
+function premioAtualTime(nome){
+  return premioTradicionalTime(nome)+premioLigaRealTime(nome)+premioTurnoTime(nome)+premioMensalTime(nome)+premioMataMataTime(nome);
+}
+function atualizarLinhaMeuTimeTopo(){
+  if(!document.getElementById('topLinha3'))return;
+  const nome=localStorage.getItem('cartolaMeuTime') || document.getElementById('selMeuTime')?.value || '';
+  if(!nome){topLinha3.textContent='Seu time: escolha na aba Meu Time';return;}
+  topLinha3.textContent=`Seu time: ${nome} · Prêmio atual: ${dinheiro(premioAtualTime(nome))}`;
+}
+function tabelaPremiacaoParticipantes(){
+  return rankingTradicional().map(t=>{
+    const tradicional=premioTradicionalTime(t.time);
+    const ligaReal=premioLigaRealTime(t.time);
+    const turnos=premioTurnoTime(t.time);
+    const mensais=premioMensalTime(t.time);
+    const mata=premioMataMataTime(t.time);
+    const total=tradicional+ligaReal+turnos+mensais+mata;
+    return {...t,tradicional,ligaReal,turnos,mensais,mata,totalPremio:total};
+  }).sort((a,b)=>b.totalPremio-a.totalPremio||b.total-a.total||a.time.localeCompare(b.time,'pt-BR'));
+}
+
 function renderTopList(lista, campo, sufixo='', limite=6){
   if(!lista.length)return '<div class="muted-card">Ainda sem dados suficientes.</div>';
   return `<div>${lista.slice(0,limite).map((t,i)=>`<div class="leader-row"><span class="pos">${i+1}</span><b>${t.time}</b><span class="value">${campo(t)}${sufixo}</span></div>`).join('')}</div>`;
@@ -1623,24 +1690,42 @@ function renderPremiacao(){
   const real=rankingLigaReal();
   const premiosTrad=[600,480,415,360,295,240];
   const premiosMata=[360,200,100,50];
+  const participantes=tabelaPremiacaoParticipantes();
+
   box.innerHTML=`
     <div class="prize-grid">
-      <div class="prize-card"><h3>Vencedores Turno</h3><div class="money-row"><b>1º Turno</b><span>R$ 100,00</span></div><div class="money-row"><b>2º Turno</b><span>R$ 100,00</span></div></div>
-      <div class="prize-card"><h3>Vencedores Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div><div class="warn-mini">Mensal será calculado pela data do primeiro jogo da rodada quando incluirmos o calendário.</div></div>
-      <div class="prize-card"><h3>Mata-mata</h3>${premiosMata.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}</div>
+      <div class="prize-card"><h3>Turnos</h3><div class="money-row"><b>1º Turno</b><span>R$ 100,00</span></div><div class="money-row"><b>2º Turno</b><span>R$ 100,00</span></div></div>
+      <div class="prize-card"><h3>Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div><div class="warn-mini">Será calculado pela data do primeiro jogo da rodada quando o calendário estiver disponível no JSON.</div></div>
+      <div class="prize-card"><h3>Mata-mata</h3>${premiosMata.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}<div class="warn-mini">Será incluído quando terminar a última fase.</div></div>
       <div class="prize-card"><h3>Tradicional</h3>${premiosTrad.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}</div>
-      <div class="prize-card"><h3>Liga Real</h3><div class="money-row"><b>38 rodadas</b><span>${dinheiro(2660)}</span></div><p class="small">R$ 70 por vencedor de rodada.</p></div>
+      <div class="prize-card"><h3>Liga Real</h3><div class="money-row"><b>38 rodadas</b><span>${dinheiro(2660)}</span></div><p class="small">R$ 70 para o maior pontuador de cada rodada.</p></div>
     </div>
-    <div class="info-block light"><h3>Líderes parciais</h3>
-      <div class="stats-grid">
-        <div class="stat-card"><small>1º turno</small><b>${turno1[0]?.time||'-'}</b><p>${turno1[0]?fmt(turno1[0].total)+' pts':'Rodadas 1 a 19'}</p></div>
-        <div class="stat-card"><small>2º turno</small><b>${turno2[0]?.time||'-'}</b><p>${turno2[0]?fmt(turno2[0].total)+' pts':'Rodadas 20 a 38'}</p></div>
-        <div class="stat-card"><small>Tradicional</small><b>${trad[0]?.time||'-'}</b><p>${trad[0]?fmt(trad[0].total)+' pts':'Soma Cartola'}</p></div>
-        <div class="stat-card"><small>Liga Real</small><b>${real[0]?.time||'-'}</b><p>${real[0]?real[0].vitorias+' vitória(s) de rodada':'R$ 70 por rodada'}</p></div>
-      </div>
+
+    <div class="info-block light"><h3>Turnos</h3>
+      <table class="table-mini"><thead><tr><th>Premiação</th><th>Líder atual</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
+        <tr><td>1º Turno</td><td><b>${turno1[0]?.time||'-'}</b></td><td>${turno1[0]?fmt(turno1[0].total):'-'}</td><td>${dinheiro(turno1[0]?100:0)}</td></tr>
+        <tr><td>2º Turno</td><td><b>${turno2[0]?.time||'Aguardando'}</b></td><td>${turno2[0]?fmt(turno2[0].total):'-'}</td><td>${dinheiro(turno2[0]?100:0)}</td></tr>
+      </tbody></table>
     </div>
-    <div class="info-block"><h3>Top 6 Tradicional</h3>${renderTopList(trad,t=>fmt(t.total)+' pts','',6)}</div>`;
+
+    <div class="info-block"><h3>Top 6 Tradicional</h3>
+      <table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
+      ${trad.slice(0,6).map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td>${fmt(t.total)}</td><td>${dinheiro(premiosTrad[i])}</td></tr>`).join('')}
+      </tbody></table>
+    </div>
+
+    <div class="info-block light"><h3>Liga Real</h3>
+      ${real.length?`<table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Vitórias</th><th>Prêmio</th></tr></thead><tbody>${real.map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td>${t.vitorias}</td><td>${dinheiro(t.premio)}</td></tr>`).join('')}</tbody></table>`:'<div class="muted-card">Ainda sem vencedores de rodada.</div>'}
+    </div>
+
+    <div class="info-block"><h3>Premiação atual por participante</h3>
+      <table class="table-mini"><thead><tr><th>Time</th><th>Trad.</th><th>Liga Real</th><th>Turnos</th><th>Mensal</th><th>Mata</th><th>Total</th></tr></thead><tbody>
+      ${participantes.map(t=>`<tr><td><b>${t.time}</b></td><td>${dinheiro(t.tradicional)}</td><td>${dinheiro(t.ligaReal)}</td><td>${dinheiro(t.turnos)}</td><td>${dinheiro(t.mensais)}</td><td>${dinheiro(t.mata)}</td><td><b>${dinheiro(t.totalPremio)}</b></td></tr>`).join('')}
+      </tbody></table>
+      <div class="warn-mini">Mata-mata será incluído quando terminar a última fase. Mensais serão calculados pela data do primeiro jogo da rodada quando o calendário estiver disponível.</div>
+    </div>`;
 }
+
 function renderApiCartola(){
   const box=document.getElementById('boxApiCartola'); if(!box)return;
   const rodadaCartola=parciaisCartola?.rodada_cartola||parciaisCartola?.rodada||'-';
@@ -1669,7 +1754,6 @@ function renderMeuTime(){
   if(!sel || !box || !historico) return;
 
   const meuTime = sel.value;
-  if(meuTime) localStorage.setItem("cartolaMeuTime", meuTime);
   const fase = faseAtualNumero();
 
   let titulo = "";
@@ -1769,8 +1853,11 @@ function renderMeuTime(){
     }else{
       box.innerHTML = `<div class="future-lock"><h3>${meuTime}</h3><p>Time não encontrado.</p></div>`;
     }
+    atualizarLinhaMeuTimeTopo();
     return;
   }
+
+  atualizarLinhaMeuTimeTopo();
 
   box.innerHTML = `
     ${renderResumoMeuTime(meuTime,titulo,grupoNome,lista,jogos,fase)}
