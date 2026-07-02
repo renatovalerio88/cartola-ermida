@@ -388,85 +388,53 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   color:#94a3b8;
 }
 .meu-summary{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:10px;
-  align-items:stretch;
+  display:block;
 }
 .meu-hero{
   background:linear-gradient(135deg,#0b1220,#0f2a1a);
   border:1px solid #22c55e44;
   border-radius:18px;
-  padding:14px;
+  padding:13px 14px;
 }
 .meu-hero h3{
   color:#f8fafc;
-  font-size:18px;
-  margin-bottom:5px;
+  font-size:17px;
+  margin:0 0 9px;
 }
-.meu-hero .meta{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
-.meu-hero .meta span{
-  background:#020617;
-  border:1px solid #334155;
-  border-radius:999px;
-  padding:5px 8px;
-  font-size:11px;
-  color:#cbd5e1;
-  font-weight:800;
-}
-.meu-status-card{
-  background:#0b1220;
-  border:1px solid #334155;
-  border-radius:18px;
-  padding:14px;
-}
-.meu-status-card b{
-  display:block;
-  font-size:22px;
-  color:#fde68a;
-  margin-bottom:2px;
-}
-.meu-status-card span{
-  color:#94a3b8;
-  font-size:12px;
-}
-.quick-grid{
+.situation-lines{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  margin-top:10px;
+  gap:5px;
+  font-size:12px;
+  color:#cbd5e1;
+  line-height:1.35;
 }
-.quick-card{
-  background:#0b1220;
-  border:1px solid #334155;
-  border-radius:15px;
-  padding:10px;
-}
-.quick-card small{
-  color:#94a3b8;
-  display:block;
-  margin-bottom:4px;
-}
-.quick-card b{
+.situation-lines b{
   color:#f8fafc;
-  font-size:16px;
+}
+.situation-lines .status-ok{
+  color:#86efac;
+  font-weight:900;
+}
+.situation-lines .status-rep{
+  color:#fde68a;
+  font-weight:900;
+}
+.situation-lines .status-bad{
+  color:#fca5a5;
+  font-weight:900;
 }
 .next-match{
-  margin-top:10px;
+  margin-top:9px;
   background:#020617;
   border:1px solid #334155;
   border-radius:14px;
-  padding:10px;
+  padding:9px 10px;
+  font-size:12px;
 }
 .next-match small{
   display:block;
   color:#94a3b8;
-  margin-bottom:5px;
+  margin-bottom:4px;
 }
 .next-match b{
   color:#dcfce7;
@@ -497,6 +465,9 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   color:#cbd5e1;
   font-size:12px;
 }
+
+.money-row{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid #263247;padding:8px 0;font-size:13px}.money-row:first-child{border-top:0}.money-row b{color:#f8fafc}.money-row span{color:#fde68a;font-weight:900;white-space:nowrap}.leader-row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid #263247;font-size:13px}.leader-row:first-child{border-top:0}.leader-row .pos{color:#94a3b8;font-weight:900}.leader-row .value{color:#fde68a;font-weight:900;white-space:nowrap}.api-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}.api-card{background:#0b1220;border:1px solid #334155;border-radius:16px;padding:12px}.api-card small{display:block;color:#94a3b8;margin-bottom:5px}.api-card b{color:#dcfce7}.pill-soft{display:inline-flex;border:1px solid #334155;background:#0b1220;border-radius:999px;padding:5px 8px;font-size:11px;color:#cbd5e1;margin:3px 4px 0 0}.table-mini{margin-top:10px}.table-mini th,.table-mini td{font-size:12px}.section-title-mini{margin:14px 0 8px;color:#38bdf8;font-size:14px;font-weight:900}.prize-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:10px}.prize-card{background:#0b1220;border:1px solid #334155;border-radius:16px;padding:12px}.prize-card h3{font-size:14px;margin-bottom:8px}.warn-mini{border-left:3px solid #fbbf24;padding-left:10px;color:#fde68a;font-size:12px;margin-top:10px}
+
 .clean-note{
   color:#94a3b8;
   font-size:11px;
@@ -546,6 +517,9 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
     <button onclick="abrirAba('grandefinal',this)">Grande Final</button>
     <button onclick="abrirAba('fluxograma',this)">Mapa</button>
     <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
+    <button onclick="abrirAba('ligareal',this)">Liga Real</button>
+    <button onclick="abrirAba('premiacao',this)">Premiação</button>
+    <button onclick="abrirAba('api',this)">API Cartola</button>
     <button onclick="abrirAba('regulamento',this)">Regulamento</button>
   </div>
 
@@ -598,6 +572,45 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
         <span class="badge future">Resumo</span>
       </div>
       <div id="boxEstatisticas"></div>
+    </div>
+  </section>
+
+  <section id="aba-ligareal" class="aba hidden">
+    <div class="card">
+      <div class="phase-title">
+        <div>
+          <h2>Liga Real</h2>
+          <p class="small">O melhor pontuador de cada rodada ganha a rodada real.</p>
+        </div>
+        <span class="badge ok">R$ 70 por rodada</span>
+      </div>
+      <div id="boxLigaReal"></div>
+    </div>
+  </section>
+
+  <section id="aba-premiacao" class="aba hidden">
+    <div class="card">
+      <div class="phase-title">
+        <div>
+          <h2>Premiação</h2>
+          <p class="small">Prêmios do campeonato e líderes parciais calculados automaticamente.</p>
+        </div>
+        <span class="badge future">Resumo financeiro</span>
+      </div>
+      <div id="boxPremiacao"></div>
+    </div>
+  </section>
+
+  <section id="aba-api" class="aba hidden">
+    <div class="card">
+      <div class="phase-title">
+        <div>
+          <h2>API Cartola</h2>
+          <p class="small">Status simples das atualizações, para conferir se os dados estão saudáveis.</p>
+        </div>
+        <span class="badge ok">Monitoramento</span>
+      </div>
+      <div id="boxApiCartola"></div>
     </div>
   </section>
 
@@ -793,6 +806,9 @@ function renderTudo(){
   renderFluxogramaNovo();
   renderMeuTime();
   renderEstatisticas();
+  renderLigaReal();
+  renderPremiacao();
+  renderApiCartola();
 }
 function renderClassificacao(){const lista=calcularGrupo(grupoAtual,Number(selClassificacao.value));tbodyClassificacao.innerHTML="";lista.forEach((t,i)=>{const pos=i+1,[dot,status]=statusInfo(pos),id=`det-${grupoAtual}-${pos}`;tbodyClassificacao.innerHTML+=`<tr class="clickable" onclick="toggleDetalhe('${id}')"><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td><td class="hide-mobile">${fmt(t.pf)}</td><td class="hide-mobile">${fmt(t.pc)}</td></tr><tr id="${id}" class="details"><td colspan="8"><b>${t.time}</b><br>Empates: ${t.e} | Derrotas: ${t.d}<br>Pontos feitos: ${fmt(t.pf)} | Pontos contra: ${fmt(t.pc)} | Saldo: ${fmt(t.saldo)}<br>Status: ${status}</td></tr>`})}
 function toggleDetalhe(id){const el=document.getElementById(id);el.style.display=el.style.display==="table-row"?"none":"table-row"}
@@ -1034,14 +1050,21 @@ function listaTodosTimes(){
 
 function preencherSelectMeuTime(){
   const sel = document.getElementById("selMeuTime");
-  if(!sel || sel.options.length) return;
+  if(!sel) return;
 
-  listaTodosTimes().forEach(nome=>{
-    const opt = document.createElement("option");
-    opt.value = nome;
-    opt.textContent = nome;
-    sel.appendChild(opt);
-  });
+  if(!sel.options.length){
+    listaTodosTimes().forEach(nome=>{
+      const opt = document.createElement("option");
+      opt.value = nome;
+      opt.textContent = nome;
+      sel.appendChild(opt);
+    });
+  }
+
+  const salvo = localStorage.getItem("cartolaMeuTime");
+  if(salvo && Array.from(sel.options).some(o=>o.value===salvo)){
+    sel.value = salvo;
+  }
 }
 
 function faseAtualNumero(){
@@ -1142,8 +1165,8 @@ function resumoResultadoCurto(ta,tb,pa,pb){
   return `${pa>pb?ta:tb} venceu · saldo ${fmtBR(dif)}`;
 }
 
-function jogosDoMeuTime(times, inicio, agenda, meuTime){
-  let html = `<div class="scoreboard meu-time-games"><div class="scoreboard-title">⚽ Jogos do time</div>`;
+function jogosDoMeuTime(times, inicio, agenda, meuTime, tituloJogos="Jogos do time"){
+  let html = `<div class="scoreboard meu-time-games"><div class="scoreboard-title">⚽ ${tituloJogos}</div>`;
 
   agenda.forEach((rodadaAgenda, idx)=>{
     const rodada = inicio + idx;
@@ -1256,12 +1279,58 @@ function campanhaTexto(t){
   return `${t.v}V · ${t.e}E · ${t.d}D`;
 }
 
+function faseNomePorNumero(fase){
+  if(fase===1)return "Fase 1";
+  if(fase===2)return "Fase 2";
+  if(fase===3)return "Fase 3";
+  if(fase===4)return "Fase 4";
+  if(fase===5)return "Fase 5";
+  return "Grande Final";
+}
+
+function grupoAtualTexto(grupoNome, fase){
+  if(!grupoNome)return "Fora da fase atual";
+  const g=String(grupoNome);
+  if(fase===1)return `Fase de Grupos (${g})`;
+  if(g.startsWith("GP"))return `Fase de Grupos (${g})`;
+  if(g.startsWith("RP"))return `Repescagem (${g})`;
+  if(g.toLowerCase().includes("repescagem"))return g;
+  return g;
+}
+
+function classeStatusMeuTime(status){
+  const s=String(status||"").toLowerCase();
+  if(s.includes("eliminado"))return "status-bad";
+  if(s.includes("repescagem") || s.includes("brigando") || s.includes("indo"))return "status-rep";
+  return "status-ok";
+}
+
+function proximoJogoTexto(prox,meuTime){
+  if(!prox)return `<span>Próximo jogo: <b>sem jogo previsto na fase atual</b></span>`;
+  const label=prox.tem?"Último jogo registrado":"Próximo jogo";
+  return `<div class="next-match"><small>${label} · Rodada ${prox.rodada}</small><b>${prox.ta}</b> x <b>${prox.tb}</b></div>`;
+}
+
+function diagnosticarTimeForaDaFase(meuTime,fase){
+  const grupoF1=acharGrupoFase1(meuTime);
+  if(!grupoF1)return null;
+  const listaF1=calcularGrupo(grupoF1,FASE1_FINAL);
+  const posF1=localizarPosicao(listaF1,meuTime);
+  return {
+    titulo:`Situação do ${meuTime}`,
+    faseAtual:"Eliminado",
+    grupoAtual:`Fase 1 · Grupo ${grupoF1}`,
+    status:"Eliminado na Fase 1",
+    posicao:posF1?`${posF1}º no Grupo ${grupoF1}`:"-",
+    prox:null
+  };
+}
+
 function renderResumoMeuTime(meuTime,titulo,grupoNome,lista,jogos, fase){
   const pos=localizarPosicao(lista,meuTime);
-  const t=lista.find(x=>x.time===meuTime);
   const situacao=textoSituacao(pos||0,grupoNome,fase);
-  const faseTxt=faseAtualNome();
-  const grupoTxt=grupoAmigavel(grupoNome);
+  const faseTxt=faseNomePorNumero(fase);
+  const grupoTxt=grupoAtualTexto(grupoNome,fase);
   let prox=null;
   if(fase===1)prox=proximoJogoMeuTime(Object.values(grupos[grupoNome]).map(time=>({time})),1,Object.values(jogosFase1),meuTime);
   if(fase===2)prox=proximoJogoMeuTime(fase2Times()[grupoNome],19,jogos4,meuTime);
@@ -1269,29 +1338,19 @@ function renderResumoMeuTime(meuTime,titulo,grupoNome,lista,jogos, fase){
   if(fase===4)prox=proximoJogoMeuTime(fase4Times()[grupoNome],31,jogos4TurnoUnico,meuTime);
   if(fase===5)prox=proximoJogoMeuTime(faseFinalTimes()[grupoNome],35,jogos3,meuTime);
   if(fase>=6 && finalTimes()[grupoNome])prox=proximoJogoMeuTime(finalTimes()[grupoNome],38,[[[1,2]]],meuTime);
-  const proxHtml=prox?`<div class="next-match"><small>${prox.tem?"Último/próximo jogo":"Próximo jogo"} · Rodada ${prox.rodada}</small><b>${meuTime}</b> x <b>${prox.adversario}</b></div>`:"";
+  const statusClass=classeStatusMeuTime(situacao);
   return `
     <div class="meu-summary">
       <div class="meu-hero">
         <h3>Situação do ${meuTime}</h3>
-        <div class="meta">
-          <span>${faseTxt}</span>
-          <span>${grupoTxt}</span>
-          <span>${situacao}</span>
+        <div class="situation-lines">
+          <span>Fase atual: <b>${faseTxt}</b></span>
+          <span>Grupo atual: <b>${grupoTxt}</b></span>
+          <span>Status: <b class="${statusClass}">${situacao}</b></span>
+          <span>Posição atual no grupo: <b>${pos?pos+'º':'-'}</b></span>
         </div>
-        ${proxHtml}
+        ${proximoJogoTexto(prox,meuTime)}
       </div>
-      <div class="meu-status-card">
-        <b>${pos?pos+'º':'-'}</b>
-        <span>posição atual no grupo</span>
-        <div class="clean-note">${t?campanhaTexto(t):"Sem campanha na fase"}</div>
-      </div>
-    </div>
-    <div class="quick-grid">
-      <div class="quick-card"><small>Pontos</small><b>${t?t.pts:'-'}</b></div>
-      <div class="quick-card"><small>Jogos</small><b>${t?t.j:'-'}</b></div>
-      <div class="quick-card"><small>Saldo</small><b>${t?fmt(t.saldo):'-'}</b></div>
-      <div class="quick-card"><small>PF</small><b>${t?fmt(t.pf):'-'}</b></div>
     </div>
   `;
 }
@@ -1320,6 +1379,112 @@ function renderEstatisticas(){
   box.innerHTML=`<div class="stats-grid">${cards.map(c=>`<div class="stat-card"><small>${c[0]}</small><b>${c[1]}</b><p>${c[2]}</p></div>`).join("")}</div><div class="clean-note">As estatísticas serão enriquecidas automaticamente conforme novas rodadas forem registradas.</div>`;
 }
 
+
+function rodadasRegistradas(){
+  return Object.keys(historico?.rodadas||{})
+    .map(Number)
+    .filter(r=>!isNaN(r) && Array.isArray(historico.rodadas[String(r)]) && historico.rodadas[String(r)].length)
+    .sort((a,b)=>a-b);
+}
+function dadosDaRodada(r){return (historico?.rodadas&&historico.rodadas[String(r)])?historico.rodadas[String(r)]:[]}
+function dinheiro(v){return Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function rankingRodada(r){return dadosDaRodada(r).slice().sort((a,b)=>Number(b.pontos||0)-Number(a.pontos||0))}
+function rankingSomaRodadas(inicio,fim){
+  const mapa={};
+  rodadasRegistradas().filter(r=>r>=inicio&&r<=fim).forEach(r=>{
+    dadosDaRodada(r).forEach(t=>{
+      const id=t.time_id||t.time;
+      if(!mapa[id])mapa[id]={time_id:t.time_id,time:t.time,cartoleiro:t.cartoleiro,total:0,rodadas:0};
+      mapa[id].total+=Number(t.pontos||0);mapa[id].rodadas++;
+    })
+  });
+  return Object.values(mapa).sort((a,b)=>b.total-a.total);
+}
+function rankingTradicional(){return rankingSomaRodadas(1,38)}
+function campeoesLigaReal(){
+  return rodadasRegistradas().map(r=>{const top=rankingRodada(r)[0];return top?{rodada:r,...top}:null}).filter(Boolean);
+}
+function rankingLigaReal(){
+  const mapa={};
+  campeoesLigaReal().forEach(c=>{
+    const id=c.time_id||c.time;
+    if(!mapa[id])mapa[id]={time:c.time,cartoleiro:c.cartoleiro,vitorias:0,premio:0,rodadas:[]};
+    mapa[id].vitorias++;mapa[id].premio+=70;mapa[id].rodadas.push(c.rodada);
+  });
+  return Object.values(mapa).sort((a,b)=>b.vitorias-a.vitorias||b.premio-a.premio||a.time.localeCompare(b.time,'pt-BR'));
+}
+function renderTopList(lista, campo, sufixo='', limite=6){
+  if(!lista.length)return '<div class="muted-card">Ainda sem dados suficientes.</div>';
+  return `<div>${lista.slice(0,limite).map((t,i)=>`<div class="leader-row"><span class="pos">${i+1}</span><b>${t.time}</b><span class="value">${campo(t)}${sufixo}</span></div>`).join('')}</div>`;
+}
+function renderLigaReal(){
+  const box=document.getElementById('boxLigaReal'); if(!box||!historico)return;
+  const campeoes=campeoesLigaReal();
+  const ranking=rankingLigaReal();
+  const totalPago=campeoes.length*70;
+  box.innerHTML=`
+    <div class="stats-grid">
+      <div class="stat-card"><small>Rodadas registradas</small><b>${campeoes.length}</b><p>de 38 rodadas</p></div>
+      <div class="stat-card"><small>Prêmio já apurado</small><b>${dinheiro(totalPago)}</b><p>${campeoes.length} × R$ 70</p></div>
+      <div class="stat-card"><small>Total da Liga Real</small><b>${dinheiro(2660)}</b><p>38 rodadas × R$ 70</p></div>
+    </div>
+    <div class="info-block light">
+      <h3>Ranking Liga Real</h3>
+      ${renderTopList(ranking,t=>`${t.vitorias} vitória${t.vitorias>1?'s':''}`, '', 10)}
+    </div>
+    <div class="info-block">
+      <h3>Vencedores por rodada</h3>
+      <table class="table-mini"><thead><tr><th>Rodada</th><th>Vencedor</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
+      ${campeoes.slice().reverse().map(c=>`<tr><td>R${c.rodada}</td><td><b>${c.time}</b></td><td>${fmt(c.pontos)}</td><td>${dinheiro(70)}</td></tr>`).join('')}
+      </tbody></table>
+    </div>`;
+}
+function renderPremiacao(){
+  const box=document.getElementById('boxPremiacao'); if(!box||!historico)return;
+  const trad=rankingTradicional();
+  const turno1=rankingSomaRodadas(1,19);
+  const turno2=rankingSomaRodadas(20,38);
+  const real=rankingLigaReal();
+  const premiosTrad=[600,480,415,360,295,240];
+  const premiosMata=[360,200,100,50];
+  box.innerHTML=`
+    <div class="prize-grid">
+      <div class="prize-card"><h3>Vencedores Turno</h3><div class="money-row"><b>1º Turno</b><span>R$ 100,00</span></div><div class="money-row"><b>2º Turno</b><span>R$ 100,00</span></div></div>
+      <div class="prize-card"><h3>Vencedores Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div><div class="warn-mini">Mensal será calculado pela data do primeiro jogo da rodada quando incluirmos o calendário.</div></div>
+      <div class="prize-card"><h3>Mata-mata</h3>${premiosMata.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}</div>
+      <div class="prize-card"><h3>Tradicional</h3>${premiosTrad.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}</div>
+      <div class="prize-card"><h3>Liga Real</h3><div class="money-row"><b>38 rodadas</b><span>${dinheiro(2660)}</span></div><p class="small">R$ 70 por vencedor de rodada.</p></div>
+    </div>
+    <div class="info-block light"><h3>Líderes parciais</h3>
+      <div class="stats-grid">
+        <div class="stat-card"><small>1º turno</small><b>${turno1[0]?.time||'-'}</b><p>${turno1[0]?fmt(turno1[0].total)+' pts':'Rodadas 1 a 19'}</p></div>
+        <div class="stat-card"><small>2º turno</small><b>${turno2[0]?.time||'-'}</b><p>${turno2[0]?fmt(turno2[0].total)+' pts':'Rodadas 20 a 38'}</p></div>
+        <div class="stat-card"><small>Tradicional</small><b>${trad[0]?.time||'-'}</b><p>${trad[0]?fmt(trad[0].total)+' pts':'Soma Cartola'}</p></div>
+        <div class="stat-card"><small>Liga Real</small><b>${real[0]?.time||'-'}</b><p>${real[0]?real[0].vitorias+' vitória(s) de rodada':'R$ 70 por rodada'}</p></div>
+      </div>
+    </div>
+    <div class="info-block"><h3>Top 6 Tradicional</h3>${renderTopList(trad,t=>fmt(t.total)+' pts','',6)}</div>`;
+}
+function renderApiCartola(){
+  const box=document.getElementById('boxApiCartola'); if(!box)return;
+  const rodadaCartola=parciaisCartola?.rodada_cartola||parciaisCartola?.rodada||'-';
+  const rodadaDados=parciaisCartola?.rodada_dados||'-';
+  const status=parciaisCartola?.rodada_em_andamento?'Rodada em andamento':parciaisCartola?.mercado_aberto?'Mercado aberto':'Mercado fechado/indisponível';
+  const fonte=parciaisCartola?'rodada_atual_cartola.json':'histórico';
+  const dataApi=parciaisCartola?.ultima_atualizacao||historicoMeta.ultimaAtualizacao||'-';
+  const obs=parciaisCartola?.observacao||'Dados carregados do JSON publicado no GitHub Pages.';
+  box.innerHTML=`
+    <div class="api-grid">
+      <div class="api-card"><small>Status</small><b>${status}</b></div>
+      <div class="api-card"><small>Rodada Cartola</small><b>${rodadaCartola}</b></div>
+      <div class="api-card"><small>Dados usados</small><b>Rodada ${rodadaDados}</b></div>
+      <div class="api-card"><small>Fonte exibida</small><b>${fonte}</b></div>
+      <div class="api-card"><small>Última atualização API</small><b>${formatarDataArquivo(dataApi)}</b></div>
+      <div class="api-card"><small>Times no JSON</small><b>${parciaisCartola?.times?.length||'-'}</b></div>
+    </div>
+    <div class="info-block"><h3>Diagnóstico</h3><p>${obs}</p><span class="pill-soft">Histórico por rodada</span><span class="pill-soft">Rodada atual</span><span class="pill-soft">Fallback preparado</span></div>`;
+}
+
 function renderMeuTime(){
   preencherSelectMeuTime();
 
@@ -1328,6 +1493,7 @@ function renderMeuTime(){
   if(!sel || !box || !historico) return;
 
   const meuTime = sel.value;
+  if(meuTime) localStorage.setItem("cartolaMeuTime", meuTime);
   const fase = faseAtualNumero();
 
   let titulo = "";
@@ -1344,7 +1510,8 @@ function renderMeuTime(){
       Object.values(grupos[grupoNome]).map(time=>({time})),
       1,
       Object.values(jogosFase1),
-      meuTime
+      meuTime,
+      `Todos os jogos do ${meuTime} da Fase 1`
     );
     statusFn = statusInfo;
   }
@@ -1354,7 +1521,7 @@ function renderMeuTime(){
     grupoNome = acharGrupoEmMapa(meuTime, mapa);
     titulo = `Fase 2 · ${nomeFase2(grupoNome)}`;
     lista = calcGrupoTimesAte(mapa[grupoNome], 19, jogos4, 24);
-    jogos = jogosDoMeuTime(mapa[grupoNome], 19, jogos4, meuTime);
+    jogos = jogosDoMeuTime(mapa[grupoNome], 19, jogos4, meuTime, `Todos os jogos do ${meuTime} da Fase 2`);
     statusFn = pos=>statusFase2(grupoNome,pos);
   }
 
@@ -1363,7 +1530,7 @@ function renderMeuTime(){
     grupoNome = acharGrupoEmMapa(meuTime, mapa);
     titulo = `Fase 3 · ${grupoNome}`;
     lista = calcGrupoTimesAte(mapa[grupoNome], 25, jogos4, 30);
-    jogos = jogosDoMeuTime(mapa[grupoNome], 25, jogos4, meuTime);
+    jogos = jogosDoMeuTime(mapa[grupoNome], 25, jogos4, meuTime, `Todos os jogos do ${meuTime} da Fase 3`);
     statusFn = pos=>statusFase3(grupoNome,pos);
   }
 
@@ -1372,7 +1539,7 @@ function renderMeuTime(){
     grupoNome = acharGrupoEmMapa(meuTime, mapa);
     titulo = `Fase 4 · ${grupoNome}`;
     lista = calcGrupoTimesAte(mapa[grupoNome], 31, jogos4TurnoUnico, 34);
-    jogos = jogosDoMeuTime(mapa[grupoNome], 31, jogos4TurnoUnico, meuTime);
+    jogos = jogosDoMeuTime(mapa[grupoNome], 31, jogos4TurnoUnico, meuTime, `Todos os jogos do ${meuTime} da Fase 4`);
     statusFn = pos=>statusFase4(grupoNome,pos);
   }
 
@@ -1381,7 +1548,7 @@ function renderMeuTime(){
     grupoNome = acharGrupoEmMapa(meuTime, mapa);
     titulo = `Fase 5 · ${grupoNome}`;
     lista = calcGrupoTimesAte(mapa[grupoNome], 35, jogos3, 37);
-    jogos = jogosDoMeuTime(mapa[grupoNome], 35, jogos3, meuTime);
+    jogos = jogosDoMeuTime(mapa[grupoNome], 35, jogos3, meuTime, `Todos os jogos do ${meuTime} da Fase 5`);
     statusFn = pos=>statusFinal(grupoNome,pos);
   }
 
@@ -1392,19 +1559,39 @@ function renderMeuTime(){
 
     if(grupoNome){
       lista = calcGrupoTimesAte(mapa[grupoNome], 38, [[[1,2]]], 38);
-      jogos = jogosDoMeuTime(mapa[grupoNome], 38, [[[1,2]]], meuTime);
+      jogos = jogosDoMeuTime(mapa[grupoNome], 38, [[[1,2]]], meuTime, `Todos os jogos do ${meuTime} da Grande Final`);
       statusFn = pos=>statusGrande(grupoNome,pos);
     }
   }
 
   if(!grupoNome){
-    box.innerHTML = `
-      <div class="future-lock">
-        <h3>${meuTime}</h3>
-        <p>Este time não está ativo na fase atual.</p>
-        <p class="small">Ele pode ter sido eliminado ou ainda estar aguardando definição de classificados.</p>
-      </div>
-    `;
+    const diag=diagnosticarTimeForaDaFase(meuTime,fase);
+    if(diag){
+      box.innerHTML = `
+        <div class="meu-summary">
+          <div class="meu-hero">
+            <h3>${diag.titulo}</h3>
+            <div class="situation-lines">
+              <span>Fase atual: <b>${diag.faseAtual}</b></span>
+              <span>Grupo atual: <b>${diag.grupoAtual}</b></span>
+              <span>Status: <b class="status-bad">${diag.status}</b></span>
+              <span>Posição final no grupo: <b>${diag.posicao}</b></span>
+              <span>Próximo jogo: <b>sem jogo previsto</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="info-block">
+          <h3>Classificação final da Fase 1</h3>
+          ${renderTabelaMeuTime(calcularGrupo(acharGrupoFase1(meuTime),FASE1_FINAL), meuTime, statusInfo)}
+        </div>
+        <div class="info-block light">
+          <h3>Jogos do ${meuTime} na Fase 1</h3>
+          ${jogosDoMeuTime(Object.values(grupos[acharGrupoFase1(meuTime)]).map(time=>({time})),1,Object.values(jogosFase1),meuTime,`Todos os jogos do ${meuTime} da Fase 1`)}
+        </div>
+      `;
+    }else{
+      box.innerHTML = `<div class="future-lock"><h3>${meuTime}</h3><p>Time não encontrado.</p></div>`;
+    }
     return;
   }
 
@@ -1417,7 +1604,7 @@ function renderMeuTime(){
     </div>
 
     <div class="info-block light">
-      <h3>Jogos do time</h3>
+      <h3>Jogos</h3>
       ${jogos}
     </div>
   `;
