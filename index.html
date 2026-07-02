@@ -73,13 +73,65 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .origin-compact-row{border-top-color:#263247}
 .box{box-shadow:0 6px 18px #0002}
 @media(max-width:760px){.scoreboard-title{font-size:12px;padding:9px 10px}.legend{font-size:11px}.score-note{font-size:9.5px}.nav{padding:8px 0 10px}button{padding:9px 12px}}
+
+/* Topo fixo de status e aba Meu Time */
+.top-status{
+  max-width:900px;
+  margin:14px auto 0;
+  background:#020617cc;
+  border:1px solid #334155;
+  border-radius:16px;
+  padding:10px 12px;
+  font-size:12px;
+  line-height:1.45;
+  color:#e5e7eb;
+}
+.top-status div:first-child{
+  color:#fde68a;
+  font-weight:900;
+}
+.top-status div:nth-child(2){
+  color:#bbf7d0;
+}
+.top-status div:nth-child(3){
+  color:#94a3b8;
+}
+.meutime-highlight{
+  background:#12351f !important;
+}
+.future-lock{
+  text-align:center;
+  padding:22px 14px;
+  background:#0b1220;
+  border:1px dashed var(--line);
+  border-radius:16px;
+}
+.future-lock h3{
+  color:#fde68a;
+  margin-bottom:8px;
+}
+.future-lock p{
+  color:#cbd5e1;
+  margin:6px 0;
+}
+
 </style>
 </head>
 <body>
-<header><h1>🏆 Cartola de Ermida</h1><p>Campeonato automático com grupos, repescagem e mata-mata — calendário até a rodada 38</p></header>
+<header>
+  <h1>🏆 Cartola de Ermida</h1>
+  <p>Campeonato automático com grupos, repescagem e mata-mata — calendário até a rodada 38</p>
+    
+  <div class="top-status">
+    <div id="topLinha1">Carregando dados...</div>
+    <div id="topLinha2">Aguarde alguns segundos.</div>
+    <div id="topLinha3">Site: carregando...</div>
+  </div>
+</header>
 <div class="container">
   <div class="nav">
-    <button class="active" onclick="abrirAba('rodadas',this)">Rodadas</button>
+    <button class="active" onclick="abrirAba('meutime',this)">Meu Time</button>
+    <button onclick="abrirAba('rodadas',this)">Rodadas</button>
     <button onclick="abrirAba('fase2',this)">Fase 2</button>
     <button onclick="abrirAba('fase3',this)">Fase 3</button>
     <button onclick="abrirAba('fase4',this)">Fase 4</button>
@@ -89,7 +141,20 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
     <button onclick="abrirAba('regulamento',this)">Regulamento</button>
   </div>
 
-  <section id="aba-rodadas" class="aba"><div class="card"><h2>Fase 1 - Grupo e Rodada</h2><div class="livebar"><div><strong id="statusAtualizacao">Dados carregados</strong><br><small id="ultimaAtualizacao">Clique para buscar a versão mais nova do JSON.</small></div><button class="refresh-btn" id="btnAtualizar" onclick="atualizarDados()">🔄 Atualizar</button></div><div class="tabs" id="tabsGruposRodadas"></div><div class="phase-filter"><label>Rodada:</label><select id="selRodada" onchange="mostrarRodada()"></select></div><div class="info-block"><h3>Classificação do grupo</h3><table class="clean-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th><th class="hide-mobile">PF</th></tr></thead><tbody id="tbodyFase1Rodada"></tbody></table><div class="legend"><span><i class="pos-dot dot-ok"></i>Grupos</span><span><i class="pos-dot dot-rep"></i>Repescagem</span><span><i class="pos-dot dot-bad"></i>Eliminado</span></div></div><div class="info-block light"><h3>Jogos da rodada</h3><div id="boxRodadas"></div></div></div></section>
+  <section id="aba-meutime" class="aba">
+    <div class="card">
+      <h2>Meu Time</h2>
+
+      <div class="phase-filter">
+        <label>Escolha seu time:</label>
+        <select id="selMeuTime" onchange="renderMeuTime()"></select>
+      </div>
+
+      <div id="boxMeuTime"></div>
+    </div>
+  </section>
+
+  <section id="aba-rodadas" class="aba hidden"><div class="card"><h2>Fase 1 - Grupo e Rodada</h2><div class="livebar"><div><strong id="statusAtualizacao">Dados carregados</strong><br><small id="ultimaAtualizacao">Clique para buscar a versão mais nova do JSON.</small></div><button class="refresh-btn" id="btnAtualizar" onclick="atualizarDados()">🔄 Atualizar</button></div><div class="tabs" id="tabsGruposRodadas"></div><div class="phase-filter"><label>Rodada:</label><select id="selRodada" onchange="mostrarRodada()"></select></div><div class="info-block"><h3>Classificação do grupo</h3><table class="clean-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th><th class="hide-mobile">PF</th></tr></thead><tbody id="tbodyFase1Rodada"></tbody></table><div class="legend"><span><i class="pos-dot dot-ok"></i>Grupos</span><span><i class="pos-dot dot-rep"></i>Repescagem</span><span><i class="pos-dot dot-bad"></i>Eliminado</span></div></div><div class="info-block light"><h3>Jogos da rodada</h3><div id="boxRodadas"></div></div></div></section>
 
   <section id="aba-fase2" class="aba hidden">
     <div class="card"><div class="phase-title"><div><h2>Fase 2</h2><p class="small">Escolha um grupo. A classificação fica primeiro; os confrontos ficam embaixo.</p></div><span class="badge future">R19 a R24</span></div><div class="tabs" id="tabsFase2"></div><div class="phase-filter"><label>Mostrar após:</label><select id="selFase2Rodada" onchange="renderFase2()"></select></div><div id="boxFase2Detalhe"></div></div>
@@ -185,7 +250,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 <script>
 const LIMITE_EMPATE = 5;
 const FASE1_FINAL = 18;
-let historico, parciaisCartola=null, grupoAtual="A", faseSelecionada="fase3", grupoFaseAtual="";
+let historico, parciaisCartola=null, rodadaAtualCartola=null, grupoAtual="A", faseSelecionada="fase3", grupoFaseAtual="";
 let historicoMeta={ultimaAtualizacao:null, fonte:""};
 const grupos={
  A:{1:"MT10M1T0",2:"RJ Clube",3:"S.C. Finha Paulista",4:"DP-SC",5:"Kayser Football",6:"GALOBERA F.C",7:"Legione Romanista",8:"Jafeth G.D.F.C.",9:"Sport Club Prexeca Bangers"},
@@ -213,12 +278,16 @@ async function buscarHistorico(){
 
 async function buscarParciais(){
   try{
-    const resp=await fetch("rodada_atual_cartola.json?v="+Date.now(),{cache:"no-store"});
-    if(!resp.ok)return null;
-    return await resp.json();
-  }catch(e){
-    return null;
-  }
+    let resp=await fetch("parciais_cartola.json?v="+Date.now(),{cache:"no-store"});
+    if(resp.ok)return await resp.json();
+  }catch(e){}
+
+  try{
+    let resp=await fetch("rodada_atual_cartola.json?v="+Date.now(),{cache:"no-store"});
+    if(resp.ok)return await resp.json();
+  }catch(e){}
+
+  return null;
 }
 function formatarDataArquivo(valor){
   if(!valor)return "horário real do arquivo indisponível";
@@ -229,45 +298,36 @@ function formatarDataArquivo(valor){
 function marcarAtualizacao(txt){
   const busca=new Date();
 
-  if(document.getElementById("statusAtualizacao")){
-    let statusTxt=txt;
+  const rodadaCartola = parciaisCartola?.rodada_cartola || parciaisCartola?.rodada || "-";
+  const rodadaDados = parciaisCartola?.rodada_dados || "-";
 
-    if(parciaisCartola){
-      if(parciaisCartola.mercado_aberto){
-        statusTxt=`Dados atualizados · Mercado aberto · Rodada Cartola ${parciaisCartola.rodada_cartola}`;
-      }else if(parciaisCartola.rodada_em_andamento){
-        statusTxt=`Dados atualizados · Rodada ${parciaisCartola.rodada_dados} em andamento`;
-      }else{
-        statusTxt=`Dados atualizados · Rodada ${parciaisCartola.rodada_dados}`;
-      }
+  let statusTxt = "Status indisponível";
+  if(parciaisCartola){
+    if(parciaisCartola.rodada_em_andamento){
+      statusTxt = "Rodada em andamento · parciais ao vivo";
+    }else if(parciaisCartola.mercado_aberto){
+      statusTxt = "Mercado aberto · sem parciais ao vivo";
+    }else{
+      statusTxt = "Mercado fechado · aguardando jogos";
     }
-
-    statusAtualizacao.textContent=statusTxt;
   }
 
+  const dataCartola = parciaisCartola?.ultima_atualizacao || historicoMeta.ultimaAtualizacao || "-";
+  const siteHora = busca.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+
+  if(document.getElementById("topLinha1")){
+    topLinha1.textContent = `Cartola: Rodada ${rodadaCartola} · Dados usados: Rodada ${rodadaDados}`;
+    topLinha2.textContent = statusTxt;
+    topLinha3.textContent = `Dados Cartola: ${formatarDataArquivo(dataCartola)} · Site: ${siteHora}`;
+  }
+
+  if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent=txt;
   if(document.getElementById("ultimaAtualizacao")){
-    const origem=historicoMeta.fonte==="json"?"JSON":"servidor";
-
-    let rodadaTxt="";
-    if(parciaisCartola){
-      const mercadoTxt=parciaisCartola.mercado_aberto
-        ? "Mercado aberto — sem parciais ao vivo"
-        : "Rodada fechada/em andamento — dados da rodada atual disponíveis";
-
-      rodadaTxt =
-        `<br>Cartola: rodada ${parciaisCartola.rodada_cartola} · Dados usados: rodada ${parciaisCartola.rodada_dados}` +
-        `<br>Status: ${mercadoTxt}` +
-        `<br>Rodada atual publicada: ${formatarDataArquivo(parciaisCartola.ultima_atualizacao)}`;
-    }
-
-    ultimaAtualizacao.innerHTML=
-      `Histórico publicado (${origem}): ${formatarDataArquivo(historicoMeta.ultimaAtualizacao)}` +
-      rodadaTxt +
-      `<br>Atualização da tela: ${busca.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}`;
+    ultimaAtualizacao.innerHTML=`Dados Cartola: ${formatarDataArquivo(dataCartola)}<br>Site: ${siteHora}`;
   }
 }
 async function atualizarDados(){try{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.add("loading");btnAtualizar.textContent="Atualizando..."}historico=await buscarHistorico();parciaisCartola=await buscarParciais();renderTudo();marcarAtualizacao("Dados atualizados")}catch(e){if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent="Não foi possível atualizar"}finally{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.remove("loading");btnAtualizar.textContent="🔄 Atualizar"}}}
-function montarControles(){["tabsGruposRodadas"].forEach(id=>{const box=document.getElementById(id);Object.keys(grupos).forEach(g=>{const b=document.createElement("button");b.textContent="Grupo "+g;b.onclick=()=>{grupoAtual=g;atualizarTabs();renderTudo()};box.appendChild(b)})});for(let r=1;r<=FASE1_FINAL;r++){selRodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`}selRodada.value=FASE1_FINAL;montarTabsFase2();montarPaginasFases();atualizarTabs()}
+function montarControles(){["tabsGruposRodadas"].forEach(id=>{const box=document.getElementById(id);Object.keys(grupos).forEach(g=>{const b=document.createElement("button");b.textContent="Grupo "+g;b.onclick=()=>{grupoAtual=g;atualizarTabs();renderTudo()};box.appendChild(b)})});for(let r=1;r<=FASE1_FINAL;r++){selRodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`}selRodada.value=FASE1_FINAL;montarTabsFase2();montarPaginasFases();preencherSelectMeuTime();atualizarTabs()}
 function atualizarTabs(){document.querySelectorAll("#tabsGrupos button,#tabsGruposRodadas button").forEach(b=>b.classList.toggle("active",b.textContent.endsWith(grupoAtual)))}
 function pontosTime(nome,rodada){
   if(
@@ -304,7 +364,13 @@ function calcularGrupo(g,ate){const stats={};Object.values(grupos[g]).forEach(no
 function calcGrupoTimes(times,inicio,agenda){return calcGrupoTimesAte(times,inicio,agenda,inicio+agenda.length-1)}
 function calcGrupoTimesAte(times,inicio,agenda,ateRodada){const stats={};times.forEach(t=>{if(t&&t.time)stats[t.time]=base(t.time)});agenda.forEach((rodada,idx)=>{const r=inicio+idx;if(r>ateRodada||!temRodada(r))return;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time,tb=times[b-1]?.time;if(ta&&tb)aplicaJogo(stats,ta,tb,pontosTime(ta,r),pontosTime(tb,r))})});return ordenar(Object.values(stats))}
 function statusInfo(pos){if(pos<=4)return["dot-ok","Grupo"];if(pos<=8)return["dot-rep","Repescagem"];return["dot-bad","Eliminado"]}
-function renderTudo(){mostrarRodada();renderFase2();renderPaginasFases();renderFluxogramaNovo()}
+function renderTudo(){
+  mostrarRodada();
+  renderFase2();
+  renderPaginasFases();
+  renderFluxogramaNovo();
+  renderMeuTime();
+}
 function renderClassificacao(){const lista=calcularGrupo(grupoAtual,Number(selClassificacao.value));tbodyClassificacao.innerHTML="";lista.forEach((t,i)=>{const pos=i+1,[dot,status]=statusInfo(pos),id=`det-${grupoAtual}-${pos}`;tbodyClassificacao.innerHTML+=`<tr class="clickable" onclick="toggleDetalhe('${id}')"><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td><td class="hide-mobile">${fmt(t.pf)}</td><td class="hide-mobile">${fmt(t.pc)}</td></tr><tr id="${id}" class="details"><td colspan="8"><b>${t.time}</b><br>Empates: ${t.e} | Derrotas: ${t.d}<br>Pontos feitos: ${fmt(t.pf)} | Pontos contra: ${fmt(t.pc)} | Saldo: ${fmt(t.saldo)}<br>Status: ${status}</td></tr>`})}
 function toggleDetalhe(id){const el=document.getElementById(id);el.style.display=el.style.display==="table-row"?"none":"table-row"}
 function renderFase1Rodada(){if(!document.getElementById("tbodyFase1Rodada"))return;const lista=calcularGrupo(grupoAtual,Number(selRodada.value));tbodyFase1Rodada.innerHTML=lista.map((t,i)=>{const pos=i+1,[dot]=statusInfo(pos);return `<tr><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td><td class="hide-mobile">${fmt(t.pf)}</td></tr>`}).join("")}
@@ -454,6 +520,13 @@ function montarPaginasFases(){
 function renderPaginasFases(){['fase3','fase4','final','grande'].forEach(renderPaginaFase)}
 function renderPaginaFase(key){
   if(!historico)return; const page=document.querySelector(`.fase-page[data-fase="${key}"]`); if(!page)return; const cfg=faseConfigs[key];
+  if(!faseEstaAberta(key)){
+    const tabs = page.querySelector('.fase-tabs-grupos');
+    const box = page.querySelector('.fase-box-detalhe');
+    if(tabs) tabs.innerHTML = "";
+    if(box) box.innerHTML = avisoFaseFechada(key);
+    return;
+  }
   const grps=cfg.get(), nomes=Object.keys(grps); if(!estadoPaginasFases[key].grupo||!grps[estadoPaginasFases[key].grupo])estadoPaginasFases[key].grupo=nomes[0];
   const atual=estadoPaginasFases[key].grupo, tabs=page.querySelector('.fase-tabs-grupos'); tabs.innerHTML='';
   nomes.forEach(n=>{const b=document.createElement('button');b.textContent=n;b.classList.toggle('active',n===atual);b.onclick=()=>{estadoPaginasFases[key].grupo=n;renderPaginaFase(key)};tabs.appendChild(b)});
@@ -525,6 +598,253 @@ function renderFluxogramaNovo(){
   </div></div>
 
   <div class="muted-card">Dica: no celular, arraste o mapa para o lado para ver todas as fases.</div>`;
+}
+
+
+function listaTodosTimes(){
+  const nomes = new Set();
+  Object.values(grupos).forEach(g=>{
+    Object.values(g).forEach(nome=>nomes.add(nome));
+  });
+  return Array.from(nomes).sort((a,b)=>a.localeCompare(b,"pt-BR"));
+}
+
+function preencherSelectMeuTime(){
+  const sel = document.getElementById("selMeuTime");
+  if(!sel || sel.options.length) return;
+
+  listaTodosTimes().forEach(nome=>{
+    const opt = document.createElement("option");
+    opt.value = nome;
+    opt.textContent = nome;
+    sel.appendChild(opt);
+  });
+}
+
+function faseAtualNumero(){
+  const r = Number(parciaisCartola?.rodada_cartola || parciaisCartola?.rodada || 18);
+
+  if(r <= 18) return 1;
+  if(r <= 24) return 2;
+  if(r <= 30) return 3;
+  if(r <= 34) return 4;
+  if(r <= 37) return 5;
+  return 6;
+}
+
+function faseEstaAberta(chave){
+  const faseAtual = faseAtualNumero();
+  const mapa = {fase3:3,fase4:4,final:5,grande:6};
+  return faseAtual >= mapa[chave];
+}
+
+function avisoFaseFechada(key){
+  const textos = {
+    fase3:["Fase 3 ainda não começou","Será aberta após a conclusão da Fase 2.","Prevista: rodadas 25 a 30."],
+    fase4:["Fase 4 ainda não começou","Será aberta após a conclusão da Fase 3.","Prevista: rodadas 31 a 34."],
+    final:["Fase 5 ainda não começou","Será aberta após a conclusão da Fase 4.","Prevista: rodadas 35 a 37."],
+    grande:["Grande Final ainda não começou","Será aberta após a conclusão da Fase 5.","Prevista: rodada 38."]
+  };
+
+  const t = textos[key];
+
+  return `
+    <div class="future-lock">
+      <h3>${t[0]}</h3>
+      <p>${t[1]}</p>
+      <p><b>${t[2]}</b></p>
+      <p class="small">Os classificados aparecerão automaticamente quando a fase anterior terminar.</p>
+    </div>
+  `;
+}
+
+function acharGrupoFase1(nome){
+  for(const [grupo, times] of Object.entries(grupos)){
+    if(Object.values(times).includes(nome)) return grupo;
+  }
+  return null;
+}
+
+function acharGrupoEmMapa(nome, mapa){
+  for(const [grupo, times] of Object.entries(mapa)){
+    if(times.some(t=>t && t.time === nome)) return grupo;
+  }
+  return null;
+}
+
+function renderTabelaMeuTime(lista, meuTime, statusFn){
+  return `
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Time</th>
+          <th>Pts</th>
+          <th>J</th>
+          <th>V</th>
+          <th>Saldo</th>
+          <th class="hide-mobile">PF</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${lista.map((t,i)=>{
+          const pos = i + 1;
+          const st = statusFn ? statusFn(pos) : ["",""];
+          const destaque = t.time === meuTime ? 'class="meutime-highlight"' : "";
+          return `
+            <tr ${destaque}>
+              <td>${st[0] ? `<span class="pos-dot ${st[0]}"></span>` : ""}${pos}</td>
+              <td><b>${t.time}</b>${t.time === meuTime ? ' <span class="badge ok">meu time</span>' : ""}</td>
+              <td><b>${t.pts}</b></td>
+              <td>${t.j}</td>
+              <td>${t.v}</td>
+              <td>${fmt(t.saldo)}</td>
+              <td class="hide-mobile">${fmt(t.pf)}</td>
+            </tr>
+          `;
+        }).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+function jogosDoMeuTime(times, inicio, agenda, meuTime){
+  let html = "";
+
+  agenda.forEach((rodadaAgenda, idx)=>{
+    const rodada = inicio + idx;
+
+    rodadaAgenda.forEach(([a,b])=>{
+      const ta = times[a-1]?.time || times[a-1];
+      const tb = times[b-1]?.time || times[b-1];
+
+      if(ta !== meuTime && tb !== meuTime) return;
+
+      const tem = temRodada(rodada);
+      const pa = tem ? pontosTime(ta, rodada) : 0;
+      const pb = tem ? pontosTime(tb, rodada) : 0;
+
+      html += `
+        <div class="match">
+          <div class="match-head">Rodada ${rodada}</div>
+          <div class="match-line">
+            <div class="team-left"><b>${ta}</b></div>
+            <div class="score-pill">${tem ? `${fmt(pa)} x ${fmt(pb)}` : "x"}</div>
+            <div class="team-right"><b>${tb}</b></div>
+          </div>
+          <div class="result">${tem ? notaJogo(ta,tb,pa,pb) : "Jogo ainda não disputado"}</div>
+        </div>
+      `;
+    });
+  });
+
+  return html || `<div class="muted-card">Nenhum jogo encontrado para este time nesta fase.</div>`;
+}
+
+function renderMeuTime(){
+  preencherSelectMeuTime();
+
+  const sel = document.getElementById("selMeuTime");
+  const box = document.getElementById("boxMeuTime");
+  if(!sel || !box || !historico) return;
+
+  const meuTime = sel.value;
+  const fase = faseAtualNumero();
+
+  let titulo = "";
+  let grupoNome = "";
+  let lista = [];
+  let jogos = "";
+  let statusFn = null;
+
+  if(fase === 1){
+    grupoNome = acharGrupoFase1(meuTime);
+    titulo = `Fase 1 · Grupo ${grupoNome}`;
+    lista = calcularGrupo(grupoNome, Number(selRodada?.value || FASE1_FINAL));
+    jogos = jogosDoMeuTime(
+      Object.values(grupos[grupoNome]).map(time=>({time})),
+      1,
+      Object.values(jogosFase1),
+      meuTime
+    );
+    statusFn = statusInfo;
+  }
+
+  if(fase === 2){
+    const mapa = fase2Times();
+    grupoNome = acharGrupoEmMapa(meuTime, mapa);
+    titulo = `Fase 2 · ${nomeFase2(grupoNome)}`;
+    lista = calcGrupoTimesAte(mapa[grupoNome], 19, jogos4, 24);
+    jogos = jogosDoMeuTime(mapa[grupoNome], 19, jogos4, meuTime);
+    statusFn = pos=>statusFase2(grupoNome,pos);
+  }
+
+  if(fase === 3){
+    const mapa = fase3Times();
+    grupoNome = acharGrupoEmMapa(meuTime, mapa);
+    titulo = `Fase 3 · ${grupoNome}`;
+    lista = calcGrupoTimesAte(mapa[grupoNome], 25, jogos4, 30);
+    jogos = jogosDoMeuTime(mapa[grupoNome], 25, jogos4, meuTime);
+    statusFn = pos=>statusFase3(grupoNome,pos);
+  }
+
+  if(fase === 4){
+    const mapa = fase4Times();
+    grupoNome = acharGrupoEmMapa(meuTime, mapa);
+    titulo = `Fase 4 · ${grupoNome}`;
+    lista = calcGrupoTimesAte(mapa[grupoNome], 31, jogos4TurnoUnico, 34);
+    jogos = jogosDoMeuTime(mapa[grupoNome], 31, jogos4TurnoUnico, meuTime);
+    statusFn = pos=>statusFase4(grupoNome,pos);
+  }
+
+  if(fase === 5){
+    const mapa = faseFinalTimes();
+    grupoNome = acharGrupoEmMapa(meuTime, mapa);
+    titulo = `Fase 5 · ${grupoNome}`;
+    lista = calcGrupoTimesAte(mapa[grupoNome], 35, jogos3, 37);
+    jogos = jogosDoMeuTime(mapa[grupoNome], 35, jogos3, meuTime);
+    statusFn = pos=>statusFinal(grupoNome,pos);
+  }
+
+  if(fase >= 6){
+    const mapa = finalTimes();
+    grupoNome = acharGrupoEmMapa(meuTime, mapa);
+    titulo = `Grande Final · ${grupoNome || "Definição"}`;
+
+    if(grupoNome){
+      lista = calcGrupoTimesAte(mapa[grupoNome], 38, [[[1,2]]], 38);
+      jogos = jogosDoMeuTime(mapa[grupoNome], 38, [[[1,2]]], meuTime);
+      statusFn = pos=>statusGrande(grupoNome,pos);
+    }
+  }
+
+  if(!grupoNome){
+    box.innerHTML = `
+      <div class="future-lock">
+        <h3>${meuTime}</h3>
+        <p>Este time não está ativo na fase atual.</p>
+        <p class="small">Ele pode ter sido eliminado ou ainda estar aguardando definição de classificados.</p>
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="info-block">
+      <h3>${meuTime}</h3>
+      <p class="small">${titulo}</p>
+    </div>
+
+    <div class="info-block">
+      <h3>Classificação</h3>
+      ${renderTabelaMeuTime(lista, meuTime, statusFn)}
+    </div>
+
+    <div class="info-block light">
+      <h3>Jogos do time</h3>
+      ${jogos}
+    </div>
+  `;
 }
 
 carregar();
