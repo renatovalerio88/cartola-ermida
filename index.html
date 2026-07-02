@@ -383,6 +383,144 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   }
 }
 
+/* Versão 1.0: cards clean de resumo, perfil e estatísticas */
+.top-status div:nth-child(4){
+  color:#94a3b8;
+}
+.meu-summary{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:10px;
+  align-items:stretch;
+}
+.meu-hero{
+  background:linear-gradient(135deg,#0b1220,#0f2a1a);
+  border:1px solid #22c55e44;
+  border-radius:18px;
+  padding:14px;
+}
+.meu-hero h3{
+  color:#f8fafc;
+  font-size:18px;
+  margin-bottom:5px;
+}
+.meu-hero .meta{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.meu-hero .meta span{
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:999px;
+  padding:5px 8px;
+  font-size:11px;
+  color:#cbd5e1;
+  font-weight:800;
+}
+.meu-status-card{
+  background:#0b1220;
+  border:1px solid #334155;
+  border-radius:18px;
+  padding:14px;
+}
+.meu-status-card b{
+  display:block;
+  font-size:22px;
+  color:#fde68a;
+  margin-bottom:2px;
+}
+.meu-status-card span{
+  color:#94a3b8;
+  font-size:12px;
+}
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+.quick-card{
+  background:#0b1220;
+  border:1px solid #334155;
+  border-radius:15px;
+  padding:10px;
+}
+.quick-card small{
+  color:#94a3b8;
+  display:block;
+  margin-bottom:4px;
+}
+.quick-card b{
+  color:#f8fafc;
+  font-size:16px;
+}
+.next-match{
+  margin-top:10px;
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:14px;
+  padding:10px;
+}
+.next-match small{
+  display:block;
+  color:#94a3b8;
+  margin-bottom:5px;
+}
+.next-match b{
+  color:#dcfce7;
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin-top:10px;
+}
+.stat-card{
+  background:#0b1220;
+  border:1px solid #334155;
+  border-radius:16px;
+  padding:12px;
+}
+.stat-card small{
+  color:#94a3b8;
+  display:block;
+  margin-bottom:4px;
+}
+.stat-card b{
+  color:#fde68a;
+  font-size:17px;
+}
+.stat-card p{
+  margin:5px 0 0;
+  color:#cbd5e1;
+  font-size:12px;
+}
+.clean-note{
+  color:#94a3b8;
+  font-size:11px;
+  margin-top:8px;
+}
+@media(max-width:760px){
+  .top-status{line-height:1.35}
+  .top-status div{margin:1px 0}
+  .meu-summary{grid-template-columns:1fr;gap:8px}
+  .meu-hero,.meu-status-card{padding:11px;border-radius:16px}
+  .meu-hero h3{font-size:16px}
+  .meu-hero .meta span{font-size:10px;padding:4px 7px}
+  .quick-grid{grid-template-columns:repeat(2,1fr);gap:7px}
+  .quick-card{padding:8px;border-radius:13px}
+  .quick-card b{font-size:14px}
+  .next-match{padding:8px}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:7px}
+  .stat-card{padding:9px;border-radius:14px}
+  .stat-card b{font-size:14px}
+}
+@media(max-width:390px){
+  .stats-grid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -393,7 +531,8 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   <div class="top-status">
     <div id="topLinha1">Carregando dados...</div>
     <div id="topLinha2">Aguarde alguns segundos.</div>
-    <div id="topLinha3">Site: carregando...</div>
+    <div id="topLinha3">API Cartola: carregando...</div>
+    <div id="topLinha4">Site: carregando...</div>
   </div>
 </header>
 <div class="container">
@@ -406,6 +545,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
     <button onclick="abrirAba('fasefinal',this)">Fase 5</button>
     <button onclick="abrirAba('grandefinal',this)">Grande Final</button>
     <button onclick="abrirAba('fluxograma',this)">Mapa</button>
+    <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
     <button onclick="abrirAba('regulamento',this)">Regulamento</button>
   </div>
 
@@ -446,6 +586,19 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 
   <section id="aba-fluxograma" class="aba hidden">
     <div class="card"><div class="phase-title"><div><h2>Mapa do campeonato</h2><p class="small">Uma visão simples, parecida com chaveamento, mostrando de onde vem cada caminho até a final.</p></div><span class="badge future">R1 a R38</span></div><div id="boxFluxogramaNovo"></div></div>
+  </section>
+
+  <section id="aba-estatisticas" class="aba hidden">
+    <div class="card">
+      <div class="phase-title">
+        <div>
+          <h2>Estatísticas</h2>
+          <p class="small">Resumo rápido dos destaques do campeonato, sem poluir a tela.</p>
+        </div>
+        <span class="badge future">Resumo</span>
+      </div>
+      <div id="boxEstatisticas"></div>
+    </div>
   </section>
 
   <section id="aba-regulamento" class="aba hidden">
@@ -586,7 +739,8 @@ function marcarAtualizacao(txt){
   if(document.getElementById("topLinha1")){
     topLinha1.textContent = `Cartola: Rodada ${rodadaCartola} · Dados usados: Rodada ${rodadaDados}`;
     topLinha2.textContent = statusTxt;
-    topLinha3.textContent = `Dados Cartola: ${formatarDataArquivo(dataCartola)} · Site: ${siteHora}`;
+    topLinha3.textContent = `Última atualização API Cartola: ${formatarDataArquivo(dataCartola)}`;
+    if(document.getElementById("topLinha4"))topLinha4.textContent = `Última atualização do site: ${siteHora}`;
   }
 
   if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent=txt;
@@ -638,6 +792,7 @@ function renderTudo(){
   renderPaginasFases();
   renderFluxogramaNovo();
   renderMeuTime();
+  renderEstatisticas();
 }
 function renderClassificacao(){const lista=calcularGrupo(grupoAtual,Number(selClassificacao.value));tbodyClassificacao.innerHTML="";lista.forEach((t,i)=>{const pos=i+1,[dot,status]=statusInfo(pos),id=`det-${grupoAtual}-${pos}`;tbodyClassificacao.innerHTML+=`<tr class="clickable" onclick="toggleDetalhe('${id}')"><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td><td class="hide-mobile">${fmt(t.pf)}</td><td class="hide-mobile">${fmt(t.pc)}</td></tr><tr id="${id}" class="details"><td colspan="8"><b>${t.time}</b><br>Empates: ${t.e} | Derrotas: ${t.d}<br>Pontos feitos: ${fmt(t.pf)} | Pontos contra: ${fmt(t.pc)} | Saldo: ${fmt(t.saldo)}<br>Status: ${status}</td></tr>`})}
 function toggleDetalhe(id){const el=document.getElementById(id);el.style.display=el.style.display==="table-row"?"none":"table-row"}
@@ -1037,6 +1192,134 @@ function jogosDoMeuTime(times, inicio, agenda, meuTime){
   return html;
 }
 
+
+function faseAtualNome(){
+  const f=faseAtualNumero();
+  if(f===1)return "Fase 1";
+  if(f===2)return "Fase 2";
+  if(f===3)return "Fase 3";
+  if(f===4)return "Fase 4";
+  if(f===5)return "Fase 5";
+  return "Grande Final";
+}
+
+function grupoAmigavel(grupoNome){
+  if(!grupoNome)return "A definir";
+  if(String(grupoNome).startsWith("GP"))return nomeFase2(grupoNome);
+  return grupoNome;
+}
+
+function textoSituacao(pos, grupoNome, fase){
+  if(fase===1){
+    if(pos<=4)return "Classificando para os grupos";
+    if(pos<=8)return "Zona de repescagem";
+    return "Eliminado no momento";
+  }
+  if(fase===2){
+    if(String(grupoNome).startsWith("GP"))return pos<=2?"Avançando no caminho dos grupos":"Indo para a repescagem";
+    return pos===1?"Avançando pela repescagem":"Eliminado no momento";
+  }
+  if(fase===3){
+    if(String(grupoNome).startsWith("Grupo"))return pos<=2?"Garantindo vaga na Fase 5":"Indo para a repescagem final";
+    if(pos===1)return "Avançando pela repescagem";
+    if(pos===2)return "Brigando por melhor 2º";
+    return "Eliminado no momento";
+  }
+  if(fase===4)return pos===1?"Classificando para a Fase 5":"Eliminado no momento";
+  if(fase===5)return pos===1?"Indo para a Grande Final":pos===2?"Disputa de 3º lugar":"Eliminado no momento";
+  return pos===1?"Campeão do confronto":"Disputa final";
+}
+
+function localizarPosicao(lista, meuTime){
+  const idx=lista.findIndex(t=>t.time===meuTime);
+  return idx>=0?idx+1:null;
+}
+
+function proximoJogoMeuTime(times,inicio,agenda,meuTime){
+  let ultimo=null;
+  for(let idx=0; idx<agenda.length; idx++){
+    const rodada=inicio+idx;
+    for(const [a,b] of agenda[idx]){
+      const ta=times[a-1]?.time || times[a-1];
+      const tb=times[b-1]?.time || times[b-1];
+      if(ta!==meuTime && tb!==meuTime)continue;
+      const item={rodada,ta,tb,adversario:ta===meuTime?tb:ta,tem:temRodada(rodada)};
+      if(!item.tem)return item;
+      ultimo=item;
+    }
+  }
+  return ultimo;
+}
+
+function campanhaTexto(t){
+  if(!t)return "-";
+  return `${t.v}V · ${t.e}E · ${t.d}D`;
+}
+
+function renderResumoMeuTime(meuTime,titulo,grupoNome,lista,jogos, fase){
+  const pos=localizarPosicao(lista,meuTime);
+  const t=lista.find(x=>x.time===meuTime);
+  const situacao=textoSituacao(pos||0,grupoNome,fase);
+  const faseTxt=faseAtualNome();
+  const grupoTxt=grupoAmigavel(grupoNome);
+  let prox=null;
+  if(fase===1)prox=proximoJogoMeuTime(Object.values(grupos[grupoNome]).map(time=>({time})),1,Object.values(jogosFase1),meuTime);
+  if(fase===2)prox=proximoJogoMeuTime(fase2Times()[grupoNome],19,jogos4,meuTime);
+  if(fase===3)prox=proximoJogoMeuTime(fase3Times()[grupoNome],25,jogos4,meuTime);
+  if(fase===4)prox=proximoJogoMeuTime(fase4Times()[grupoNome],31,jogos4TurnoUnico,meuTime);
+  if(fase===5)prox=proximoJogoMeuTime(faseFinalTimes()[grupoNome],35,jogos3,meuTime);
+  if(fase>=6 && finalTimes()[grupoNome])prox=proximoJogoMeuTime(finalTimes()[grupoNome],38,[[[1,2]]],meuTime);
+  const proxHtml=prox?`<div class="next-match"><small>${prox.tem?"Último/próximo jogo":"Próximo jogo"} · Rodada ${prox.rodada}</small><b>${meuTime}</b> x <b>${prox.adversario}</b></div>`:"";
+  return `
+    <div class="meu-summary">
+      <div class="meu-hero">
+        <h3>Situação do ${meuTime}</h3>
+        <div class="meta">
+          <span>${faseTxt}</span>
+          <span>${grupoTxt}</span>
+          <span>${situacao}</span>
+        </div>
+        ${proxHtml}
+      </div>
+      <div class="meu-status-card">
+        <b>${pos?pos+'º':'-'}</b>
+        <span>posição atual no grupo</span>
+        <div class="clean-note">${t?campanhaTexto(t):"Sem campanha na fase"}</div>
+      </div>
+    </div>
+    <div class="quick-grid">
+      <div class="quick-card"><small>Pontos</small><b>${t?t.pts:'-'}</b></div>
+      <div class="quick-card"><small>Jogos</small><b>${t?t.j:'-'}</b></div>
+      <div class="quick-card"><small>Saldo</small><b>${t?fmt(t.saldo):'-'}</b></div>
+      <div class="quick-card"><small>PF</small><b>${t?fmt(t.pf):'-'}</b></div>
+    </div>
+  `;
+}
+
+function renderEstatisticas(){
+  const box=document.getElementById("boxEstatisticas");
+  if(!box||!historico)return;
+  const rodadaDados=Number(parciaisCartola?.rodada_dados || FASE1_FINAL);
+  const listaRodada=(historico.rodadas&&historico.rodadas[String(rodadaDados)]) || (parciaisCartola?.times||[]);
+  const timesAtuais=Array.isArray(listaRodada)?listaRodada.slice():[];
+  const porPontos=[...timesAtuais].sort((a,b)=>Number(b.pontos||0)-Number(a.pontos||0));
+  const porPatrimonio=[...timesAtuais].filter(t=>t.patrimonio!==undefined).sort((a,b)=>Number(b.patrimonio||0)-Number(a.patrimonio||0));
+  const porCamp=[...timesAtuais].filter(t=>t.pontos_campeonato!==undefined).sort((a,b)=>Number(b.pontos_campeonato||0)-Number(a.pontos_campeonato||0));
+  let fase1=[];
+  Object.keys(grupos).forEach(g=>calcularGrupo(g,FASE1_FINAL).forEach(t=>fase1.push({...t,grupo:g})));
+  const melhorFase1=[...fase1].sort((a,b)=>b.pts-a.pts||b.saldo-a.saldo||b.pf-a.pf)[0];
+  const ataque=[...fase1].sort((a,b)=>b.pf-a.pf)[0];
+  const defesa=[...fase1].sort((a,b)=>a.pc-b.pc)[0];
+  const cards=[];
+  if(porCamp[0])cards.push(["Líder geral",porCamp[0].time,`${fmt(porCamp[0].pontos_campeonato)} pts no campeonato`]);
+  if(porPontos[0])cards.push([`Maior pontuação R${rodadaDados}`,porPontos[0].time,`${fmt(porPontos[0].pontos)} pts na rodada`]);
+  if(porPatrimonio[0])cards.push(["Maior patrimônio",porPatrimonio[0].time,`C$ ${fmt(porPatrimonio[0].patrimonio)}`]);
+  if(melhorFase1)cards.push(["Melhor campanha Fase 1",melhorFase1.time,`${melhorFase1.pts} pts · Grupo ${melhorFase1.grupo}`]);
+  if(ataque)cards.push(["Melhor ataque Fase 1",ataque.time,`${fmt(ataque.pf)} pontos feitos`]);
+  if(defesa)cards.push(["Melhor defesa Fase 1",defesa.time,`${fmt(defesa.pc)} pontos sofridos`]);
+  box.innerHTML=`<div class="stats-grid">${cards.map(c=>`<div class="stat-card"><small>${c[0]}</small><b>${c[1]}</b><p>${c[2]}</p></div>`).join("")}</div><div class="clean-note">As estatísticas serão enriquecidas automaticamente conforme novas rodadas forem registradas.</div>`;
+}
+
 function renderMeuTime(){
   preencherSelectMeuTime();
 
@@ -1126,10 +1409,7 @@ function renderMeuTime(){
   }
 
   box.innerHTML = `
-    <div class="info-block">
-      <h3>${meuTime}</h3>
-      <p class="small">${titulo}</p>
-    </div>
+    ${renderResumoMeuTime(meuTime,titulo,grupoNome,lista,jogos,fase)}
 
     <div class="info-block">
       <h3>Classificação</h3>
