@@ -577,6 +577,15 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .fase-master-global{margin-bottom:12px}
 @media(max-width:760px){.chart-svg{min-width:430px;height:245px}.table-prize-full{display:none}.prize-mobile-list{display:block}.stats-toolbar{display:grid;grid-template-columns:1fr}.stats-toolbar select{width:100%}.mgsp-score{grid-template-columns:1fr 1fr}.zoeira-grid{grid-template-columns:1fr}.chart-label{font-size:9px}.chart-tick{font-size:9px}}
 
+
+.form-list .form-row{grid-template-columns:auto auto 1fr;gap:7px;align-items:center;line-height:1.25}
+.form-list .form-row span:last-child{white-space:normal}
+.stat-desc{font-size:10.5px;color:#94a3b8;margin:3px 0 6px;line-height:1.25}
+.mgsp-table-wrap{overflow-x:auto;margin-top:10px}
+.mgsp-table{width:100%;border-collapse:collapse;font-size:12px;background:#0b1220;border-radius:12px;overflow:hidden}
+.mgsp-table th,.mgsp-table td{padding:7px 6px;border-bottom:1px solid #1f2a3d;text-align:left;white-space:nowrap}
+.mgsp-table th{background:#14532d;color:#dcfce7;font-size:10px;text-transform:uppercase}
+.stats-subtitle{font-size:11px;color:#94a3b8;margin:4px 0 8px}
 </style>
 </head>
 <body>
@@ -1932,7 +1941,7 @@ function renderMeuTime(){
 
 
 /* =========================
-   V11: melhorias preservando a v7
+   V12: ajustes finos preservando a v7
    ========================= */
 function navFasesSelect(valor){
   return `<div class="phase-filter fase-master fase-master-global"><label>Ver fase:</label><select onchange="mudarAbaFases(this)">
@@ -1949,7 +1958,7 @@ function garantirSeletorFases(nome){
   if(!section)return;
   const card=section.querySelector('.card');
   if(!card)return;
-  let master=card.querySelector('.fase-master-global');
+  let master=card.querySelector('.fase-master');
   if(!master){
     card.insertAdjacentHTML('afterbegin', navFasesSelect(nome));
   }else{
@@ -1983,7 +1992,7 @@ function resultadoDoMeuTime(meuTime,rodada,pontos){
   const dif=pa-pb, abs=Math.abs(dif);
   let tipo='draw', label='Empate';
   if(abs>LIMITE_EMPATE){tipo=pa>pb?'win':'loss'; label=pa>pb?'Vitória':'Derrota';}
-  return {tipo,label,adv,placar:`${fmt(pa)} x ${fmt(pb)}`,saldo:`${dif>=0?'+':''}${fmtBR(dif)}`};
+  return {tipo,label,adv,placar:`${fmtBR(pa)} x ${fmtBR(pb)}`,saldo:`${dif>=0?'+':''}${fmtBR(dif)}`};
 }
 function renderUltimasCinco(meuTime){
   const ult=ultimasCincoMeuTime(meuTime);
@@ -1991,7 +2000,7 @@ function renderUltimasCinco(meuTime){
   const rows=ult.map(item=>{
     const res=resultadoDoMeuTime(meuTime,item.rodada,item.pontos);
     const dot=res.tipo==='win'?'status-win':res.tipo==='loss'?'status-loss':res.tipo==='bye'?'status-bye':'status-draw';
-    const detalhe=res.tipo==='bye'?`Folga · ${fmt(item.pontos)} pts`:`${res.label} vs ${res.adv} · ${res.placar} · saldo ${res.saldo}`;
+    const detalhe=res.tipo==='bye'?`Folga · ${fmt(item.pontos)} pts`:`${res.label} vs ${res.adv} · ${res.placar} · ${res.saldo}`;
     return `<div class="form-row"><b>R${item.rodada}</b><span class="status-dot ${dot}"></span><span>${detalhe}${item.aoVivo?'<span class="form-live">AO VIVO</span>':''}</span></div>`;
   }).join('');
   const dots=ult.map(item=>{
@@ -2134,12 +2143,44 @@ function mgSpAcumulado(){
   });
   return {ptsMg,ptsSp,emp,hist,ultimo:hist.at(-1)};
 }
+
+function descIndicadorEstatistica(nome){
+  const map={
+    'Maior pontuação':'Melhor pontuação individual no filtro escolhido.',
+    'Menor pontuação':'Pior pontuação individual no filtro escolhido.',
+    'Média geral':'Média de pontuação dos resultados considerados.',
+    'Azarado':'Perdeu mesmo fazendo boa pontuação.',
+    'Rei da sorte':'Venceu com pontuação baixa para a rodada.',
+    'Maior surra':'Maior diferença de pontos em um confronto.',
+    'Jogo mais quente':'Confronto com maior soma de pontos.'
+  };
+  return map[nome]||'Indicador calculado automaticamente pelos dados disponíveis.';
+}
+function rankingMgSpGeral(){
+  return rankingTradicional().map(t=>{
+    const dados=somaAteTime(t.time, Math.max(...rodadasRegistradas()));
+    return {time:t.time, uf:TIMES_SP.includes(t.time)?'SP':'MG', media:dados.media, total:dados.total};
+  }).sort((a,b)=>b.media-a.media||b.total-a.total);
+}
+function tabelaMgSpRodadas(hist){
+  const linhas=(hist||[]).slice().reverse().map(d=>{
+    const dif=Math.abs(d.mg-d.sp);
+    const vencedor=dif<=LIMITE_EMPATE?'Empate':(d.mg>d.sp?'MG':'SP');
+    return `<tr><td>R${d.rodada}</td><td>${fmtBR(d.mg)}</td><td>${fmtBR(d.sp)}</td><td><b>${vencedor}</b></td></tr>`;
+  }).join('');
+  return `<div class="mgsp-table-wrap"><table class="mgsp-table"><thead><tr><th>Rodada</th><th>Média MG</th><th>Média SP</th><th>Vencedor</th></tr></thead><tbody>${linhas}</tbody></table></div>`;
+}
+function tabelaMgSpRanking(){
+  const linhas=rankingMgSpGeral().map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td>${t.uf}</td><td>${fmtBR(t.media)}</td><td>${fmtBR(t.total)}</td></tr>`).join('');
+  return `<div class="mgsp-table-wrap"><table class="mgsp-table"><thead><tr><th>#</th><th>Time</th><th>UF</th><th>Média</th><th>Total</th></tr></thead><tbody>${linhas}</tbody></table></div>`;
+}
 function renderEstatisticas(){
   const box=document.getElementById('boxEstatisticas'); if(!box||!historico)return;
   const nomes=todosNomesTimes();
   const a=document.getElementById('selCompA')?.value||nomes[0]||'';
   const b=document.getElementById('selCompB')?.value||nomes.find(n=>n!==a)||'';
   const tipo=document.getElementById('selCompTipo')?.value||'pontos';
+  const campeonato=document.getElementById('selStatsCamp')?.value||'tradicional';
   const rodadaSel=document.getElementById('selStatsRodada')?.value||'all';
   const opts=nomes.map(n=>`<option value="${n}">${n}</option>`).join('');
   const rodOpts='<option value="all">Temporada inteira</option>'+rodadasRegistradas().map(r=>`<option value="${r}">Rodada ${r}</option>`).join('');
@@ -2150,15 +2191,16 @@ function renderEstatisticas(){
   const ultimo=mgsp.ultimo||{mg:0,sp:0};
   box.innerHTML=`
     <div class="info-block light"><h3>Comparar times</h3>
-      <div class="stats-toolbar"><label>Time 1</label><select id="selCompA" onchange="renderEstatisticas()">${opts}</select><label>Time 2</label><select id="selCompB" onchange="renderEstatisticas()">${opts}</select><label>Gráfico</label><select id="selCompTipo" onchange="renderEstatisticas()"><option value="pontos">Pontuação por rodada</option><option value="posicao">Posição no tradicional</option><option value="media">Média acumulada</option></select></div>
+      <div class="stats-toolbar"><label>Campeonato</label><select id="selStatsCamp" onchange="renderEstatisticas()"><option value="tradicional">Tradicional</option><option value="matamata">Mata-mata</option></select><label>Time 1</label><select id="selCompA" onchange="renderEstatisticas()">${opts}</select><label>Time 2</label><select id="selCompB" onchange="renderEstatisticas()">${opts}</select><label>Gráfico</label><select id="selCompTipo" onchange="renderEstatisticas()"><option value="pontos">Pontuação por rodada</option><option value="posicao">Posição no tradicional</option><option value="media">Média acumulada</option></select></div>
+      <div class="stats-subtitle">Filtro atual: ${campeonato==='tradicional'?'Tradicional / pontos oficiais':'Mata-mata / confrontos'}</div>
       ${lineChartSvg(serie,a,b,tipo==='posicao')}
       <div class="stats-note">Em posição, quanto mais alto no gráfico, melhor a colocação.</div>
     </div>
-    <div class="info-block"><h3>Recordes</h3><div class="stats-toolbar"><label>Filtro</label><select id="selStatsRodada" onchange="renderEstatisticas()">${rodOpts}</select></div><div class="stats-grid">${rec.map(c=>`<div class="stat-card"><small>${c[0]}</small><b>${c[1]}</b><p>${c[2]}</p></div>`).join('')}</div></div>
-    <div class="info-block light"><h3>Hall da Zoeira</h3><div class="zoeira-grid">${zr.cards.map(c=>`<div class="zoeira-card"><small>${c[0]}</small><b>${c[1]}</b><p>${c[2]}</p></div>`).join('')}</div><div class="stats-note">Use o filtro de rodada acima para ver a zoeira de uma rodada específica.</div></div>
-    <div class="info-block"><h3>MG x SP</h3><p class="small">Para ficar justo, a comparação usa a média dos times. Paulistas: ${TIMES_SP.join(', ')}. Todos os demais entram como MG.</p><div class="mgsp-score"><div class="mgsp-card"><small>MG</small><b>${mgsp.ptsMg}</b><span>pts no duelo</span></div><div class="mgsp-card"><small>SP</small><b>${mgsp.ptsSp}</b><span>pts no duelo</span></div></div>${barChartMgSp(ultimo.mg,ultimo.sp)}<div class="stats-note">A cada rodada: maior média vence e ganha 3 pontos. Diferença de até 5 pontos dá empate e 1 ponto para cada lado.</div></div>`;
-  const sa=document.getElementById('selCompA'), sb=document.getElementById('selCompB'), st=document.getElementById('selCompTipo'), sr=document.getElementById('selStatsRodada');
-  if(sa)sa.value=a;if(sb)sb.value=b;if(st)st.value=tipo;if(sr)sr.value=rodadaSel;
+    <div class="info-block"><h3>Recordes</h3><div class="stats-toolbar"><label>Filtro</label><select id="selStatsRodada" onchange="renderEstatisticas()">${rodOpts}</select></div><div class="stats-grid">${rec.map(c=>`<div class="stat-card"><small>${c[0]}</small><div class="stat-desc">${descIndicadorEstatistica(c[0])}</div><b>${c[1]}</b><p>${c[2]}</p></div>`).join('')}</div></div>
+    <div class="info-block light"><h3>Hall da Zoeira</h3><div class="zoeira-grid">${zr.cards.map(c=>`<div class="zoeira-card"><small>${c[0]}</small><div class="stat-desc">${descIndicadorEstatistica(c[0])}</div><b>${c[1]}</b><p>${c[2]}</p></div>`).join('')}</div><div class="stats-note">Use o filtro de rodada acima para ver a zoeira de uma rodada específica.</div></div>
+    <div class="info-block"><h3>MG x SP</h3><p class="small">Para ficar justo, a comparação usa a média dos times por rodada. Paulistas: ${TIMES_SP.join(', ')}. Todos os demais entram como MG.</p><div class="mgsp-score"><div class="mgsp-card"><small>MG</small><b>${mgsp.ptsMg}</b><span>pts no duelo</span></div><div class="mgsp-card"><small>SP</small><b>${mgsp.ptsSp}</b><span>pts no duelo</span></div></div><h3>Média da última rodada registrada</h3>${barChartMgSp(ultimo.mg,ultimo.sp)}<div class="stats-note">A cada rodada: maior média vence e ganha 3 pontos. Diferença de até 5 pontos dá empate e 1 ponto para cada lado.</div><h3>Médias por rodada</h3>${tabelaMgSpRodadas(mgsp.hist)}<h3>Classificação geral MG x SP</h3>${tabelaMgSpRanking()}</div>`;
+  const sa=document.getElementById('selCompA'), sb=document.getElementById('selCompB'), st=document.getElementById('selCompTipo'), sc=document.getElementById('selStatsCamp'), sr=document.getElementById('selStatsRodada');
+  if(sa)sa.value=a;if(sb)sb.value=b;if(st)st.value=tipo;if(sc)sc.value=campeonato;if(sr)sr.value=rodadaSel;
 }
 
 function renderLigaReal(){
