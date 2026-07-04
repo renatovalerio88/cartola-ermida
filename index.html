@@ -2170,6 +2170,27 @@ function tabelaMgSpRodadas(hist){
   }).join('');
   return `<div class="mgsp-table-wrap"><table class="mgsp-table"><thead><tr><th>Rodada</th><th>Média MG</th><th>Média SP</th><th>Vencedor</th></tr></thead><tbody>${linhas}</tbody></table></div>`;
 }
+function tabelaMgSpClassificacao(hist){
+  const stats={
+    MG:{nome:'MG',pts:0,j:0,v:0,e:0,d:0,pf:0,pc:0,saldo:0},
+    SP:{nome:'SP',pts:0,j:0,v:0,e:0,d:0,pf:0,pc:0,saldo:0}
+  };
+  (hist||[]).forEach(r=>{
+    const dif=Math.abs(r.mg-r.sp);
+    stats.MG.j++; stats.SP.j++;
+    stats.MG.pf+=r.mg; stats.MG.pc+=r.sp;
+    stats.SP.pf+=r.sp; stats.SP.pc+=r.mg;
+    if(dif<=LIMITE_EMPATE){stats.MG.e++;stats.SP.e++;stats.MG.pts++;stats.SP.pts++;}
+    else if(r.mg>r.sp){stats.MG.v++;stats.SP.d++;stats.MG.pts+=3;}
+    else{stats.SP.v++;stats.MG.d++;stats.SP.pts+=3;}
+  });
+  const lista=Object.values(stats).map(t=>{t.saldo=t.pf-t.pc;t.media=t.j?t.pf/t.j:0;return t;}).sort((a,b)=>b.pts-a.pts||b.v-a.v||b.saldo-a.saldo||b.pf-a.pf);
+  return `<table class="phase-table"><thead><tr><th>#</th><th>Seleção</th><th>Pts</th><th>J</th><th>V</th><th>E</th><th>D</th><th>Saldo</th><th>Média</th></tr></thead><tbody>${lista.map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.nome}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${t.e}</td><td>${t.d}</td><td>${fmtBR(t.saldo)}</td><td>${fmtBR(t.media)}</td></tr>`).join('')}</tbody></table>`;
+}
+function graficoMgSpMedias(hist){
+  const serie=(hist||[]).map(d=>({rodada:d.rodada,a:d.mg,b:d.sp}));
+  return lineChartSvg(serie,'MG','SP',false);
+}
 function tabelaMgSpRanking(){
   const linhas=rankingMgSpGeral().map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td>${t.uf}</td><td>${fmtBR(t.media)}</td><td>${fmtBR(t.total)}</td></tr>`).join('');
   return `<div class="mgsp-table-wrap"><table class="mgsp-table"><thead><tr><th>#</th><th>Time</th><th>UF</th><th>Média</th><th>Total</th></tr></thead><tbody>${linhas}</tbody></table></div>`;
@@ -2198,7 +2219,7 @@ function renderEstatisticas(){
     </div>
     <div class="info-block"><h3>Recordes</h3><div class="stats-toolbar"><label>Filtro</label><select id="selStatsRodada" onchange="renderEstatisticas()">${rodOpts}</select></div><div class="stats-grid">${rec.map(c=>`<div class="stat-card"><small>${c[0]}</small><div class="stat-desc">${descIndicadorEstatistica(c[0])}</div><b>${c[1]}</b><p>${c[2]}</p></div>`).join('')}</div></div>
     <div class="info-block light"><h3>Hall da Zoeira</h3><div class="zoeira-grid">${zr.cards.map(c=>`<div class="zoeira-card"><small>${c[0]}</small><div class="stat-desc">${descIndicadorEstatistica(c[0])}</div><b>${c[1]}</b><p>${c[2]}</p></div>`).join('')}</div><div class="stats-note">Use o filtro de rodada acima para ver a zoeira de uma rodada específica.</div></div>
-    <div class="info-block"><h3>MG x SP</h3><p class="small">Para ficar justo, a comparação usa a média dos times por rodada. Paulistas: ${TIMES_SP.join(', ')}. Todos os demais entram como MG.</p><div class="mgsp-score"><div class="mgsp-card"><small>MG</small><b>${mgsp.ptsMg}</b><span>pts no duelo</span></div><div class="mgsp-card"><small>SP</small><b>${mgsp.ptsSp}</b><span>pts no duelo</span></div></div><h3>Média da última rodada registrada</h3>${barChartMgSp(ultimo.mg,ultimo.sp)}<div class="stats-note">A cada rodada: maior média vence e ganha 3 pontos. Diferença de até 5 pontos dá empate e 1 ponto para cada lado.</div><h3>Médias por rodada</h3>${tabelaMgSpRodadas(mgsp.hist)}<h3>Classificação geral MG x SP</h3>${tabelaMgSpRanking()}</div>`;
+    <div class="info-block"><h3>MG x SP</h3><p class="small">Para ficar justo, a comparação usa a média dos times por rodada. Paulistas: ${TIMES_SP.join(', ')}. Todos os demais entram como MG.</p><div class="mgsp-score"><div class="mgsp-card"><small>MG</small><b>${mgsp.ptsMg}</b><span>pts no duelo</span></div><div class="mgsp-card"><small>SP</small><b>${mgsp.ptsSp}</b><span>pts no duelo</span></div></div><h3>Classificação MG x SP</h3>${tabelaMgSpClassificacao(mgsp.hist)}<div class="stats-note">A cada rodada: maior média vence e ganha 3 pontos. Diferença de até 5 pontos dá empate e 1 ponto para cada lado.</div><h3>Gráfico de médias por rodada</h3>${graficoMgSpMedias(mgsp.hist)}<h3>Médias por rodada</h3>${tabelaMgSpRodadas(mgsp.hist)}</div>`;
   const sa=document.getElementById('selCompA'), sb=document.getElementById('selCompB'), st=document.getElementById('selCompTipo'), sc=document.getElementById('selStatsCamp'), sr=document.getElementById('selStatsRodada');
   if(sa)sa.value=a;if(sb)sb.value=b;if(st)st.value=tipo;if(sc)sc.value=campeonato;if(sr)sr.value=rodadaSel;
 }
