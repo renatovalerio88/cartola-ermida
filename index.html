@@ -561,6 +561,22 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   .stats-grid{grid-template-columns:1fr}
 }
 
+
+
+/* V11: Estatísticas, fases e premiação mobile */
+.stats-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 14px;background:#0f172a;border:1px solid var(--line);border-radius:14px;padding:10px}
+.stats-toolbar label{font-size:12px;color:var(--muted)}
+.stats-toolbar select{min-width:150px}
+.chart-box{background:#0b1220;border:1px solid #263247;border-radius:16px;padding:12px;margin:12px 0;overflow-x:auto}
+.chart-svg{width:100%;min-width:520px;height:270px;display:block}
+.chart-axis{stroke:#334155;stroke-width:1}.chart-grid{stroke:#1f2a3d;stroke-width:1}.chart-line-a{fill:none;stroke:#38bdf8;stroke-width:3}.chart-line-b{fill:none;stroke:#fbbf24;stroke-width:3}.chart-dot-a{fill:#38bdf8}.chart-dot-b{fill:#fbbf24}.chart-label{fill:#e5e7eb;font-size:10px;font-weight:800}.chart-tick{fill:#94a3b8;font-size:10px}.chart-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}.legend-a,.legend-b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}.legend-a{background:#38bdf8}.legend-b{background:#fbbf24}
+.zoeira-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}.zoeira-card{background:#0b1220;border:1px solid #263247;border-radius:14px;padding:10px}.zoeira-card small{color:var(--muted);font-size:11px}.zoeira-card b{display:block;margin-top:4px;color:#fff}.zoeira-card p{margin:5px 0 0;font-size:12px;color:#cbd5e1}
+.mgsp-score{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.mgsp-card{background:#0b1220;border:1px solid #263247;border-radius:14px;padding:12px;text-align:center}.mgsp-card b{display:block;font-size:24px;color:var(--gold)}.mgsp-card small{color:var(--muted)}
+.stats-note{font-size:12px;color:var(--muted);line-height:1.45;background:#0b1220;border:1px dashed var(--line);border-radius:12px;padding:10px;margin-top:8px}
+.prize-mobile-list{display:none}.prize-mobile-card{background:#0b1220;border:1px solid #263247;border-radius:14px;padding:10px;margin:8px 0}.prize-mobile-card b{display:block}.prize-mobile-card .total{font-size:18px;color:var(--gold);margin:4px 0}.prize-mobile-card small{color:var(--muted)}
+.fase-master-global{margin-bottom:12px}
+@media(max-width:760px){.chart-svg{min-width:430px;height:245px}.table-prize-full{display:none}.prize-mobile-list{display:block}.stats-toolbar{display:grid;grid-template-columns:1fr}.stats-toolbar select{width:100%}.mgsp-score{grid-template-columns:1fr 1fr}.zoeira-grid{grid-template-columns:1fr}.chart-label{font-size:9px}.chart-tick{font-size:9px}}
+
 </style>
 </head>
 <body>
@@ -579,14 +595,13 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 <div class="container">
   <div class="nav">
     <button class="active" onclick="abrirAba('meutime',this)">Meu Time</button>
-    <button onclick="abrirAba('rodadas',this)">Rodadas</button>
     <button data-nav-fases="1" onclick="abrirAba('fase2',this)">Fases</button>
     <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
     <button onclick="abrirAba('ligareal',this)">Liga Real</button>
     <button onclick="abrirAba('premiacao',this)">Premiação</button>
-    <button onclick="abrirAba('api',this)">API Cartola</button>
-    <button onclick="abrirAba('fluxograma',this)">Regulamento resumido</button>
+    <button onclick="abrirAba('fluxograma',this)">Regulamento resumido mata-mata</button>
     <button onclick="abrirAba('regulamento',this)">Regulamento detalhado</button>
+    <button onclick="abrirAba('api',this)">API Cartola</button>
   </div>
 
   <section id="aba-meutime" class="aba">
@@ -606,27 +621,27 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   <section id="aba-rodadas" class="aba hidden"><div class="card"><h2>Fase 1 - Grupo e Rodada</h2><div class="livebar"><div><strong id="statusAtualizacao">Dados carregados</strong><br><small id="ultimaAtualizacao">Clique para buscar a versão mais nova do JSON.</small></div><button class="refresh-btn" id="btnAtualizar" onclick="atualizarDados()">🔄 Atualizar</button></div><div class="tabs" id="tabsGruposRodadas"></div><div class="phase-filter"><label>Rodada:</label><select id="selRodada" onchange="mostrarRodada()"></select></div><div class="info-block"><h3>Classificação do grupo</h3><table class="clean-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th><th class="hide-mobile">PF</th></tr></thead><tbody id="tbodyFase1Rodada"></tbody></table><div class="legend"><span><i class="pos-dot dot-ok"></i>Grupos</span><span><i class="pos-dot dot-rep"></i>Repescagem</span><span><i class="pos-dot dot-bad"></i>Eliminado</span></div></div><div class="info-block light"><h3>Jogos da rodada</h3><div id="boxRodadas"></div></div></div></section>
 
   <section id="aba-fase2" class="aba hidden">
-    <div class="card"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="fase2" selected>Fase 2</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 2</h2><p class="small">Escolha um grupo. A classificação fica primeiro; os confrontos ficam embaixo.</p></div><span class="badge future">R19 a R24</span></div><div class="tabs" id="tabsFase2"></div><div class="phase-filter"><label>Mostrar após:</label><select id="selFase2Rodada" onchange="renderFase2()"></select></div><div id="boxFase2Detalhe"></div></div>
+    <div class="card"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2" selected>Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 2</h2><p class="small">Escolha um grupo. A classificação fica primeiro; os confrontos ficam embaixo.</p></div><span class="badge future">R19 a R24</span></div><div class="tabs" id="tabsFase2"></div><div class="phase-filter"><label>Mostrar após:</label><select id="selFase2Rodada" onchange="renderFase2()"></select></div><div id="boxFase2Detalhe"></div></div>
   </section>
 
   <section id="aba-fase3" class="aba hidden">
-    <div class="card fase-page" data-fase="fase3"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="fase2">Fase 2</option><option value="fase3" selected>Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 3</h2><p class="small">Caminho dos grupos separado da repescagem. Escolha o grupo e veja classificação + jogos.</p></div><span class="badge future">R25 a R30</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+    <div class="card fase-page" data-fase="fase3"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2 — atual</option><option value="fase3" selected>Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 3</h2><p class="small">Caminho dos grupos separado da repescagem. Escolha o grupo e veja classificação + jogos.</p></div><span class="badge future">R25 a R30</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-fase4" class="aba hidden">
-    <div class="card fase-page" data-fase="fase4"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="fase2">Fase 2</option><option value="fase3">Fase 3</option><option value="fase4" selected>Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 4 · Repescagem Final</h2><p class="small">Os classificados dos grupos ficam esperando. A repescagem decide as últimas 2 vagas.</p></div><span class="badge future">R31 a R34</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+    <div class="card fase-page" data-fase="fase4"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4" selected>Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 4 · Repescagem Final</h2><p class="small">Os classificados dos grupos ficam esperando. A repescagem decide as últimas 2 vagas.</p></div><span class="badge future">R31 a R34</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-fasefinal" class="aba hidden">
-    <div class="card fase-page" data-fase="final"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="fase2">Fase 2</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal" selected>Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 5 · Fase Final</h2><p class="small">Aqui os caminhos se misturam: 4 vindos dos grupos + 2 vindos da repescagem.</p></div><span class="badge future">R35 a R37</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+    <div class="card fase-page" data-fase="final"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal" selected>Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 5 · Fase Final</h2><p class="small">Aqui os caminhos se misturam: 4 vindos dos grupos + 2 vindos da repescagem.</p></div><span class="badge future">R35 a R37</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-grandefinal" class="aba hidden">
-    <div class="card fase-page" data-fase="grande"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="fase2">Fase 2</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal" selected>Grande Final</option></select></div><div class="phase-title"><div><h2>Grande Final</h2><p class="small">Rodada 38: decisão do título e disputa de 3º lugar.</p></div><span class="badge future">R38</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+    <div class="card fase-page" data-fase="grande"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal" selected>Grande Final</option></select></div><div class="phase-title"><div><h2>Grande Final</h2><p class="small">Rodada 38: decisão do título e disputa de 3º lugar.</p></div><span class="badge future">R38</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-fluxograma" class="aba hidden">
-    <div class="card"><div class="phase-title"><div><h2>Regulamento resumido</h2><p class="small">Uma visão simples, parecida com chaveamento, mostrando de onde vem cada caminho até a final.</p></div><span class="badge future">R1 a R38</span></div><div id="boxFluxogramaNovo"></div></div>
+    <div class="card"><div class="phase-title"><div><h2>Regulamento resumido mata-mata</h2><p class="small">Uma visão simples, parecida com chaveamento, mostrando de onde vem cada caminho até a final.</p></div><span class="badge future">R1 a R38</span></div><div id="boxFluxogramaNovo"></div></div>
   </section>
 
   <section id="aba-estatisticas" class="aba hidden">
@@ -1912,6 +1927,261 @@ function renderMeuTime(){
 
     ${renderPremiacaoMeuTime(meuTime)}
   `;
+}
+
+
+
+/* =========================
+   V11: melhorias preservando a v7
+   ========================= */
+function navFasesSelect(valor){
+  return `<div class="phase-filter fase-master fase-master-global"><label>Ver fase:</label><select onchange="mudarAbaFases(this)">
+    <option value="rodadas" ${valor==='rodadas'?'selected':''}>Fase 1</option>
+    <option value="fase2" ${valor==='fase2'?'selected':''}>Fase 2 — atual</option>
+    <option value="fase3" ${valor==='fase3'?'selected':''}>Fase 3</option>
+    <option value="fase4" ${valor==='fase4'?'selected':''}>Fase 4</option>
+    <option value="fasefinal" ${valor==='fasefinal'?'selected':''}>Fase 5</option>
+    <option value="grandefinal" ${valor==='grandefinal'?'selected':''}>Grande Final</option>
+  </select></div>`;
+}
+function garantirSeletorFases(nome){
+  const section=document.getElementById('aba-'+nome);
+  if(!section)return;
+  const card=section.querySelector('.card');
+  if(!card)return;
+  let master=card.querySelector('.fase-master-global');
+  if(!master){
+    card.insertAdjacentHTML('afterbegin', navFasesSelect(nome));
+  }else{
+    const sel=master.querySelector('select');
+    if(sel)sel.value=nome;
+  }
+}
+const abrirAbaOriginalV7=abrirAba;
+abrirAba=function(nome,btn){
+  document.querySelectorAll('.aba').forEach(a=>a.classList.add('hidden'));
+  const alvo=document.getElementById('aba-'+nome);
+  if(alvo)alvo.classList.remove('hidden');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(['rodadas','fase2','fase3','fase4','fasefinal','grandefinal'].includes(nome)){
+    garantirSeletorFases(nome);
+    const nav=document.querySelector('[data-nav-fases="1"]');
+    if(nav)nav.classList.add('active');
+  }
+}
+mudarAbaFases=function(sel){
+  const btn=document.querySelector('[data-nav-fases="1"]');
+  abrirAba(sel.value,btn);
+}
+
+function resultadoDoMeuTime(meuTime,rodada,pontos){
+  const jogo=confrontoDoTimeNaRodada(meuTime,rodada);
+  if(!jogo)return {tipo:'bye',label:'Folga',adv:'-',placar:fmt(pontos),saldo:'-'};
+  const adv=jogo.ta===meuTime?jogo.tb:jogo.ta;
+  const pa=Number(pontos||0), pb=Number(pontosTime(adv,rodada)||0);
+  const dif=pa-pb, abs=Math.abs(dif);
+  let tipo='draw', label='Empate';
+  if(abs>LIMITE_EMPATE){tipo=pa>pb?'win':'loss'; label=pa>pb?'Vitória':'Derrota';}
+  return {tipo,label,adv,placar:`${fmt(pa)} x ${fmt(pb)}`,saldo:`${dif>=0?'+':''}${fmtBR(dif)}`};
+}
+function renderUltimasCinco(meuTime){
+  const ult=ultimasCincoMeuTime(meuTime);
+  if(!ult.length)return '';
+  const rows=ult.map(item=>{
+    const res=resultadoDoMeuTime(meuTime,item.rodada,item.pontos);
+    const dot=res.tipo==='win'?'status-win':res.tipo==='loss'?'status-loss':res.tipo==='bye'?'status-bye':'status-draw';
+    const detalhe=res.tipo==='bye'?`Folga · ${fmt(item.pontos)} pts`:`${res.label} vs ${res.adv} · ${res.placar} · saldo ${res.saldo}`;
+    return `<div class="form-row"><b>R${item.rodada}</b><span class="status-dot ${dot}"></span><span>${detalhe}${item.aoVivo?'<span class="form-live">AO VIVO</span>':''}</span></div>`;
+  }).join('');
+  const dots=ult.map(item=>{
+    const res=resultadoDoMeuTime(meuTime,item.rodada,item.pontos);
+    const dot=res.tipo==='win'?'status-win':res.tipo==='loss'?'status-loss':res.tipo==='bye'?'status-bye':'status-draw';
+    return `<span class="status-dot ${dot}" title="R${item.rodada} · ${res.label}"></span>`;
+  }).join('');
+  return `<div class="form-card"><div class="form-head"><small>Últimas 5 rodadas</small><div class="form-dots">${dots}</div></div><div class="form-list">${rows}</div></div>`;
+}
+
+function todosNomesTimes(){
+  const set=new Set();
+  Object.values(grupos).forEach(g=>Object.values(g).forEach(n=>set.add(n)));
+  rankingTradicional().forEach(t=>set.add(t.time));
+  return Array.from(set).sort((a,b)=>a.localeCompare(b,'pt-BR'));
+}
+function somaAteTime(nome,ate){
+  let total=0, qtd=0;
+  rodadasRegistradas().filter(r=>r<=ate).forEach(r=>{
+    const t=dadosDaRodada(r).find(x=>String(x.time).trim()===String(nome).trim());
+    if(t){total+=Number(t.pontos||0);qtd++;}
+  });
+  return {total,qtd,media:qtd?total/qtd:0};
+}
+function posicaoTradicionalAte(nome,ate){
+  const mapa={};
+  rodadasRegistradas().filter(r=>r<=ate).forEach(r=>dadosDaRodada(r).forEach(t=>{
+    const n=t.time;
+    if(!mapa[n])mapa[n]={time:n,total:0};
+    mapa[n].total+=Number(t.pontos||0);
+  }));
+  const lista=Object.values(mapa).sort((a,b)=>b.total-a.total);
+  const idx=lista.findIndex(x=>x.time===nome);
+  return idx>=0?idx+1:null;
+}
+function serieComparacao(nomeA,nomeB,tipo){
+  return rodadasRegistradas().map(r=>{
+    let a=0,b=0;
+    if(tipo==='posicao'){
+      a=posicaoTradicionalAte(nomeA,r)||0; b=posicaoTradicionalAte(nomeB,r)||0;
+    }else if(tipo==='media'){
+      a=somaAteTime(nomeA,r).media; b=somaAteTime(nomeB,r).media;
+    }else{
+      const ta=dadosDaRodada(r).find(x=>x.time===nomeA); const tb=dadosDaRodada(r).find(x=>x.time===nomeB);
+      a=Number(ta?.pontos||0); b=Number(tb?.pontos||0);
+    }
+    return {rodada:r,a,b};
+  }).filter(x=>x.a||x.b);
+}
+function lineChartSvg(data,labelA,labelB,invert=false){
+  if(!data.length)return '<div class="muted-card">Ainda sem dados suficientes para o gráfico.</div>';
+  const w=620,h=260,ml=44,mr=22,mt=24,mb=34;
+  const vals=data.flatMap(d=>[d.a,d.b]).filter(v=>isFinite(v));
+  let min=Math.min(...vals), max=Math.max(...vals);
+  if(min===max){min-=1;max+=1;}
+  if(invert){const oldMin=min;min=max;max=oldMin;}
+  const x=(i)=>ml+(i/(Math.max(1,data.length-1)))*(w-ml-mr);
+  const y=(v)=>{
+    if(invert)return mt+((v-max)/(min-max))*(h-mt-mb);
+    return mt+((max-v)/(max-min))*(h-mt-mb);
+  };
+  const path=(key)=>data.map((d,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(d[key]).toFixed(1)).join(' ');
+  const points=(key,cls)=>data.map((d,i)=>`<circle class="${cls}" cx="${x(i).toFixed(1)}" cy="${y(d[key]).toFixed(1)}" r="4"></circle><text class="chart-label" x="${x(i).toFixed(1)}" y="${(y(d[key])-8).toFixed(1)}" text-anchor="middle">${tipoNumeroChart(d[key])}</text>`).join('');
+  const ticks=data.map((d,i)=>`<text class="chart-tick" x="${x(i).toFixed(1)}" y="${h-10}" text-anchor="middle">R${d.rodada}</text>`).join('');
+  return `<div class="chart-box"><svg class="chart-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <line class="chart-axis" x1="${ml}" y1="${mt}" x2="${ml}" y2="${h-mb}"></line><line class="chart-axis" x1="${ml}" y1="${h-mb}" x2="${w-mr}" y2="${h-mb}"></line>
+    <line class="chart-grid" x1="${ml}" y1="${mt}" x2="${w-mr}" y2="${mt}"></line><line class="chart-grid" x1="${ml}" y1="${(h-mb+mt)/2}" x2="${w-mr}" y2="${(h-mb+mt)/2}"></line>
+    <path class="chart-line-a" d="${path('a')}"></path><path class="chart-line-b" d="${path('b')}"></path>
+    ${points('a','chart-dot-a')}${points('b','chart-dot-b')}${ticks}
+  </svg><div class="chart-legend"><span><i class="legend-a"></i>${labelA}</span><span><i class="legend-b"></i>${labelB}</span></div></div>`;
+}
+function tipoNumeroChart(v){return Math.abs(v)>=10?Number(v).toFixed(0):Number(v).toFixed(1)}
+function barChartMgSp(mg,sp){
+  const max=Math.max(1,mg,sp), w=520,h=200,base=165;
+  const hm=(mg/max)*120, hs=(sp/max)*120;
+  return `<div class="chart-box"><svg class="chart-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <line class="chart-axis" x1="40" y1="${base}" x2="480" y2="${base}"></line>
+    <rect x="120" y="${base-hm}" width="90" height="${hm}" rx="8" class="chart-dot-a"></rect>
+    <rect x="300" y="${base-hs}" width="90" height="${hs}" rx="8" class="chart-dot-b"></rect>
+    <text class="chart-label" x="165" y="${base-hm-8}" text-anchor="middle">${fmtBR(mg)}</text>
+    <text class="chart-label" x="345" y="${base-hs-8}" text-anchor="middle">${fmtBR(sp)}</text>
+    <text class="chart-tick" x="165" y="188" text-anchor="middle">MG</text><text class="chart-tick" x="345" y="188" text-anchor="middle">SP</text>
+  </svg></div>`;
+}
+function partidasFase1Rodada(r){
+  const jogos=[];
+  Object.entries(grupos).forEach(([g,times])=>{
+    (jogosFase1[r]||[]).forEach(([a,b])=>jogos.push({ta:times[a],tb:times[b],rodada:r}));
+  });
+  return jogos;
+}
+function jogosComResultadoRodada(r){
+  let jogos=[];
+  if(r<=18)jogos=partidasFase1Rodada(r);
+  else if(r<=24){const mapa=fase2Times();Object.values(mapa).forEach(times=>(jogos4[r-19]||[]).forEach(([a,b])=>jogos.push({ta:times[a-1]?.time,tb:times[b-1]?.time,rodada:r})));}
+  return jogos.map(j=>{const pa=pontosTime(j.ta,r),pb=pontosTime(j.tb,r);return {...j,pa,pb,dif:Math.abs(pa-pb)}}).filter(j=>j.ta&&j.tb&&temRodada(r));
+}
+function zueiraDaRodada(r){
+  const jogos=jogosComResultadoRodada(r).filter(j=>j.dif>LIMITE_EMPATE);
+  if(!jogos.length){const rank=rankingRodada(r);return {cards:[['Maior pontuação',rank[0]?.time||'-',rank[0]?fmt(rank[0].pontos)+' pts':'-'],['Menor pontuação',rank.at(-1)?.time||'-',rank.at(-1)?fmt(rank.at(-1).pontos)+' pts':'-']]};}
+  const derrotas=[]; const vitorias=[];
+  jogos.forEach(j=>{if(j.pa>j.pb){vitorias.push({time:j.ta,pontos:j.pa,adv:j.tb,advp:j.pb,dif:j.dif});derrotas.push({time:j.tb,pontos:j.pb,adv:j.ta,advp:j.pa,dif:j.dif});}else{vitorias.push({time:j.tb,pontos:j.pb,adv:j.ta,advp:j.pa,dif:j.dif});derrotas.push({time:j.ta,pontos:j.pa,adv:j.tb,advp:j.pb,dif:j.dif});}});
+  const azarado=derrotas.sort((a,b)=>b.pontos-a.pontos)[0];
+  const sortudo=vitorias.sort((a,b)=>a.pontos-b.pontos)[0];
+  const surra=[...jogos].sort((a,b)=>b.dif-a.dif)[0];
+  return {cards:[
+    ['Azarado',azarado?.time||'-',azarado?`Perdeu fazendo ${fmt(azarado.pontos)} pts`:'-'],
+    ['Rei da sorte',sortudo?.time||'-',sortudo?`Venceu com ${fmt(sortudo.pontos)} pts`:'-'],
+    ['Maior surra',surra?(surra.pa>surra.pb?surra.ta:surra.tb):'-',surra?`Diferença de ${fmtBR(surra.dif)} pts`:'-'],
+    ['Jogo mais quente',surra?`${surra.ta} x ${surra.tb}`:'-',surra?`${fmt(surra.pa)} x ${fmt(surra.pb)}`:'-']
+  ]};
+}
+function recordsPeriodo(rodadaSel){
+  const rows=[];
+  if(rodadaSel==='all')rodadasRegistradas().forEach(r=>dadosDaRodada(r).forEach(t=>rows.push({...t,rodada:r})));
+  else dadosDaRodada(Number(rodadaSel)).forEach(t=>rows.push({...t,rodada:Number(rodadaSel)}));
+  const top=[...rows].sort((a,b)=>Number(b.pontos)-Number(a.pontos))[0];
+  const low=[...rows].sort((a,b)=>Number(a.pontos)-Number(b.pontos))[0];
+  const media=rows.length?rows.reduce((s,t)=>s+Number(t.pontos||0),0)/rows.length:0;
+  return [
+    ['Maior pontuação',top?.time||'-',top?`${fmt(top.pontos)} pts · R${top.rodada}`:'-'],
+    ['Menor pontuação',low?.time||'-',low?`${fmt(low.pontos)} pts · R${low.rodada}`:'-'],
+    ['Média geral',rows.length?fmt(media):'-',rows.length?`${rows.length} resultados considerados`:'-']
+  ];
+}
+const TIMES_SP=['Legione Romanista','S.C. Finha Paulista','SANTASTICO GLORIOSO I','JUNA FUTEBOL CLUBE','Epidemia Sport Clube','CHARLLOTTTE F.C.'];
+function mgSpRodada(r){
+  const rows=dadosDaRodada(r); let mg=[],sp=[];
+  rows.forEach(t=>(TIMES_SP.includes(t.time)?sp:mg).push(Number(t.pontos||0)));
+  const avg=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:0;
+  return {rodada:r,mg:avg(mg),sp:avg(sp)};
+}
+function mgSpAcumulado(){
+  let ptsMg=0,ptsSp=0,emp=0;
+  const hist=rodadasRegistradas().map(r=>{
+    const d=mgSpRodada(r); const dif=Math.abs(d.mg-d.sp);
+    if(dif<=LIMITE_EMPATE){ptsMg++;ptsSp++;emp++;}
+    else if(d.mg>d.sp)ptsMg+=3; else ptsSp+=3;
+    return {...d,ptsMg,ptsSp};
+  });
+  return {ptsMg,ptsSp,emp,hist,ultimo:hist.at(-1)};
+}
+function renderEstatisticas(){
+  const box=document.getElementById('boxEstatisticas'); if(!box||!historico)return;
+  const nomes=todosNomesTimes();
+  const a=document.getElementById('selCompA')?.value||nomes[0]||'';
+  const b=document.getElementById('selCompB')?.value||nomes.find(n=>n!==a)||'';
+  const tipo=document.getElementById('selCompTipo')?.value||'pontos';
+  const rodadaSel=document.getElementById('selStatsRodada')?.value||'all';
+  const opts=nomes.map(n=>`<option value="${n}">${n}</option>`).join('');
+  const rodOpts='<option value="all">Temporada inteira</option>'+rodadasRegistradas().map(r=>`<option value="${r}">Rodada ${r}</option>`).join('');
+  const serie=serieComparacao(a,b,tipo);
+  const rec=recordsPeriodo(rodadaSel);
+  const zr=rodadaSel==='all'?zueiraDaRodada(rodadasRegistradas().at(-1)||1):zueiraDaRodada(Number(rodadaSel));
+  const mgsp=mgSpAcumulado();
+  const ultimo=mgsp.ultimo||{mg:0,sp:0};
+  box.innerHTML=`
+    <div class="info-block light"><h3>Comparar times</h3>
+      <div class="stats-toolbar"><label>Time 1</label><select id="selCompA" onchange="renderEstatisticas()">${opts}</select><label>Time 2</label><select id="selCompB" onchange="renderEstatisticas()">${opts}</select><label>Gráfico</label><select id="selCompTipo" onchange="renderEstatisticas()"><option value="pontos">Pontuação por rodada</option><option value="posicao">Posição no tradicional</option><option value="media">Média acumulada</option></select></div>
+      ${lineChartSvg(serie,a,b,tipo==='posicao')}
+      <div class="stats-note">Em posição, quanto mais alto no gráfico, melhor a colocação.</div>
+    </div>
+    <div class="info-block"><h3>Recordes</h3><div class="stats-toolbar"><label>Filtro</label><select id="selStatsRodada" onchange="renderEstatisticas()">${rodOpts}</select></div><div class="stats-grid">${rec.map(c=>`<div class="stat-card"><small>${c[0]}</small><b>${c[1]}</b><p>${c[2]}</p></div>`).join('')}</div></div>
+    <div class="info-block light"><h3>Hall da Zoeira</h3><div class="zoeira-grid">${zr.cards.map(c=>`<div class="zoeira-card"><small>${c[0]}</small><b>${c[1]}</b><p>${c[2]}</p></div>`).join('')}</div><div class="stats-note">Use o filtro de rodada acima para ver a zoeira de uma rodada específica.</div></div>
+    <div class="info-block"><h3>MG x SP</h3><p class="small">Para ficar justo, a comparação usa a média dos times. Paulistas: ${TIMES_SP.join(', ')}. Todos os demais entram como MG.</p><div class="mgsp-score"><div class="mgsp-card"><small>MG</small><b>${mgsp.ptsMg}</b><span>pts no duelo</span></div><div class="mgsp-card"><small>SP</small><b>${mgsp.ptsSp}</b><span>pts no duelo</span></div></div>${barChartMgSp(ultimo.mg,ultimo.sp)}<div class="stats-note">A cada rodada: maior média vence e ganha 3 pontos. Diferença de até 5 pontos dá empate e 1 ponto para cada lado.</div></div>`;
+  const sa=document.getElementById('selCompA'), sb=document.getElementById('selCompB'), st=document.getElementById('selCompTipo'), sr=document.getElementById('selStatsRodada');
+  if(sa)sa.value=a;if(sb)sb.value=b;if(st)st.value=tipo;if(sr)sr.value=rodadaSel;
+}
+
+function renderLigaReal(){
+  const box=document.getElementById('boxLigaReal'); if(!box||!historico)return;
+  const campeoes=campeoesLigaReal(); const ranking=rankingLigaReal(); const totalPago=campeoes.length*70;
+  box.innerHTML=`<div class="stats-grid"><div class="stat-card"><small>Rodadas registradas</small><b>${campeoes.length}</b><p>de 38 rodadas</p></div><div class="stat-card"><small>Prêmio já apurado</small><b>${dinheiro(totalPago)}</b><p>${campeoes.length} × R$ 70</p></div><div class="stat-card"><small>Total da Liga Real</small><b>${dinheiro(2660)}</b><p>38 rodadas × R$ 70</p></div></div><div class="info-block light"><h3>Ranking Liga Real</h3>${renderTopList(ranking,t=>`${t.vitorias} vitória${t.vitorias>1?'s':''}`, '', 999)}</div><div class="info-block"><h3>Vencedores por rodada</h3><table class="table-mini"><thead><tr><th>Rodada</th><th>Vencedor</th><th>Pontos</th></tr></thead><tbody>${campeoes.slice().reverse().map(c=>`<tr><td>R${c.rodada}</td><td><b>${c.time}</b></td><td>${fmt(c.pontos)}</td></tr>`).join('')}</tbody></table></div>`;
+}
+function renderPremiacao(){
+  const box=document.getElementById('boxPremiacao'); if(!box||!historico)return;
+  const trad=rankingTradicional(), turno1=rankingSomaRodadas(1,19), turno2=rankingSomaRodadas(20,38), real=rankingLigaReal(), premiosTrad=[600,480,415,360,295,240], premiosMata=[360,200,100,50], participantes=tabelaPremiacaoParticipantes();
+  box.innerHTML=`<div class="prize-grid"><div class="prize-card"><h3>Turnos</h3><div class="money-row"><b>1º Turno</b><span>R$ 100,00</span></div><div class="money-row"><b>2º Turno</b><span>R$ 100,00</span></div></div><div class="prize-card"><h3>Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div><div class="warn-mini">Será calculado automaticamente pela data do primeiro jogo da rodada quando a informação estiver disponível.</div></div><div class="prize-card"><h3>Mata-mata</h3>${premiosMata.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}<div class="warn-mini">Será incluído quando terminar a última fase.</div></div><div class="prize-card"><h3>Tradicional</h3>${premiosTrad.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}</div><div class="prize-card"><h3>Liga Real</h3><div class="money-row"><b>38 rodadas</b><span>${dinheiro(2660)}</span></div><p class="small">R$ 70 para o maior pontuador de cada rodada.</p></div></div><div class="info-block light"><h3>Turnos</h3><table class="table-mini"><thead><tr><th>Premiação</th><th>Líder atual</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody><tr><td>1º Turno</td><td><b>${turno1[0]?.time||'-'}</b></td><td>${turno1[0]?fmt(turno1[0].total):'-'}</td><td>${dinheiro(turno1[0]?100:0)}</td></tr><tr><td>2º Turno</td><td><b>${turno2[0]?.time||'Aguardando'}</b></td><td>${turno2[0]?fmt(turno2[0].total):'-'}</td><td>${dinheiro(turno2[0]?100:0)}</td></tr></tbody></table></div><div class="info-block"><h3>Top 6 Tradicional</h3><table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>${trad.slice(0,6).map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td>${fmt(t.total)}</td><td>${dinheiro(premiosTrad[i])}</td></tr>`).join('')}</tbody></table></div><div class="info-block light"><h3>Liga Real</h3>${real.length?`<table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Vitórias</th><th>Prêmio</th></tr></thead><tbody>${real.map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td>${t.vitorias}</td><td>${dinheiro(t.premio)}</td></tr>`).join('')}</tbody></table>`:'<div class="muted-card">Ainda sem vencedores de rodada.</div>'}</div><div class="info-block"><h3>Premiação atual por participante</h3><table class="table-mini table-prize-full"><thead><tr><th>Time</th><th>Total</th><th>Trad.</th><th>Liga Real</th><th>Turnos</th><th>Mensal</th><th>Mata</th></tr></thead><tbody>${participantes.map(t=>`<tr><td><b>${t.time}</b></td><td><b>${dinheiro(t.totalPremio)}</b></td><td>${dinheiro(t.tradicional)}</td><td>${dinheiro(t.ligaReal)}</td><td>${dinheiro(t.turnos)}</td><td>${dinheiro(t.mensais)}</td><td>${dinheiro(t.mata)}</td></tr>`).join('')}</tbody></table><div class="prize-mobile-list">${participantes.map(t=>`<div class="prize-mobile-card"><b>${t.time}</b><div class="total">${dinheiro(t.totalPremio)}</div><small>Tradicional ${dinheiro(t.tradicional)} · Liga Real ${dinheiro(t.ligaReal)} · Turnos ${dinheiro(t.turnos)} · Mensais ${dinheiro(t.mensais)} · Mata ${dinheiro(t.mata)}</small></div>`).join('')}</div><div class="warn-mini">Mata-mata será incluído quando terminar a última fase. Mensais serão calculados pela data do primeiro jogo da rodada quando a informação estiver disponível.</div></div>`;
+}
+
+function regulamentoDetalhadoV11(){
+  const sec=document.getElementById('aba-regulamento'); if(!sec)return;
+  const card=sec.querySelector('.card'); if(!card)return;
+  card.innerHTML=`<h2>Regulamento detalhado</h2><div class="box"><h3>Regras gerais</h3><p><b>Valor da inscrição:</b> R$ 176,00, dando direito a participar dos 3 campeonatos: Tradicional, Mata-mata e Liga Real.</p><p><b>Pagamento da premiação:</b> será realizado após a última rodada, com todos os resultados conferidos.</p><p><b>Polêmicas:</b> qualquer caso não previsto será decidido por votação no grupo em até 24 horas. A maioria vence. Quem não votar terá voto considerado nulo.</p><p><b>Zoeira:</b> a brincadeira está liberada, mas não pode zuar os times reais dos cartoleiros.</p></div><br><div class="box"><h3>Campeonato Tradicional</h3><p>Soma simples dos pontos oficiais do Cartola em todas as rodadas.</p><p><b>Premiação:</b> Top 6 geral, vencedores de turno e vencedores mensais conforme a aba Premiação.</p><p>Times eliminados do mata-mata continuam disputando normalmente Tradicional e Liga Real.</p></div><br><div class="box"><h3>Campeonato Mata-mata</h3><p><b>Fase 1:</b> 36 times em 4 grupos de 9. Do 1º ao 4º seguem para os grupos; do 5º ao 8º vão para a repescagem; 9º é eliminado do mata-mata.</p><p><b>Fase 2:</b> caminho dos grupos e repescagem separados. Nos grupos, 1º e 2º avançam; 3º e 4º caem para repescagem. Na repescagem, só o campeão continua.</p><p><b>Fase 3:</b> 8 times seguem no caminho dos grupos e 12 disputam a Repescagem 2. Os melhores do caminho principal garantem vaga na Fase Final; outros ainda podem passar pela repescagem.</p><p><b>Fase 4:</b> Repescagem Final. Os classificados do caminho dos grupos aguardam, enquanto a repescagem define as últimas vagas.</p><p><b>Fase 5:</b> 6 times em 2 grupos de 3. O 1º de cada grupo vai para a Grande Final. O 2º disputa 3º lugar.</p><p><b>Grande Final:</b> rodada 38 decide campeão e 3º lugar.</p><p><b>Regra dos confrontos:</b> vitória vale 3 pontos, empate vale 1, derrota vale 0. Diferença de até 5 pontos Cartola é empate. Diferença maior que 5 define vencedor.</p><p><b>Desempate:</b> pontos, vitórias, saldo de pontos Cartola, pontos Cartola feitos.</p></div><br><div class="box"><h3>Liga Real</h3><p>Em cada rodada, o maior pontuador da liga vence a Liga Real da rodada.</p><p>O prêmio por rodada é de R$ 70,00. Em caso de empate na maior pontuação, o prêmio será dividido.</p><p>O pagamento será feito ao final do campeonato.</p></div>`;
+}
+const renderTudoOriginalV7=renderTudo;
+renderTudo=function(){
+  renderTudoOriginalV7();
+  regulamentoDetalhadoV11();
+  garantirSeletorFases('fase2');
 }
 
 carregar();
