@@ -1,123 +1,210 @@
 import json
-import urllib.request
+import os
 import time
+import urllib.request
 from datetime import datetime
+from pathlib import Path
+from tempfile import NamedTemporaryFile
+from zoneinfo import ZoneInfo
 
-ARQUIVO_RODADA_ATUAL = "rodada_atual_cartola.json"
+ARQUIVO_RODADA_ATUAL = Path("rodada_atual_cartola.json")
+ARQUIVO_PARCIAIS = Path("parciais_cartola.json")
 URL_STATUS = "https://api.cartola.globo.com/mercado/status"
+TOTAL_TIMES = 36
+FUSO = ZoneInfo("America/Sao_Paulo")
 
 TIMES = [
-    {"time_id": 3619967, "time": "Forward F. Club", "cartoleiro": "Valcard"},
-    {"time_id": 40995, "time": "WECAM", "cartoleiro": "Renato Valerio"},
-    {"time_id": 6074454, "time": "SardoGalo 13", "cartoleiro": "Álvaro Firmino"},
-    {"time_id": 385413, "time": "Mão C.F", "cartoleiro": "Lucas Mão"},
-    {"time_id": 8976743, "time": "MT10M1T0", "cartoleiro": "Marco Tulio"},
-    {"time_id": 50252506, "time": "Branes25", "cartoleiro": "Roger Nunes"},
-    {"time_id": 195382, "time": "CAMARASSO", "cartoleiro": "André Camarasso"},
-    {"time_id": 60383, "time": "RJ Clube", "cartoleiro": "Ricardo Júdice"},
-    {"time_id": 19198951, "time": "SANTASTICO GLORIOSO I", "cartoleiro": "Renato Do SANTOS"},
-    {"time_id": 25588958, "time": "JUNA FUTEBOL CLUBE", "cartoleiro": "AMARILO JUNIOR"},
-    {"time_id": 654232, "time": "D1OS", "cartoleiro": "10inho"},
-    {"time_id": 974057, "time": "S.C. Finha Paulista", "cartoleiro": "Lucas Guedes"},
-    {"time_id": 2745059, "time": "Epidemia Sport Clube", "cartoleiro": "Jorge Queiroz"},
-    {"time_id": 91357, "time": "DP-SC", "cartoleiro": "D Pedro"},
-    {"time_id": 29565271, "time": "Legione Romanista", "cartoleiro": "Arthur Godioso"},
-    {"time_id": 28538913, "time": "Maria Gol De Costas", "cartoleiro": "Rafa Palhares"},
-    {"time_id": 178173, "time": "Jack Golden", "cartoleiro": "Dourado"},
-    {"time_id": 21141036, "time": "Ardam Cabubu", "cartoleiro": "Guizoba"},
-    {"time_id": 50327258, "time": "Digdigie94", "cartoleiro": "DigdigieCabuloso"},
-    {"time_id": 18434405, "time": "Gabiru cabuloso", "cartoleiro": "Wendell Costa"},
-    {"time_id": 1193651, "time": "CruzeiroKiller", "cartoleiro": "André Pitanga"},
-    {"time_id": 25565544, "time": "CHARLLOTTTE F.C.", "cartoleiro": "Charles Duek"},
-    {"time_id": 28604976, "time": "Galo de Rio Doce FC", "cartoleiro": "Pedro Natali"},
-    {"time_id": 14705949, "time": "Seu Cuca Futebol", "cartoleiro": "Xande Costa"},
-    {"time_id": 214265, "time": "Framos F.C", "cartoleiro": "Fernando Ramos"},
-    {"time_id": 186377, "time": "JACB FC", "cartoleiro": "Juca Barros"},
-    {"time_id": 51042838, "time": "A76 FC", "cartoleiro": "Alan Guimarães"},
-    {"time_id": 285883, "time": "Kayser Football", "cartoleiro": "Pedro Kayser"},
-    {"time_id": 3128927, "time": "Jafeth G.D.F.C.", "cartoleiro": "Henrique Jafeth"},
-    {"time_id": 25937153, "time": "GALOBERA F.C", "cartoleiro": "Gabriel Carvalho"},
-    {"time_id": 1005072, "time": "PELUDÃO13", "cartoleiro": "WAGNER"},
-    {"time_id": 49415297, "time": "SemFreio LEFC1988", "cartoleiro": "LEANDRO CAMPOS GIANI"},
-    {"time_id": 103947, "time": "Campista F. C", "cartoleiro": "Rafael Abrantes"},
-    {"time_id": 24449, "time": "Sport Club Prexeca Bangers", "cartoleiro": "Giovanni Guedes"},
-    {"time_id": 25889523, "time": "Clube de Regatas Sô", "cartoleiro": "Betinho Valerio"},
-    {"time_id": 596168, "time": "Galo Doido BH 93", "cartoleiro": "Lucas Real"},
+    (3619967, "Forward F. Club", "Valcard"),
+    (40995, "WECAM", "Renato Valerio"),
+    (6074454, "SardoGalo 13", "Álvaro Firmino"),
+    (385413, "Mão C.F", "Lucas Mão"),
+    (8976743, "MT10M1T0", "Marco Tulio"),
+    (50252506, "Branes25", "Roger Nunes"),
+    (195382, "CAMARASSO", "André Camarasso"),
+    (60383, "RJ Clube", "Ricardo Júdice"),
+    (19198951, "SANTASTICO GLORIOSO I", "Renato Do SANTOS"),
+    (25588958, "JUNA FUTEBOL CLUBE", "AMARILO JUNIOR"),
+    (654232, "D1OS", "10inho"),
+    (974057, "S.C. Finha Paulista", "Lucas Guedes"),
+    (2745059, "Epidemia Sport Clube", "Jorge Queiroz"),
+    (91357, "DP-SC", "D Pedro"),
+    (29565271, "Legione Romanista", "Arthur Godioso"),
+    (28538913, "Maria Gol De Costas", "Rafa Palhares"),
+    (178173, "Jack Golden", "Dourado"),
+    (21141036, "Ardam Cabubu", "Guizoba"),
+    (50327258, "Digdigie94", "DigdigieCabuloso"),
+    (18434405, "Gabiru cabuloso", "Wendell Costa"),
+    (1193651, "CruzeiroKiller", "André Pitanga"),
+    (25565544, "CHARLLOTTTE F.C.", "Charles Duek"),
+    (28604976, "Galo de Rio Doce FC", "Pedro Natali"),
+    (14705949, "Seu Cuca Futebol", "Xande Costa"),
+    (214265, "Framos F.C", "Fernando Ramos"),
+    (186377, "JACB FC", "Juca Barros"),
+    (51042838, "A76 FC", "Alan Guimarães"),
+    (285883, "Kayser Football", "Pedro Kayser"),
+    (3128927, "Jafeth G.D.F.C.", "Henrique Jafeth"),
+    (25937153, "GALOBERA F.C", "Gabriel Carvalho"),
+    (1005072, "PELUDÃO13", "WAGNER"),
+    (49415297, "SemFreio LEFC1988", "LEANDRO CAMPOS GIANI"),
+    (103947, "Campista F. C", "Rafael Abrantes"),
+    (24449, "Sport Club Prexeca Bangers", "Giovanni Guedes"),
+    (25889523, "Clube de Regatas Sô", "Betinho Valerio"),
+    (596168, "Galo Doido BH 93", "Lucas Real"),
 ]
 
 
-def buscar_json(url):
-    req = urllib.request.Request(
-        url,
-        headers={
-            "Accept": "application/json",
-            "User-Agent": "Mozilla/5.0",
-        }
-    )
-    with urllib.request.urlopen(req) as resposta:
-        return json.loads(resposta.read().decode("utf-8"))
+def agora_texto():
+    return datetime.now(FUSO).strftime("%d/%m/%Y %H:%M:%S")
 
 
-print("Buscando status do mercado...")
+def buscar_json(url, tentativas=3):
+    ultimo_erro = None
+    for tentativa in range(1, tentativas + 1):
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={"Accept": "application/json", "User-Agent": "Mozilla/5.0"},
+            )
+            with urllib.request.urlopen(req, timeout=25) as resposta:
+                return json.loads(resposta.read().decode("utf-8"))
+        except Exception as erro:
+            ultimo_erro = erro
+            print(f"Tentativa {tentativa}/{tentativas} falhou em {url}: {erro}")
+            if tentativa < tentativas:
+                time.sleep(tentativa * 2)
+    raise RuntimeError(f"Falha definitiva em {url}: {ultimo_erro}")
+
+
+def carregar_json(caminho):
+    try:
+        with caminho.open("r", encoding="utf-8") as arquivo:
+            dados = json.load(arquivo)
+            return dados if isinstance(dados, dict) else None
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None
+
+
+def salvar_atomico(caminho, dados):
+    caminho.parent.mkdir(parents=True, exist_ok=True)
+    with NamedTemporaryFile(
+        "w", encoding="utf-8", dir=caminho.parent, delete=False, suffix=".tmp"
+    ) as temporario:
+        json.dump(dados, temporario, ensure_ascii=False, indent=2)
+        temporario.write("\n")
+        nome_temporario = temporario.name
+    os.replace(nome_temporario, caminho)
+
+
+def sem_data(dados):
+    if dados is None:
+        return None
+    copia = dict(dados)
+    copia.pop("ultima_atualizacao", None)
+    return copia
+
+
+def salvar_somente_se_mudou(caminho, dados):
+    anterior = carregar_json(caminho)
+    if sem_data(anterior) == sem_data(dados):
+        print(f"{caminho}: dados sem alteração.")
+        return False
+
+    dados["ultima_atualizacao"] = agora_texto()
+    salvar_atomico(caminho, dados)
+    print(f"{caminho}: arquivo atualizado.")
+    return True
+
+
+print("Consultando o status do Cartola...")
 status = buscar_json(URL_STATUS)
 
 rodada_status = int(status.get("rodada_atual", 0) or 0)
 mercado_status = int(status.get("status_mercado", 0) or 0)
-
 mercado_aberto = mercado_status == 1
-rodada_em_andamento = mercado_status != 1
+bola_rolando = bool(status.get("bola_rolando", False))
+rodada_em_andamento = bola_rolando
+rodada_dados = rodada_status - 1 if mercado_aberto else rodada_status
 
-if mercado_aberto:
-    rodada_dados = rodada_status - 1
-else:
-    rodada_dados = rodada_status
+if rodada_dados <= 0:
+    raise RuntimeError("Não foi possível determinar a rodada dos dados.")
 
-print(f"Rodada do Cartola/status: {rodada_status}")
-print(f"Status do mercado: {mercado_status}")
-print(f"Rodada usada para dados: {rodada_dados}")
+print(f"Rodada Cartola: {rodada_status}")
+print(f"Status mercado: {mercado_status}")
+print(f"Mercado aberto: {mercado_aberto}")
+print(f"Bola rolando: {bola_rolando}")
+print(f"Rodada usada nos dados: {rodada_dados}")
 
-times_rodada = []
+novos_times = []
+erros = []
 
-for t in TIMES:
-    url = f"https://api.cartola.globo.com/time/id/{t['time_id']}"
-
+for indice, (time_id, nome_time, cartoleiro) in enumerate(TIMES, start=1):
+    url = f"https://api.cartola.globo.com/time/id/{time_id}"
     try:
         dados = buscar_json(url)
+        rodada_retornada = int(
+            dados.get("rodada_atual", rodada_dados) or rodada_dados
+        )
+        if rodada_retornada != rodada_dados:
+            raise ValueError(
+                f"API retornou rodada {rodada_retornada}; "
+                f"esperada {rodada_dados}."
+            )
 
-        pontos = round(float(dados.get("pontos", 0) or 0), 2)
-        patrimonio = round(float(dados.get("patrimonio", 0) or 0), 2)
-        pontos_campeonato = round(float(dados.get("pontos_campeonato", 0) or 0), 2)
+        registro = {
+            "time_id": time_id,
+            "time": nome_time,
+            "cartoleiro": cartoleiro,
+            "rodada_dados": rodada_retornada,
+            "pontos": round(float(dados.get("pontos", 0) or 0), 2),
+            "patrimonio": round(float(dados.get("patrimonio", 0) or 0), 2),
+            "pontos_campeonato": round(
+                float(dados.get("pontos_campeonato", 0) or 0), 2
+            ),
+        }
+        novos_times.append(registro)
+        print(f"[{indice:02d}/{TOTAL_TIMES}] OK - {nome_time}: {registro['pontos']}")
+    except Exception as erro:
+        mensagem = f"{nome_time}: {erro}"
+        erros.append(mensagem)
+        print(f"[{indice:02d}/{TOTAL_TIMES}] ERRO - {mensagem}")
+    time.sleep(0.12)
 
-        times_rodada.append({
-            "time_id": t["time_id"],
-            "time": t["time"],
-            "cartoleiro": t["cartoleiro"],
-            "rodada_dados": int(dados.get("rodada_atual", rodada_dados) or rodada_dados),
-            "pontos": pontos,
-            "patrimonio": patrimonio,
-            "pontos_campeonato": pontos_campeonato
-        })
+if erros or len(novos_times) != TOTAL_TIMES:
+    print("\nColeta cancelada para preservar os arquivos anteriores.")
+    print(f"Times obtidos: {len(novos_times)}/{TOTAL_TIMES}")
+    for mensagem in erros:
+        print(f" - {mensagem}")
+    raise RuntimeError("Não foi possível obter os 36 times.")
 
-        print(f"OK - {t['time']} : {pontos}")
-        time.sleep(0.1)
-
-    except Exception as e:
-        print(f"ERRO - {t['time']} : {e}")
+if rodada_em_andamento:
+    observacao = "Dados parciais da rodada atual."
+elif mercado_aberto:
+    observacao = "Mercado aberto: pontos da última rodada fechada."
+else:
+    observacao = "Mercado fechado, mas sem indicação de bola rolando."
 
 saida = {
     "liga": "Cartola de Ermida",
-    "ultima_atualizacao": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
     "rodada_cartola": rodada_status,
     "status_mercado": mercado_status,
     "mercado_aberto": mercado_aberto,
+    "bola_rolando": bola_rolando,
     "rodada_em_andamento": rodada_em_andamento,
     "rodada_dados": rodada_dados,
-    "observacao": "Sem token. Se mercado_aberto=true, os pontos normalmente representam a última rodada fechada.",
-    "times": times_rodada
+    "observacao": observacao,
+    "times": novos_times,
 }
 
-with open(ARQUIVO_RODADA_ATUAL, "w", encoding="utf-8") as arquivo:
-    json.dump(saida, arquivo, ensure_ascii=False, indent=2)
+salvar_somente_se_mudou(ARQUIVO_RODADA_ATUAL, dict(saida))
 
-print("rodada_atual_cartola.json atualizado com sucesso!")
-print(f"Times atualizados: {len(times_rodada)}")
+if rodada_em_andamento:
+    parciais = dict(saida)
+    parciais["fonte"] = "api_time_id"
+    salvar_somente_se_mudou(ARQUIVO_PARCIAIS, parciais)
+elif ARQUIVO_PARCIAIS.exists():
+    ARQUIVO_PARCIAIS.unlink()
+    print("parciais_cartola.json removido: não há rodada ao vivo.")
+
+print("\nAtualização da rodada atual concluída com segurança.")
+print(f"Times atualizados: {len(novos_times)}")
+print(f"Parciais ao vivo: {'sim' if rodada_em_andamento else 'não'}")
