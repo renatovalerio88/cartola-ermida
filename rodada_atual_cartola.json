@@ -3,10 +3,10 @@
   "rodada_cartola": 19,
   "status_mercado": 2,
   "mercado_aberto": false,
-  "bola_rolando": true,
-  "rodada_em_andamento": true,
+  "bola_rolando": false,
+  "rodada_em_andamento": false,
   "rodada_dados": 19,
-  "observacao": "Dados parciais da rodada atual.",
+  "observacao": "Mercado fechado, mas sem indicação de bola rolando.",
   "times": [
     {
       "time_id": 3619967,
@@ -333,5 +333,5 @@
       "pontos_campeonato": 1072.11
     }
   ],
-  "ultima_atualizacao": "21/07/2026 20:25:20"
+  "ultima_atualizacao": "22/07/2026 00:46:40"
 }
