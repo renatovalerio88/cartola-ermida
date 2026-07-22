@@ -586,6 +586,23 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .mgsp-table th,.mgsp-table td{padding:7px 6px;border-bottom:1px solid #1f2a3d;text-align:left;white-space:nowrap}
 .mgsp-table th{background:#14532d;color:#dcfce7;font-size:10px;text-transform:uppercase}
 .stats-subtitle{font-size:11px;color:#94a3b8;margin:4px 0 8px}
+
+
+/* =========================
+   V2.0 LIVE — simples, limpo e responsivo
+   ========================= */
+.live-v2-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:10px 0}
+.live-v2-card{background:#0b1220;border:1px solid #263247;border-radius:15px;padding:12px}
+.live-v2-card small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.live-v2-card b{font-size:18px;color:#f8fafc}.live-v2-card .green{color:#86efac}.live-v2-card .gold{color:#fde68a}
+.live-v2-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}.live-v2-head h2{margin:0}.live-v2-provisional{font-size:11px;color:#fde68a;background:#422f09;border:1px solid #fbbf2455;border-radius:999px;padding:5px 9px;font-weight:900}
+.live-v2-tabs{display:flex;gap:7px;overflow-x:auto;margin:8px 0 12px}.live-v2-tabs button{padding:7px 10px;font-size:11px}
+.live-v2-table-wrap{overflow-x:auto}.live-v2-table td,.live-v2-table th{white-space:nowrap}
+.live-v2-row-me{background:#12351f!important}.live-v2-up{color:#86efac;font-weight:900}.live-v2-down{color:#fca5a5;font-weight:900}
+.live-v2-match{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center;padding:10px 0;border-top:1px solid #263247}.live-v2-match:first-child{border-top:0}.live-v2-team{font-weight:800}.live-v2-team.right{text-align:right}.live-v2-score{background:#020617;border:1px solid #475569;border-radius:999px;padding:5px 9px;font-weight:900;white-space:nowrap}.live-v2-note{grid-column:1/-1;font-size:11px;color:#94a3b8;text-align:center}.live-v2-note strong{color:#86efac}.live-v2-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ef4444;margin-right:5px;box-shadow:0 0 0 3px #ef444422}
+.player-live-panel{margin:10px 0 0;background:#020617;border:1px solid #334155;border-radius:14px;padding:10px}.player-live-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px}.player-live-head b{font-size:13px}.player-live-head span{font-size:10px;color:#94a3b8}.player-live-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:6px}.player-live-item{display:grid;grid-template-columns:1fr auto;gap:6px;background:#0b1220;border:1px solid #1f2a3d;border-radius:11px;padding:7px 8px;font-size:11px}.player-live-item b{font-size:12px}.player-live-item small{display:block;color:#94a3b8}.player-live-points{font-weight:900;color:#fde68a;white-space:nowrap}.player-live-cap{color:#fbbf24}.provisional-title{font-size:11px;color:#fde68a;margin:5px 0 9px}.live-language{color:#86efac;font-weight:900}.closed-language{color:#dcfce7;font-weight:900}
+@media(max-width:760px){.live-v2-grid{grid-template-columns:1fr 1fr;gap:7px}.live-v2-card{padding:9px}.live-v2-card b{font-size:15px}.player-live-list{grid-template-columns:1fr}.live-v2-match{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);font-size:11px}.live-v2-score{padding:4px 6px;font-size:11px}.live-v2-note{font-size:9.5px}.live-v2-head h2{font-size:17px}}
+@media(max-width:390px){.live-v2-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -604,6 +621,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 <div class="container">
   <div class="nav">
     <button class="active" onclick="abrirAba('meutime',this)">Meu Time</button>
+    <button onclick="abrirAba('aovivo',this)"><span class="live-v2-dot"></span>Ao Vivo</button>
     <button data-nav-fases="1" onclick="abrirAba('fase2',this)">Fases</button>
     <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
     <button onclick="abrirAba('ligareal',this)">Liga Real</button>
@@ -624,6 +642,16 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
       </div>
 
       <div id="boxMeuTime"></div>
+    </div>
+  </section>
+
+  <section id="aba-aovivo" class="aba hidden">
+    <div class="card">
+      <div class="live-v2-head">
+        <h2>Ao Vivo</h2>
+        <span id="liveV2Status" class="live-v2-provisional">Classificação provisória</span>
+      </div>
+      <div id="boxAoVivo"></div>
     </div>
   </section>
 
@@ -2246,6 +2274,110 @@ renderTudo=function(){
   regulamentoDetalhadoV11();
   garantirSeletorFases('fase2');
 }
+
+
+/* =========================
+   V2.0 LIVE — linguagem e painel ao vivo
+   ========================= */
+function rodadaEstaAoVivo(rodada){
+  return !!(parciaisCartola?.rodada_em_andamento && Number(parciaisCartola?.rodada_dados)===Number(rodada));
+}
+function textoResultadoV2(ta,tb,pa,pb,rodada){
+  const dif=Math.abs(Number(pa)-Number(pb));
+  const vivo=rodadaEstaAoVivo(rodada);
+  if(dif<=LIMITE_EMPATE){
+    return vivo?`Os times estão empatando pela regra dos 5 pontos · diferença ${fmtBR(dif)}`:`Empate · diferença ${fmtBR(dif)}`;
+  }
+  const vencedor=pa>pb?ta:tb;
+  return vivo?`${vencedor} está vencendo · saldo ${fmtBR(dif)}`:`${vencedor} venceu · saldo ${fmtBR(dif)}`;
+}
+function iconeResultadoV2(tipo,rodada){
+  if(rodadaEstaAoVivo(rodada)) return '<span class="live-v2-dot"></span>';
+  return dotStatus(tipo);
+}
+
+// Substitui apenas a linguagem; a regra matemática continua igual.
+notaJogo=function(ta,tb,pa,pb){
+  const rodada=Number(parciaisCartola?.rodada_dados||0);
+  return `(${textoResultadoV2(ta,tb,pa,pb,rodada)})`;
+};
+resumoResultadoCurto=function(ta,tb,pa,pb,rodada){return textoResultadoV2(ta,tb,pa,pb,rodada||Number(parciaisCartola?.rodada_dados||0));};
+
+const jogosDoMeuTimeV1=jogosDoMeuTime;
+jogosDoMeuTime=function(times,inicio,agenda,meuTime,tituloJogos="Jogos do time"){
+  let html=`<div class="scoreboard meu-time-games"><div class="scoreboard-title">⚽ ${tituloJogos}</div>`;
+  let achou=false;
+  agenda.forEach((rodadaAgenda,idx)=>{
+    const rodada=inicio+idx;
+    rodadaAgenda.forEach(([a,b])=>{
+      const ta=times[a-1]?.time||times[a-1], tb=times[b-1]?.time||times[b-1];
+      if(ta!==meuTime&&tb!==meuTime)return;
+      achou=true;
+      const tem=temRodada(rodada), pa=tem?pontosTime(ta,rodada):0, pb=tem?pontosTime(tb,rodada):0;
+      const st=tem?simbolosJogo(pa,pb):{a:'draw',b:'draw'};
+      const vivo=rodadaEstaAoVivo(rodada);
+      html+=`<div class="score-game-wrap"><div class="score-game">${tem?iconeResultadoV2(st.a,rodada):'<span></span>'}<span class="score-team ${ta===meuTime?'meu-time-label ':''}${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${tem?`${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}`:'<span class="score-x">x</span>'}</span><span class="score-team right ${tb===meuTime?'meu-time-label ':''}${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${tem?iconeResultadoV2(st.b,rodada):'<span></span>'}</div><div class="match-status-line">Rodada ${rodada} · ${tem?textoResultadoV2(ta,tb,pa,pb,rodada):'Jogo ainda não disputado'}${vivo?' · <span class="form-live">AO VIVO</span>':''}</div></div>`;
+    });
+  });
+  html+=`<div class="mobile-score-legend"><span><span class="live-v2-dot"></span> ao vivo</span><span><span class="status-dot status-win"></span> resultado final</span></div></div>`;
+  return achou?html:`<div class="muted-card">Nenhum jogo encontrado para este time nesta fase.</div>`;
+};
+
+renderConfrontosRodada=function(times,inicio,agenda,rodadaEscolhida,titulo){
+  const idx=rodadaEscolhida-inicio, rodada=agenda[idx]||[];
+  let html=`<div class="section-gap"></div><h3>${titulo}</h3>${rodadaEstaAoVivo(rodadaEscolhida)?'<div class="provisional-title"><span class="live-v2-dot"></span>Resultados e classificação provisórios</div>':''}<div class="scoreboard"><div class="scoreboard-title">⚽ Rodada ${rodadaEscolhida}</div>`;
+  rodada.forEach(([a,b])=>{
+    const ta=times[a-1]?.time||'A definir',tb=times[b-1]?.time||'A definir',tem=temRodada(rodadaEscolhida),pa=tem?pontosTime(ta,rodadaEscolhida):0,pb=tem?pontosTime(tb,rodadaEscolhida):0,st=tem?simbolosJogo(pa,pb):{a:'draw',b:'draw'};
+    html+=`<div class="score-game-wrap"><div class="score-game">${tem?iconeResultadoV2(st.a,rodadaEscolhida):'<span></span>'}<span class="score-team ${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${tem?`${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}`:'<span class="score-x">x</span>'}</span><span class="score-team right ${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${tem?iconeResultadoV2(st.b,rodadaEscolhida):'<span></span>'}</div><div class="score-note">${tem?textoResultadoV2(ta,tb,pa,pb,rodadaEscolhida):'Jogo ainda não disputado'}</div></div>`;
+  });
+  html+='</div>';return html;
+};
+
+function timeParcialV2(nome){return parciaisCartola?.times?.find(t=>String(t.time).trim()===String(nome).trim())||null;}
+function painelJogadoresV2(nome){
+  const t=timeParcialV2(nome); if(!t||!Array.isArray(t.detalhes_parcial)||!t.detalhes_parcial.length)return '';
+  const itens=[...t.detalhes_parcial].sort((a,b)=>Number(b.pontos_computados||0)-Number(a.pontos_computados||0));
+  const pontuaram=itens.filter(x=>Number(x.pontos||0)!==0||x.entrou_em_campo).length;
+  return `<div class="player-live-panel"><div class="player-live-head"><b>Escalação e parciais</b><span>${pontuaram}/${itens.length} com dados de jogo</span></div><div class="player-live-list">${itens.map(x=>`<div class="player-live-item"><div><b>${x.apelido||x.atleta_id}${x.capitao?' <span class="player-live-cap">(C)</span>':''}</b><small>${x.entrou_em_campo?'Entrou em campo':'Ainda sem atuação confirmada'}</small></div><span class="player-live-points">${fmtBR(x.pontos_computados)} pts</span></div>`).join('')}</div></div>`;
+}
+const renderMeuTimeV1=renderMeuTime;
+renderMeuTime=function(){
+  renderMeuTimeV1();
+  const nome=document.getElementById('selMeuTime')?.value, box=document.getElementById('boxMeuTime');
+  if(nome&&box&&rodadaEstaAoVivo(parciaisCartola?.rodada_dados)){
+    const painel=painelJogadoresV2(nome); if(painel){const hero=box.querySelector('.meu-hero');(hero||box).insertAdjacentHTML('beforeend',painel);}
+  }
+};
+
+function confrontosAtuaisV2(){
+  const r=Number(parciaisCartola?.rodada_dados||0); if(!r)return [];
+  let mapa=null,inicio=0,agenda=null;
+  if(r<=18){mapa=grupos; inicio=1; agenda=Object.values(jogosFase1);}
+  else if(r<=24){mapa=fase2Times();inicio=19;agenda=jogos4;}
+  else if(r<=30){mapa=fase3Times();inicio=25;agenda=jogos4;}
+  else if(r<=34){mapa=fase4Times();inicio=31;agenda=jogos4TurnoUnico;}
+  else if(r<=37){mapa=faseFinalTimes();inicio=35;agenda=jogos3;}
+  else{mapa=finalTimes();inicio=38;agenda=[[[1,2]]];}
+  const idx=r-inicio, jogos=[];
+  Object.entries(mapa||{}).forEach(([grupo,timesObj])=>{
+    const times=Array.isArray(timesObj)?timesObj:Object.values(timesObj).map(time=>({time}));
+    (agenda?.[idx]||[]).forEach(([a,b])=>{const ta=times[a-1]?.time,tb=times[b-1]?.time;if(ta&&tb)jogos.push({grupo,ta,tb,pa:pontosTime(ta,r),pb:pontosTime(tb,r),rodada:r});});
+  });
+  return jogos;
+}
+function renderAoVivo(){
+  const box=document.getElementById('boxAoVivo');if(!box)return;
+  if(!parciaisCartola?.times?.length){box.innerHTML='<div class="muted-card">Dados ao vivo indisponíveis.</div>';return;}
+  const r=Number(parciaisCartola.rodada_dados||0),vivo=rodadaEstaAoVivo(r),ranking=[...parciaisCartola.times].sort((a,b)=>Number(b.pontos||0)-Number(a.pontos||0));
+  const jogos=confrontosAtuaisV2(), maior=ranking[0], goleada=[...jogos].sort((a,b)=>Math.abs(b.pa-b.pb)-Math.abs(a.pa-a.pb))[0], equilibrado=[...jogos].sort((a,b)=>Math.abs(a.pa-a.pb)-Math.abs(b.pa-b.pb))[0];
+  const meu=document.getElementById('selMeuTime')?.value||localStorage.getItem('meuTimeCartola')||'';
+  if(document.getElementById('liveV2Status'))liveV2Status.textContent=vivo?'Classificação provisória · AO VIVO':'Rodada encerrada';
+  box.innerHTML=`<div class="live-v2-grid"><div class="live-v2-card"><small>Maior parcial</small><b class="green">${fmtBR(maior?.pontos)} pts</b><div class="small">${maior?.time||'-'}</div></div><div class="live-v2-card"><small>Maior vantagem</small><b class="green">${goleada?fmtBR(Math.abs(goleada.pa-goleada.pb)):'-'}</b><div class="small">${goleada?`${goleada.ta} x ${goleada.tb}`:'-'}</div></div><div class="live-v2-card"><small>Mais equilibrado</small><b class="gold">${equilibrado?fmtBR(Math.abs(equilibrado.pa-equilibrado.pb)):'-'}</b><div class="small">diferença</div></div><div class="live-v2-card"><small>Atletas pontuados</small><b>${parciaisCartola.total_atletas_pontuados||0}</b><div class="small">Rodada ${r}</div></div></div><div class="info-block"><h3>Ranking geral das parciais</h3><div class="live-v2-table-wrap"><table class="live-v2-table"><thead><tr><th>#</th><th>Time</th><th>Parcial</th><th>Jogadores</th></tr></thead><tbody>${ranking.map((t,i)=>`<tr class="${t.time===meu?'live-v2-row-me':''}"><td>${i+1}</td><td><b>${t.time}</b></td><td><b>${fmtBR(t.pontos)}</b></td><td>${t.atletas_pontuando??'-'}</td></tr>`).join('')}</tbody></table></div></div><div class="info-block light"><h3>Confrontos da rodada ${r}</h3>${jogos.length?jogos.map(j=>`<div class="live-v2-match"><span class="live-v2-team">${j.ta}</span><span class="live-v2-score">${fmtBR(j.pa)} x ${fmtBR(j.pb)}</span><span class="live-v2-team right">${j.tb}</span><div class="live-v2-note">${vivo?'<span class="live-v2-dot"></span>':''}<strong>${textoResultadoV2(j.ta,j.tb,j.pa,j.pb,j.rodada)}</strong></div></div>`).join(''):'<div class="muted-card">Confrontos não encontrados para esta rodada.</div>'}</div><div class="stats-note">Os dados são atualizados pelo GitHub Actions. Durante a rodada, classificação e resultados são provisórios.</div>`;
+}
+
+const renderTudoV2Base=renderTudo;
+renderTudo=function(){renderTudoV2Base();renderAoVivo();};
+
 
 carregar();
 </script>
