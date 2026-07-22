@@ -27,63 +27,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Testar APIs do WECAM
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json
-          import urllib.request
-
-          urls = [
-              "https://api.cartola.globo.com/mercado/status",
-              "https://api.cartola.globo.com/time/id/40995",
-              "https://api.cartola.globo.com/time/id/40995/19",
-          ]
-
-          for url in urls:
-              print()
-              print("=" * 80)
-              print(f"URL: {url}")
-
-              req = urllib.request.Request(
-                  url,
-                  headers={
-                      "Accept": "application/json",
-                      "User-Agent": "Mozilla/5.0",
-                  },
-              )
-
-              try:
-                  with urllib.request.urlopen(req, timeout=25) as resposta:
-                      dados = json.loads(
-                          resposta.read().decode("utf-8")
-                      )
-
-                  resumo = {
-                      "rodada_atual": dados.get("rodada_atual"),
-                      "status_mercado": dados.get("status_mercado"),
-                      "bola_rolando": dados.get("bola_rolando"),
-                      "pontos": dados.get("pontos"),
-                      "pontos_campeonato": dados.get("pontos_campeonato"),
-                      "patrimonio": dados.get("patrimonio"),
-                      "capitao_id": dados.get("capitao_id"),
-                      "quantidade_atletas": len(
-                          dados.get("atletas", [])
-                      ),
-                  }
-
-                  print(
-                      json.dumps(
-                          resumo,
-                          ensure_ascii=False,
-                          indent=2,
-                      )
-                  )
-
-              except Exception as erro:
-                  print(f"ERRO: {erro!r}")
-          PY
-
       - name: Consultar status e decidir tarefas
         id: mercado
         shell: bash
@@ -99,6 +42,7 @@ jobs:
 
           def buscar_status():
               ultimo_erro = None
+
               for tentativa in range(1, 4):
                   try:
                       req = urllib.request.Request(
@@ -108,20 +52,31 @@ jobs:
                               "User-Agent": "Mozilla/5.0",
                           },
                       )
-                      with urllib.request.urlopen(req, timeout=20) as resposta:
+
+                      with urllib.request.urlopen(
+                          req,
+                          timeout=20,
+                      ) as resposta:
                           return json.loads(
-                              resposta.read().decode("utf-8")
+                              resposta
+                              .read()
+                              .decode("utf-8")
                           )
+
                   except Exception as erro:
                       ultimo_erro = erro
+
                       print(
-                          f"Tentativa {tentativa}/3 falhou: {erro}"
+                          f"Tentativa "
+                          f"{tentativa}/3 falhou: "
+                          f"{erro}"
                       )
+
                       time.sleep(tentativa * 2)
 
               raise RuntimeError(
-                  f"Não foi possível consultar o status: "
-                  f"{ultimo_erro}"
+                  "Não foi possível consultar "
+                  f"o status: {ultimo_erro}"
               )
 
           def carregar_historico():
@@ -132,6 +87,7 @@ jobs:
                       encoding="utf-8",
                   ) as arquivo:
                       return json.load(arquivo)
+
               except (
                   FileNotFoundError,
                   json.JSONDecodeError,
@@ -141,20 +97,34 @@ jobs:
           status = buscar_status()
 
           rodada = int(
-              status.get("rodada_atual", 0) or 0
+              status.get("rodada_atual", 0)
+              or 0
           )
+
           status_mercado = int(
-              status.get("status_mercado", 0) or 0
+              status.get("status_mercado", 0)
+              or 0
           )
-          mercado_aberto = status_mercado == 1
+
+          mercado_aberto = (
+              status_mercado == 1
+          )
+
           bola_rolando = bool(
-              status.get("bola_rolando", False)
+              status.get(
+                  "bola_rolando",
+                  False,
+              )
           )
+
           rodada_fechada = (
-              rodada - 1 if mercado_aberto else 0
+              rodada - 1
+              if mercado_aberto
+              else 0
           )
 
           historico = carregar_historico()
+
           ultima_fechada = int(
               historico.get(
                   "ultima_rodada_fechada",
@@ -166,7 +136,10 @@ jobs:
           registros = (
               historico
               .get("rodadas", {})
-              .get(str(rodada_fechada), [])
+              .get(
+                  str(rodada_fechada),
+                  [],
+              )
               if rodada_fechada > 0
               else []
           )
@@ -175,21 +148,36 @@ jobs:
               mercado_aberto
               and rodada_fechada > 0
               and (
-                  ultima_fechada < rodada_fechada
-                  or len(registros) != TOTAL_TIMES
+                  ultima_fechada
+                  < rodada_fechada
+                  or len(registros)
+                  != TOTAL_TIMES
               )
           )
 
-          print(f"Rodada Cartola: {rodada}")
-          print(f"Status mercado: {status_mercado}")
-          print(f"Mercado aberto: {mercado_aberto}")
-          print(f"Bola rolando: {bola_rolando}")
           print(
-              "Última rodada fechada registrada: "
+              f"Rodada Cartola: {rodada}"
+          )
+          print(
+              "Status mercado: "
+              f"{status_mercado}"
+          )
+          print(
+              "Mercado aberto: "
+              f"{mercado_aberto}"
+          )
+          print(
+              "Bola rolando: "
+              f"{bola_rolando}"
+          )
+          print(
+              "Última rodada fechada "
+              "registrada: "
               f"{ultima_fechada}"
           )
           print(
-              f"Rodada a consolidar: {rodada_fechada}"
+              "Rodada a consolidar: "
+              f"{rodada_fechada}"
           )
           print(
               "Precisa atualizar histórico: "
@@ -201,7 +189,9 @@ jobs:
               "a",
               encoding="utf-8",
           ) as out:
-              out.write(f"rodada={rodada}\n")
+              out.write(
+                  f"rodada={rodada}\n"
+              )
               out.write(
                   f"status={status_mercado}\n"
               )
@@ -234,7 +224,9 @@ jobs:
       - name: Salvar arquivos atualizados
         shell: bash
         run: |
-          git config user.name "github-actions[bot]"
+          git config user.name \
+            "github-actions[bot]"
+
           git config user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
 
@@ -245,6 +237,14 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Atualiza dados do Cartola"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git commit \
+            -m "Atualiza dados do Cartola"
+
+          git pull \
+            --rebase \
+            origin \
+            "${GITHUB_REF_NAME}"
+
+          git push \
+            origin \
+            "HEAD:${GITHUB_REF_NAME}"
