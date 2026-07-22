@@ -605,6 +605,21 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 
 
 .player-live-pos{display:inline-flex;min-width:34px;justify-content:center;padding:2px 5px;border-radius:999px;background:#163a2a;color:#67e89b;font-size:10px;margin-right:4px}.player-live-section-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 6px;padding-top:9px;border-top:1px solid #1f2a3d;color:#e2e8f0;font-size:12px}.player-live-section-title:first-of-type{border-top:0;padding-top:0}.player-live-status-played{color:#4ade80!important;font-weight:800}.player-live-rl{display:inline-flex;align-items:center;padding:1px 5px;border-radius:999px;background:#7c2d12;color:#fed7aa;font-size:9px;font-weight:900;margin-left:3px;border:1px solid #fb923c66}.player-live-reserve{border-color:#7c2d1255;background:#140d0a}.player-live-reserve .player-live-pos{background:#4a250e;color:#fdba74}.origin-final-box{margin-top:14px}.origin-final-box h3{margin-bottom:8px}.origin-compact-row{padding:7px 0}.origin-compact-row>div{width:100%}.live-v2-group{margin-top:14px;border:1px solid #1f6d3c;border-radius:14px;padding:0 12px 6px;background:rgba(3,35,20,.23)}.live-v2-group:first-child{margin-top:0}.live-v2-group-title{margin:0 -12px 4px;padding:10px 12px;border-radius:13px 13px 0 0;background:#145d32;color:#fff;font-weight:900;letter-spacing:.3px}.live-v2-group.live-v2-group-rep{border-color:#9a5a14;background:rgba(64,32,3,.25)}.live-v2-group.live-v2-group-rep .live-v2-group-title{background:#9a5a14;color:#fff7ed}.live-v2-group .live-v2-match:last-child{border-bottom:0}
+
+
+/* Cenário da classificação — compacto, simples e expansível */
+.class-prob-card{margin:14px 0;padding:15px 16px;border:1px solid #33435b;border-radius:16px;background:linear-gradient(135deg,#0a1424,#0d1b2c);box-shadow:0 10px 26px rgba(0,0,0,.16)}
+.class-prob-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.class-prob-head h3{margin:0;color:#f7c843;font-size:17px}.class-prob-head p{margin:3px 0 0;color:#9fb3cf;font-size:12px}
+.class-prob-badge{white-space:nowrap;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900;border:1px solid #2c8a55;background:#0e3c29;color:#72f3a3}.class-prob-badge.open{border-color:#b88b17;background:#433208;color:#ffd65a}.class-prob-badge.danger{border-color:#b85c28;background:#48220e;color:#ffb36b}.class-prob-badge.out{border-color:#a84444;background:#401919;color:#ff8d8d}
+.class-prob-summary{display:grid;grid-template-columns:155px 1fr;gap:16px;align-items:center}.class-prob-number{font-size:38px;line-height:1;font-weight:950;color:#55e58b}.class-prob-number small{font-size:15px;color:#9fb3cf}.class-prob-title{margin-top:5px;font-size:13px;font-weight:900;color:#eaf2ff}
+.class-prob-message{padding:12px 13px;border-radius:12px;background:#091221;border:1px solid #273750;color:#e5edf9;font-size:13px;line-height:1.5}.class-prob-message b{color:#fff}.class-prob-message strong{color:#72f3a3}.class-prob-situation{margin-top:8px;color:#a9bad2;font-size:11px}
+.class-prob-bar{height:14px;display:flex;overflow:hidden;border-radius:999px;background:#17243a;border:1px solid #34455f;margin-top:13px}.class-prob-seg{height:100%;transition:width .35s ease}.class-prob-direct{background:#20c96b}.class-prob-rep{background:#f2b52b}.class-prob-out{background:#e64d55}
+.class-prob-details{margin-top:10px}.class-prob-details summary{cursor:pointer;display:inline-flex;align-items:center;gap:5px;color:#9fc5ff;font-size:11px;font-weight:900;list-style:none}.class-prob-details summary::-webkit-details-marker{display:none}.class-prob-details summary:after{content:'▾';font-size:10px}.class-prob-details[open] summary:after{content:'▴'}
+.class-prob-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}.class-prob-item{padding:8px 9px;border-radius:10px;background:#091221;border:1px solid #273750}.class-prob-item small{display:block;color:#91a7c5;font-size:10px}.class-prob-item b{font-size:15px}.class-prob-item.direct b{color:#55e58b}.class-prob-item.rep b{color:#ffd45b}.class-prob-item.out b{color:#ff7d84}
+.class-prob-scenarios{display:grid;gap:7px;margin-top:9px}.class-prob-scenario{padding:9px 10px;border-radius:10px;background:#091221;border:1px solid #273750;font-size:11px;line-height:1.45;color:#b8c7dc}.class-prob-scenario b{color:#eef5ff}.class-prob-scenario.safe{border-left:3px solid #20c96b}.class-prob-scenario.possible{border-left:3px solid #f2b52b}.class-prob-scenario.risk{border-left:3px solid #e64d55}
+.class-prob-note{margin-top:10px;color:#8297b4;font-size:10px;line-height:1.45}.class-prob-note strong{color:#cdd9ea}
+@media(max-width:700px){.class-prob-summary{grid-template-columns:1fr}.class-prob-head{display:block}.class-prob-badge{display:inline-block;margin-top:8px}.class-prob-number{font-size:32px}.class-prob-legend{grid-template-columns:1fr}.class-prob-message{padding:10px 11px}}
+
 </style>
 </head>
 <body>
@@ -2405,6 +2420,149 @@ function renderAoVivo(){
 
 const renderTudoV2Base=renderTudo;
 renderTudo=function(){renderTudoV2Base();renderAoVivo();};
+
+
+/* =========================
+   Probabilidade estimada de classificação
+   ========================= */
+function contextoProbabilidadeMeuTime(nome){
+  const fase=faseAtualNumero();
+  let grupo='';
+  if(fase===1)grupo=acharGrupoFase1(nome);
+  else if(fase===2)grupo=acharGrupoEmMapa(nome,fase2Times());
+  else if(fase===3)grupo=acharGrupoEmMapa(nome,fase3Times());
+  else if(fase===4)grupo=acharGrupoEmMapa(nome,fase4Times());
+  else if(fase===5)grupo=acharGrupoEmMapa(nome,faseFinalTimes());
+  else grupo=acharGrupoEmMapa(nome,finalTimes());
+  if(!grupo)return null;
+  const cfg=configFaseMeuTime(fase,grupo);
+  if(!cfg||!Array.isArray(cfg.times)||!cfg.times.length)return null;
+  const rodadaAtual=Math.max(cfg.inicio,Math.min(cfg.fim,rodadaReferenciaFase(fase)));
+  const listaAtual=listaFaseAte(fase,grupo,rodadaAtual);
+  return {fase,grupo,cfg,rodadaAtual,listaAtual};
+}
+function rotulosProbabilidade(fase,grupo){
+  if(fase===1)return {direto:'Avançar aos grupos',rep:'Ir à repescagem',fora:'Eliminação'};
+  if(fase===2&&String(grupo).startsWith('GP'))return {direto:'Avançar direto',rep:'Ir à repescagem',fora:'Eliminação'};
+  if(fase===2)return {direto:'Avançar',rep:'Caminho alternativo',fora:'Eliminação'};
+  if(fase===3&&String(grupo).startsWith('Grupo'))return {direto:'Ir à Fase Final',rep:'Repescagem Final',fora:'Eliminação'};
+  if(fase===3)return {direto:'Avançar',rep:'Brigar pela melhor 2ª vaga',fora:'Eliminação'};
+  if(fase===4)return {direto:'Ir à Fase Final',rep:'Caminho alternativo',fora:'Eliminação'};
+  if(fase===5)return {direto:'Ir à Grande Final',rep:'Disputar o 3º lugar',fora:'Eliminação'};
+  return {direto:'Ser campeão',rep:'',fora:'Não conquistar o título'};
+}
+function categoriaProbabilidade(fase,grupo,pos){
+  if(fase===1)return pos<=4?'direto':pos<=8?'rep':'fora';
+  if(fase===2&&String(grupo).startsWith('GP'))return pos<=2?'direto':'rep';
+  if(fase===2)return pos===1?'direto':'fora';
+  if(fase===3&&String(grupo).startsWith('Grupo'))return pos<=2?'direto':'rep';
+  if(fase===3)return pos===1?'direto':pos===2?'rep':'fora';
+  if(fase===4)return pos===1?'direto':'fora';
+  if(fase===5)return pos===1?'direto':pos===2?'rep':'fora';
+  return pos===1?'direto':'fora';
+}
+function hashProbabilidade(texto){let h=2166136261;for(let i=0;i<texto.length;i++){h^=texto.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rngProbabilidade(seed){let a=seed>>>0;return function(){a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+function normalProbabilidade(rng){const u=Math.max(rng(),1e-9),v=Math.max(rng(),1e-9);return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function perfilPontuacaoProbabilidade(nome){
+  const valores=[];
+  rodadasRegistradas().slice(-10).forEach(r=>{const t=dadosDaRodada(r).find(x=>String(x.time).trim()===String(nome).trim());if(t&&Number.isFinite(Number(t.pontos)))valores.push(Number(t.pontos))});
+  if(!valores.length)return {media:75,desvio:18};
+  const media=valores.reduce((a,b)=>a+b,0)/valores.length;
+  const variancia=valores.reduce((s,x)=>s+(x-media)**2,0)/Math.max(1,valores.length-1);
+  return {media:Math.max(25,Math.min(130,media)),desvio:Math.max(10,Math.min(35,Math.sqrt(variancia)||18))};
+}
+function limiteDiretoProbabilidade(fase,grupo){
+  if(fase===1)return 4;
+  if(fase===2&&String(grupo).startsWith('GP'))return 2;
+  if(fase===2)return 1;
+  if(fase===3&&String(grupo).startsWith('Grupo'))return 2;
+  if(fase===3)return 1;
+  return 1;
+}
+function simularProbabilidadeClassificacao(nome){
+  const ctx=contextoProbabilidadeMeuTime(nome);if(!ctx)return null;
+  const {fase,grupo,cfg,rodadaAtual,listaAtual}=ctx;
+  const nomes=cfg.times.map(t=>t?.time||t).filter(Boolean);
+  const restante=[];
+  cfg.agenda.forEach((jogos,idx)=>{const r=cfg.inicio+idx;if(r<=rodadaAtual)return;(jogos||[]).forEach(([a,b])=>{const ta=nomes[a-1],tb=nomes[b-1];if(ta&&tb)restante.push({r,ta,tb})})});
+  const posAtual=localizarPosicao(listaAtual,nome)||nomes.length;
+  const corte=limiteDiretoProbabilidade(fase,grupo);
+  const primeiroFora=listaAtual[corte];
+  const euAtual=listaAtual.find(x=>x.time===nome);
+  const vantagem=euAtual&&primeiroFora?Number(euAtual.pts)-Number(primeiroFora.pts):null;
+  if(!restante.length){const cat=categoriaProbabilidade(fase,grupo,posAtual);return {direto:cat==='direto'?100:0,rep:cat==='rep'?100:0,fora:cat==='fora'?100:0,restam:0,fase,grupo,simulacoes:0,posAtual,corte,vantagem,porVitorias:{}};}
+  const perfis=Object.fromEntries(nomes.map(n=>[n,perfilPontuacaoProbabilidade(n)]));
+  const estadoBase={};listaAtual.forEach(t=>estadoBase[t.time]={...t});nomes.forEach(n=>{if(!estadoBase[n])estadoBase[n]=base(n)});
+  const seed=hashProbabilidade(`${nome}|${fase}|${grupo}|${rodadaAtual}|${listaAtual.map(x=>`${x.time}:${x.pts}:${x.saldo.toFixed(2)}`).join(';')}`);
+  const rng=rngProbabilidade(seed),N=3500,cont={direto:0,rep:0,fora:0},porVitorias={};
+  for(let s=0;s<N;s++){
+    const stats={};Object.entries(estadoBase).forEach(([n,t])=>stats[n]={...t});let vitoriasMeuTime=0;
+    restante.forEach(j=>{
+      const paPerfil=perfis[j.ta],pbPerfil=perfis[j.tb];
+      const pa=Math.max(0,Math.min(220,paPerfil.media+normalProbabilidade(rng)*paPerfil.desvio));
+      const pb=Math.max(0,Math.min(220,pbPerfil.media+normalProbabilidade(rng)*pbPerfil.desvio));
+      aplicaJogo(stats,j.ta,j.tb,pa,pb);
+      if(j.ta===nome&&pa-pb>5)vitoriasMeuTime++;
+      if(j.tb===nome&&pb-pa>5)vitoriasMeuTime++;
+    });
+    const fim=ordenar(Object.values(stats));
+    const pos=fim.findIndex(x=>x.time===nome)+1,cat=categoriaProbabilidade(fase,grupo,pos);cont[cat]++;
+    if(!porVitorias[vitoriasMeuTime])porVitorias[vitoriasMeuTime]={total:0,direto:0,rep:0,fora:0};
+    porVitorias[vitoriasMeuTime].total++;porVitorias[vitoriasMeuTime][cat]++;
+  }
+  const jogosRestantesDoTime=restante.filter(j=>j.ta===nome||j.tb===nome).length;
+  Object.values(porVitorias).forEach(x=>{x.pDireto=100*x.direto/x.total;x.pRep=100*x.rep/x.total;x.pFora=100*x.fora/x.total});
+  return {direto:100*cont.direto/N,rep:100*cont.rep/N,fora:100*cont.fora/N,restam:jogosRestantesDoTime,fase,grupo,simulacoes:N,posAtual,corte,vantagem,porVitorias};
+}
+function diagnosticoProbabilidade(p){
+  if(!p.restam){if(p.direto===100)return {texto:'Classificação garantida',classe:'',icone:'✅'};if(p.rep===100)return {texto:'Foco no caminho alternativo',classe:'open',icone:'🟡'};return {texto:'Sem possibilidade de classificação',classe:'out',icone:'❌'};}
+  if(p.direto>=85)return {texto:'Classificação muito próxima',classe:'',icone:'🟢'};
+  if(p.direto>=65)return {texto:'Você depende apenas de si',classe:'',icone:'🟢'};
+  if(p.direto>=40)return {texto:'Disputa totalmente aberta',classe:'open',icone:'🟡'};
+  if(p.direto>=20)return {texto:'Precisa reagir',classe:'danger',icone:'🟠'};
+  return {texto:'Situação complicada',classe:'out',icone:'🔴'};
+}
+function recomendacaoVitoriasProbabilidade(p){
+  const dados=Object.entries(p.porVitorias||{}).map(([v,x])=>({v:Number(v),...x})).sort((a,b)=>a.v-b.v);
+  const seguro=dados.find(x=>x.total>=20&&x.pDireto>=80);
+  const possivel=dados.find(x=>x.total>=20&&x.pDireto>=45);
+  const seguroV=seguro?seguro.v:null,possivelV=possivel?possivel.v:null;
+  let principal='';
+  if(!p.restam)principal=p.direto===100?'A vaga já está confirmada.':p.rep===100?'A classificação direta terminou; o time segue pelo caminho alternativo.':'A fase terminou sem classificação.';
+  else if(seguroV!==null)principal=`Com <strong>${seguroV} vitória${seguroV===1?'':'s'}</strong>, a classificação direta fica muito bem encaminhada.`;
+  else if(p.direto>=40)principal=`A disputa está equilibrada. O melhor caminho é buscar pelo menos <strong>${Math.max(1,Math.ceil(p.restam*.6))} vitórias</strong>.`;
+  else principal=`O time precisa de uma reação forte e deve buscar <strong>${Math.max(1,p.restam-1)} vitória${p.restam-1===1?'':'s'}</strong> ou mais.`;
+  const linhas=[];
+  if(seguroV!==null)linhas.push({cls:'safe',html:`🏆 <b>Cenário seguro:</b> ${seguroV} vitória${seguroV===1?'':'s'} deixa${seguroV===1?'':'m'} a vaga direta muito provável.`});
+  if(possivelV!==null&&possivelV!==seguroV)linhas.push({cls:'possible',html:`🤝 <b>Cenário possível:</b> com ${possivelV} vitória${possivelV===1?'':'s'}, o time continua com chance, mas pode depender dos concorrentes.`});
+  const riscoBase=possivelV!==null?Math.max(0,possivelV-1):Math.max(0,Math.floor(p.restam/2)-1);
+  if(p.restam)linhas.push({cls:'risk',html:`⚠️ <b>Cenário de risco:</b> com ${riscoBase} vitória${riscoBase===1?'':'s'} ou menos, aumenta o risco de repescagem ou eliminação.`});
+  return {principal,linhas};
+}
+function textoSituacaoTabelaProbabilidade(p){
+  const pos=`Você está em <b>${p.posAtual}º lugar</b>`;
+  if(p.vantagem===null)return `${pos} no grupo.`;
+  if(p.vantagem>0)return `${pos}, com <b>${p.vantagem} ponto${p.vantagem===1?'':'s'} de vantagem</b> sobre o primeiro time fora da zona direta.`;
+  if(p.vantagem===0)return `${pos}, empatado em pontos com o primeiro time fora da zona direta.`;
+  return `${pos}, a <b>${Math.abs(p.vantagem)} ponto${Math.abs(p.vantagem)===1?'':'s'}</b> da zona de classificação direta.`;
+}
+function renderProbabilidadeClassificacao(nome){
+  const p=simularProbabilidadeClassificacao(nome);if(!p)return '';
+  const labels=rotulosProbabilidade(p.fase,p.grupo),diag=diagnosticoProbabilidade(p),rec=recomendacaoVitoriasProbabilidade(p);
+  const nota=p.simulacoes?`Estimativa feita com <strong>${p.simulacoes.toLocaleString('pt-BR')} simulações</strong>, usando campanha atual, jogos restantes e desempenho recente.`:'A fase já não possui jogos restantes.';
+  const vivo=rodadaEstaAoVivo(parciaisCartola?.rodada_dados)?' O placar parcial atual é considerado como se a rodada terminasse agora.':'';
+  return `<div class="class-prob-card"><div class="class-prob-head"><div><h3>🎯 Cenário da classificação</h3><p>Uma tradução simples do que o time precisa fazer</p></div><span class="class-prob-badge ${diag.classe}">${diag.icone} ${diag.texto}</span></div><div class="class-prob-summary"><div><div class="class-prob-number">${p.direto.toFixed(0)}<small>%</small></div><div class="class-prob-title">de chance de ${labels.direto.toLowerCase()}</div></div><div class="class-prob-message">Restam <b>${p.restam} jogo${p.restam===1?'':'s'}</b> nesta fase.<br>${rec.principal}<div class="class-prob-situation">${textoSituacaoTabelaProbabilidade(p)}</div></div></div><div class="class-prob-bar"><span class="class-prob-seg class-prob-direct" style="width:${p.direto}%"></span><span class="class-prob-seg class-prob-rep" style="width:${p.rep}%"></span><span class="class-prob-seg class-prob-out" style="width:${p.fora}%"></span></div><details class="class-prob-details"><summary>Ver cenário completo</summary><div class="class-prob-legend"><div class="class-prob-item direct"><small>${labels.direto}</small><b>${p.direto.toFixed(0)}%</b></div><div class="class-prob-item rep"><small>${labels.rep||'Caminho alternativo'}</small><b>${p.rep.toFixed(0)}%</b></div><div class="class-prob-item out"><small>${labels.fora}</small><b>${p.fora.toFixed(0)}%</b></div></div><div class="class-prob-scenarios">${rec.linhas.map(x=>`<div class="class-prob-scenario ${x.cls}">${x.html}</div>`).join('')}</div><div class="class-prob-note">${nota}${vivo} É uma projeção, não uma garantia matemática.</div></details></div>`;
+}
+const renderMeuTimeProbBase=renderMeuTime;
+renderMeuTime=function(){
+  renderMeuTimeProbBase();
+  const nome=document.getElementById('selMeuTime')?.value,box=document.getElementById('boxMeuTime');
+  if(!nome||!box)return;
+  const html=renderProbabilidadeClassificacao(nome);if(!html)return;
+  const resumo=box.querySelector('.meu-summary');
+  if(resumo)resumo.insertAdjacentHTML('afterend',html);else box.insertAdjacentHTML('afterbegin',html);
+};
 
 
 carregar();
