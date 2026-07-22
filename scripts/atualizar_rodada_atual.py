@@ -378,6 +378,27 @@ def calcular_parcial(
     )
 
 
+def montar_detalhes_reservas(dados_time, mapa_pontuados):
+    reservas = dados_time.get("reservas", [])
+    if not isinstance(reservas, list):
+        reservas = []
+    reserva_luxo_id = inteiro(dados_time.get("reserva_luxo_id", 0))
+    detalhes = []
+    for atleta in reservas:
+        atleta_id = inteiro(atleta.get("atleta_id", 0))
+        pontos = obter_pontuacao_atleta(mapa_pontuados, atleta_id)
+        detalhes.append({
+            "atleta_id": atleta_id,
+            "apelido": atleta.get("apelido") or str(atleta_id),
+            "posicao_id": inteiro(atleta.get("posicao_id", 0)),
+            "reserva_luxo": atleta_id == reserva_luxo_id,
+            "entrou_em_campo": atleta_entrou_em_campo(mapa_pontuados, atleta_id),
+            "pontos": round(pontos, 2),
+            "substituicao_aplicada": False,
+        })
+    return detalhes
+
+
 def rodada_da_escalacao(dados_time):
     informacoes_time = dados_time.get(
         "time",
@@ -662,6 +683,16 @@ for indice, (
             registro[
                 "detalhes_parcial"
             ] = detalhes
+            registro["reserva_luxo_id"] = inteiro(
+                dados_time.get("reserva_luxo_id", 0)
+            )
+            registro["reservas_parcial"] = montar_detalhes_reservas(
+                dados_time, mapa_pontuados
+            )
+            registro["substituicoes_aplicadas"] = []
+            registro["criterio_parcial"] = (
+                "titulares + capitao 1.5; reservas apenas para diagnóstico"
+            )
 
         novos_times.append(registro)
 
