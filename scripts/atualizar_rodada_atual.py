@@ -300,12 +300,6 @@ def calcular_parcial(
     detalhes = []
     atletas_pontuando = 0
 
-    ids_pontuados = {
-        inteiro(chave)
-        for chave in mapa_pontuados
-        if str(chave).isdigit()
-    }
-
     for atleta in atletas:
         atleta_id = inteiro(
             atleta.get(
@@ -343,7 +337,7 @@ def calcular_parcial(
                 pontuacao_normal
             )
 
-        if atleta_id in ids_pontuados:
+        if entrou_em_campo:
             atletas_pontuando += 1
 
         total += pontuacao_computada
