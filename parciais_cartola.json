@@ -3,11 +3,11 @@
   "rodada_cartola": 19,
   "status_mercado": 2,
   "mercado_aberto": false,
-  "bola_rolando": false,
+  "bola_rolando": true,
   "rodada_em_andamento": true,
   "rodada_dados": 19,
   "rodada_pontuados": 19,
-  "total_atletas_pontuados": 50,
+  "total_atletas_pontuados": 72,
   "observacao": "Parciais calculadas pelas escalações dos times e pela API oficial de atletas pontuados.",
   "fonte": "parciais_cartola.json",
   "times": [
@@ -17,44 +17,53 @@
       "cartoleiro": "Valcard",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 3.4,
+      "pontos": 9.2,
       "patrimonio": 157.98,
-      "pontos_campeonato": 1542.48,
+      "pontos_campeonato": 1548.28,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 4,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
-          "atleta_id": 89274,
-          "apelido": "Andreas Pereira",
+          "atleta_id": 99815,
+          "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
+          "atleta_id": 96591,
+          "apelido": "Renan Lodi",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 3.4,
+          "pontos_computados": 3.4
+        },
+        {
+          "atleta_id": 71684,
+          "apelido": "Gustavo Gómez",
           "posicao_id": 3,
           "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 80287,
-          "apelido": "Luciano",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
+          "atleta_id": 88963,
+          "apelido": "Leonardo Jardim",
+          "posicao_id": 6,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -70,37 +79,10 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 88963,
-          "apelido": "Leonardo Jardim",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
           "atleta_id": 117910,
           "apelido": "Breno Bidon",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 71684,
-          "apelido": "Gustavo Gómez",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
@@ -115,18 +97,36 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 96591,
-          "apelido": "Renan Lodi",
-          "posicao_id": 2,
+          "atleta_id": 80287,
+          "apelido": "Luciano",
+          "posicao_id": 5,
           "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 3.4,
-          "pontos_computados": 3.4
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
         },
         {
-          "atleta_id": 99815,
-          "apelido": "Arias",
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 89274,
+          "apelido": "Andreas Pereira",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.8,
+          "pontos_computados": 0.8
+        },
+        {
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -136,19 +136,28 @@
       "reserva_luxo_id": 100652,
       "reservas_parcial": [
         {
-          "atleta_id": 104075,
-          "apelido": "Sabino",
-          "posicao_id": 3,
+          "atleta_id": 107554,
+          "apelido": "Natanael",
+          "posicao_id": 2,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 4.2,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 107873,
+          "apelido": "Bobadilla",
+          "posicao_id": 4,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
-          "reserva_luxo": true,
+          "atleta_id": 104075,
+          "apelido": "Sabino",
+          "posicao_id": 3,
+          "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
@@ -163,21 +172,12 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 107873,
-          "apelido": "Bobadilla",
-          "posicao_id": 4,
-          "reserva_luxo": false,
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
+          "posicao_id": 5,
+          "reserva_luxo": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 107554,
-          "apelido": "Natanael",
-          "posicao_id": 2,
-          "reserva_luxo": false,
-          "entrou_em_campo": true,
-          "pontos": 4.2,
           "substituicao_aplicada": false
         }
       ],
@@ -190,11 +190,11 @@
       "cartoleiro": "Renato Valerio",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 13.1,
+      "pontos": 18.1,
       "patrimonio": 139.13,
-      "pontos_campeonato": 1443.22,
+      "pontos_campeonato": 1448.22,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 2,
+      "atletas_pontuando": 4,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
@@ -202,7 +202,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -220,9 +220,9 @@
           "apelido": "Gustavo Gómez",
           "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         },
         {
           "atleta_id": 96591,
@@ -367,27 +367,9 @@
       "patrimonio": 158.93,
       "pontos_campeonato": 1433.46,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 2,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
-        {
-          "atleta_id": 72460,
-          "apelido": "Bernard",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 9.7,
-          "pontos_computados": 9.7
-        },
-        {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
         {
           "atleta_id": 100652,
           "apelido": "Yuri Alberto",
@@ -407,18 +389,27 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 101574,
-          "apelido": "Hugo Souza",
-          "posicao_id": 1,
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 69208,
-          "apelido": "Gabriel Paulista",
-          "posicao_id": 3,
+          "atleta_id": 72460,
+          "apelido": "Bernard",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 9.7,
+          "pontos_computados": 9.7
+        },
+        {
+          "atleta_id": 101574,
+          "apelido": "Hugo Souza",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -434,6 +425,15 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 72391,
+          "apelido": "Fernando Diniz",
+          "posicao_id": 6,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
           "atleta_id": 96591,
           "apelido": "Renan Lodi",
           "posicao_id": 2,
@@ -443,9 +443,9 @@
           "pontos_computados": 3.4
         },
         {
-          "atleta_id": 72391,
-          "apelido": "Fernando Diniz",
-          "posicao_id": 6,
+          "atleta_id": 69208,
+          "apelido": "Gabriel Paulista",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -465,7 +465,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -486,8 +486,8 @@
           "apelido": "Murilo",
           "posicao_id": 3,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -509,18 +509,18 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 68928,
-          "apelido": "Rafael",
-          "posicao_id": 1,
+          "atleta_id": 101727,
+          "apelido": "Matheuzinho",
+          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 101727,
-          "apelido": "Matheuzinho",
-          "posicao_id": 2,
+          "atleta_id": 68928,
+          "apelido": "Rafael",
+          "posicao_id": 1,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -536,35 +536,53 @@
       "cartoleiro": "Lucas Mão",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 3.4,
+      "pontos": 9.2,
       "patrimonio": 160.45,
-      "pontos_campeonato": 1410.3,
+      "pontos_campeonato": 1416.1,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 2,
+      "atletas_pontuando": 5,
       "capitao_id": 100652,
       "detalhes_parcial": [
-        {
-          "atleta_id": 89274,
-          "apelido": "Andreas Pereira",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
         {
           "atleta_id": 104084,
           "apelido": "Carlos Miguel",
           "posicao_id": 1,
           "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 89274,
+          "apelido": "Andreas Pereira",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.8,
+          "pontos_computados": 0.8
+        },
+        {
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
+          "posicao_id": 5,
+          "capitao": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 117910,
-          "apelido": "Breno Bidon",
-          "posicao_id": 4,
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 72391,
+          "apelido": "Fernando Diniz",
+          "posicao_id": 6,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -580,9 +598,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
+          "atleta_id": 69208,
+          "apelido": "Gabriel Paulista",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -598,33 +616,6 @@
           "pontos_computados": 3.4
         },
         {
-          "atleta_id": 72391,
-          "apelido": "Fernando Diniz",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 69208,
-          "apelido": "Gabriel Paulista",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
           "atleta_id": 118844,
           "apelido": "Kaio César",
           "posicao_id": 5,
@@ -634,8 +625,8 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 99815,
-          "apelido": "Arias",
+          "atleta_id": 117910,
+          "apelido": "Breno Bidon",
           "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
@@ -648,6 +639,15 @@
           "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         }
@@ -709,11 +709,11 @@
       "cartoleiro": "Marco Tulio",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 5.0,
       "patrimonio": 144.13,
-      "pontos_campeonato": 1398.36,
+      "pontos_campeonato": 1403.36,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
@@ -726,28 +726,19 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
           "atleta_id": 99815,
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": true,
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
+          "posicao_id": 2,
+          "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
@@ -771,17 +762,17 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 117910,
-          "apelido": "Breno Bidon",
-          "posicao_id": 4,
-          "capitao": false,
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 96610,
-          "apelido": "Matheus Pereira",
+          "atleta_id": 117910,
+          "apelido": "Breno Bidon",
           "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
@@ -798,18 +789,18 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 110426,
-          "apelido": "Bernabei",
-          "posicao_id": 2,
+          "atleta_id": 96610,
+          "apelido": "Matheus Pereira",
+          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 104084,
-          "apelido": "Carlos Miguel",
-          "posicao_id": 1,
+          "atleta_id": 110426,
+          "apelido": "Bernabei",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -823,6 +814,15 @@
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 104084,
+          "apelido": "Carlos Miguel",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         }
       ],
       "reserva_luxo_id": 100652,
@@ -859,8 +859,8 @@
           "apelido": "Murilo",
           "posicao_id": 3,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         }
       ],
@@ -873,44 +873,17 @@
       "cartoleiro": "Roger Nunes",
       "rodada_dados": 19,
       "rodada_escalacao": 18,
-      "pontos": 0.0,
+      "pontos": 7.77,
       "patrimonio": 136.72,
-      "pontos_campeonato": 1396.5,
+      "pontos_campeonato": 1404.27,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 2,
       "capitao_id": 143193,
       "detalhes_parcial": [
-        {
-          "atleta_id": 96610,
-          "apelido": "Matheus Pereira",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
         {
           "atleta_id": 145404,
           "apelido": "Arthur",
           "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 130843,
-          "apelido": "Arthur Dias",
-          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -926,6 +899,15 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 130843,
+          "apelido": "Arthur Dias",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
           "atleta_id": 94583,
           "apelido": "Pedro",
           "posicao_id": 5,
@@ -935,9 +917,36 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 96610,
+          "apelido": "Matheus Pereira",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
           "atleta_id": 70592,
           "apelido": "Felipe Anderson",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 112709,
+          "apelido": "Kaiki Bruno",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -953,9 +962,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 112709,
-          "apelido": "Kaiki Bruno",
-          "posicao_id": 2,
+          "atleta_id": 87008,
+          "apelido": "Léo Jardim",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -975,18 +984,9 @@
           "apelido": "Abel Ferreira",
           "posicao_id": 6,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 87008,
-          "apelido": "Léo Jardim",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 2.77,
+          "pontos_computados": 2.77
         }
       ],
       "reserva_luxo_id": 83257,
@@ -1000,26 +1000,26 @@
       "cartoleiro": "André Camarasso",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 13.1,
+      "pontos": 18.1,
       "patrimonio": 148.31,
-      "pontos_campeonato": 1406.21,
+      "pontos_campeonato": 1411.21,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 2,
+      "atletas_pontuando": 4,
       "capitao_id": 94583,
       "detalhes_parcial": [
-        {
-          "atleta_id": 72018,
-          "apelido": "Tiago Volpi",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
         {
           "atleta_id": 99815,
           "apelido": "Arias",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 72018,
+          "apelido": "Tiago Volpi",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1039,18 +1039,9 @@
           "apelido": "Gustavo Gómez",
           "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         },
         {
           "atleta_id": 83528,
@@ -1080,6 +1071,15 @@
           "pontos_computados": 3.4
         },
         {
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
           "atleta_id": 72460,
           "apelido": "Bernard",
           "posicao_id": 4,
@@ -1087,6 +1087,15 @@
           "entrou_em_campo": true,
           "pontos": 9.7,
           "pontos_computados": 9.7
+        },
+        {
+          "atleta_id": 96610,
+          "apelido": "Matheus Pereira",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
         },
         {
           "atleta_id": 100652,
@@ -1101,15 +1110,6 @@
           "atleta_id": 98873,
           "apelido": "Samuel Lino",
           "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 96610,
-          "apelido": "Matheus Pereira",
-          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1137,9 +1137,9 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
+          "atleta_id": 80196,
+          "apelido": "Yago Pikachu",
+          "posicao_id": 4,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1155,12 +1155,12 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 80196,
-          "apelido": "Yago Pikachu",
-          "posicao_id": 4,
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         }
       ],
@@ -1173,17 +1173,17 @@
       "cartoleiro": "Ricardo Júdice",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 13.1,
+      "pontos": 18.1,
       "patrimonio": 142.95,
-      "pontos_campeonato": 1398.93,
+      "pontos_campeonato": 1403.93,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 2,
+      "atletas_pontuando": 4,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1199,9 +1199,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1226,10 +1226,19 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
+          "atleta_id": 97653,
+          "apelido": "Murilo",
           "posicao_id": 3,
           "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
@@ -1244,27 +1253,18 @@
           "pontos_computados": 3.4
         },
         {
-          "atleta_id": 88963,
-          "apelido": "Leonardo Jardim",
-          "posicao_id": 6,
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
+          "atleta_id": 88963,
+          "apelido": "Leonardo Jardim",
+          "posicao_id": 6,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1284,7 +1284,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         }
@@ -1296,8 +1296,8 @@
           "apelido": "Carlos Miguel",
           "posicao_id": 1,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -1346,62 +1346,35 @@
       "cartoleiro": "Renato Do SANTOS",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.5,
+      "pontos": 5.5,
       "patrimonio": 146.12,
-      "pontos_campeonato": 1377.33,
+      "pontos_campeonato": 1382.33,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
-          "atleta_id": 99815,
-          "apelido": "Arias",
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 84735,
+          "apelido": "Jorginho",
           "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 116034,
-          "apelido": "Victor Hugo",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 0.5,
-          "pontos_computados": 0.5
-        },
-        {
-          "atleta_id": 71684,
-          "apelido": "Gustavo Gómez",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 84816,
-          "apelido": "Varela",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1435,29 +1408,56 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 84735,
-          "apelido": "Jorginho",
+          "atleta_id": 71684,
+          "apelido": "Gustavo Gómez",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 84816,
+          "apelido": "Varela",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 116034,
+          "apelido": "Victor Hugo",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 0.5,
+          "pontos_computados": 0.5
         },
         {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         }
@@ -1465,12 +1465,30 @@
       "reserva_luxo_id": 118844,
       "reservas_parcial": [
         {
-          "atleta_id": 80570,
-          "apelido": "Wendell",
-          "posicao_id": 2,
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 104783,
+          "apelido": "Acevedo",
+          "posicao_id": 4,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 3.7,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 104084,
+          "apelido": "Carlos Miguel",
+          "posicao_id": 1,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -1483,30 +1501,12 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 104084,
-          "apelido": "Carlos Miguel",
-          "posicao_id": 1,
+          "atleta_id": 80570,
+          "apelido": "Wendell",
+          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 104783,
-          "apelido": "Acevedo",
-          "posicao_id": 4,
-          "reserva_luxo": false,
-          "entrou_em_campo": true,
-          "pontos": 3.7,
           "substituicao_aplicada": false
         }
       ],
@@ -1519,13 +1519,94 @@
       "cartoleiro": "AMARILO JUNIOR",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 5.0,
       "patrimonio": 150.03,
-      "pontos_campeonato": 1376.81,
+      "pontos_campeonato": 1381.81,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
+        {
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 90768,
+          "apelido": "Fabrício Bruno",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 105647,
+          "apelido": "Maurício",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 103445,
+          "apelido": "Kaio Jorge",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 72391,
+          "apelido": "Fernando Diniz",
+          "posicao_id": 6,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 72018,
+          "apelido": "Tiago Volpi",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 117910,
+          "apelido": "Breno Bidon",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
         {
           "atleta_id": 88393,
           "apelido": "Ayrton Lucas",
@@ -1549,103 +1630,13 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 72018,
-          "apelido": "Tiago Volpi",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 105647,
-          "apelido": "Maurício",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 103445,
-          "apelido": "Kaio Jorge",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 117910,
-          "apelido": "Breno Bidon",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 72391,
-          "apelido": "Fernando Diniz",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 90768,
-          "apelido": "Fabrício Bruno",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         }
       ],
       "reserva_luxo_id": 100652,
       "reservas_parcial": [
-        {
-          "atleta_id": 84626,
-          "apelido": "Josué",
-          "posicao_id": 4,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
         {
           "atleta_id": 100652,
           "apelido": "Yuri Alberto",
@@ -1656,9 +1647,9 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 104084,
-          "apelido": "Carlos Miguel",
-          "posicao_id": 1,
+          "atleta_id": 61987,
+          "apelido": "Alex Sandro",
+          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1674,12 +1665,21 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 61987,
-          "apelido": "Alex Sandro",
-          "posicao_id": 2,
+          "atleta_id": 104084,
+          "apelido": "Carlos Miguel",
+          "posicao_id": 1,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 84626,
+          "apelido": "Josué",
+          "posicao_id": 4,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 0.5,
           "substituicao_aplicada": false
         }
       ],
@@ -1692,35 +1692,17 @@
       "cartoleiro": "10inho",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 3.4,
+      "pontos": 8.4,
       "patrimonio": 141.09,
-      "pontos_campeonato": 1377.56,
+      "pontos_campeonato": 1382.56,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
-        {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
         {
           "atleta_id": 96610,
           "apelido": "Matheus Pereira",
           "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 121823,
-          "apelido": "Kauê",
-          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1736,6 +1718,15 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 71684,
+          "apelido": "Gustavo Gómez",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
           "atleta_id": 72391,
           "apelido": "Fernando Diniz",
           "posicao_id": 6,
@@ -1745,27 +1736,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 71684,
-          "apelido": "Gustavo Gómez",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 96591,
-          "apelido": "Renan Lodi",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 3.4,
-          "pontos_computados": 3.4
-        },
-        {
-          "atleta_id": 117910,
-          "apelido": "Breno Bidon",
-          "posicao_id": 4,
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1781,11 +1754,38 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 96591,
+          "apelido": "Renan Lodi",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 3.4,
+          "pontos_computados": 3.4
+        },
+        {
+          "atleta_id": 121823,
+          "apelido": "Kauê",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 117910,
+          "apelido": "Breno Bidon",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
           "atleta_id": 99815,
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -1820,6 +1820,15 @@
           "substituicao_aplicada": false
         },
         {
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "substituicao_aplicada": false
+        },
+        {
           "atleta_id": 100652,
           "apelido": "Yuri Alberto",
           "posicao_id": 5,
@@ -1829,9 +1838,9 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
+          "atleta_id": 82775,
+          "apelido": "Lucas Ramon",
+          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1841,15 +1850,6 @@
           "atleta_id": 117404,
           "apelido": "Otávio",
           "posicao_id": 1,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 82775,
-          "apelido": "Lucas Ramon",
-          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1865,22 +1865,13 @@
       "cartoleiro": "Lucas Guedes",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 5.0,
       "patrimonio": 144.05,
-      "pontos_campeonato": 1373.03,
+      "pontos_campeonato": 1378.03,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
-        {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
         {
           "atleta_id": 100652,
           "apelido": "Yuri Alberto",
@@ -1891,17 +1882,8 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
           "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
@@ -1912,6 +1894,24 @@
           "atleta_id": 96610,
           "apelido": "Matheus Pereira",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -1967,7 +1967,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -1984,6 +1984,15 @@
       "reserva_luxo_id": 118844,
       "reservas_parcial": [
         {
+          "atleta_id": 104084,
+          "apelido": "Carlos Miguel",
+          "posicao_id": 1,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "substituicao_aplicada": false
+        },
+        {
           "atleta_id": 104075,
           "apelido": "Sabino",
           "posicao_id": 3,
@@ -1993,20 +2002,11 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 104084,
-          "apelido": "Carlos Miguel",
-          "posicao_id": 1,
+          "atleta_id": 105647,
+          "apelido": "Maurício",
+          "posicao_id": 4,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 84816,
-          "apelido": "Varela",
-          "posicao_id": 2,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "substituicao_aplicada": false
         },
@@ -2020,9 +2020,9 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 105647,
-          "apelido": "Maurício",
-          "posicao_id": 4,
+          "atleta_id": 84816,
+          "apelido": "Varela",
+          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2042,7 +2042,7 @@
       "patrimonio": 150.12,
       "pontos_campeonato": 1377.68,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
@@ -2122,7 +2122,7 @@
           "apelido": "Maurício",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -2149,7 +2149,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         }
@@ -2161,8 +2161,8 @@
           "apelido": "Murilo",
           "posicao_id": 3,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -2211,17 +2211,35 @@
       "cartoleiro": "D Pedro",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 0.8,
       "patrimonio": 154.81,
-      "pontos_campeonato": 1367.28,
+      "pontos_campeonato": 1368.08,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
+        {
+          "atleta_id": 89274,
+          "apelido": "Andreas Pereira",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.8,
+          "pontos_computados": 0.8
+        },
         {
           "atleta_id": 98873,
           "apelido": "Samuel Lino",
           "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2237,18 +2255,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 89274,
-          "apelido": "Andreas Pereira",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
-          "posicao_id": 3,
+          "atleta_id": 88963,
+          "apelido": "Leonardo Jardim",
+          "posicao_id": 6,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2273,26 +2282,8 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 88963,
-          "apelido": "Leonardo Jardim",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
           "atleta_id": 117910,
           "apelido": "Breno Bidon",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 99815,
-          "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
@@ -2318,6 +2309,15 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
           "atleta_id": 105531,
           "apelido": "Matheus Bidu",
           "posicao_id": 2,
@@ -2330,12 +2330,12 @@
       "reserva_luxo_id": 90285,
       "reservas_parcial": [
         {
-          "atleta_id": 95556,
-          "apelido": "Raniele",
-          "posicao_id": 4,
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -2352,14 +2352,14 @@
           "apelido": "Carlos Miguel",
           "posicao_id": 1,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
+          "atleta_id": 95556,
+          "apelido": "Raniele",
+          "posicao_id": 4,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2384,16 +2384,25 @@
       "cartoleiro": "Arthur Godioso",
       "rodada_dados": 19,
       "rodada_escalacao": 18,
-      "pontos": 0.0,
+      "pontos": 7.77,
       "patrimonio": 152.32,
-      "pontos_campeonato": 1363.92,
+      "pontos_campeonato": 1371.69,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 2,
       "capitao_id": 143193,
       "detalhes_parcial": [
         {
-          "atleta_id": 104502,
-          "apelido": "Christian",
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 96610,
+          "apelido": "Matheus Pereira",
           "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
@@ -2401,18 +2410,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 110506,
-          "apelido": "Abel Ferreira",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 97867,
-          "apelido": "Léo Ortiz",
-          "posicao_id": 3,
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2437,33 +2437,6 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 143193,
-          "apelido": "Viveros",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94968,
-          "apelido": "Juninho Capixaba",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
           "atleta_id": 141451,
           "apelido": "Allan",
           "posicao_id": 4,
@@ -2473,9 +2446,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 96610,
-          "apelido": "Matheus Pereira",
-          "posicao_id": 4,
+          "atleta_id": 97867,
+          "apelido": "Léo Ortiz",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2491,13 +2464,40 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
+          "atleta_id": 94968,
+          "apelido": "Juninho Capixaba",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 143193,
+          "apelido": "Viveros",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 104502,
+          "apelido": "Christian",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 110506,
+          "apelido": "Abel Ferreira",
+          "posicao_id": 6,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 2.77,
+          "pontos_computados": 2.77
         }
       ],
       "reserva_luxo_id": 103445,
@@ -2511,11 +2511,11 @@
       "cartoleiro": "Rafa Palhares",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 2.9,
+      "pontos": 7.9,
       "patrimonio": 136.75,
-      "pontos_campeonato": 1359.06,
+      "pontos_campeonato": 1364.06,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 3,
       "capitao_id": 98873,
       "detalhes_parcial": [
         {
@@ -2532,9 +2532,9 @@
           "apelido": "Murilo",
           "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         },
         {
           "atleta_id": 98873,
@@ -2613,7 +2613,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -2688,13 +2688,13 @@
       "patrimonio": 148.78,
       "pontos_campeonato": 1365.66,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 3,
+      "atletas_pontuando": 4,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
-          "atleta_id": 84735,
-          "apelido": "Jorginho",
-          "posicao_id": 4,
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2710,9 +2710,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
+          "atleta_id": 84735,
+          "apelido": "Jorginho",
+          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2737,6 +2737,15 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 100842,
+          "apelido": "Ruan",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 9.5,
+          "pontos_computados": 9.5
+        },
+        {
           "atleta_id": 96591,
           "apelido": "Renan Lodi",
           "posicao_id": 2,
@@ -2755,15 +2764,6 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 100842,
-          "apelido": "Ruan",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 9.5,
-          "pontos_computados": 9.5
-        },
-        {
           "atleta_id": 72294,
           "apelido": "Everson",
           "posicao_id": 1,
@@ -2771,15 +2771,6 @@
           "entrou_em_campo": true,
           "pontos": 2.9,
           "pontos_computados": 2.9
-        },
-        {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
         },
         {
           "atleta_id": 107873,
@@ -2794,6 +2785,15 @@
           "atleta_id": 99815,
           "apelido": "Arias",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2812,9 +2812,9 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 145744,
-          "apelido": "André",
-          "posicao_id": 4,
+          "atleta_id": 82775,
+          "apelido": "Lucas Ramon",
+          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -2830,21 +2830,21 @@
           "substituicao_aplicada": false
         },
         {
+          "atleta_id": 145744,
+          "apelido": "André",
+          "posicao_id": 4,
+          "reserva_luxo": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
           "atleta_id": 98909,
           "apelido": "Cuello",
           "posicao_id": 5,
           "reserva_luxo": true,
           "entrou_em_campo": true,
           "pontos": 5.3,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 82775,
-          "apelido": "Lucas Ramon",
-          "posicao_id": 2,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
           "substituicao_aplicada": false
         }
       ],
@@ -2857,11 +2857,11 @@
       "cartoleiro": "Guizoba",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 5.0,
       "patrimonio": 164.3,
-      "pontos_campeonato": 1347.1,
+      "pontos_campeonato": 1352.1,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
@@ -2905,9 +2905,9 @@
           "apelido": "Murilo",
           "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         },
         {
           "atleta_id": 98873,
@@ -2968,7 +2968,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         }
@@ -2989,8 +2989,8 @@
           "apelido": "Carlos Miguel",
           "posicao_id": 1,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -3007,7 +3007,7 @@
           "apelido": "Maurício",
           "posicao_id": 4,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "substituicao_aplicada": false
         },
@@ -3034,40 +3034,58 @@
       "patrimonio": 154.33,
       "pontos_campeonato": 1347.05,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 116034,
+          "apelido": "Victor Hugo",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.5,
+          "pontos_computados": 0.5
+        },
+        {
+          "atleta_id": 72018,
+          "apelido": "Tiago Volpi",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 97101,
-          "apelido": "Gabriel Rojas",
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
           "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 83528,
+          "apelido": "Léo Pereira",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 69208,
+          "apelido": "Gabriel Paulista",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3092,54 +3110,36 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 69208,
-          "apelido": "Gabriel Paulista",
-          "posicao_id": 3,
-          "capitao": false,
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 83528,
-          "apelido": "Léo Pereira",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 72018,
-          "apelido": "Tiago Volpi",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 99815,
-          "apelido": "Arias",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 116034,
-          "apelido": "Victor Hugo",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 0.5,
-          "pontos_computados": 0.5
-        },
-        {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
+          "atleta_id": 97101,
+          "apelido": "Gabriel Rojas",
           "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3148,15 +3148,6 @@
       ],
       "reserva_luxo_id": 114405,
       "reservas_parcial": [
-        {
-          "atleta_id": 114405,
-          "apelido": "Sinisterra",
-          "posicao_id": 5,
-          "reserva_luxo": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
         {
           "atleta_id": 99552,
           "apelido": "Rossi",
@@ -3167,21 +3158,12 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 105647,
-          "apelido": "Maurício",
-          "posicao_id": 4,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
           "atleta_id": 105175,
           "apelido": "Khellven",
           "posicao_id": 2,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -3189,6 +3171,24 @@
           "apelido": "Arboleda",
           "posicao_id": 3,
           "reserva_luxo": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 105647,
+          "apelido": "Maurício",
+          "posicao_id": 4,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 114405,
+          "apelido": "Sinisterra",
+          "posicao_id": 5,
+          "reserva_luxo": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
@@ -3207,21 +3207,21 @@
       "patrimonio": 147.49,
       "pontos_campeonato": 1337.37,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 2,
       "capitao_id": 100652,
       "detalhes_parcial": [
         {
-          "atleta_id": 96610,
-          "apelido": "Matheus Pereira",
-          "posicao_id": 4,
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 104075,
-          "apelido": "Sabino",
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
           "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
@@ -3238,45 +3238,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 97101,
-          "apelido": "Gabriel Rojas",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 72294,
-          "apelido": "Everson",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 2.9,
-          "pontos_computados": 2.9
-        },
-        {
-          "atleta_id": 103445,
-          "apelido": "Kaio Jorge",
-          "posicao_id": 5,
+          "atleta_id": 96610,
+          "apelido": "Matheus Pereira",
+          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3292,6 +3256,24 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 104075,
+          "apelido": "Sabino",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 97101,
+          "apelido": "Gabriel Rojas",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
           "atleta_id": 117910,
           "apelido": "Breno Bidon",
           "posicao_id": 4,
@@ -3301,11 +3283,29 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 103445,
+          "apelido": "Kaio Jorge",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 72294,
+          "apelido": "Everson",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 2.9,
+          "pontos_computados": 2.9
+        },
+        {
           "atleta_id": 99815,
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -3321,15 +3321,6 @@
       ],
       "reserva_luxo_id": 89840,
       "reservas_parcial": [
-        {
-          "atleta_id": 124912,
-          "apelido": "Jonathan Jesus",
-          "posicao_id": 3,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
         {
           "atleta_id": 89256,
           "apelido": "Gerson",
@@ -3349,9 +3340,9 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
+          "atleta_id": 124912,
+          "apelido": "Jonathan Jesus",
+          "posicao_id": 3,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3361,6 +3352,15 @@
           "atleta_id": 105175,
           "apelido": "Khellven",
           "posicao_id": 2,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3376,26 +3376,17 @@
       "cartoleiro": "André Pitanga",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 0.8,
       "patrimonio": 156.48,
-      "pontos_campeonato": 1330.94,
+      "pontos_campeonato": 1331.74,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
           "atleta_id": 100652,
           "apelido": "Yuri Alberto",
           "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 89274,
-          "apelido": "Andreas Pereira",
-          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3409,6 +3400,15 @@
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 89274,
+          "apelido": "Andreas Pereira",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.8,
+          "pontos_computados": 0.8
         },
         {
           "atleta_id": 145404,
@@ -3447,15 +3447,6 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
           "atleta_id": 103445,
           "apelido": "Kaio Jorge",
           "posicao_id": 5,
@@ -3465,9 +3456,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
-          "posicao_id": 2,
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3477,6 +3468,15 @@
           "atleta_id": 99815,
           "apelido": "Arias",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3494,15 +3494,6 @@
       ],
       "reserva_luxo_id": 89840,
       "reservas_parcial": [
-        {
-          "atleta_id": 84735,
-          "apelido": "Jorginho",
-          "posicao_id": 4,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
         {
           "atleta_id": 101574,
           "apelido": "Hugo Souza",
@@ -3522,12 +3513,12 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 100842,
-          "apelido": "Ruan",
-          "posicao_id": 3,
+          "atleta_id": 84735,
+          "apelido": "Jorginho",
+          "posicao_id": 4,
           "reserva_luxo": false,
-          "entrou_em_campo": true,
-          "pontos": 9.5,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
           "substituicao_aplicada": false
         },
         {
@@ -3537,6 +3528,15 @@
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 100842,
+          "apelido": "Ruan",
+          "posicao_id": 3,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 9.5,
           "substituicao_aplicada": false
         }
       ],
@@ -3553,7 +3553,7 @@
       "patrimonio": 141.67,
       "pontos_campeonato": 1324.75,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 1,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
@@ -3561,7 +3561,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -3726,7 +3726,7 @@
       "patrimonio": 131.78,
       "pontos_campeonato": 1333.94,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 4,
+      "atletas_pontuando": 5,
       "capitao_id": 80287,
       "detalhes_parcial": [
         {
@@ -3743,7 +3743,7 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -3895,17 +3895,17 @@
       "cartoleiro": "Xande Costa",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 7.77,
       "patrimonio": 146.68,
-      "pontos_campeonato": 1306.92,
+      "pontos_campeonato": 1314.69,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -3930,17 +3930,17 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         },
         {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
           "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
@@ -3966,15 +3966,6 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 117910,
-          "apelido": "Breno Bidon",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
           "atleta_id": 97101,
           "apelido": "Gabriel Rojas",
           "posicao_id": 2,
@@ -3984,8 +3975,8 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 99815,
-          "apelido": "Arias",
+          "atleta_id": 117910,
+          "apelido": "Breno Bidon",
           "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
@@ -4006,7 +3997,16 @@
           "apelido": "Abel Ferreira",
           "posicao_id": 6,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
+          "pontos": 2.77,
+          "pontos_computados": 2.77
+        },
+        {
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         }
@@ -4027,17 +4027,8 @@
           "apelido": "Khellven",
           "posicao_id": 2,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 105647,
-          "apelido": "Maurício",
-          "posicao_id": 4,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -4050,11 +4041,20 @@
           "substituicao_aplicada": false
         },
         {
+          "atleta_id": 105647,
+          "apelido": "Maurício",
+          "posicao_id": 4,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
           "atleta_id": 112863,
           "apelido": "Ramón Sosa",
           "posicao_id": 5,
           "reserva_luxo": true,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "substituicao_aplicada": false
         }
@@ -4068,80 +4068,35 @@
       "cartoleiro": "Fernando Ramos",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 5.0,
       "patrimonio": 137.44,
-      "pontos_campeonato": 1305.91,
+      "pontos_campeonato": 1310.91,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 0,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
-          "atleta_id": 99815,
-          "apelido": "Arias",
-          "posicao_id": 4,
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
-          "posicao_id": 2,
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 84816,
-          "apelido": "Varela",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         },
         {
           "atleta_id": 69208,
           "apelido": "Gabriel Paulista",
           "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 72391,
-          "apelido": "Fernando Diniz",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 125803,
-          "apelido": "Pedro Morisco",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 117910,
-          "apelido": "Breno Bidon",
-          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4157,6 +4112,24 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 72391,
+          "apelido": "Fernando Diniz",
+          "posicao_id": 6,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
           "atleta_id": 100652,
           "apelido": "Yuri Alberto",
           "posicao_id": 5,
@@ -4166,18 +4139,45 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
+          "atleta_id": 117910,
+          "apelido": "Breno Bidon",
+          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
+          "atleta_id": 84816,
+          "apelido": "Varela",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 125803,
+          "apelido": "Pedro Morisco",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4186,24 +4186,6 @@
       ],
       "reserva_luxo_id": 89840,
       "reservas_parcial": [
-        {
-          "atleta_id": 68928,
-          "apelido": "Rafael",
-          "posicao_id": 1,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 80570,
-          "apelido": "Wendell",
-          "posicao_id": 2,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
         {
           "atleta_id": 89840,
           "apelido": "Calleri",
@@ -4230,6 +4212,24 @@
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 68928,
+          "apelido": "Rafael",
+          "posicao_id": 1,
+          "reserva_luxo": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 80570,
+          "apelido": "Wendell",
+          "posicao_id": 2,
+          "reserva_luxo": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
         }
       ],
       "substituicoes_aplicadas": [],
@@ -4249,8 +4249,8 @@
       "capitao_id": 95799,
       "detalhes_parcial": [
         {
-          "atleta_id": 80287,
-          "apelido": "Luciano",
+          "atleta_id": 123648,
+          "apelido": "Lucas Ronier",
           "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
@@ -4258,18 +4258,45 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 95799,
-          "apelido": "Artur",
-          "posicao_id": 5,
-          "capitao": true,
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
+          "posicao_id": 2,
+          "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 95556,
-          "apelido": "Raniele",
+          "atleta_id": 116034,
+          "apelido": "Victor Hugo",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.5,
+          "pontos_computados": 0.5
+        },
+        {
+          "atleta_id": 68928,
+          "apelido": "Rafael",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 69208,
+          "apelido": "Gabriel Paulista",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 91573,
+          "apelido": "Arboleda",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4303,54 +4330,27 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 91573,
-          "apelido": "Arboleda",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 68928,
-          "apelido": "Rafael",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 116034,
-          "apelido": "Victor Hugo",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 0.5,
-          "pontos_computados": 0.5
-        },
-        {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 69208,
-          "apelido": "Gabriel Paulista",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 123648,
-          "apelido": "Lucas Ronier",
+          "atleta_id": 95799,
+          "apelido": "Artur",
           "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 80287,
+          "apelido": "Luciano",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 95556,
+          "apelido": "Raniele",
+          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4360,21 +4360,21 @@
       "reserva_luxo_id": 95362,
       "reservas_parcial": [
         {
-          "atleta_id": 106294,
-          "apelido": "Marcos Antônio",
-          "posicao_id": 4,
+          "atleta_id": 90061,
+          "apelido": "Bruno Pacheco",
+          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
-          "posicao_id": 3,
+          "atleta_id": 110708,
+          "apelido": "Pedro Rangel",
+          "posicao_id": 1,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -4387,18 +4387,18 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 110708,
-          "apelido": "Pedro Rangel",
-          "posicao_id": 1,
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
+          "posicao_id": 3,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 90061,
-          "apelido": "Bruno Pacheco",
-          "posicao_id": 2,
+          "atleta_id": 106294,
+          "apelido": "Marcos Antônio",
+          "posicao_id": 4,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4414,80 +4414,17 @@
       "cartoleiro": "Alan Guimarães",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 0.0,
+      "pontos": 5.0,
       "patrimonio": 143.67,
-      "pontos_campeonato": 1286.94,
+      "pontos_campeonato": 1291.94,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 99815,
-          "apelido": "Arias",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 92087,
-          "apelido": "Lyanco",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
           "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 82775,
-          "apelido": "Lucas Ramon",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 117910,
-          "apelido": "Breno Bidon",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 103445,
-          "apelido": "Kaio Jorge",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4497,6 +4434,15 @@
           "atleta_id": 97653,
           "apelido": "Murilo",
           "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 106907,
+          "apelido": "Rafael Lacerda",
+          "posicao_id": 6,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4512,18 +4458,72 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 106907,
-          "apelido": "Rafael Lacerda",
-          "posicao_id": 6,
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
+          "atleta_id": 92087,
+          "apelido": "Lyanco",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 82775,
+          "apelido": "Lucas Ramon",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 103445,
+          "apelido": "Kaio Jorge",
           "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 117910,
+          "apelido": "Breno Bidon",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4533,9 +4533,27 @@
       "reserva_luxo_id": 95799,
       "reservas_parcial": [
         {
-          "atleta_id": 97905,
-          "apelido": "Matheus Aurélio",
-          "posicao_id": 1,
+          "atleta_id": 95799,
+          "apelido": "Artur",
+          "posicao_id": 5,
+          "reserva_luxo": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 124912,
+          "apelido": "Jonathan Jesus",
+          "posicao_id": 3,
+          "reserva_luxo": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 110426,
+          "apelido": "Bernabei",
+          "posicao_id": 2,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4551,27 +4569,9 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 95799,
-          "apelido": "Artur",
-          "posicao_id": 5,
-          "reserva_luxo": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 110426,
-          "apelido": "Bernabei",
-          "posicao_id": 2,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 124912,
-          "apelido": "Jonathan Jesus",
-          "posicao_id": 3,
+          "atleta_id": 97905,
+          "apelido": "Matheus Aurélio",
+          "posicao_id": 1,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4591,31 +4591,13 @@
       "patrimonio": 135.31,
       "pontos_campeonato": 1275.47,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
-        {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
         {
           "atleta_id": 89840,
           "apelido": "Calleri",
           "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 145404,
-          "apelido": "Arthur",
-          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4631,9 +4613,18 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 69208,
-          "apelido": "Gabriel Paulista",
-          "posicao_id": 3,
+          "atleta_id": 145404,
+          "apelido": "Arthur",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4643,6 +4634,15 @@
           "atleta_id": 99552,
           "apelido": "Rossi",
           "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 69208,
+          "apelido": "Gabriel Paulista",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4676,6 +4676,15 @@
           "pontos_computados": 0.0
         },
         {
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
           "atleta_id": 116034,
           "apelido": "Victor Hugo",
           "posicao_id": 4,
@@ -4683,15 +4692,6 @@
           "entrou_em_campo": true,
           "pontos": 0.5,
           "pontos_computados": 0.5
-        },
-        {
-          "atleta_id": 99815,
-          "apelido": "Arias",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
         },
         {
           "atleta_id": 105531,
@@ -4706,18 +4706,18 @@
       "reserva_luxo_id": 98909,
       "reservas_parcial": [
         {
-          "atleta_id": 85403,
-          "apelido": "Danielzinho",
-          "posicao_id": 4,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
           "atleta_id": 104084,
           "apelido": "Carlos Miguel",
           "posicao_id": 1,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 85403,
+          "apelido": "Danielzinho",
+          "posicao_id": 4,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4760,11 +4760,11 @@
       "cartoleiro": "Henrique Jafeth",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 3.4,
+      "pontos": 8.4,
       "patrimonio": 129.9,
-      "pontos_campeonato": 1277.48,
+      "pontos_campeonato": 1282.48,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
@@ -4772,63 +4772,9 @@
           "apelido": "Murilo",
           "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 91473,
-          "apelido": "Erick Pulgar",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 90285,
-          "apelido": "Bruno Henrique",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 84735,
-          "apelido": "Jorginho",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 84816,
-          "apelido": "Varela",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         },
         {
           "atleta_id": 96591,
@@ -4840,9 +4786,9 @@
           "pontos_computados": 3.4
         },
         {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4858,9 +4804,45 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 99815,
-          "apelido": "Arias",
+          "atleta_id": 91473,
+          "apelido": "Erick Pulgar",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 84735,
+          "apelido": "Jorginho",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 90285,
+          "apelido": "Bruno Henrique",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -4874,19 +4856,28 @@
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 84816,
+          "apelido": "Varela",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 99815,
+          "apelido": "Arias",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
         }
       ],
       "reserva_luxo_id": 95362,
       "reservas_parcial": [
-        {
-          "atleta_id": 104084,
-          "apelido": "Carlos Miguel",
-          "posicao_id": 1,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
         {
           "atleta_id": 95362,
           "apelido": "Cassierra",
@@ -4897,12 +4888,12 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 100842,
-          "apelido": "Ruan",
-          "posicao_id": 3,
+          "atleta_id": 104084,
+          "apelido": "Carlos Miguel",
+          "posicao_id": 1,
           "reserva_luxo": false,
           "entrou_em_campo": true,
-          "pontos": 9.5,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -4915,12 +4906,21 @@
           "substituicao_aplicada": false
         },
         {
+          "atleta_id": 100842,
+          "apelido": "Ruan",
+          "posicao_id": 3,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 9.5,
+          "substituicao_aplicada": false
+        },
+        {
           "atleta_id": 105175,
           "apelido": "Khellven",
           "posicao_id": 2,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         }
       ],
@@ -4933,22 +4933,13 @@
       "cartoleiro": "Gabriel Carvalho",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 3.4,
+      "pontos": 8.4,
       "patrimonio": 137.67,
-      "pontos_campeonato": 1269.51,
+      "pontos_campeonato": 1274.51,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 3,
       "capitao_id": 94583,
       "detalhes_parcial": [
-        {
-          "atleta_id": 89256,
-          "apelido": "Gerson",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
         {
           "atleta_id": 84735,
           "apelido": "Jorginho",
@@ -4977,27 +4968,9 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 71684,
-          "apelido": "Gustavo Gómez",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 88963,
-          "apelido": "Leonardo Jardim",
-          "posicao_id": 6,
+          "atleta_id": 89256,
+          "apelido": "Gerson",
+          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5008,6 +4981,15 @@
           "apelido": "Pedro",
           "posicao_id": 5,
           "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 88963,
+          "apelido": "Leonardo Jardim",
+          "posicao_id": 6,
+          "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
@@ -5031,9 +5013,18 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 143193,
-          "apelido": "Viveros",
-          "posicao_id": 5,
+          "atleta_id": 71684,
+          "apelido": "Gustavo Gómez",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5043,6 +5034,15 @@
           "atleta_id": 99815,
           "apelido": "Arias",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 143193,
+          "apelido": "Viveros",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5056,6 +5056,15 @@
           "apelido": "Carlos Miguel",
           "posicao_id": 1,
           "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 95799,
+          "apelido": "Artur",
+          "posicao_id": 5,
+          "reserva_luxo": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
@@ -5070,10 +5079,10 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 95799,
-          "apelido": "Artur",
-          "posicao_id": 5,
-          "reserva_luxo": true,
+          "atleta_id": 145744,
+          "apelido": "André",
+          "posicao_id": 4,
+          "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
@@ -5083,17 +5092,8 @@
           "apelido": "Khellven",
           "posicao_id": 2,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 145744,
-          "apelido": "André",
-          "posicao_id": 4,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         }
       ],
@@ -5110,7 +5110,7 @@
       "patrimonio": 130.4,
       "pontos_campeonato": 1245.04,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 7,
+      "atletas_pontuando": 8,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
@@ -5123,13 +5123,13 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 95362,
-          "apelido": "Cassierra",
-          "posicao_id": 5,
+          "atleta_id": 115479,
+          "apelido": "Paulo Pezzolano",
+          "posicao_id": 6,
           "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 5.8,
-          "pontos_computados": 5.8
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
         },
         {
           "atleta_id": 94583,
@@ -5150,15 +5150,6 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 115479,
-          "apelido": "Paulo Pezzolano",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
           "atleta_id": 96591,
           "apelido": "Renan Lodi",
           "posicao_id": 2,
@@ -5166,6 +5157,15 @@
           "entrou_em_campo": true,
           "pontos": 3.4,
           "pontos_computados": 3.4
+        },
+        {
+          "atleta_id": 95362,
+          "apelido": "Cassierra",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.8,
+          "pontos_computados": 5.8
         },
         {
           "atleta_id": 72460,
@@ -5195,15 +5195,6 @@
           "pontos_computados": 9.5
         },
         {
-          "atleta_id": 107554,
-          "apelido": "Natanael",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 4.2,
-          "pontos_computados": 4.2
-        },
-        {
           "atleta_id": 72294,
           "apelido": "Everson",
           "posicao_id": 1,
@@ -5217,22 +5208,22 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 107554,
+          "apelido": "Natanael",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 4.2,
+          "pontos_computados": 4.2
         }
       ],
       "reserva_luxo_id": 80196,
       "reservas_parcial": [
-        {
-          "atleta_id": 80196,
-          "apelido": "Yago Pikachu",
-          "posicao_id": 4,
-          "reserva_luxo": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
         {
           "atleta_id": 111466,
           "apelido": "Victor Gabriel",
@@ -5243,10 +5234,10 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
-          "reserva_luxo": false,
+          "atleta_id": 80196,
+          "apelido": "Yago Pikachu",
+          "posicao_id": 4,
+          "reserva_luxo": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
@@ -5255,6 +5246,15 @@
           "atleta_id": 84816,
           "apelido": "Varela",
           "posicao_id": 2,
+          "reserva_luxo": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5283,31 +5283,22 @@
       "patrimonio": 125.88,
       "pontos_campeonato": 1207.4,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 2,
+      "atletas_pontuando": 3,
       "capitao_id": 100652,
       "detalhes_parcial": [
         {
-          "atleta_id": 97900,
-          "apelido": "Vitão",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 101727,
-          "apelido": "Matheuzinho",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 99815,
-          "apelido": "Arias",
+          "atleta_id": 72460,
+          "apelido": "Bernard",
           "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 9.7,
+          "pontos_computados": 9.7
+        },
+        {
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5321,6 +5312,42 @@
           "entrou_em_campo": true,
           "pontos": 3.4,
           "pontos_computados": 3.4
+        },
+        {
+          "atleta_id": 80287,
+          "apelido": "Luciano",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 101574,
+          "apelido": "Hugo Souza",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
         },
         {
           "atleta_id": 72391,
@@ -5341,54 +5368,27 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 72460,
-          "apelido": "Bernard",
+          "atleta_id": 99815,
+          "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": true,
-          "pontos": 9.7,
-          "pontos_computados": 9.7
+          "pontos": 0.0,
+          "pontos_computados": 0.0
         },
         {
-          "atleta_id": 101574,
-          "apelido": "Hugo Souza",
-          "posicao_id": 1,
+          "atleta_id": 101727,
+          "apelido": "Matheuzinho",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 80287,
-          "apelido": "Luciano",
-          "posicao_id": 5,
+          "atleta_id": 97900,
+          "apelido": "Vitão",
+          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5398,21 +5398,21 @@
       "reserva_luxo_id": 95362,
       "reservas_parcial": [
         {
-          "atleta_id": 107554,
-          "apelido": "Natanael",
-          "posicao_id": 2,
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
           "reserva_luxo": false,
           "entrou_em_campo": true,
-          "pontos": 4.2,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 68928,
-          "apelido": "Rafael",
-          "posicao_id": 1,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "atleta_id": 95362,
+          "apelido": "Cassierra",
+          "posicao_id": 5,
+          "reserva_luxo": true,
+          "entrou_em_campo": true,
+          "pontos": 5.8,
           "substituicao_aplicada": false
         },
         {
@@ -5425,21 +5425,21 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
+          "atleta_id": 68928,
+          "apelido": "Rafael",
+          "posicao_id": 1,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 95362,
-          "apelido": "Cassierra",
-          "posicao_id": 5,
-          "reserva_luxo": true,
+          "atleta_id": 107554,
+          "apelido": "Natanael",
+          "posicao_id": 2,
+          "reserva_luxo": false,
           "entrou_em_campo": true,
-          "pontos": 5.8,
+          "pontos": 4.2,
           "substituicao_aplicada": false
         }
       ],
@@ -5452,53 +5452,17 @@
       "cartoleiro": "Rafael Abrantes",
       "rodada_dados": 19,
       "rodada_escalacao": 19,
-      "pontos": 9.2,
+      "pontos": 14.2,
       "patrimonio": 129.85,
-      "pontos_campeonato": 1179.62,
+      "pontos_campeonato": 1184.62,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 3,
+      "atletas_pontuando": 5,
       "capitao_id": 89840,
       "detalhes_parcial": [
         {
-          "atleta_id": 78248,
-          "apelido": "Gustavo Henrique",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 89840,
-          "apelido": "Calleri",
-          "posicao_id": 5,
-          "capitao": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 98909,
-          "apelido": "Cuello",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 5.3,
-          "pontos_computados": 5.3
-        },
-        {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
+          "atleta_id": 107873,
+          "apelido": "Bobadilla",
+          "posicao_id": 4,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5518,25 +5482,25 @@
           "apelido": "Gustavo Gómez",
           "posicao_id": 3,
           "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 105531,
+          "apelido": "Matheus Bidu",
+          "posicao_id": 2,
+          "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 96591,
-          "apelido": "Renan Lodi",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 3.4,
-          "pontos_computados": 3.4
-        },
-        {
-          "atleta_id": 107873,
-          "apelido": "Bobadilla",
+          "atleta_id": 99815,
+          "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
-          "entrou_em_campo": false,
+          "entrou_em_campo": true,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
@@ -5550,18 +5514,54 @@
           "pontos_computados": 0.5
         },
         {
-          "atleta_id": 99815,
-          "apelido": "Arias",
-          "posicao_id": 4,
+          "atleta_id": 98909,
+          "apelido": "Cuello",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.3,
+          "pontos_computados": 5.3
+        },
+        {
+          "atleta_id": 96591,
+          "apelido": "Renan Lodi",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 3.4,
+          "pontos_computados": 3.4
+        },
+        {
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 105531,
-          "apelido": "Matheus Bidu",
-          "posicao_id": 2,
+          "atleta_id": 78248,
+          "apelido": "Gustavo Henrique",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 89840,
+          "apelido": "Calleri",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
+          "posicao_id": 5,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5570,6 +5570,24 @@
       ],
       "reserva_luxo_id": 95362,
       "reservas_parcial": [
+        {
+          "atleta_id": 101727,
+          "apelido": "Matheuzinho",
+          "posicao_id": 2,
+          "reserva_luxo": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 105647,
+          "apelido": "Maurício",
+          "posicao_id": 4,
+          "reserva_luxo": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
         {
           "atleta_id": 95362,
           "apelido": "Cassierra",
@@ -5584,8 +5602,8 @@
           "apelido": "Carlos Miguel",
           "posicao_id": 1,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         },
         {
@@ -5593,26 +5611,8 @@
           "apelido": "Murilo",
           "posicao_id": 3,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 105647,
-          "apelido": "Maurício",
-          "posicao_id": 4,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 101727,
-          "apelido": "Matheuzinho",
-          "posicao_id": 2,
-          "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         }
       ],
@@ -5625,11 +5625,11 @@
       "cartoleiro": "Giovanni Guedes",
       "rodada_dados": 19,
       "rodada_escalacao": 18,
-      "pontos": 1.5,
+      "pontos": 6.5,
       "patrimonio": 135.09,
-      "pontos_campeonato": 1167.41,
+      "pontos_campeonato": 1172.41,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 2,
       "capitao_id": 94583,
       "detalhes_parcial": [
         {
@@ -5646,9 +5646,9 @@
           "apelido": "Murilo",
           "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
         },
         {
           "atleta_id": 130843,
@@ -5752,13 +5752,94 @@
       "cartoleiro": "Betinho Valerio",
       "rodada_dados": 19,
       "rodada_escalacao": 18,
-      "pontos": 13.1,
+      "pontos": 18.1,
       "patrimonio": 144.27,
-      "pontos_campeonato": 1167.96,
+      "pontos_campeonato": 1172.96,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 2,
+      "atletas_pontuando": 3,
       "capitao_id": 143193,
       "detalhes_parcial": [
+        {
+          "atleta_id": 97653,
+          "apelido": "Murilo",
+          "posicao_id": 3,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
+          "pontos_computados": 5.0
+        },
+        {
+          "atleta_id": 90031,
+          "apelido": "Mendoza",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 92273,
+          "apelido": "Odair Hellmann",
+          "posicao_id": 6,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 72460,
+          "apelido": "Bernard",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 9.7,
+          "pontos_computados": 9.7
+        },
+        {
+          "atleta_id": 96591,
+          "apelido": "Renan Lodi",
+          "posicao_id": 2,
+          "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 3.4,
+          "pontos_computados": 3.4
+        },
+        {
+          "atleta_id": 94583,
+          "apelido": "Pedro",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 99552,
+          "apelido": "Rossi",
+          "posicao_id": 1,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 126471,
+          "apelido": "Barreal",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 141451,
+          "apelido": "Allan",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
         {
           "atleta_id": 143193,
           "apelido": "Viveros",
@@ -5785,87 +5866,6 @@
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 126471,
-          "apelido": "Barreal",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 94583,
-          "apelido": "Pedro",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 96591,
-          "apelido": "Renan Lodi",
-          "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 3.4,
-          "pontos_computados": 3.4
-        },
-        {
-          "atleta_id": 99552,
-          "apelido": "Rossi",
-          "posicao_id": 1,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 141451,
-          "apelido": "Allan",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 72460,
-          "apelido": "Bernard",
-          "posicao_id": 4,
-          "capitao": false,
-          "entrou_em_campo": true,
-          "pontos": 9.7,
-          "pontos_computados": 9.7
-        },
-        {
-          "atleta_id": 90031,
-          "apelido": "Mendoza",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 92273,
-          "apelido": "Odair Hellmann",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 97653,
-          "apelido": "Murilo",
-          "posicao_id": 3,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
         }
       ],
       "reserva_luxo_id": 95362,
@@ -5883,12 +5883,12 @@
       "patrimonio": 110.49,
       "pontos_campeonato": 1072.11,
       "fonte_pontos": "atletas_pontuados",
-      "atletas_pontuando": 1,
+      "atletas_pontuando": 2,
       "capitao_id": 98873,
       "detalhes_parcial": [
         {
-          "atleta_id": 97900,
-          "apelido": "Vitão",
+          "atleta_id": 69208,
+          "apelido": "Gabriel Paulista",
           "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
@@ -5900,14 +5900,50 @@
           "apelido": "Arias",
           "posicao_id": 4,
           "capitao": false,
+          "entrou_em_campo": true,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 89840,
+          "apelido": "Calleri",
+          "posicao_id": 5,
+          "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 101727,
-          "apelido": "Matheuzinho",
-          "posicao_id": 2,
+          "atleta_id": 98873,
+          "apelido": "Samuel Lino",
+          "posicao_id": 5,
+          "capitao": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 84735,
+          "apelido": "Jorginho",
+          "posicao_id": 4,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 100652,
+          "apelido": "Yuri Alberto",
+          "posicao_id": 5,
+          "capitao": false,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "pontos_computados": 0.0
+        },
+        {
+          "atleta_id": 115479,
+          "apelido": "Paulo Pezzolano",
+          "posicao_id": 6,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5917,15 +5953,6 @@
           "atleta_id": 84816,
           "apelido": "Varela",
           "posicao_id": 2,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 69208,
-          "apelido": "Gabriel Paulista",
-          "posicao_id": 3,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -5950,46 +5977,19 @@
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 84735,
-          "apelido": "Jorginho",
-          "posicao_id": 4,
+          "atleta_id": 101727,
+          "apelido": "Matheuzinho",
+          "posicao_id": 2,
           "capitao": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
         },
         {
-          "atleta_id": 100652,
-          "apelido": "Yuri Alberto",
-          "posicao_id": 5,
+          "atleta_id": 97900,
+          "apelido": "Vitão",
+          "posicao_id": 3,
           "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 89840,
-          "apelido": "Calleri",
-          "posicao_id": 5,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 115479,
-          "apelido": "Paulo Pezzolano",
-          "posicao_id": 6,
-          "capitao": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "pontos_computados": 0.0
-        },
-        {
-          "atleta_id": 98873,
-          "apelido": "Samuel Lino",
-          "posicao_id": 5,
-          "capitao": true,
           "entrou_em_campo": false,
           "pontos": 0.0,
           "pontos_computados": 0.0
@@ -5998,9 +5998,18 @@
       "reserva_luxo_id": 124912,
       "reservas_parcial": [
         {
-          "atleta_id": 105175,
-          "apelido": "Khellven",
-          "posicao_id": 2,
+          "atleta_id": 124912,
+          "apelido": "Jonathan Jesus",
+          "posicao_id": 3,
+          "reserva_luxo": true,
+          "entrou_em_campo": false,
+          "pontos": 0.0,
+          "substituicao_aplicada": false
+        },
+        {
+          "atleta_id": 90285,
+          "apelido": "Bruno Henrique",
+          "posicao_id": 5,
           "reserva_luxo": false,
           "entrou_em_campo": false,
           "pontos": 0.0,
@@ -6016,21 +6025,12 @@
           "substituicao_aplicada": false
         },
         {
-          "atleta_id": 90285,
-          "apelido": "Bruno Henrique",
-          "posicao_id": 5,
+          "atleta_id": 105175,
+          "apelido": "Khellven",
+          "posicao_id": 2,
           "reserva_luxo": false,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
-          "substituicao_aplicada": false
-        },
-        {
-          "atleta_id": 124912,
-          "apelido": "Jonathan Jesus",
-          "posicao_id": 3,
-          "reserva_luxo": true,
-          "entrou_em_campo": false,
-          "pontos": 0.0,
+          "entrou_em_campo": true,
+          "pontos": 5.0,
           "substituicao_aplicada": false
         }
       ],
@@ -6038,5 +6038,5 @@
       "criterio_parcial": "titulares + capitao 1.5; reservas apenas para diagnóstico"
     }
   ],
-  "ultima_atualizacao": "22/07/2026 18:54:31"
+  "ultima_atualizacao": "22/07/2026 19:42:02"
 }
