@@ -603,6 +603,8 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 @media(max-width:760px){.live-v2-grid{grid-template-columns:1fr 1fr;gap:7px}.live-v2-card{padding:9px}.live-v2-card b{font-size:15px}.player-live-list{grid-template-columns:1fr}.live-v2-match{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);font-size:11px}.live-v2-score{padding:4px 6px;font-size:11px}.live-v2-note{font-size:9.5px}.live-v2-head h2{font-size:17px}}
 @media(max-width:390px){.live-v2-grid{grid-template-columns:1fr}}
 
+
+.player-live-pos{display:inline-flex;min-width:34px;justify-content:center;padding:2px 5px;border-radius:999px;background:#163a2a;color:#67e89b;font-size:10px;margin-right:4px}.live-v2-group{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:0 12px 6px;background:rgba(3,10,25,.35)}.live-v2-group:first-child{margin-top:0}.live-v2-group-title{margin:0 -12px 4px;padding:10px 12px;border-radius:13px 13px 0 0;background:#145d32;color:#fff;font-weight:900;letter-spacing:.3px}.live-v2-group .live-v2-match:last-child{border-bottom:0}
 </style>
 </head>
 <body>
@@ -655,7 +657,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
     </div>
   </section>
 
-  <section id="aba-rodadas" class="aba hidden"><div class="card"><h2>Fase 1 - Grupo e Rodada</h2><div class="livebar"><div><strong id="statusAtualizacao">Dados carregados</strong><br><small id="ultimaAtualizacao">Clique para buscar a versão mais nova do JSON.</small></div><button class="refresh-btn" id="btnAtualizar" onclick="atualizarDados()">🔄 Atualizar</button></div><div class="tabs" id="tabsGruposRodadas"></div><div class="phase-filter"><label>Rodada:</label><select id="selRodada" onchange="mostrarRodada()"></select></div><div class="info-block"><h3>Classificação do grupo</h3><table class="clean-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th><th class="hide-mobile">PF</th></tr></thead><tbody id="tbodyFase1Rodada"></tbody></table><div class="legend"><span><i class="pos-dot dot-ok"></i>Grupos</span><span><i class="pos-dot dot-rep"></i>Repescagem</span><span><i class="pos-dot dot-bad"></i>Eliminado</span></div></div><div class="info-block light"><h3>Jogos da rodada</h3><div id="boxRodadas"></div></div></div></section>
+  <section id="aba-rodadas" class="aba hidden"><div class="card"><h2>Fase 1 - Grupo e Rodada</h2><div class="livebar"><div><strong id="statusAtualizacao">Dados carregados</strong><br><small id="ultimaAtualizacao">Clique para buscar a versão mais nova do JSON.</small></div><button class="refresh-btn" id="btnAtualizar" onclick="atualizarDados()">🔄 Atualizar</button></div><div class="tabs" id="tabsGruposRodadas"></div><div class="phase-filter"><label>Rodada:</label><select id="selRodada" onchange="mostrarRodada()"></select></div><div class="info-block"><h3>Classificação do grupo</h3><table class="clean-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th class="hide-mobile">PF</th><th>Saldo</th></tr></thead><tbody id="tbodyFase1Rodada"></tbody></table><div class="legend"><span><i class="pos-dot dot-ok"></i>Grupos</span><span><i class="pos-dot dot-rep"></i>Repescagem</span><span><i class="pos-dot dot-bad"></i>Eliminado</span></div></div><div class="info-block light"><h3>Jogos da rodada</h3><div id="boxRodadas"></div></div></div></section>
 
   <section id="aba-fase2" class="aba hidden">
     <div class="card"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2" selected>Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 2</h2><p class="small">Escolha um grupo. A classificação fica primeiro; os confrontos ficam embaixo.</p></div><span class="badge future">R19 a R24</span></div><div class="tabs" id="tabsFase2"></div><div class="phase-filter"><label>Mostrar após:</label><select id="selFase2Rodada" onchange="renderFase2()"></select></div><div id="boxFase2Detalhe"></div></div>
@@ -932,9 +934,9 @@ function renderTudo(){
   renderPremiacao();
   renderApiCartola();
 }
-function renderClassificacao(){const lista=calcularGrupo(grupoAtual,Number(selClassificacao.value));tbodyClassificacao.innerHTML="";lista.forEach((t,i)=>{const pos=i+1,[dot,status]=statusInfo(pos),id=`det-${grupoAtual}-${pos}`;tbodyClassificacao.innerHTML+=`<tr class="clickable" onclick="toggleDetalhe('${id}')"><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td><td class="hide-mobile">${fmt(t.pf)}</td><td class="hide-mobile">${fmt(t.pc)}</td></tr><tr id="${id}" class="details"><td colspan="8"><b>${t.time}</b><br>Empates: ${t.e} | Derrotas: ${t.d}<br>Pontos feitos: ${fmt(t.pf)} | Pontos contra: ${fmt(t.pc)} | Saldo: ${fmt(t.saldo)}<br>Status: ${status}</td></tr>`})}
+function renderClassificacao(){const lista=calcularGrupo(grupoAtual,Number(selClassificacao.value));tbodyClassificacao.innerHTML="";lista.forEach((t,i)=>{const pos=i+1,[dot,status]=statusInfo(pos),id=`det-${grupoAtual}-${pos}`;tbodyClassificacao.innerHTML+=`<tr class="clickable" onclick="toggleDetalhe('${id}')"><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td class="hide-mobile">${fmt(t.pf)}</td><td>${fmt(t.saldo)}</td><td class="hide-mobile">${fmt(t.pc)}</td></tr><tr id="${id}" class="details"><td colspan="8"><b>${t.time}</b><br>Empates: ${t.e} | Derrotas: ${t.d}<br>Pontos feitos: ${fmt(t.pf)} | Pontos contra: ${fmt(t.pc)} | Saldo: ${fmt(t.saldo)}<br>Status: ${status}</td></tr>`})}
 function toggleDetalhe(id){const el=document.getElementById(id);el.style.display=el.style.display==="table-row"?"none":"table-row"}
-function renderFase1Rodada(){if(!document.getElementById("tbodyFase1Rodada"))return;const lista=calcularGrupo(grupoAtual,Number(selRodada.value));tbodyFase1Rodada.innerHTML=lista.map((t,i)=>{const pos=i+1,[dot]=statusInfo(pos);return `<tr><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td><td class="hide-mobile">${fmt(t.pf)}</td></tr>`}).join("")}
+function renderFase1Rodada(){if(!document.getElementById("tbodyFase1Rodada"))return;const lista=calcularGrupo(grupoAtual,Number(selRodada.value));tbodyFase1Rodada.innerHTML=lista.map((t,i)=>{const pos=i+1,[dot]=statusInfo(pos);return `<tr><td><span class="pos-dot ${dot}"></span>${pos}</td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td class="hide-mobile">${fmt(t.pf)}</td><td>${fmt(t.saldo)}</td></tr>`}).join("")}
 function simbolosJogo(pa,pb){const dif=Math.abs(pa-pb);if(dif<=LIMITE_EMPATE)return {a:"draw",b:"draw",res:`Empate · dif. ${fmt(dif)}`};if(pa>pb)return {a:"win",b:"loss",res:`Vitória do mandante · dif. ${fmt(dif)}`};return {a:"loss",b:"win",res:`Vitória do visitante · dif. ${fmt(dif)}`}}
 function dotStatus(tipo){if(tipo==="win")return '<span class="status-dot status-win">✓</span>';if(tipo==="loss")return '<span class="status-dot status-loss">×</span>';return '<span class="status-dot status-draw">=</span>'}
 function mostrarRodada(){renderFase1Rodada();const r=Number(selRodada.value),partidas=jogosFase1[r];boxRodadas.innerHTML=`<div class="scoreboard"><div class="scoreboard-title">⚽ Rodada ${r} · Grupo ${grupoAtual}</div>`;partidas.forEach(([a,b])=>{const ta=grupos[grupoAtual][a],tb=grupos[grupoAtual][b],pa=pontosTime(ta,r),pb=pontosTime(tb,r);const st=simbolosJogo(pa,pb);boxRodadas.innerHTML+=`<div class="score-game-wrap"><div class="score-game" title="${st.res}">${dotStatus(st.a)}<span class="score-team ${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}</span><span class="score-team right ${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${dotStatus(st.b)}</div><div class="score-note">${notaJogo(ta,tb,pa,pb)}</div></div>`});boxRodadas.innerHTML+=`<div class="legend"><span><span class="status-dot status-win">✓</span> Vitória</span><span><span class="status-dot status-draw">=</span> Empate</span><span><span class="status-dot status-loss">×</span> Derrota</span></div></div>`}
@@ -944,7 +946,7 @@ function origemFase2(k,idx){const map={GP1:["1º Grupo A","2º Grupo B","3º Gru
 function listaOrigem(times,k){return `<div class="origin-compact">${times.map((t,i)=>`<div class="origin-compact-row"><span class="pos-dot ${k.startsWith('GP')?'dot-ok':'dot-rep'}"></span><div><div class="origin-compact-name">${t.time}</div><div class="origin-compact-meta">veio de: ${origemFase2(k,i)}</div></div></div>`).join("")}</div>`}
 
 function montarTabsFase2(){Object.keys(fase2Times()).forEach((nome,i)=>{const b=document.createElement("button");b.textContent=nomeFase2(nome);b.onclick=()=>{grupoFaseAtual=nome;renderFase2()};tabsFase2.appendChild(b);if(i===0)grupoFaseAtual=nome})}
-function renderMiniClassificacao(lista,titulo,statusFn){return `<h3>${titulo}</h3><table class="phase-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>Saldo</th></tr></thead><tbody>${lista.map((t,i)=>{const pos=i+1;const st=statusFn?statusFn(pos):["",""];return `<tr><td><span class="rank-cell">${st[0]?`<span class="pos-dot ${st[0]}"></span>`:""}<span>${pos}</span></span></td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.saldo)}</td></tr>`}).join("")}</tbody></table>`}
+function renderMiniClassificacao(lista,titulo,statusFn){return `<h3>${titulo}</h3><table class="phase-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>PF</th><th>Saldo</th></tr></thead><tbody>${lista.map((t,i)=>{const pos=i+1;const st=statusFn?statusFn(pos):["",""];return `<tr><td><span class="rank-cell">${st[0]?`<span class="pos-dot ${st[0]}"></span>`:""}<span>${pos}</span></span></td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.pf)}</td><td>${fmt(t.saldo)}</td></tr>`}).join("")}</tbody></table>`}
 function statusFase2(nome,pos){if(nome.startsWith("GP"))return pos<=2?["dot-ok","Avança"]:["dot-rep","Vai para repescagem"];return pos===1?["dot-ok","Avança"]:["dot-bad","Eliminado"]}
 function statusPadrao(pos){return pos<=2?["dot-ok","Avança"]:["dot-bad","Eliminado"]}
 function renderConfrontosRodada(times,inicio,agenda,rodadaEscolhida,titulo){const idx=rodadaEscolhida-inicio;const rodada=agenda[idx]||[];let html=`<div class="section-gap"></div><h3>${titulo}</h3><div class="scoreboard"><div class="scoreboard-title">⚽ Rodada ${rodadaEscolhida}</div>`;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time||"A definir",tb=times[b-1]?.time||"A definir",tem=temRodada(rodadaEscolhida);const pa=tem?pontosTime(ta,rodadaEscolhida):0,pb=tem?pontosTime(tb,rodadaEscolhida):0;let st=tem?simbolosJogo(pa,pb):{a:"draw",b:"draw",res:"A jogar"};const centro=tem?`${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}`:'<span class="score-x">x</span>';html+=`<div class="score-game-wrap"><div class="score-game" title="${st.res}">${tem?dotStatus(st.a):'<span></span>'}<span class="score-team ${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${centro}</span><span class="score-team right ${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${tem?dotStatus(st.b):'<span></span>'}</div>${tem?`<div class="score-note">${notaJogo(ta,tb,pa,pb)}</div>`:`<div class="score-note">(jogo ainda não disputado)</div>`}</div>`});html+=`<div class="legend"><span><span class="status-dot status-win">✓</span> Vitória</span><span><span class="status-dot status-draw">=</span> Empate</span><span><span class="status-dot status-loss">×</span> Derrota</span></div></div>`;return html}
@@ -1263,8 +1265,8 @@ function renderTabelaMeuTime(lista, meuTime, statusFn){
           <th>Pts</th>
           <th>J</th>
           <th>V</th>
-          <th>Saldo</th>
           <th class="hide-mobile">PF</th>
+          <th>Saldo</th>
         </tr>
       </thead>
       <tbody>
@@ -1279,8 +1281,8 @@ function renderTabelaMeuTime(lista, meuTime, statusFn){
               <td><b>${t.pts}</b></td>
               <td>${t.j}</td>
               <td>${t.v}</td>
-              <td>${fmt(t.saldo)}</td>
               <td class="hide-mobile">${fmt(t.pf)}</td>
+              <td>${fmt(t.saldo)}</td>
             </tr>
           `;
         }).join("")}
@@ -2336,9 +2338,16 @@ renderConfrontosRodada=function(times,inicio,agenda,rodadaEscolhida,titulo){
 function timeParcialV2(nome){return parciaisCartola?.times?.find(t=>String(t.time).trim()===String(nome).trim())||null;}
 function painelJogadoresV2(nome){
   const t=timeParcialV2(nome); if(!t||!Array.isArray(t.detalhes_parcial)||!t.detalhes_parcial.length)return '';
-  const itens=[...t.detalhes_parcial].sort((a,b)=>Number(b.pontos_computados||0)-Number(a.pontos_computados||0));
-  const pontuaram=itens.filter(x=>Number(x.pontos||0)!==0||x.entrou_em_campo).length;
-  return `<div class="player-live-panel"><div class="player-live-head"><b>Escalação e parciais</b><span>${pontuaram}/${itens.length} com dados de jogo</span></div><div class="player-live-list">${itens.map(x=>`<div class="player-live-item"><div><b>${x.apelido||x.atleta_id}${x.capitao?' <span class="player-live-cap">(C)</span>':''}</b><small>${x.entrou_em_campo?'Entrou em campo':'Ainda sem atuação confirmada'}</small></div><span class="player-live-points">${fmtBR(x.pontos_computados)} pts</span></div>`).join('')}</div></div>`;
+  const ordemPosicao={1:1,2:2,3:3,4:4,5:5,6:6};
+  const itens=[...t.detalhes_parcial].sort((a,b)=>{
+    const pa=ordemPosicao[Number(a.posicao_id)]||99;
+    const pb=ordemPosicao[Number(b.posicao_id)]||99;
+    if(pa!==pb)return pa-pb;
+    return String(a.apelido||'').localeCompare(String(b.apelido||''),'pt-BR');
+  });
+  const pontuaram=itens.filter(x=>x.entrou_em_campo===true).length;
+  const siglas={1:'GOL',2:'LAT',3:'ZAG',4:'MEI',5:'ATA',6:'TEC'};
+  return `<div class="player-live-panel"><div class="player-live-head"><b>Escalação e parciais</b><span>${pontuaram}/${itens.length} jogadores pontuados</span></div><div class="player-live-list">${itens.map(x=>`<div class="player-live-item"><div><b><span class="player-live-pos">${siglas[Number(x.posicao_id)]||'-'}</span> ${x.apelido||x.atleta_id}${x.capitao?' <span class="player-live-cap">(C)</span>':''}</b><small>${x.entrou_em_campo?'Entrou em campo':'Ainda sem atuação confirmada'}</small></div><span class="player-live-points">${fmtBR(x.pontos_computados)} pts</span></div>`).join('')}</div></div>`;
 }
 const renderMeuTimeV1=renderMeuTime;
 renderMeuTime=function(){
@@ -2365,14 +2374,28 @@ function confrontosAtuaisV2(){
   });
   return jogos;
 }
+function jogadoresPontuadosV2(time){
+  if(Array.isArray(time?.detalhes_parcial)) return time.detalhes_parcial.filter(x=>x.entrou_em_campo===true).length;
+  return Number(time?.atletas_pontuando||0);
+}
+function nomeGrupoV2(chave){
+  const texto=String(chave||'').trim();
+  if(/^Grupo\s/i.test(texto)) return texto;
+  if(/^[A-D]$/i.test(texto)) return `Grupo ${texto.toUpperCase()}`;
+  if(/^GP\d+$/i.test(texto)) return texto.toUpperCase();
+  return texto||'Grupo';
+}
 function renderAoVivo(){
   const box=document.getElementById('boxAoVivo');if(!box)return;
   if(!parciaisCartola?.times?.length){box.innerHTML='<div class="muted-card">Dados ao vivo indisponíveis.</div>';return;}
   const r=Number(parciaisCartola.rodada_dados||0),vivo=rodadaEstaAoVivo(r),ranking=[...parciaisCartola.times].sort((a,b)=>Number(b.pontos||0)-Number(a.pontos||0));
-  const jogos=confrontosAtuaisV2(), maior=ranking[0], goleada=[...jogos].sort((a,b)=>Math.abs(b.pa-b.pb)-Math.abs(a.pa-a.pb))[0], equilibrado=[...jogos].sort((a,b)=>Math.abs(a.pa-a.pb)-Math.abs(b.pa-b.pb))[0];
+  const jogos=confrontosAtuaisV2();
   const meu=document.getElementById('selMeuTime')?.value||localStorage.getItem('meuTimeCartola')||'';
   if(document.getElementById('liveV2Status'))liveV2Status.textContent=vivo?'Classificação provisória · AO VIVO':'Rodada encerrada';
-  box.innerHTML=`<div class="live-v2-grid"><div class="live-v2-card"><small>Maior parcial</small><b class="green">${fmtBR(maior?.pontos)} pts</b><div class="small">${maior?.time||'-'}</div></div><div class="live-v2-card"><small>Maior vantagem</small><b class="green">${goleada?fmtBR(Math.abs(goleada.pa-goleada.pb)):'-'}</b><div class="small">${goleada?`${goleada.ta} x ${goleada.tb}`:'-'}</div></div><div class="live-v2-card"><small>Mais equilibrado</small><b class="gold">${equilibrado?fmtBR(Math.abs(equilibrado.pa-equilibrado.pb)):'-'}</b><div class="small">diferença</div></div><div class="live-v2-card"><small>Atletas pontuados</small><b>${parciaisCartola.total_atletas_pontuados||0}</b><div class="small">Rodada ${r}</div></div></div><div class="info-block"><h3>Ranking geral das parciais</h3><div class="live-v2-table-wrap"><table class="live-v2-table"><thead><tr><th>#</th><th>Time</th><th>Parcial</th><th>Jogadores</th></tr></thead><tbody>${ranking.map((t,i)=>`<tr class="${t.time===meu?'live-v2-row-me':''}"><td>${i+1}</td><td><b>${t.time}</b></td><td><b>${fmtBR(t.pontos)}</b></td><td>${t.atletas_pontuando??'-'}</td></tr>`).join('')}</tbody></table></div></div><div class="info-block light"><h3>Confrontos da rodada ${r}</h3>${jogos.length?jogos.map(j=>`<div class="live-v2-match"><span class="live-v2-team">${j.ta}</span><span class="live-v2-score">${fmtBR(j.pa)} x ${fmtBR(j.pb)}</span><span class="live-v2-team right">${j.tb}</span><div class="live-v2-note">${vivo?'<span class="live-v2-dot"></span>':''}<strong>${textoResultadoV2(j.ta,j.tb,j.pa,j.pb,j.rodada)}</strong></div></div>`).join(''):'<div class="muted-card">Confrontos não encontrados para esta rodada.</div>'}</div><div class="stats-note">Os dados são atualizados pelo GitHub Actions. Durante a rodada, classificação e resultados são provisórios.</div>`;
+  const grupos={};
+  jogos.forEach(j=>{const chave=nomeGrupoV2(j.grupo);(grupos[chave]||(grupos[chave]=[])).push(j);});
+  const htmlGrupos=Object.entries(grupos).map(([grupo,lista])=>`<div class="live-v2-group"><div class="live-v2-group-title">${grupo}</div>${lista.map(j=>`<div class="live-v2-match"><span class="live-v2-team">${j.ta}</span><span class="live-v2-score">${fmtBR(j.pa)} x ${fmtBR(j.pb)}</span><span class="live-v2-team right">${j.tb}</span><div class="live-v2-note">${vivo?'<span class="live-v2-dot"></span>':''}<strong>${textoResultadoV2(j.ta,j.tb,j.pa,j.pb,j.rodada)}</strong></div></div>`).join('')}</div>`).join('');
+  box.innerHTML=`<div class="info-block"><h3>Ranking geral das parciais</h3><div class="live-v2-table-wrap"><table class="live-v2-table"><thead><tr><th>#</th><th>Time</th><th>Parcial</th><th>Jogadores</th></tr></thead><tbody>${ranking.map((t,i)=>`<tr class="${t.time===meu?'live-v2-row-me':''}"><td>${i+1}</td><td><b>${t.time}</b></td><td><b>${fmtBR(t.pontos)}</b></td><td>${jogadoresPontuadosV2(t)}</td></tr>`).join('')}</tbody></table></div></div><div class="info-block light"><h3>Confrontos da rodada ${r} por grupo</h3>${jogos.length?htmlGrupos:'<div class="muted-card">Confrontos não encontrados para esta rodada.</div>'}</div><div class="stats-note">Os dados são atualizados pelo GitHub Actions. Durante a rodada, classificação e resultados são provisórios.</div>`;
 }
 
 const renderTudoV2Base=renderTudo;
