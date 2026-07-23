@@ -2,7 +2,7 @@ import json
 import os
 import time
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from zoneinfo import ZoneInfo
@@ -13,6 +13,7 @@ ARQUIVO_PARCIAIS = Path("parciais_cartola.json")
 
 URL_STATUS = "https://api.cartola.globo.com/mercado/status"
 URL_PONTUADOS = "https://api.cartola.globo.com/atletas/pontuados"
+URL_PARTIDAS = "https://api.cartola.globo.com/partidas"
 
 TOTAL_TIMES = 36
 MULTIPLICADOR_CAPITAO = 1.5
@@ -275,9 +276,114 @@ def atleta_tem_dados_na_api(
     return str(atleta_id) in mapa_pontuados
 
 
+def parse_data_cartola(valor):
+    if not valor:
+        return None
+
+    texto = str(valor).strip()
+    formatos = (
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S%z",
+        "%Y-%m-%dT%H:%M:%S.%f%z",
+    )
+
+    for formato in formatos:
+        try:
+            data = datetime.strptime(texto.replace("Z", "+00:00"), formato)
+            if data.tzinfo is None:
+                data = data.replace(tzinfo=FUSO)
+            return data.astimezone(FUSO)
+        except ValueError:
+            continue
+
+    try:
+        data = datetime.fromisoformat(texto.replace("Z", "+00:00"))
+        if data.tzinfo is None:
+            data = data.replace(tzinfo=FUSO)
+        return data.astimezone(FUSO)
+    except ValueError:
+        return None
+
+
+def texto_indica_encerrado(partida):
+    termos = []
+    for chave, valor in partida.items():
+        if isinstance(valor, (str, int, float, bool)):
+            termos.append(f"{chave}={valor}".lower())
+    texto = " ".join(termos)
+    return any(
+        termo in texto
+        for termo in (
+            "encerrad",
+            "finalizad",
+            "fim de jogo",
+            "finalizado",
+            "finished",
+        )
+    )
+
+
+def montar_mapa_partidas(dados_partidas):
+    partidas = dados_partidas.get("partidas", [])
+    if not isinstance(partidas, list):
+        partidas = []
+
+    agora = datetime.now(FUSO)
+    mapa = {}
+
+    for partida in partidas:
+        if not isinstance(partida, dict):
+            continue
+
+        valida = partida.get("valida", True)
+        if valida is False:
+            continue
+
+        data = parse_data_cartola(
+            partida.get("partida_data")
+            or partida.get("data")
+            or partida.get("data_partida")
+        )
+
+        encerrada = texto_indica_encerrado(partida)
+
+        # A API pública nem sempre fornece um campo explícito de encerramento.
+        # Como proteção, após três horas do horário marcado consideramos a
+        # ausência confirmada. Jogos inválidos/adiados não entram neste cálculo.
+        if not encerrada and data is not None:
+            encerrada = agora >= data + timedelta(hours=3)
+
+        info = {
+            "data": data.isoformat() if data else None,
+            "encerrada": bool(encerrada),
+        }
+
+        for chave in ("clube_casa_id", "clube_visitante_id"):
+            clube_id = inteiro(partida.get(chave, 0))
+            if clube_id > 0:
+                mapa[clube_id] = info
+
+    return mapa
+
+
+def jogo_do_atleta(mapa_partidas, clube_id):
+    return mapa_partidas.get(inteiro(clube_id), {})
+
+
+def jogo_encerrado_atleta(mapa_partidas, clube_id):
+    return bool(jogo_do_atleta(mapa_partidas, clube_id).get("encerrada", False))
+
+
+def data_jogo_atleta(mapa_partidas, clube_id):
+    texto = jogo_do_atleta(mapa_partidas, clube_id).get("data")
+    return parse_data_cartola(texto) or datetime.max.replace(tzinfo=FUSO)
+
+
 def montar_detalhe_atleta(
     atleta,
     mapa_pontuados,
+    mapa_partidas,
     capitao_id=0,
     reserva_luxo_id=0,
 ):
@@ -285,12 +391,19 @@ def montar_detalhe_atleta(
     pontos = obter_pontuacao_atleta(mapa_pontuados, atleta_id)
     entrou = atleta_entrou_em_campo(mapa_pontuados, atleta_id)
     tem_dados = atleta_tem_dados_na_api(mapa_pontuados, atleta_id)
+    clube_id = inteiro(atleta.get("clube_id", 0))
+    jogo_encerrado = jogo_encerrado_atleta(mapa_partidas, clube_id)
+    data_jogo = data_jogo_atleta(mapa_partidas, clube_id)
 
     return {
         "atleta_id": atleta_id,
         "apelido": atleta.get("apelido") or str(atleta_id),
         "posicao_id": inteiro(atleta.get("posicao_id", 0)),
-        "clube_id": inteiro(atleta.get("clube_id", 0)),
+        "clube_id": clube_id,
+        "preco_num": round(numero(atleta.get("preco_num", 0)), 2),
+        "jogo_encerrado": jogo_encerrado,
+        "data_jogo": None if data_jogo.year == datetime.max.year else data_jogo.isoformat(),
+        "nao_jogou": bool(jogo_encerrado and not entrou),
         "capitao": atleta_id == capitao_id,
         "reserva_luxo": atleta_id == reserva_luxo_id,
         "entrou_em_campo": entrou,
@@ -317,6 +430,7 @@ def aplicar_pontos_computados(atleta):
 def calcular_parcial(
     dados_time,
     mapa_pontuados,
+    mapa_partidas,
 ):
     atletas = dados_time.get("atletas", [])
     reservas = dados_time.get("reservas", [])
@@ -337,6 +451,7 @@ def calcular_parcial(
         montar_detalhe_atleta(
             atleta,
             mapa_pontuados,
+            mapa_partidas,
             capitao_id=capitao_id,
             reserva_luxo_id=reserva_luxo_id,
         )
@@ -346,6 +461,7 @@ def calcular_parcial(
         montar_detalhe_atleta(
             atleta,
             mapa_pontuados,
+            mapa_partidas,
             capitao_id=0,
             reserva_luxo_id=reserva_luxo_id,
         )
@@ -356,9 +472,10 @@ def calcular_parcial(
     reservas_exibidas = list(reservas_originais)
     substituicoes = []
 
-    # Banco normal: um reserva por posição. A troca é mostrada quando o
-    # titular já apareceu na API de pontuados, ainda não entrou em campo,
-    # e o reserva da posição entrou e fez pontuação positiva.
+    # Banco normal: o reserva da posição entra quando sua pontuação é
+    # positiva e a ausência de um titular foi confirmada após o fim do jogo.
+    # Se mais de um titular da posição não atuar, vale a ordem cronológica;
+    # em jogos simultâneos: capitão, maior preço e ordem alfabética.
     for reserva in list(reservas_originais):
         if not reserva.get("entrou_em_campo") or numero(reserva.get("pontos")) <= 0:
             continue
@@ -369,12 +486,21 @@ def calcular_parcial(
             for titular in titulares_efetivos
             if inteiro(titular.get("posicao_id")) == posicao
             and not titular.get("entrou_em_campo")
-            and titular.get("tem_dados_api")
+            and titular.get("jogo_encerrado")
         ]
 
         if not ausentes:
             continue
 
+        ausentes.sort(
+            key=lambda titular: (
+                parse_data_cartola(titular.get("data_jogo"))
+                or datetime.max.replace(tzinfo=FUSO),
+                0 if titular.get("capitao") else 1,
+                -numero(titular.get("preco_num", 0)),
+                str(titular.get("apelido", "")).casefold(),
+            )
+        )
         saiu = ausentes[0]
         indice = titulares_efetivos.index(saiu)
         entrou = dict(reserva)
@@ -391,6 +517,7 @@ def calcular_parcial(
         saiu_banco["substituicao_aplicada"] = True
         saiu_banco["tipo_substituicao"] = "banco_normal"
         saiu_banco["substituido_por"] = entrou.get("apelido")
+        saiu_banco["nao_jogou"] = bool(not saiu.get("entrou_em_campo"))
 
         titulares_efetivos[indice] = entrou
         reservas_exibidas = [
@@ -587,6 +714,11 @@ mapa_pontuados = obter_mapa_pontuados(
     dados_pontuados
 )
 
+print("Consultando partidas da rodada...")
+dados_partidas = buscar_json(URL_PARTIDAS)
+mapa_partidas = montar_mapa_partidas(dados_partidas)
+print(f"Clubes com partida mapeada: {len(mapa_partidas)}")
+
 total_atletas_pontuados = inteiro(
     dados_pontuados.get(
         "total_atletas",
@@ -714,6 +846,7 @@ for indice, (
             ) = calcular_parcial(
                 dados_time,
                 mapa_pontuados,
+                mapa_partidas,
             )
 
             pontos_anteriores = numero(
