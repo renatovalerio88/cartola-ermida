@@ -363,9 +363,12 @@ def montar_mapa_partidas(dados_partidas):
         if not isinstance(partida, dict):
             continue
 
+        # Não descartamos partidas com ``valida: false``. A API do Cartola
+        # pode marcar como não válida uma partida já encerrada, mas ela ainda
+        # é necessária para confirmar que um atleta daquele clube não atuou
+        # e permitir a entrada do reserva. Esse é o caso observado na rodada
+        # 19: o jogo do Bragantino aparece como encerrado e ``valida: false``.
         valida = partida.get("valida", True)
-        if valida is False:
-            continue
 
         data = parse_data_cartola(
             partida.get("partida_data")
@@ -384,6 +387,7 @@ def montar_mapa_partidas(dados_partidas):
         info = {
             "data": data.isoformat() if data else None,
             "encerrada": bool(encerrada),
+            "valida": bool(valida),
         }
 
         for chave in ("clube_casa_id", "clube_visitante_id"):
