@@ -268,130 +268,240 @@ def atleta_entrou_em_campo(
     )
 
 
+def atleta_tem_dados_na_api(
+    mapa_pontuados,
+    atleta_id,
+):
+    return str(atleta_id) in mapa_pontuados
+
+
+def montar_detalhe_atleta(
+    atleta,
+    mapa_pontuados,
+    capitao_id=0,
+    reserva_luxo_id=0,
+):
+    atleta_id = inteiro(atleta.get("atleta_id", 0))
+    pontos = obter_pontuacao_atleta(mapa_pontuados, atleta_id)
+    entrou = atleta_entrou_em_campo(mapa_pontuados, atleta_id)
+    tem_dados = atleta_tem_dados_na_api(mapa_pontuados, atleta_id)
+
+    return {
+        "atleta_id": atleta_id,
+        "apelido": atleta.get("apelido") or str(atleta_id),
+        "posicao_id": inteiro(atleta.get("posicao_id", 0)),
+        "clube_id": inteiro(atleta.get("clube_id", 0)),
+        "capitao": atleta_id == capitao_id,
+        "reserva_luxo": atleta_id == reserva_luxo_id,
+        "entrou_em_campo": entrou,
+        "tem_dados_api": tem_dados,
+        "pontos": round(pontos, 2),
+        "pontos_computados": 0.0,
+        "substituicao_aplicada": False,
+        "tipo_substituicao": None,
+        "entrou_no_lugar_de": None,
+        "substituido_por": None,
+        "titular_efetivo": False,
+    }
+
+
+def aplicar_pontos_computados(atleta):
+    multiplicador = MULTIPLICADOR_CAPITAO if atleta.get("capitao") else 1.0
+    atleta["pontos_computados"] = round(
+        numero(atleta.get("pontos", 0)) * multiplicador,
+        2,
+    )
+    return atleta["pontos_computados"]
+
+
 def calcular_parcial(
     dados_time,
     mapa_pontuados,
 ):
-    atletas = dados_time.get(
-        "atletas",
-        [],
-    )
-
-    capitao_id = inteiro(
-        dados_time.get(
-            "capitao_id",
-            0,
-        )
-    )
+    atletas = dados_time.get("atletas", [])
+    reservas = dados_time.get("reservas", [])
+    capitao_id = inteiro(dados_time.get("capitao_id", 0))
+    reserva_luxo_id = inteiro(dados_time.get("reserva_luxo_id", 0))
 
     if not isinstance(atletas, list):
-        raise ValueError(
-            "A escalação não contém "
-            "uma lista de atletas."
-        )
-
+        raise ValueError("A escalação não contém uma lista de atletas.")
+    if not isinstance(reservas, list):
+        reservas = []
     if len(atletas) < 11:
         raise ValueError(
             "Escalação incompleta: "
             f"apenas {len(atletas)} atletas."
         )
 
+    titulares_originais = [
+        montar_detalhe_atleta(
+            atleta,
+            mapa_pontuados,
+            capitao_id=capitao_id,
+            reserva_luxo_id=reserva_luxo_id,
+        )
+        for atleta in atletas
+    ]
+    reservas_originais = [
+        montar_detalhe_atleta(
+            atleta,
+            mapa_pontuados,
+            capitao_id=0,
+            reserva_luxo_id=reserva_luxo_id,
+        )
+        for atleta in reservas
+    ]
+
+    titulares_efetivos = list(titulares_originais)
+    reservas_exibidas = list(reservas_originais)
+    substituicoes = []
+
+    # Banco normal: um reserva por posição. A troca é mostrada quando o
+    # titular já apareceu na API de pontuados, ainda não entrou em campo,
+    # e o reserva da posição entrou e fez pontuação positiva.
+    for reserva in list(reservas_originais):
+        if not reserva.get("entrou_em_campo") or numero(reserva.get("pontos")) <= 0:
+            continue
+
+        posicao = inteiro(reserva.get("posicao_id"))
+        ausentes = [
+            titular
+            for titular in titulares_efetivos
+            if inteiro(titular.get("posicao_id")) == posicao
+            and not titular.get("entrou_em_campo")
+            and titular.get("tem_dados_api")
+        ]
+
+        if not ausentes:
+            continue
+
+        saiu = ausentes[0]
+        indice = titulares_efetivos.index(saiu)
+        entrou = dict(reserva)
+        saiu_banco = dict(saiu)
+
+        entrou["capitao"] = bool(saiu.get("capitao"))
+        entrou["titular_efetivo"] = True
+        entrou["substituicao_aplicada"] = True
+        entrou["tipo_substituicao"] = "banco_normal"
+        entrou["entrou_no_lugar_de"] = saiu.get("apelido")
+
+        saiu_banco["capitao"] = False
+        saiu_banco["titular_efetivo"] = False
+        saiu_banco["substituicao_aplicada"] = True
+        saiu_banco["tipo_substituicao"] = "banco_normal"
+        saiu_banco["substituido_por"] = entrou.get("apelido")
+
+        titulares_efetivos[indice] = entrou
+        reservas_exibidas = [
+            item
+            for item in reservas_exibidas
+            if inteiro(item.get("atleta_id")) != inteiro(reserva.get("atleta_id"))
+        ]
+        reservas_exibidas.append(saiu_banco)
+
+        substituicoes.append({
+            "tipo": "banco_normal",
+            "posicao_id": posicao,
+            "saiu_atleta_id": inteiro(saiu.get("atleta_id")),
+            "saiu": saiu.get("apelido"),
+            "entrou_atleta_id": inteiro(entrou.get("atleta_id")),
+            "entrou": entrou.get("apelido"),
+            "capitao_transferido": bool(saiu.get("capitao")),
+            "pontos_adicionados": round(numero(entrou.get("pontos")), 2),
+        })
+
+    # Reserva de Luxo: só pode substituir o pior titular da mesma posição
+    # quando todos os titulares originais daquela posição entraram em campo.
+    luxo = next(
+        (
+            reserva
+            for reserva in reservas_originais
+            if reserva.get("reserva_luxo")
+        ),
+        None,
+    )
+    if luxo and luxo.get("entrou_em_campo"):
+        posicao = inteiro(luxo.get("posicao_id"))
+        originais_posicao = [
+            titular
+            for titular in titulares_originais
+            if inteiro(titular.get("posicao_id")) == posicao
+        ]
+        todos_atuaram = bool(originais_posicao) and all(
+            titular.get("entrou_em_campo")
+            for titular in originais_posicao
+        )
+        luxo_ja_usado = any(
+            inteiro(t.get("atleta_id")) == inteiro(luxo.get("atleta_id"))
+            for t in titulares_efetivos
+        )
+
+        if todos_atuaram and not luxo_ja_usado:
+            candidatos = [
+                titular
+                for titular in titulares_efetivos
+                if inteiro(titular.get("posicao_id")) == posicao
+            ]
+            if candidatos:
+                pior = min(candidatos, key=lambda item: numero(item.get("pontos")))
+                if numero(luxo.get("pontos")) > numero(pior.get("pontos")):
+                    indice = titulares_efetivos.index(pior)
+                    entrou = dict(luxo)
+                    saiu_banco = dict(pior)
+
+                    entrou["capitao"] = bool(pior.get("capitao"))
+                    entrou["titular_efetivo"] = True
+                    entrou["substituicao_aplicada"] = True
+                    entrou["tipo_substituicao"] = "reserva_luxo"
+                    entrou["entrou_no_lugar_de"] = pior.get("apelido")
+
+                    saiu_banco["capitao"] = False
+                    saiu_banco["titular_efetivo"] = False
+                    saiu_banco["substituicao_aplicada"] = True
+                    saiu_banco["tipo_substituicao"] = "reserva_luxo"
+                    saiu_banco["substituido_por"] = entrou.get("apelido")
+
+                    titulares_efetivos[indice] = entrou
+                    reservas_exibidas = [
+                        item
+                        for item in reservas_exibidas
+                        if inteiro(item.get("atleta_id")) != inteiro(luxo.get("atleta_id"))
+                    ]
+                    reservas_exibidas.append(saiu_banco)
+
+                    substituicoes.append({
+                        "tipo": "reserva_luxo",
+                        "posicao_id": posicao,
+                        "saiu_atleta_id": inteiro(pior.get("atleta_id")),
+                        "saiu": pior.get("apelido"),
+                        "entrou_atleta_id": inteiro(entrou.get("atleta_id")),
+                        "entrou": entrou.get("apelido"),
+                        "capitao_transferido": bool(pior.get("capitao")),
+                        "pontos_adicionados": round(
+                            numero(entrou.get("pontos")) - numero(pior.get("pontos")),
+                            2,
+                        ),
+                    })
+
     total = 0.0
-    detalhes = []
     atletas_pontuando = 0
-
-    for atleta in atletas:
-        atleta_id = inteiro(
-            atleta.get(
-                "atleta_id",
-                0,
-            )
-        )
-
-        apelido = (
-            atleta.get("apelido")
-            or str(atleta_id)
-        )
-
-        pontuacao_normal = obter_pontuacao_atleta(
-            mapa_pontuados,
-            atleta_id,
-        )
-
-        entrou_em_campo = atleta_entrou_em_campo(
-            mapa_pontuados,
-            atleta_id,
-        )
-
-        eh_capitao = (
-            atleta_id == capitao_id
-        )
-
-        if eh_capitao:
-            pontuacao_computada = (
-                pontuacao_normal
-                * MULTIPLICADOR_CAPITAO
-            )
-        else:
-            pontuacao_computada = (
-                pontuacao_normal
-            )
-
-        if entrou_em_campo:
+    for titular in titulares_efetivos:
+        titular["titular_efetivo"] = True
+        total += aplicar_pontos_computados(titular)
+        if titular.get("entrou_em_campo"):
             atletas_pontuando += 1
 
-        total += pontuacao_computada
-
-        detalhes.append(
-            {
-                "atleta_id": atleta_id,
-                "apelido": apelido,
-                "posicao_id": inteiro(
-                    atleta.get(
-                        "posicao_id",
-                        0,
-                    )
-                ),
-                "capitao": eh_capitao,
-                "entrou_em_campo": entrou_em_campo,
-                "pontos": round(
-                    pontuacao_normal,
-                    2,
-                ),
-                "pontos_computados": round(
-                    pontuacao_computada,
-                    2,
-                ),
-            }
-        )
+    for reserva in reservas_exibidas:
+        aplicar_pontos_computados(reserva)
 
     return (
         round(total, 2),
         atletas_pontuando,
-        detalhes,
+        titulares_efetivos,
+        reservas_exibidas,
+        substituicoes,
     )
-
-
-def montar_detalhes_reservas(dados_time, mapa_pontuados):
-    reservas = dados_time.get("reservas", [])
-    if not isinstance(reservas, list):
-        reservas = []
-    reserva_luxo_id = inteiro(dados_time.get("reserva_luxo_id", 0))
-    detalhes = []
-    for atleta in reservas:
-        atleta_id = inteiro(atleta.get("atleta_id", 0))
-        pontos = obter_pontuacao_atleta(mapa_pontuados, atleta_id)
-        detalhes.append({
-            "atleta_id": atleta_id,
-            "apelido": atleta.get("apelido") or str(atleta_id),
-            "posicao_id": inteiro(atleta.get("posicao_id", 0)),
-            "reserva_luxo": atleta_id == reserva_luxo_id,
-            "entrou_em_campo": atleta_entrou_em_campo(mapa_pontuados, atleta_id),
-            "pontos": round(pontos, 2),
-            "substituicao_aplicada": False,
-        })
-    return detalhes
-
 
 def rodada_da_escalacao(dados_time):
     informacoes_time = dados_time.get(
@@ -599,6 +709,8 @@ for indice, (
                 pontos,
                 atletas_pontuando,
                 detalhes,
+                reservas_detalhes,
+                substituicoes_aplicadas,
             ) = calcular_parcial(
                 dados_time,
                 mapa_pontuados,
@@ -680,12 +792,10 @@ for indice, (
             registro["reserva_luxo_id"] = inteiro(
                 dados_time.get("reserva_luxo_id", 0)
             )
-            registro["reservas_parcial"] = montar_detalhes_reservas(
-                dados_time, mapa_pontuados
-            )
-            registro["substituicoes_aplicadas"] = []
+            registro["reservas_parcial"] = reservas_detalhes
+            registro["substituicoes_aplicadas"] = substituicoes_aplicadas
             registro["criterio_parcial"] = (
-                "titulares + capitao 1.5; reservas apenas para diagnóstico"
+                "escalação efetiva com banco normal, reserva de luxo e capitão 1.5"
             )
 
         novos_times.append(registro)
