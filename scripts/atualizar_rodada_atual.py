@@ -14,6 +14,7 @@ ARQUIVO_PARCIAIS = Path("parciais_cartola.json")
 URL_STATUS = "https://api.cartola.globo.com/mercado/status"
 URL_PONTUADOS = "https://api.cartola.globo.com/atletas/pontuados"
 URL_PARTIDAS = "https://api.cartola.globo.com/partidas"
+URL_ATLETAS_MERCADO = "https://api.cartola.globo.com/atletas/mercado"
 
 TOTAL_TIMES = 36
 MULTIPLICADOR_CAPITAO = 1.5
@@ -202,6 +203,32 @@ def inteiro(valor, padrao=0):
         return int(padrao)
 
 
+
+
+def obter_mapa_atletas_mercado(dados):
+    atletas = dados.get("atletas", [])
+    if not isinstance(atletas, list):
+        return {}
+
+    mapa = {}
+    for atleta in atletas:
+        if not isinstance(atleta, dict):
+            continue
+        atleta_id = inteiro(atleta.get("atleta_id", 0))
+        if atleta_id > 0:
+            mapa[atleta_id] = atleta
+    return mapa
+
+
+def clube_atual_atleta(atleta, mapa_atletas_mercado):
+    atleta_id = inteiro(atleta.get("atleta_id", 0))
+    mercado = mapa_atletas_mercado.get(atleta_id, {})
+    clube_mercado = inteiro(mercado.get("clube_id", 0)) if isinstance(mercado, dict) else 0
+    if clube_mercado > 0:
+        return clube_mercado
+    return inteiro(atleta.get("clube_id", 0))
+
+
 def obter_mapa_pontuados(dados):
     atletas = dados.get("atletas", {})
 
@@ -384,6 +411,7 @@ def montar_detalhe_atleta(
     atleta,
     mapa_pontuados,
     mapa_partidas,
+    mapa_atletas_mercado,
     capitao_id=0,
     reserva_luxo_id=0,
 ):
@@ -391,7 +419,8 @@ def montar_detalhe_atleta(
     pontos = obter_pontuacao_atleta(mapa_pontuados, atleta_id)
     entrou = atleta_entrou_em_campo(mapa_pontuados, atleta_id)
     tem_dados = atleta_tem_dados_na_api(mapa_pontuados, atleta_id)
-    clube_id = inteiro(atleta.get("clube_id", 0))
+    clube_id_original = inteiro(atleta.get("clube_id", 0))
+    clube_id = clube_atual_atleta(atleta, mapa_atletas_mercado)
     jogo_encerrado = jogo_encerrado_atleta(mapa_partidas, clube_id)
     data_jogo = data_jogo_atleta(mapa_partidas, clube_id)
 
@@ -400,6 +429,10 @@ def montar_detalhe_atleta(
         "apelido": atleta.get("apelido") or str(atleta_id),
         "posicao_id": inteiro(atleta.get("posicao_id", 0)),
         "clube_id": clube_id,
+        "clube_id_original": clube_id_original,
+        "clube_corrigido_pelo_mercado": bool(
+            clube_id > 0 and clube_id != clube_id_original
+        ),
         "preco_num": round(numero(atleta.get("preco_num", 0)), 2),
         "jogo_encerrado": jogo_encerrado,
         "data_jogo": None if data_jogo.year == datetime.max.year else data_jogo.isoformat(),
@@ -431,6 +464,7 @@ def calcular_parcial(
     dados_time,
     mapa_pontuados,
     mapa_partidas,
+    mapa_atletas_mercado,
 ):
     atletas = dados_time.get("atletas", [])
     reservas = dados_time.get("reservas", [])
@@ -452,6 +486,7 @@ def calcular_parcial(
             atleta,
             mapa_pontuados,
             mapa_partidas,
+            mapa_atletas_mercado,
             capitao_id=capitao_id,
             reserva_luxo_id=reserva_luxo_id,
         )
@@ -462,6 +497,7 @@ def calcular_parcial(
             atleta,
             mapa_pontuados,
             mapa_partidas,
+            mapa_atletas_mercado,
             capitao_id=0,
             reserva_luxo_id=reserva_luxo_id,
         )
@@ -719,6 +755,11 @@ dados_partidas = buscar_json(URL_PARTIDAS)
 mapa_partidas = montar_mapa_partidas(dados_partidas)
 print(f"Clubes com partida mapeada: {len(mapa_partidas)}")
 
+print("Consultando cadastro atual de atletas...")
+dados_atletas_mercado = buscar_json(URL_ATLETAS_MERCADO)
+mapa_atletas_mercado = obter_mapa_atletas_mercado(dados_atletas_mercado)
+print(f"Atletas atuais mapeados: {len(mapa_atletas_mercado)}")
+
 total_atletas_pontuados = inteiro(
     dados_pontuados.get(
         "total_atletas",
@@ -847,6 +888,7 @@ for indice, (
                 dados_time,
                 mapa_pontuados,
                 mapa_partidas,
+                mapa_atletas_mercado,
             )
 
             pontos_anteriores = numero(
