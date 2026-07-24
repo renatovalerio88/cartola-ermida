@@ -324,7 +324,7 @@
       "time": "JACB FC",
       "cartoleiro": "Juca Barros",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 70.13,
       "patrimonio": 138.17,
       "pontos_campeonato": 1372.16,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "24/07/2026 14:41:06"
+  "ultima_atualizacao": "24/07/2026 16:04:26"
 }
