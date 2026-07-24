@@ -60,7 +60,7 @@
       "time": "Mão C.F",
       "cartoleiro": "Lucas Mão",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 115.53,
       "patrimonio": 162.33,
       "pontos_campeonato": 1522.43,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "24/07/2026 17:40:19"
+  "ultima_atualizacao": "24/07/2026 19:46:19"
 }
