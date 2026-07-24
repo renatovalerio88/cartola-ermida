@@ -88,7 +88,7 @@
       "time": "CAMARASSO",
       "cartoleiro": "André Camarasso",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 129.38,
       "patrimonio": 148.21,
       "pontos_campeonato": 1522.49,
@@ -444,5 +444,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "24/07/2026 12:01:06"
+  "ultima_atualizacao": "24/07/2026 12:56:10"
 }
