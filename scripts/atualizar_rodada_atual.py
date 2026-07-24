@@ -65,7 +65,19 @@ def agora_texto():
     return datetime.now(FUSO).strftime("%d/%m/%Y %H:%M:%S")
 
 
-def buscar_json(url, tentativas=3):
+def buscar_json(
+    url,
+    tentativas=3,
+    obrigatorio=True,
+):
+    """Consulta uma URL e devolve o JSON.
+
+    Alguns endpoints do Cartola, especialmente /atletas/pontuados,
+    podem responder sem conteúdo entre o fechamento de uma rodada e
+    o início das parciais da rodada seguinte. Quando obrigatorio=False,
+    essa situação é tratada como "dados ainda indisponíveis" e não como
+    falha do workflow.
+    """
     ultimo_erro = None
 
     for tentativa in range(1, tentativas + 1):
@@ -83,9 +95,26 @@ def buscar_json(url, tentativas=3):
                 requisicao,
                 timeout=30,
             ) as resposta:
-                return json.loads(
-                    resposta.read().decode("utf-8")
+                conteudo = (
+                    resposta
+                    .read()
+                    .decode("utf-8")
+                    .strip()
                 )
+
+                if not conteudo:
+                    raise ValueError(
+                        "A API respondeu sem conteúdo."
+                    )
+
+                dados = json.loads(conteudo)
+
+                if not isinstance(dados, dict):
+                    raise ValueError(
+                        "A API não retornou um objeto JSON."
+                    )
+
+                return dados
 
         except Exception as erro:
             ultimo_erro = erro
@@ -97,6 +126,13 @@ def buscar_json(url, tentativas=3):
 
             if tentativa < tentativas:
                 time.sleep(tentativa * 2)
+
+    if not obrigatorio:
+        print(
+            f"Dados opcionais indisponíveis em {url}. "
+            "A execução continuará com segurança."
+        )
+        return None
 
     raise RuntimeError(
         f"Falha definitiva ao consultar {url}: {ultimo_erro}"
@@ -737,50 +773,93 @@ print(
 )
 
 
-print("\nConsultando atletas pontuados...")
+print()
 
-dados_pontuados = buscar_json(
-    URL_PONTUADOS
-)
+# Com o mercado aberto, a rodada indicada pelo status já é a próxima.
+# Nesse momento /atletas/pontuados pode ficar vazio. Não precisamos dele:
+# os valores definitivos são obtidos pelo endpoint /time/id/{id}/{rodada}.
+dados_pontuados = None
+mapa_pontuados = {}
+mapa_partidas = {}
+mapa_atletas_mercado = {}
+rodada_pontuados = 0
+total_atletas_pontuados = 0
+parciais_disponiveis = False
 
-rodada_pontuados = inteiro(
-    dados_pontuados.get(
-        "rodada",
-        0,
-    )
-)
-
-mapa_pontuados = obter_mapa_pontuados(
-    dados_pontuados
-)
-
-print("Consultando partidas da rodada...")
-dados_partidas = buscar_json(URL_PARTIDAS)
-mapa_partidas = montar_mapa_partidas(dados_partidas)
-print(f"Clubes com partida mapeada: {len(mapa_partidas)}")
-
-print("Consultando cadastro atual de atletas...")
-dados_atletas_mercado = buscar_json(URL_ATLETAS_MERCADO)
-mapa_atletas_mercado = obter_mapa_atletas_mercado(dados_atletas_mercado)
-print(f"Atletas atuais mapeados: {len(mapa_atletas_mercado)}")
-
-total_atletas_pontuados = inteiro(
-    dados_pontuados.get(
-        "total_atletas",
-        len(mapa_pontuados),
-    )
-)
-
-if total_atletas_pontuados <= 0:
-    total_atletas_pontuados = len(
-        mapa_pontuados
+if mercado_aberto:
+    print(
+        "Mercado aberto: a rodada anterior será "
+        "consultada pelos valores definitivos."
     )
 
-parciais_disponiveis = (
-    rodada_pontuados == rodada_status
-    and total_atletas_pontuados > 0
-    and len(mapa_pontuados) > 0
-)
+else:
+    print("Consultando atletas pontuados...")
+
+    dados_pontuados = buscar_json(
+        URL_PONTUADOS,
+        obrigatorio=False,
+    )
+
+    if isinstance(dados_pontuados, dict):
+        rodada_pontuados = inteiro(
+            dados_pontuados.get(
+                "rodada",
+                0,
+            )
+        )
+
+        mapa_pontuados = obter_mapa_pontuados(
+            dados_pontuados
+        )
+
+        total_atletas_pontuados = inteiro(
+            dados_pontuados.get(
+                "total_atletas",
+                len(mapa_pontuados),
+            )
+        )
+
+        if total_atletas_pontuados <= 0:
+            total_atletas_pontuados = len(
+                mapa_pontuados
+            )
+
+        parciais_disponiveis = (
+            rodada_pontuados == rodada_status
+            and total_atletas_pontuados > 0
+            and len(mapa_pontuados) > 0
+        )
+
+    if parciais_disponiveis:
+        print("Consultando partidas da rodada...")
+        dados_partidas = buscar_json(URL_PARTIDAS)
+        mapa_partidas = montar_mapa_partidas(
+            dados_partidas
+        )
+        print(
+            "Clubes com partida mapeada: "
+            f"{len(mapa_partidas)}"
+        )
+
+        print("Consultando cadastro atual de atletas...")
+        dados_atletas_mercado = buscar_json(
+            URL_ATLETAS_MERCADO
+        )
+        mapa_atletas_mercado = (
+            obter_mapa_atletas_mercado(
+                dados_atletas_mercado
+            )
+        )
+        print(
+            "Atletas atuais mapeados: "
+            f"{len(mapa_atletas_mercado)}"
+        )
+
+    else:
+        print(
+            "Ainda não existem parciais válidas para "
+            f"a rodada {rodada_status}."
+        )
 
 rodada_em_andamento = (
     not mercado_aberto
@@ -1081,12 +1160,23 @@ if rodada_em_andamento:
         parciais,
     )
 
-elif ARQUIVO_PARCIAIS.exists():
+elif mercado_aberto and ARQUIVO_PARCIAIS.exists():
+    # A abertura do mercado confirma que a rodada anterior terminou.
+    # O arquivo ao vivo deixa de ser necessário; rodada_atual_cartola.json
+    # passa a conter os pontos definitivos da rodada encerrada.
     ARQUIVO_PARCIAIS.unlink()
 
     print(
         "parciais_cartola.json removido: "
-        "não há parciais atuais disponíveis."
+        "a rodada anterior foi encerrada e consolidada."
+    )
+
+elif not mercado_aberto and ARQUIVO_PARCIAIS.exists():
+    # Se o endpoint de pontuados oscilar durante uma rodada fechada,
+    # preservamos a última parcial válida em vez de apagar dados bons.
+    print(
+        "Parciais ainda indisponíveis ou temporariamente fora do ar. "
+        "O último parciais_cartola.json válido foi preservado."
     )
 
 
