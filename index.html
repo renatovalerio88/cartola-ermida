@@ -620,6 +620,20 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .class-prob-note{margin-top:10px;color:#8297b4;font-size:10px;line-height:1.45}.class-prob-note strong{color:#cdd9ea}
 @media(max-width:700px){.class-prob-summary{grid-template-columns:1fr}.class-prob-head{display:block}.class-prob-badge{display:inline-block;margin-top:8px}.class-prob-number{font-size:32px}.class-prob-legend{grid-template-columns:1fr}.class-prob-message{padding:10px 11px}}
 
+
+
+/* Painel inteligente do ciclo da rodada */
+.live-cycle-card{margin:0 0 16px;padding:16px;border:1px solid #334155;border-radius:16px;background:#0b1324}
+.live-cycle-card.upcoming{border-color:#b7791f;background:linear-gradient(135deg,#171505,#0b1324 72%)}
+.live-cycle-kicker{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:17px;font-weight:900;color:#facc15}
+.live-cycle-title{font-size:16px;font-weight:800;color:#f8fafc;margin-bottom:8px}
+.live-cycle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.live-cycle-metric{padding:10px 12px;border:1px solid #334155;border-radius:12px;background:#07101f}
+.live-cycle-metric small{display:block;color:#94a3b8;margin-bottom:4px}
+.live-cycle-metric strong{display:block;color:#fff;font-size:15px}
+.live-cycle-note{margin-top:10px;color:#cbd5e1;font-size:13px}
+@media(max-width:700px){.live-cycle-grid{grid-template-columns:1fr}.live-cycle-card{padding:13px}}
+
 </style>
 </head>
 <body>
@@ -665,7 +679,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   <section id="aba-aovivo" class="aba hidden">
     <div class="card">
       <div class="live-v2-head">
-        <h2>Ao Vivo</h2>
+        <h2 id="liveV2Title">Ao Vivo</h2>
         <span id="liveV2Status" class="live-v2-provisional">Classificação provisória</span>
       </div>
       <div id="boxAoVivo"></div>
@@ -2425,17 +2439,61 @@ function nomeGrupoV2(chave){
   if(/^GP\d+$/i.test(texto)) return texto.toUpperCase();
   return texto||'Grupo';
 }
+function fechamentoMercadoV2(){
+  const f=parciaisCartola?.fechamento_mercado;
+  if(!f)return null;
+  if(Number(f.timestamp)>0)return new Date(Number(f.timestamp)*1000);
+  if(f.ano&&f.mes&&f.dia){
+    return new Date(Number(f.ano),Number(f.mes)-1,Number(f.dia),Number(f.hora||0),Number(f.minuto||0),0);
+  }
+  return null;
+}
+function formatarFechamentoV2(data){
+  if(!(data instanceof Date)||isNaN(data.getTime()))return 'Horário ainda não informado';
+  const dia=data.toLocaleDateString('pt-BR',{weekday:'long'});
+  const dataCurta=data.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  const hora=data.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  return `${dia.charAt(0).toUpperCase()+dia.slice(1)} · ${dataCurta} às ${hora}`;
+}
+function tempoRestanteV2(data){
+  if(!(data instanceof Date)||isNaN(data.getTime()))return 'Aguardando informação da API';
+  let ms=data.getTime()-Date.now();
+  if(ms<=0)return 'Fechamento em processamento';
+  const dias=Math.floor(ms/86400000); ms%=86400000;
+  const horas=Math.floor(ms/3600000); ms%=3600000;
+  const minutos=Math.floor(ms/60000);
+  if(dias>0)return `${dias} ${dias===1?'dia':'dias'} e ${horas}h`;
+  if(horas>0)return `${horas}h e ${minutos}min`;
+  return `${Math.max(1,minutos)} min`;
+}
 function renderAoVivo(){
   const box=document.getElementById('boxAoVivo');if(!box)return;
-  if(!parciaisCartola?.times?.length){box.innerHTML='<div class="muted-card">Dados ao vivo indisponíveis.</div>';return;}
-  const r=Number(parciaisCartola.rodada_dados||0),vivo=rodadaEstaAoVivo(r),ranking=[...parciaisCartola.times].sort((a,b)=>Number(b.pontos||0)-Number(a.pontos||0));
+  if(!parciaisCartola||!Array.isArray(parciaisCartola.times)){box.innerHTML='<div class="muted-card">Dados da rodada indisponíveis.</div>';return;}
+  const r=Number(parciaisCartola.rodada_dados||0);
+  const rodadaCartola=Number(parciaisCartola.rodada_cartola||r||0);
+  const vivo=rodadaEstaAoVivo(r);
+  const entreRodadas=!vivo&&parciaisCartola.mercado_aberto===true;
+  const ranking=[...parciaisCartola.times].sort((a,b)=>Number(b.pontos||0)-Number(a.pontos||0));
   const jogos=confrontosAtuaisV2();
   const meu=document.getElementById('selMeuTime')?.value||localStorage.getItem('meuTimeCartola')||'';
-  if(document.getElementById('liveV2Status'))liveV2Status.textContent=vivo?'Classificação provisória · AO VIVO':'Rodada encerrada';
+  const titulo=document.getElementById('liveV2Title');
+  const status=document.getElementById('liveV2Status');
+  if(titulo)titulo.textContent=vivo?'Ao Vivo':entreRodadas?'Resultado Oficial':'Próxima rodada';
+  if(status)status.textContent=vivo?'Classificação provisória · AO VIVO':entreRodadas?`Rodada ${r} encerrada`:'Aguardando jogos';
   const grupos={};
   jogos.forEach(j=>{const chave=nomeGrupoV2(j.grupo);(grupos[chave]||(grupos[chave]=[])).push(j);});
-  const htmlGrupos=Object.entries(grupos).map(([grupo,lista])=>{const rep=/repescagem|^RP\d+$/i.test(grupo);return `<div class="live-v2-group ${rep?'live-v2-group-rep':''}"><div class="live-v2-group-title">${grupo}</div>${lista.map(j=>{const dif=Math.abs(Number(j.pa)-Number(j.pb));const empate=dif<=LIMITE_EMPATE;const aVence=!empate&&Number(j.pa)>Number(j.pb);const bVence=!empate&&Number(j.pb)>Number(j.pa);const nota=empate?'Empate no momento':`${aVence?j.ta:j.tb} está vencendo · saldo ${fmtBR(dif)}`;return `<div class="live-v2-match"><span class="live-v2-team ${empate?'is-draw':aVence?'is-winning':'is-losing'}"><span class="live-result-dot ${empate?'draw':aVence?'win':'loss'}"></span>${j.ta}</span><span class="live-v2-score">${fmtBR(j.pa)} x ${fmtBR(j.pb)}</span><span class="live-v2-team right ${empate?'is-draw':bVence?'is-winning':'is-losing'}">${j.tb}<span class="live-result-dot ${empate?'draw':bVence?'win':'loss'}" style="margin-left:6px;margin-right:0"></span></span><div class="live-v2-note"><strong>${nota}</strong></div></div>`}).join('')}</div>`}).join('');
-  box.innerHTML=`<div class="info-block"><h3>Ranking geral das parciais</h3><div class="live-v2-table-wrap"><table class="live-v2-table"><thead><tr><th>#</th><th>Time</th><th>Parcial</th><th>Jogadores</th></tr></thead><tbody>${ranking.map((t,i)=>`<tr class="${t.time===meu?'live-v2-row-me':''}"><td>${i+1}</td><td><b>${t.time}</b></td><td><b>${fmtBR(t.pontos)}</b></td><td>${jogadoresPontuadosV2(t)}</td></tr>`).join('')}</tbody></table></div></div><div class="info-block light"><h3>Confrontos da rodada ${r} por grupo</h3>${jogos.length?htmlGrupos:'<div class="muted-card">Confrontos não encontrados para esta rodada.</div>'}</div><div class="stats-note">Os dados são atualizados pelo GitHub Actions. Durante a rodada, classificação e resultados são provisórios.</div>`;
+  const htmlGrupos=Object.entries(grupos).map(([grupo,lista])=>{const rep=/repescagem|^RP\d+$/i.test(grupo);return `<div class="live-v2-group ${rep?'live-v2-group-rep':''}"><div class="live-v2-group-title">${grupo}</div>${lista.map(j=>{const dif=Math.abs(Number(j.pa)-Number(j.pb));const empate=dif<=LIMITE_EMPATE;const aVence=!empate&&Number(j.pa)>Number(j.pb);const bVence=!empate&&Number(j.pb)>Number(j.pa);const nota=empate?(vivo?'Empate no momento':'Empate'):`${aVence?j.ta:j.tb} ${vivo?'está vencendo':'venceu'} · saldo ${fmtBR(dif)}`;return `<div class="live-v2-match"><span class="live-v2-team ${empate?'is-draw':aVence?'is-winning':'is-losing'}"><span class="live-result-dot ${empate?'draw':aVence?'win':'loss'}"></span>${j.ta}</span><span class="live-v2-score">${fmtBR(j.pa)} x ${fmtBR(j.pb)}</span><span class="live-v2-team right ${empate?'is-draw':bVence?'is-winning':'is-losing'}">${j.tb}<span class="live-result-dot ${empate?'draw':bVence?'win':'loss'}" style="margin-left:6px;margin-right:0"></span></span><div class="live-v2-note"><strong>${nota}</strong></div></div>`}).join('')}</div>`}).join('');
+  let ciclo='';
+  if(entreRodadas){
+    const fechamento=fechamentoMercadoV2();
+    ciclo=`<div class="live-cycle-card upcoming"><div class="live-cycle-kicker">⏳ Próxima rodada</div><div class="live-cycle-title">Mercado da Rodada ${rodadaCartola} aberto</div><div class="live-cycle-grid"><div class="live-cycle-metric"><small>Próximo fechamento</small><strong>${formatarFechamentoV2(fechamento)}</strong></div><div class="live-cycle-metric"><small>Tempo restante</small><strong>${tempoRestanteV2(fechamento)}</strong></div><div class="live-cycle-metric"><small>Próximos dados</small><strong>Parciais da Rodada ${rodadaCartola}</strong></div></div><div class="live-cycle-note">Quando começarem os jogos, esta aba mudará automaticamente para 🔴 AO VIVO.</div></div>`;
+  }
+  const tituloRanking=vivo?`Parciais · Ranking da Rodada ${r}`:`Ranking oficial da Rodada ${r}`;
+  const tituloConfrontos=vivo?`Confrontos ao vivo da rodada ${r}`:`Confrontos oficiais da rodada ${r}`;
+  const cabJogadores=vivo?'<th>Jogadores</th>':'';
+  const celJogadores=vivo?t=>`<td>${jogadoresPontuadosV2(t)}</td>`:()=>'';
+  const notaFinal=vivo?'Classificação e resultados são provisórios durante os jogos.':`Pontuações oficiais da Rodada ${r}. O mercado da Rodada ${rodadaCartola} está aberto.`;
+  box.innerHTML=`${ciclo}<div class="info-block"><h3>${tituloRanking}</h3><div class="live-v2-table-wrap"><table class="live-v2-table"><thead><tr><th>#</th><th>Time</th><th>${vivo?'Parcial':'Resultado'}</th>${cabJogadores}</tr></thead><tbody>${ranking.map((t,i)=>`<tr class="${t.time===meu?'live-v2-row-me':''}"><td>${i+1}</td><td><b>${t.time}</b></td><td><b>${fmtBR(t.pontos)}</b></td>${celJogadores(t)}</tr>`).join('')}</tbody></table></div></div><div class="info-block light"><h3>${tituloConfrontos}</h3>${jogos.length?htmlGrupos:'<div class="muted-card">Confrontos não encontrados para esta rodada.</div>'}</div><div class="stats-note">${notaFinal}</div>`;
 }
 
 const renderTudoV2Base=renderTudo;
