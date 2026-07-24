@@ -1127,6 +1127,7 @@ saida = {
     "status_mercado": mercado_status,
     "mercado_aberto": mercado_aberto,
     "bola_rolando": bola_rolando_api,
+    "fechamento_mercado": status.get("fechamento"),
     "rodada_em_andamento": rodada_em_andamento,
     "rodada_dados": rodada_dados,
     "rodada_pontuados": rodada_pontuados,
