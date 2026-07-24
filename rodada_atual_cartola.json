@@ -4,6 +4,14 @@
   "status_mercado": 1,
   "mercado_aberto": true,
   "bola_rolando": false,
+  "fechamento_mercado": {
+    "dia": 25,
+    "mes": 7,
+    "ano": 2026,
+    "hora": 18,
+    "minuto": 29,
+    "timestamp": 1785014940
+  },
   "rodada_em_andamento": false,
   "rodada_dados": 19,
   "rodada_pontuados": 0,
@@ -444,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "24/07/2026 12:56:10"
+  "ultima_atualizacao": "24/07/2026 13:31:22"
 }
