@@ -144,7 +144,7 @@
       "time": "D1OS",
       "cartoleiro": "10inho",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 118.88,
       "patrimonio": 140.58,
       "pontos_campeonato": 1493.04,
@@ -348,7 +348,7 @@
       "time": "Kayser Football",
       "cartoleiro": "Pedro Kayser",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 94.77,
       "patrimonio": 137.66,
       "pontos_campeonato": 1369.74,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "24/07/2026 13:31:22"
+  "ultima_atualizacao": "24/07/2026 14:41:06"
 }
