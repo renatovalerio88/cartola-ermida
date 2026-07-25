@@ -48,7 +48,7 @@
       "time": "SardoGalo 13",
       "cartoleiro": "Álvaro Firmino",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 121.78,
       "patrimonio": 161.53,
       "pontos_campeonato": 1542.14,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "25/07/2026 11:22:32"
+  "ultima_atualizacao": "25/07/2026 12:34:17"
 }
