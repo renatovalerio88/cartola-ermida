@@ -36,7 +36,7 @@
       "time": "WECAM",
       "cartoleiro": "Renato Valerio",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 118.58,
       "patrimonio": 139.68,
       "pontos_campeonato": 1548.7,
@@ -120,7 +120,7 @@
       "time": "SANTASTICO GLORIOSO I",
       "cartoleiro": "Renato Do SANTOS",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 115.28,
       "patrimonio": 149.38,
       "pontos_campeonato": 1492.11,
@@ -132,7 +132,7 @@
       "time": "JUNA FUTEBOL CLUBE",
       "cartoleiro": "AMARILO JUNIOR",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 130.88,
       "patrimonio": 153.86,
       "pontos_campeonato": 1507.69,
@@ -156,7 +156,7 @@
       "time": "S.C. Finha Paulista",
       "cartoleiro": "Lucas Guedes",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 139.18,
       "patrimonio": 150.45,
       "pontos_campeonato": 1512.21,
@@ -240,7 +240,7 @@
       "time": "Digdigie94",
       "cartoleiro": "DigdigieCabuloso",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 116.78,
       "patrimonio": 157.19,
       "pontos_campeonato": 1463.33,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "25/07/2026 14:34:59"
+  "ultima_atualizacao": "25/07/2026 15:36:53"
 }
