@@ -168,7 +168,7 @@
       "time": "Epidemia Sport Clube",
       "cartoleiro": "Jorge Queiroz",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 128.18,
       "patrimonio": 155.69,
       "pontos_campeonato": 1496.16,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "24/07/2026 20:48:39"
+  "ultima_atualizacao": "24/07/2026 22:15:38"
 }
