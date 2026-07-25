@@ -228,7 +228,7 @@
       "time": "Ardam Cabubu",
       "cartoleiro": "Guizoba",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 122.28,
       "patrimonio": 169.3,
       "pontos_campeonato": 1469.38,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "25/07/2026 06:02:47"
+  "ultima_atualizacao": "25/07/2026 08:48:44"
 }
