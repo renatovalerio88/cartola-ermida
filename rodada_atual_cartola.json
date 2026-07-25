@@ -372,7 +372,7 @@
       "time": "GALOBERA F.C",
       "cartoleiro": "Gabriel Carvalho",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 91.68,
       "patrimonio": 136.24,
       "pontos_campeonato": 1357.79,
@@ -408,7 +408,7 @@
       "time": "Campista F. C",
       "cartoleiro": "Rafael Abrantes",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 82.88,
       "patrimonio": 131.55,
       "pontos_campeonato": 1253.3,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "25/07/2026 13:31:56"
+  "ultima_atualizacao": "25/07/2026 14:34:59"
 }
