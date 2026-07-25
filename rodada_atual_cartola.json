@@ -84,7 +84,7 @@
       "time": "Branes25",
       "cartoleiro": "Roger Nunes",
       "rodada_dados": 19,
-      "rodada_escalacao": 18,
+      "rodada_escalacao": 20,
       "pontos": 43.04,
       "patrimonio": 134.21,
       "pontos_campeonato": 1439.54,
@@ -312,7 +312,7 @@
       "time": "Framos F.C",
       "cartoleiro": "Fernando Ramos",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 117.78,
       "patrimonio": 138.85,
       "pontos_campeonato": 1423.69,
@@ -336,7 +336,7 @@
       "time": "A76 FC",
       "cartoleiro": "Alan Guimarães",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 113.62,
       "patrimonio": 145.49,
       "pontos_campeonato": 1400.56,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "25/07/2026 08:48:44"
+  "ultima_atualizacao": "25/07/2026 09:48:41"
 }
