@@ -108,7 +108,7 @@
       "time": "RJ Clube",
       "cartoleiro": "Ricardo Júdice",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 129.08,
       "patrimonio": 143.62,
       "pontos_campeonato": 1514.91,
@@ -396,7 +396,7 @@
       "time": "SemFreio LEFC1988",
       "cartoleiro": "LEANDRO CAMPOS GIANI",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 111.03,
       "patrimonio": 129.44,
       "pontos_campeonato": 1305.33,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "24/07/2026 22:15:38"
+  "ultima_atualizacao": "25/07/2026 01:33:17"
 }
