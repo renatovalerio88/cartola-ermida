@@ -24,7 +24,7 @@
       "time": "Forward F. Club",
       "cartoleiro": "Valcard",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 112.28,
       "patrimonio": 158.03,
       "pontos_campeonato": 1651.36,
@@ -192,7 +192,7 @@
       "time": "Legione Romanista",
       "cartoleiro": "Arthur Godioso",
       "rodada_dados": 19,
-      "rodada_escalacao": 18,
+      "rodada_escalacao": 20,
       "pontos": 52.34,
       "patrimonio": 150.77,
       "pontos_campeonato": 1416.26,
@@ -288,7 +288,7 @@
       "time": "Galo de Rio Doce FC",
       "cartoleiro": "Pedro Natali",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 102.78,
       "patrimonio": 135.19,
       "pontos_campeonato": 1410.24,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "25/07/2026 15:36:53"
+  "ultima_atualizacao": "25/07/2026 16:53:22"
 }
