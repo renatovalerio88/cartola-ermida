@@ -72,7 +72,7 @@
       "time": "MT10M1T0",
       "cartoleiro": "Marco Tulio",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 125.48,
       "patrimonio": 145.88,
       "pontos_campeonato": 1523.84,
@@ -180,7 +180,7 @@
       "time": "DP-SC",
       "cartoleiro": "D Pedro",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 124.78,
       "patrimonio": 157.6,
       "pontos_campeonato": 1492.06,
@@ -384,7 +384,7 @@
       "time": "PELUDÃO13",
       "cartoleiro": "WAGNER",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 97.4,
       "patrimonio": 130.12,
       "pontos_campeonato": 1306.94,
@@ -420,7 +420,7 @@
       "time": "Sport Club Prexeca Bangers",
       "cartoleiro": "Giovanni Guedes",
       "rodada_dados": 19,
-      "rodada_escalacao": 18,
+      "rodada_escalacao": 20,
       "pontos": 63.18,
       "patrimonio": 131.09,
       "pontos_campeonato": 1229.09,
@@ -444,7 +444,7 @@
       "time": "Galo Doido BH 93",
       "cartoleiro": "Lucas Real",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 78.0,
       "patrimonio": 110.39,
       "pontos_campeonato": 1150.11,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "25/07/2026 12:34:17"
+  "ultima_atualizacao": "25/07/2026 13:31:56"
 }
