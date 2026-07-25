@@ -204,7 +204,7 @@
       "time": "Maria Gol De Costas",
       "cartoleiro": "Rafa Palhares",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 105.48,
       "patrimonio": 136.06,
       "pontos_campeonato": 1461.64,
@@ -300,7 +300,7 @@
       "time": "Seu Cuca Futebol",
       "cartoleiro": "Xande Costa",
       "rodada_dados": 19,
-      "rodada_escalacao": 19,
+      "rodada_escalacao": 20,
       "pontos": 126.44,
       "patrimonio": 152.58,
       "pontos_campeonato": 1433.36,
@@ -452,5 +452,5 @@
       "atletas_pontuando": 0
     }
   ],
-  "ultima_atualizacao": "25/07/2026 09:48:41"
+  "ultima_atualizacao": "25/07/2026 11:22:32"
 }
