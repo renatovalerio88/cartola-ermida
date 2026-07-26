@@ -65,6 +65,11 @@ def agora_texto():
     return datetime.now(FUSO).strftime("%d/%m/%Y %H:%M:%S")
 
 
+def agora_iso():
+    """Data/hora atual em ISO 8601, com o fuso de São Paulo."""
+    return datetime.now(FUSO).isoformat(timespec="seconds")
+
+
 def buscar_json(
     url,
     tentativas=3,
