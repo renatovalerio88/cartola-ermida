@@ -641,6 +641,26 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .v3-round-kicker{font-size:12px;color:#9fc6ff;margin-bottom:8px}.v3-round-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}.v3-round-team{min-width:0}.v3-round-team.right{text-align:right}.v3-round-name{font-weight:800;overflow-wrap:anywhere}.v3-round-score{font-size:25px;font-weight:900;color:#ffe36a}.v3-round-count{font-size:12px;color:#b9c7db;margin-top:3px}.v3-round-vs{font-weight:900;color:#72819a}.v3-round-note{text-align:center;margin-top:10px;font-size:12px;color:#50f18a}.v3-round-note.draw{color:#cbd5e1}
 .v3-compare{margin:14px 0;border:1px solid #30415d;border-radius:14px;background:#03091b;overflow:hidden}.v3-compare-head{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 14px;border-bottom:1px solid #273750}.v3-compare-head b:last-child{text-align:right}.v3-compare-meta{font-size:11px;color:#a9b8ce}.v3-compare-list{padding:8px 12px 12px}.v3-compare-row{display:grid;grid-template-columns:1fr 46px 1fr;gap:8px;align-items:stretch;padding:8px 0;border-bottom:1px solid #1d2a40}.v3-compare-row:last-child{border-bottom:0}.v3-player{padding:9px 10px;border-radius:10px;background:#0a1424;border:1px solid #26364d;min-width:0}.v3-player.right{text-align:right}.v3-player-name{font-weight:750;overflow-wrap:anywhere}.v3-player-line{font-size:11px;margin-top:3px;color:#a9b8ce}.v3-player.played .v3-player-line{color:#43ef82}.v3-player.pending .v3-player-line{color:#f5c451}.v3-player.dnp .v3-player-line{color:#ef6b6b}.v3-pos{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#8dd4ff}.v3-empty{opacity:.55}.v3-sub{display:inline-block;margin-left:4px;font-size:10px;color:#ffcf66}.v3-remove-form{display:none!important}
 @media(max-width:640px){.v3-round-grid{grid-template-columns:1fr 34px 1fr;gap:6px}.v3-round-score{font-size:21px}.v3-round-name{font-size:13px}.v3-compare-head{font-size:12px}.v3-compare-row{grid-template-columns:1fr 30px 1fr;gap:5px}.v3-player{padding:7px 6px}.v3-player-name{font-size:12px}.v3-player-line{font-size:10px}.v3-pos{font-size:9px}.v3-compare-list{padding:6px}.v3-round-card{padding:11px}}
+
+/* V3 FINAL — comparativo simplificado */
+.v3-compare-body{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:10px 12px 14px}
+.v3-team-column{display:flex;flex-direction:column;gap:8px;min-width:0}
+.v3-team-column.right .v3-player{text-align:right}
+.v3-player{min-height:54px;display:flex;flex-direction:column;justify-content:center}
+.v3-player-name{font-size:13px;line-height:1.2}
+.v3-player-position{color:#8dd4ff;font-weight:900;margin-right:5px}
+.v3-player-line{font-size:12px;margin-top:4px;color:#f5c451!important;font-weight:800}
+.v3-player-line.no-score{color:#8d9bb0!important}
+.v3-compare-head{grid-template-columns:1fr 1fr}
+.v3-compare-meta{margin-top:2px}
+@media(max-width:640px){
+  .v3-compare-body{gap:7px;padding:8px 7px 12px}
+  .v3-team-column{gap:7px}
+  .v3-player{padding:8px 7px;min-height:50px}
+  .v3-player-name{font-size:11.5px}
+  .v3-player-line{font-size:11px}
+  .v3-compare-head{padding:10px 9px;gap:7px}
+}
 </style>
 
 </head>
@@ -2663,25 +2683,76 @@ carregar();
   function timeAtual(nome){return parciaisCartola?.times?.find(t=>String(t.time).trim()===String(nome).trim())||null}
   function confirmados(t){return Array.isArray(t?.detalhes_parcial)?t.detalhes_parcial.filter(x=>x.entrou_em_campo===true).length:Number(t?.atletas_pontuando||0)}
   function confrontoDoTime(nome){return confrontosAtuaisV2().find(j=>j.ta===nome||j.tb===nome)||null}
-  function estadoAtleta(x){
-    if(!x)return {cls:'empty',txt:'Sem jogador nesta posição'};
-    if(x.entrou_em_campo)return {cls:'played',txt:x.substituicao_aplicada?(x.tipo_substituicao==='reserva_luxo'?`⭐ Reserva de Luxo · entrou por ${x.entrou_no_lugar_de||'titular'}`:`🔁 Entrou por ${x.entrou_no_lugar_de||'titular'}`):'Entrou em campo'};
-    if(x.nao_jogou||x.jogo_encerrado)return {cls:'dnp',txt:'Não jogou'};
-    if(x.data_jogo){const d=new Date(x.data_jogo);if(!isNaN(d)){const agora=Date.now();if(d.getTime()>agora)return {cls:'pending',txt:`Ainda vai jogar · ${d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})} ${d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`};return {cls:'pending',txt:'Jogo em andamento · atuação não confirmada'};}}
-    return {cls:'pending',txt:'Ainda sem atuação confirmada'};
+  function ordenarAtletas(t){
+    return [...(t?.detalhes_parcial||[])].sort((a,b)=>{
+      const pa=Number(a.posicao_id||99),pb=Number(b.posicao_id||99);
+      if(pa!==pb)return pa-pb;
+      return String(a.apelido||'').localeCompare(String(b.apelido||''),'pt-BR');
+    });
   }
-  function cardAtleta(x,lado){const e=estadoAtleta(x);if(!x)return `<div class="v3-player v3-empty ${lado||''}"><div class="v3-player-name">—</div><div class="v3-player-line">${e.txt}</div></div>`;return `<div class="v3-player ${e.cls} ${lado||''}"><div class="v3-player-name">${x.apelido||x.atleta_id}${x.capitao?' (C)':''}${x.reserva_luxo?' <span class="v3-sub">RL</span>':''}</div><div class="v3-player-line">${fmtBR(x.pontos_computados??x.pontos)} pts · ${e.txt}</div></div>`}
-  function gruposPosicao(t){const out={};(t?.detalhes_parcial||[]).forEach(x=>{const p=Number(x.posicao_id);(out[p]||(out[p]=[])).push(x)});Object.values(out).forEach(a=>a.sort((x,y)=>String(x.apelido).localeCompare(String(y.apelido),'pt-BR')));return out}
-  function comparacao(nome,adv){const a=timeAtual(nome),b=timeAtual(adv);if(!a||!b||!Array.isArray(a.detalhes_parcial)||!Array.isArray(b.detalhes_parcial))return '';
-    const ga=gruposPosicao(a),gb=gruposPosicao(b),rows=[];[1,2,3,4,5,6].forEach(p=>{const n=Math.max(ga[p]?.length||0,gb[p]?.length||0);for(let i=0;i<n;i++)rows.push(`<div class="v3-compare-row">${cardAtleta(ga[p]?.[i],'')}<div class="v3-pos">${POS[p]}</div>${cardAtleta(gb[p]?.[i],'right')}</div>`)});
-    return `<div class="v3-compare"><div class="v3-compare-head"><div><b>${nome}</b><div class="v3-compare-meta">${confirmados(a)}/12 confirmados</div></div><div><b>${adv}</b><div class="v3-compare-meta" style="text-align:right">${confirmados(b)}/12 confirmados</div></div></div><div class="v3-compare-list">${rows.join('')}</div></div>`}
-  function cardConfronto(nome){const j=confrontoDoTime(nome);if(!j)return '';const a=timeAtual(j.ta),b=timeAtual(j.tb),vivo=rodadaEstaAoVivo(j.rodada),tem=temRodada(j.rodada);const pa=Number(j.pa||0),pb=Number(j.pb||0),dif=Math.abs(pa-pb),empate=dif<=LIMITE_EMPATE;let note=tem?(empate?'Empate no momento':`${pa>pb?j.ta:j.tb} ${vivo?'está vencendo':'venceu'} por ${fmtBR(dif)} pts`):'Aguardando início';return `<div class="v3-round-card"><div class="v3-round-kicker">${vivo?'🔴 Rodada atual · Ao vivo':tem?'🏆 Rodada atual · Resultado':'⏳ Rodada atual · Próximo confronto'} · Rodada ${j.rodada}</div><div class="v3-round-grid"><div class="v3-round-team"><div class="v3-round-name">${j.ta}</div><div class="v3-round-score">${tem?fmtBR(pa):'—'}</div><div class="v3-round-count">${confirmados(a)}/12 jogadores</div></div><div class="v3-round-vs">x</div><div class="v3-round-team right"><div class="v3-round-name">${j.tb}</div><div class="v3-round-score">${tem?fmtBR(pb):'—'}</div><div class="v3-round-count">${confirmados(b)}/12 jogadores</div></div></div><div class="v3-round-note ${empate?'draw':''}">${note}</div></div>`}
-  const old=renderMeuTime;
-  renderMeuTime=function(){old();const nome=document.getElementById('selMeuTime')?.value,box=document.getElementById('boxMeuTime');if(!nome||!box)return;
+  function marcadores(x){
+    const itens=[];
+    if(x?.substituicao_aplicada)itens.push(x.tipo_substituicao==='reserva_luxo'?'⭐':'🔁');
+    else if(x?.reserva_luxo)itens.push('<span class="v3-sub">RL</span>');
+    if(x?.capitao)itens.push('©');
+    return itens.length?` ${itens.join(' ')}`:'';
+  }
+  function cardAtleta(x,lado){
+    if(!x)return '';
+    const pos=POS[Number(x.posicao_id)]||'—';
+    const jogou=x.entrou_em_campo===true;
+    const pontos=jogou?`${fmtBR(x.pontos_computados??x.pontos??0)} pts`:'-';
+    return `<div class="v3-player ${jogou?'played':'pending'} ${lado||''}"><div class="v3-player-name"><span class="v3-player-position">${pos} ·</span>${x.apelido||x.atleta_id}${marcadores(x)}</div><div class="v3-player-line ${jogou?'':'no-score'}">${pontos}</div></div>`;
+  }
+  function colunaTime(t,lado){return `<div class="v3-team-column ${lado||''}">${ordenarAtletas(t).map(x=>cardAtleta(x,lado)).join('')}</div>`}
+  function comparacao(nome,adv){
+    const a=timeAtual(nome),b=timeAtual(adv);
+    if(!a||!b||!Array.isArray(a.detalhes_parcial)||!Array.isArray(b.detalhes_parcial))return '';
+    return `<div class="v3-compare"><div class="v3-compare-head"><div><b>${nome}</b><div class="v3-compare-meta">${confirmados(a)}/12</div></div><div style="text-align:right"><b>${adv}</b><div class="v3-compare-meta">${confirmados(b)}/12</div></div></div><div class="v3-compare-body">${colunaTime(a,'')}${colunaTime(b,'right')}</div></div>`;
+  }
+  function cardConfronto(nome){
+    const j=confrontoDoTime(nome);if(!j)return '';
+    const a=timeAtual(j.ta),b=timeAtual(j.tb),vivo=rodadaEstaAoVivo(j.rodada),tem=temRodada(j.rodada);
+    const pa=Number(j.pa||0),pb=Number(j.pb||0),dif=Math.abs(pa-pb),empate=dif<=LIMITE_EMPATE;
+    const note=tem?(empate?(vivo?'Empate no momento':'Empate'):`${pa>pb?j.ta:j.tb} ${vivo?'está vencendo':'venceu'} por ${fmtBR(dif)} pts`):'Aguardando início';
+    return `<div class="v3-round-card"><div class="v3-round-kicker">${vivo?'🔴 Rodada atual · Ao vivo':tem?'🏆 Rodada atual · Resultado':'⏳ Rodada atual · Próximo confronto'} · Rodada ${j.rodada}</div><div class="v3-round-grid"><div class="v3-round-team"><div class="v3-round-name">${j.ta}</div><div class="v3-round-score">${tem?fmtBR(pa):'—'}</div><div class="v3-round-count">${confirmados(a)}/12 jogadores</div></div><div class="v3-round-vs">x</div><div class="v3-round-team right"><div class="v3-round-name">${j.tb}</div><div class="v3-round-score">${tem?fmtBR(pb):'—'}</div><div class="v3-round-count">${confirmados(b)}/12 jogadores</div></div></div><div class="v3-round-note ${empate?'draw':''}">${note}</div></div>`;
+  }
+  function ajustarTextoFasesAoVivo(){
+    const rodada=Number(parciaisCartola?.rodada_dados||0);
+    if(!rodadaEstaAoVivo(rodada))return;
+    const selecionada=Number(document.getElementById('selFaseRodada')?.value||document.getElementById('selFase2Rodada')?.value||0);
+    if(selecionada&&selecionada!==rodada)return;
+    const raiz=document.getElementById('aba-fases');if(!raiz)return;
+    const walker=document.createTreeWalker(raiz,NodeFilter.SHOW_TEXT);
+    const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(n=>{
+      n.nodeValue=n.nodeValue
+        .replace(/venceu/g,'está vencendo')
+        .replace(/Empate ·/g,'Empate no momento ·')
+        .replace(/\(Empate por diferença/g,'(Empate no momento por diferença');
+    });
+  }
+  const oldMeuTime=renderMeuTime;
+  renderMeuTime=function(){
+    oldMeuTime();
+    const nome=document.getElementById('selMeuTime')?.value,box=document.getElementById('boxMeuTime');if(!nome||!box)return;
     box.querySelectorAll('.form-card').forEach(el=>{if(el.textContent.includes('Últimas 5 rodadas'))el.remove()});
-    const j=confrontoDoTime(nome);const next=box.querySelector('.next-match');if(j&&next)next.outerHTML=cardConfronto(nome);else if(j){const hero=box.querySelector('.meu-hero')||box;hero.insertAdjacentHTML('beforeend',cardConfronto(nome));}
-    if(j&&(rodadaEstaAoVivo(j.rodada)||temRodada(j.rodada))){const html=comparacao(nome,j.ta===nome?j.tb:j.ta);if(html){const hero=box.querySelector('.meu-hero')||box;const painel=hero.querySelector('.player-live-panel');if(painel)painel.insertAdjacentHTML('beforebegin',html);else hero.insertAdjacentHTML('beforeend',html);}}
+    box.querySelectorAll('.player-live-panel').forEach(el=>el.remove());
+    const j=confrontoDoTime(nome);
+    const next=box.querySelector('.next-match');
+    if(j&&next)next.outerHTML=cardConfronto(nome);else if(j){const hero=box.querySelector('.meu-hero')||box;hero.insertAdjacentHTML('beforeend',cardConfronto(nome));}
+    if(j&&(rodadaEstaAoVivo(j.rodada)||temRodada(j.rodada))){
+      const html=comparacao(nome,j.ta===nome?j.tb:j.ta);
+      if(html){const hero=box.querySelector('.meu-hero')||box;hero.insertAdjacentHTML('beforeend',html);}
+    }
   };
+  const oldFases=renderFases;
+  renderFases=function(){oldFases();ajustarTextoFasesAoVivo();};
+  if(typeof renderFase2==='function'){
+    const oldFase2=renderFase2;
+    renderFase2=function(){oldFase2();ajustarTextoFasesAoVivo();};
+  }
+  setTimeout(ajustarTextoFasesAoVivo,700);
 })();
 </script>
 
