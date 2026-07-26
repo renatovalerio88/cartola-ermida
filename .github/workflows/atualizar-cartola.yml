@@ -79,6 +79,13 @@ jobs:
                   f"o status: {ultimo_erro}"
               )
 
+          def carregar_json_local(caminho):
+              try:
+                  with open(caminho, "r", encoding="utf-8") as arquivo:
+                      return json.load(arquivo)
+              except (FileNotFoundError, json.JSONDecodeError):
+                  return {}
+
           def carregar_historico():
               try:
                   with open(
@@ -124,6 +131,7 @@ jobs:
           )
 
           historico = carregar_historico()
+          rodada_atual_local = carregar_json_local("rodada_atual_cartola.json")
 
           ultima_fechada = int(
               historico.get(
@@ -155,6 +163,19 @@ jobs:
               )
           )
 
+          # Fora dos jogos, evita consultar os 36 times a cada 10 minutos.
+          # Faz uma atualização completa apenas quando o estado mudou ou
+          # quando a rodada anterior ainda não foi registrada no JSON atual.
+          rodada_local = int(rodada_atual_local.get("rodada_cartola", 0) or 0)
+          dados_local = int(rodada_atual_local.get("rodada_dados", 0) or 0)
+          mercado_local = bool(rodada_atual_local.get("mercado_aberto", False))
+          precisa_atualizar_atual = (
+              not mercado_aberto
+              or rodada_local != rodada
+              or dados_local != rodada_fechada
+              or mercado_local is not True
+          )
+
           print(
               f"Rodada Cartola: {rodada}"
           )
@@ -183,6 +204,10 @@ jobs:
               "Precisa atualizar histórico: "
               f"{precisa_historico}"
           )
+          print(
+              "Precisa atualizar dados atuais: "
+              f"{precisa_atualizar_atual}"
+          )
 
           with open(
               os.environ["GITHUB_OUTPUT"],
@@ -210,11 +235,23 @@ jobs:
                   f"{'true' if precisa_historico else 'false'}"
                   "\n"
               )
+              out.write(
+                  "precisa_atualizar_atual="
+                  f"{'true' if precisa_atualizar_atual else 'false'}"
+                  "\n"
+              )
           PY
 
       - name: Atualizar status e dados da rodada atual
+        if: steps.mercado.outputs.precisa_atualizar_atual == 'true'
         run: |
           python scripts/atualizar_rodada_atual.py
+
+      - name: Execução leve sem alterações
+        if: steps.mercado.outputs.precisa_atualizar_atual != 'true' && steps.mercado.outputs.precisa_historico != 'true'
+        run: |
+          echo "Mercado aberto e dados oficiais já consolidados."
+          echo "Nenhuma consulta aos 36 times foi necessária nesta execução."
 
       - name: Consolidar rodada fechada no histórico
         if: steps.mercado.outputs.precisa_historico == 'true'
