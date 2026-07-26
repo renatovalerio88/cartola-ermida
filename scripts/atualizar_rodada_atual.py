@@ -1140,6 +1140,27 @@ saida = {
         if rodada_em_andamento
         else "rodada_atual_cartola.json"
     ),
+    "monitoramento": {
+        "modo": (
+            "ao_vivo" if rodada_em_andamento
+            else "mercado_aberto" if mercado_aberto
+            else "aguardando_parciais"
+        ),
+        "consulta_programada_minutos": 10,
+        "ultima_consulta_api": agora_iso(),
+        "houve_parciais_validas": bool(parciais_disponiveis),
+        "times_processados": len(novos_times),
+        "substituicoes_banco": sum(
+            1 for time in novos_times
+            for item in time.get("substituicoes_aplicadas", [])
+            if item.get("tipo") == "banco_normal"
+        ),
+        "reservas_luxo_acionados": sum(
+            1 for time in novos_times
+            for item in time.get("substituicoes_aplicadas", [])
+            if item.get("tipo") == "reserva_luxo"
+        ),
+    },
     "times": novos_times,
 }
 
