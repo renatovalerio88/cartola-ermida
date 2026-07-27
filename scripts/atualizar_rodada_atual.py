@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 import time
 import urllib.request
 from datetime import datetime, timedelta
@@ -163,6 +164,114 @@ def carregar_json(caminho):
     ):
         return None
 
+
+
+def carregar_ultima_parcial_com_escalacoes(rodada_dados):
+    """
+    Recupera a última parcial válida da rodada para manter titulares,
+    reservas e marcadores no resultado oficial.
+
+    Primeiro tenta o arquivo atual. Se ele já tiver sido removido na
+    abertura do mercado, procura a versão mais recente no histórico Git.
+    O checkout do workflow usa fetch-depth: 0, portanto os commits
+    anteriores estão disponíveis no runner.
+    """
+    candidatos = []
+
+    atual = carregar_json(ARQUIVO_PARCIAIS)
+    if isinstance(atual, dict):
+        candidatos.append(atual)
+
+    try:
+        processo = subprocess.run(
+            [
+                "git",
+                "log",
+                "--all",
+                "--format=%H",
+                "--",
+                str(ARQUIVO_PARCIAIS),
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=20,
+        )
+
+        for commit in processo.stdout.splitlines()[:30]:
+            commit = commit.strip()
+            if not commit:
+                continue
+
+            exibicao = subprocess.run(
+                [
+                    "git",
+                    "show",
+                    f"{commit}:{ARQUIVO_PARCIAIS}",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+                timeout=20,
+            )
+
+            if exibicao.returncode != 0 or not exibicao.stdout.strip():
+                continue
+
+            try:
+                dados = json.loads(exibicao.stdout)
+            except json.JSONDecodeError:
+                continue
+
+            if isinstance(dados, dict):
+                candidatos.append(dados)
+    except (OSError, subprocess.SubprocessError):
+        pass
+
+    for dados in candidatos:
+        rodada = inteiro(
+            dados.get("rodada_dados", dados.get("rodada", 0))
+        )
+        times = dados.get("times", [])
+        if rodada != rodada_dados or not isinstance(times, list):
+            continue
+
+        com_escalacao = [
+            time for time in times
+            if isinstance(time, dict)
+            and isinstance(time.get("detalhes_parcial"), list)
+            and len(time.get("detalhes_parcial", [])) > 0
+        ]
+
+        if com_escalacao:
+            print(
+                "Escalações recuperadas da última parcial válida "
+                f"da rodada {rodada_dados}: {len(com_escalacao)} times."
+            )
+            return dados
+
+    print(
+        "Nenhuma parcial anterior com escalações completas foi encontrada "
+        f"para a rodada {rodada_dados}."
+    )
+    return None
+
+
+def mapa_times_por_id_ou_nome(dados):
+    mapa = {}
+    if not isinstance(dados, dict):
+        return mapa
+
+    for time in dados.get("times", []):
+        if not isinstance(time, dict):
+            continue
+        time_id = inteiro(time.get("time_id", 0))
+        nome = str(time.get("time", "")).strip()
+        if time_id > 0:
+            mapa[("id", time_id)] = time
+        if nome:
+            mapa[("nome", nome)] = time
+    return mapa
 
 def salvar_atomico(caminho, dados):
     caminho.parent.mkdir(
@@ -950,6 +1059,13 @@ if rodada_dados <= 0:
     )
 
 
+parcial_anterior = None
+mapa_parcial_anterior = {}
+if not rodada_em_andamento:
+    parcial_anterior = carregar_ultima_parcial_com_escalacoes(rodada_dados)
+    mapa_parcial_anterior = mapa_times_por_id_ou_nome(parcial_anterior)
+
+
 novos_times = []
 erros = []
 
@@ -1084,6 +1200,34 @@ for indice, (
                 detalhes = []
                 reservas_detalhes = []
                 substituicoes_aplicadas = []
+
+            # O endpoint oficial do time nem sempre devolve a pontuação
+            # individual após a abertura do mercado. Quando isso acontece,
+            # recuperamos a última escalação completa salva durante as
+            # parciais. O total oficial do time permanece vindo da API.
+            anterior = (
+                mapa_parcial_anterior.get(("id", time_id))
+                or mapa_parcial_anterior.get(("nome", nome_time))
+            )
+            if (
+                isinstance(anterior, dict)
+                and isinstance(anterior.get("detalhes_parcial"), list)
+                and anterior.get("detalhes_parcial")
+            ):
+                detalhes = anterior.get("detalhes_parcial", [])
+                reservas_detalhes = anterior.get("reservas_parcial", [])
+                substituicoes_aplicadas = anterior.get(
+                    "substituicoes_aplicadas", []
+                )
+                atletas_pontuando = inteiro(
+                    anterior.get("atletas_pontuando", 0)
+                )
+                if atletas_pontuando <= 0:
+                    atletas_pontuando = sum(
+                        1 for atleta in detalhes
+                        if isinstance(atleta, dict)
+                        and atleta.get("entrou_em_campo") is True
+                    )
 
             fonte_pontos = "api_time_id"
 
