@@ -691,7 +691,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 <div class="container">
   <div class="nav">
     <button class="active" onclick="abrirAba('meutime',this)">Meu Time</button>
-    <button onclick="abrirAba('aovivo',this)"><span class="live-v2-dot"></span>Ao Vivo</button>
+    <button id="navAoVivo" onclick="abrirAba('aovivo',this)"><span id="navAoVivoDot" class="live-v2-dot"></span><span id="navAoVivoLabel">Ao Vivo</span></button>
     <button data-nav-fases="1" onclick="abrirAba('fase2',this)">Fases</button>
     <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
     <button onclick="abrirAba('ligareal',this)">Liga Real</button>
@@ -2533,8 +2533,12 @@ function renderAoVivo(){
   const meu=document.getElementById('selMeuTime')?.value||localStorage.getItem('meuTimeCartola')||'';
   const titulo=document.getElementById('liveV2Title');
   const status=document.getElementById('liveV2Status');
+  const navLabel=document.getElementById('navAoVivoLabel');
+  const navDot=document.getElementById('navAoVivoDot');
   if(titulo)titulo.textContent=vivo?'Ao Vivo':entreRodadas?'Resultado Oficial':'Próxima rodada';
   if(status)status.textContent=vivo?'Classificação provisória · AO VIVO':entreRodadas?`Rodada ${r} encerrada`:'Aguardando jogos';
+  if(navLabel)navLabel.textContent=vivo?'Ao Vivo':entreRodadas?'Rodada fechada':'Próxima rodada';
+  if(navDot)navDot.style.display=vivo?'inline-block':'none';
   const grupos={};
   jogos.forEach(j=>{const chave=nomeGrupoV2(j.grupo);(grupos[chave]||(grupos[chave]=[])).push(j);});
   const htmlGrupos=Object.entries(grupos).map(([grupo,lista])=>{const rep=/repescagem|^RP\d+$/i.test(grupo);return `<div class="live-v2-group ${rep?'live-v2-group-rep':''}"><div class="live-v2-group-title">${grupo}</div>${lista.map(j=>{const dif=Math.abs(Number(j.pa)-Number(j.pb));const empate=dif<=LIMITE_EMPATE;const aVence=!empate&&Number(j.pa)>Number(j.pb);const bVence=!empate&&Number(j.pb)>Number(j.pa);const nota=empate?(vivo?'Empate no momento':'Empate'):`${aVence?j.ta:j.tb} ${vivo?'está vencendo':'venceu'} · saldo ${fmtBR(dif)}`;return `<div class="live-v2-match"><span class="live-v2-team ${empate?'is-draw':aVence?'is-winning':'is-losing'}"><span class="live-result-dot ${empate?'draw':aVence?'win':'loss'}"></span>${j.ta}</span><span class="live-v2-score">${fmtBR(j.pa)} x ${fmtBR(j.pb)}</span><span class="live-v2-team right ${empate?'is-draw':bVence?'is-winning':'is-losing'}">${j.tb}<span class="live-result-dot ${empate?'draw':bVence?'win':'loss'}" style="margin-left:6px;margin-right:0"></span></span><div class="live-v2-note"><strong>${nota}</strong></div></div>`}).join('')}</div>`}).join('');
