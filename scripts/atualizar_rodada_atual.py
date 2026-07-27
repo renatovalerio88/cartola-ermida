@@ -11,6 +11,7 @@ from zoneinfo import ZoneInfo
 
 ARQUIVO_RODADA_ATUAL = Path("rodada_atual_cartola.json")
 ARQUIVO_PARCIAIS = Path("parciais_cartola.json")
+ARQUIVO_ULTIMA_PARCIAL = Path("ultima_parcial_cartola.json")
 
 URL_STATUS = "https://api.cartola.globo.com/mercado/status"
 URL_PONTUADOS = "https://api.cartola.globo.com/atletas/pontuados"
@@ -178,10 +179,21 @@ def carregar_ultima_parcial_com_escalacoes(rodada_dados):
     """
     candidatos = []
 
+    # 1) Snapshot permanente da última rodada com escalações.
+    # Esse arquivo não é lido pelo site e permanece no repositório mesmo
+    # depois que parciais_cartola.json é removido ao abrir o mercado.
+    snapshot = carregar_json(ARQUIVO_ULTIMA_PARCIAL)
+    if isinstance(snapshot, dict):
+        candidatos.append(snapshot)
+
+    # 2) Arquivo ao vivo atual, quando ainda existir.
     atual = carregar_json(ARQUIVO_PARCIAIS)
     if isinstance(atual, dict):
         candidatos.append(atual)
 
+    # 3) Recuperação de segurança pelo histórico Git. Não limitamos aos
+    # 30 commits mais recentes, porque um fim de semana com muitas
+    # atualizações pode empurrar a última parcial válida para bem atrás.
     try:
         processo = subprocess.run(
             [
@@ -198,7 +210,7 @@ def carregar_ultima_parcial_com_escalacoes(rodada_dados):
             timeout=20,
         )
 
-        for commit in processo.stdout.splitlines()[:30]:
+        for commit in processo.stdout.splitlines():
             commit = commit.strip()
             if not commit:
                 continue
@@ -247,6 +259,15 @@ def carregar_ultima_parcial_com_escalacoes(rodada_dados):
             print(
                 "Escalações recuperadas da última parcial válida "
                 f"da rodada {rodada_dados}: {len(com_escalacao)} times."
+            )
+
+            # Cria/atualiza o snapshot permanente. Assim, nas próximas
+            # execuções não será necessário percorrer novamente o Git.
+            snapshot_dados = dict(dados)
+            snapshot_dados["fonte"] = "ultima_parcial_cartola.json"
+            salvar_somente_se_mudou(
+                ARQUIVO_ULTIMA_PARCIAL,
+                snapshot_dados,
             )
             return dados
 
@@ -1396,6 +1417,16 @@ if rodada_em_andamento:
     salvar_somente_se_mudou(
         ARQUIVO_PARCIAIS,
         parciais,
+    )
+
+    # Mantém uma cópia permanente com as escalações e pontuações
+    # individuais. Ela será usada no Resultado Oficial após a abertura
+    # do mercado da rodada seguinte.
+    snapshot_parciais = dict(parciais)
+    snapshot_parciais["fonte"] = "ultima_parcial_cartola.json"
+    salvar_somente_se_mudou(
+        ARQUIVO_ULTIMA_PARCIAL,
+        snapshot_parciais,
     )
 
 elif mercado_aberto and ARQUIVO_PARCIAIS.exists():
