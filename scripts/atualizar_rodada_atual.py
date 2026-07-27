@@ -270,6 +270,52 @@ def clube_atual_atleta(atleta, mapa_atletas_mercado):
     return inteiro(atleta.get("clube_id", 0))
 
 
+
+def montar_mapa_pontuados_do_time(dados_time):
+    """
+    Reconstrói um mapa compatível com /atletas/pontuados usando os dados
+    oficiais devolvidos por /time/id/{id}/{rodada}.
+
+    Isso mantém titulares, reservas, capitão e Reserva de Luxo disponíveis
+    na comparação mesmo depois que a rodada deixa o modo de parciais.
+    """
+    mapa = {}
+    listas = [dados_time.get("atletas", []), dados_time.get("reservas", [])]
+
+    for lista in listas:
+        if not isinstance(lista, list):
+            continue
+        for atleta in lista:
+            if not isinstance(atleta, dict):
+                continue
+            atleta_id = inteiro(atleta.get("atleta_id", 0))
+            if atleta_id <= 0:
+                continue
+
+            chaves_pontos = ("pontuacao", "pontos", "pontos_num")
+            tem_pontuacao = any(chave in atleta for chave in chaves_pontos)
+            pontos = numero(
+                atleta.get(
+                    "pontuacao",
+                    atleta.get("pontos", atleta.get("pontos_num", 0)),
+                )
+            )
+
+            entrou_explicito = atleta.get("entrou_em_campo")
+            if entrou_explicito is None:
+                # Na resposta oficial do time, a presença do campo de pontos
+                # identifica que o atleta recebeu uma nota, inclusive 0,00.
+                entrou = bool(tem_pontuacao)
+            else:
+                entrou = bool(entrou_explicito)
+
+            mapa[str(atleta_id)] = {
+                "pontuacao": pontos,
+                "entrou_em_campo": entrou,
+            }
+
+    return mapa
+
 def obter_mapa_pontuados(dados):
     atletas = dados.get("atletas", {})
 
@@ -1016,8 +1062,29 @@ for indice, (
                 2,
             )
 
-            atletas_pontuando = 0
-            detalhes = []
+            # Mesmo com o resultado oficial, preservamos a escalação
+            # efetiva completa para o comparativo Meu Time x adversário.
+            # A pontuação total continua vindo da API oficial do time.
+            mapa_oficial_time = montar_mapa_pontuados_do_time(dados_time)
+            if len(atletas_escalados) >= 11 and mapa_oficial_time:
+                (
+                    _pontos_calculados,
+                    atletas_pontuando,
+                    detalhes,
+                    reservas_detalhes,
+                    substituicoes_aplicadas,
+                ) = calcular_parcial(
+                    dados_time,
+                    mapa_oficial_time,
+                    mapa_partidas,
+                    mapa_atletas_mercado,
+                )
+            else:
+                atletas_pontuando = 0
+                detalhes = []
+                reservas_detalhes = []
+                substituicoes_aplicadas = []
+
             fonte_pontos = "api_time_id"
 
         registro = {
@@ -1041,7 +1108,7 @@ for indice, (
             "atletas_pontuando": atletas_pontuando,
         }
 
-        if rodada_em_andamento:
+        if detalhes:
             registro["capitao_id"] = inteiro(
                 dados_time.get(
                     "capitao_id",
