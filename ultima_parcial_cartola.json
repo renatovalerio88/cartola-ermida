@@ -17,7 +17,7 @@
   "rodada_pontuados": 21,
   "total_atletas_pontuados": 42,
   "observacao": "Parciais calculadas pelas escalações dos times e pela API oficial de atletas pontuados.",
-  "fonte": "parciais_cartola.json",
+  "fonte": "ultima_parcial_cartola.json",
   "monitoramento": {
     "modo": "ao_vivo",
     "consulta_programada_minutos": 10,
