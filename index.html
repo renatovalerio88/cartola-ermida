@@ -655,6 +655,8 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .v3-compare-meta{margin-top:2px}
 .v3-reserve-title{margin:10px 0 2px;padding-top:9px;border-top:1px solid #26364d;color:#f5c451;font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
 .v3-player-badge{display:inline-block;margin-right:4px;padding:1px 5px;border-radius:999px;background:#4a2308;border:1px solid #9a4d12;color:#ffd28a;font-size:9px;font-weight:900;vertical-align:1px}
+.v3-club-badge{display:inline-block;margin-left:5px;padding:1px 4px;border-radius:5px;background:#18263a;border:1px solid #344761;color:#9eb0c8;font-size:8px;font-weight:800;letter-spacing:.35px;vertical-align:1px}
+.top-data-status{margin-top:3px;font-size:11px;font-weight:700}.top-data-status.updated{color:#70e39a}.top-data-status.unchanged{color:#a9b8ce}.top-data-status.error{color:#ffd166}
 .v3-compare-legend{display:flex;flex-wrap:wrap;gap:8px 14px;padding:9px 12px 11px;border-top:1px solid #273750;color:#a9b8ce;font-size:10px}
 .v3-compare-legend span{white-space:nowrap}
 @media(max-width:640px){
@@ -686,6 +688,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
     <div id="topLinha4">API Cartola: carregando...</div>
     <div id="topLinha5">Site: carregando...</div>
     <div id="topLinha6">Próxima execução prevista: calculando...</div>
+    <div id="topLinha7" class="top-data-status">Status dos dados: carregando...</div>
   </div>
 </header>
 <div class="container">
@@ -948,26 +951,48 @@ function marcarAtualizacao(txt){
     }
   }
 
-  const dataCartola = parciaisCartola?.ultima_atualizacao || historicoMeta.ultimaAtualizacao || "-";
+  const monitor = parciaisCartola?.monitoramento || {};
+  const ultimaConsulta = monitor.ultima_consulta_api || parciaisCartola?.ultima_atualizacao || historicoMeta.ultimaAtualizacao || "-";
+  const ultimosDadosNovos = monitor.ultima_mudanca_dados || parciaisCartola?.ultima_atualizacao || historicoMeta.ultimaAtualizacao || "-";
   const siteHora = busca.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+  const resultadoConsulta = monitor.resultado_ultima_consulta || "indisponivel";
 
   if(document.getElementById("topLinha1")){
     const aoVivo = !!parciaisCartola?.rodada_em_andamento;
     topLinha1.innerHTML = `${aoVivo?'<span class="live-pill"><span class="live-dot"></span>AO VIVO</span>':''}Cartola: Rodada ${rodadaCartola} · Dados usados: Rodada ${rodadaDados}`;
     topLinha2.textContent = statusTxt;
     atualizarLinhaMeuTimeTopo();
-    topLinha4.textContent = `Última atualização API Cartola: ${formatarDataArquivo(dataCartola)}`;
-    if(document.getElementById("topLinha5"))topLinha5.textContent = `Última atualização do site: ${siteHora}`;
-    if(document.getElementById("topLinha6"))topLinha6.textContent = `Próxima execução prevista: ${proximaExecucaoPrevista()}`;
+    topLinha4.textContent = `Última consulta à API: ${formatarDataArquivo(ultimaConsulta)}`;
+    if(document.getElementById("topLinha5"))topLinha5.textContent = `Últimos dados novos: ${formatarDataArquivo(ultimosDadosNovos)}`;
+    if(document.getElementById("topLinha6"))topLinha6.textContent = `Próxima consulta prevista: ${proximaExecucaoPrevista()}`;
+    const linha7=document.getElementById("topLinha7");
+    if(linha7){
+      linha7.className='top-data-status';
+      if(resultadoConsulta==='dados_novos'){linha7.textContent='● Novos dados recebidos · informações atualizadas';linha7.classList.add('updated')}
+      else if(resultadoConsulta==='sem_alteracao'){linha7.textContent='✓ Consulta concluída · nenhum dado novo';linha7.classList.add('unchanged')}
+      else if(resultadoConsulta==='erro'){linha7.textContent='⚠ Falha na consulta · últimos dados válidos mantidos';linha7.classList.add('error')}
+      else {linha7.textContent='Status da última consulta indisponível';linha7.classList.add('unchanged')}
+    }
   }
 
   if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent=txt;
   if(document.getElementById("ultimaAtualizacao")){
-    ultimaAtualizacao.innerHTML=`Dados Cartola: ${formatarDataArquivo(dataCartola)}<br>Site: ${siteHora}`;
+    ultimaAtualizacao.innerHTML=`Última consulta: ${formatarDataArquivo(ultimaConsulta)}<br>Últimos dados novos: ${formatarDataArquivo(ultimosDadosNovos)}`;
   }
 }
 async function atualizarDados(){try{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.add("loading");btnAtualizar.textContent="Atualizando..."}historico=await buscarHistorico();parciaisCartola=await buscarParciais();renderTudo();marcarAtualizacao("Dados atualizados")}catch(e){if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent="Não foi possível atualizar"}finally{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.remove("loading");btnAtualizar.textContent="🔄 Atualizar"}}}
-function montarControles(){["tabsGruposRodadas"].forEach(id=>{const box=document.getElementById(id);Object.keys(grupos).forEach(g=>{const b=document.createElement("button");b.textContent="Grupo "+g;b.onclick=()=>{grupoAtual=g;atualizarTabs();renderTudo()};box.appendChild(b)})});for(let r=1;r<=FASE1_FINAL;r++){selRodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`}selRodada.value=FASE1_FINAL;montarTabsFase2();montarPaginasFases();preencherSelectMeuTime();atualizarTabs()}
+
+function rodadaCompeticaoAtual(){
+  const dados=Number(parciaisCartola?.rodada_dados||0);
+  if(!dados)return 0;
+  // O campeonato começou uma rodada depois do Cartola: Cartola 20 = competição 19.
+  return Math.max(1,dados-1);
+}
+function rotuloRodadaOpcao(r){
+  const atual=rodadaCompeticaoAtual();
+  return `Rodada ${r}${r===atual?' (atual)':''}`;
+}
+function montarControles(){["tabsGruposRodadas"].forEach(id=>{const box=document.getElementById(id);Object.keys(grupos).forEach(g=>{const b=document.createElement("button");b.textContent="Grupo "+g;b.onclick=()=>{grupoAtual=g;atualizarTabs();renderTudo()};box.appendChild(b)})});for(let r=1;r<=FASE1_FINAL;r++){selRodada.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`}const atualF1=rodadaCompeticaoAtual();selRodada.value=(atualF1>=1&&atualF1<=FASE1_FINAL)?atualF1:FASE1_FINAL;montarTabsFase2();montarPaginasFases();preencherSelectMeuTime();atualizarTabs()}
 function atualizarTabs(){document.querySelectorAll("#tabsGrupos button,#tabsGruposRodadas button").forEach(b=>b.classList.toggle("active",b.textContent.endsWith(grupoAtual)))}
 function pontosTime(nome,rodada){
   if(
@@ -1031,7 +1056,7 @@ function renderMiniClassificacao(lista,titulo,statusFn){return `<h3>${titulo}</h
 function statusFase2(nome,pos){if(nome.startsWith("GP"))return pos<=2?["dot-ok","Avança"]:["dot-rep","Vai para repescagem"];return pos===1?["dot-ok","Avança"]:["dot-bad","Eliminado"]}
 function statusPadrao(pos){return pos<=2?["dot-ok","Avança"]:["dot-bad","Eliminado"]}
 function renderConfrontosRodada(times,inicio,agenda,rodadaEscolhida,titulo){const idx=rodadaEscolhida-inicio;const rodada=agenda[idx]||[];let html=`<div class="section-gap"></div><h3>${titulo}</h3><div class="scoreboard"><div class="scoreboard-title">⚽ Rodada ${rodadaEscolhida}</div>`;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time||"A definir",tb=times[b-1]?.time||"A definir",tem=temRodada(rodadaEscolhida);const pa=tem?pontosTime(ta,rodadaEscolhida):0,pb=tem?pontosTime(tb,rodadaEscolhida):0;let st=tem?simbolosJogo(pa,pb):{a:"draw",b:"draw",res:"A jogar"};const centro=tem?`${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}`:'<span class="score-x">x</span>';html+=`<div class="score-game-wrap"><div class="score-game" title="${st.res}">${tem?dotStatus(st.a):'<span></span>'}<span class="score-team ${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${centro}</span><span class="score-team right ${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${tem?dotStatus(st.b):'<span></span>'}</div>${tem?`<div class="score-note">${notaJogo(ta,tb,pa,pb)}</div>`:`<div class="score-note">(jogo ainda não disputado)</div>`}</div>`});html+=`<div class="legend"><span><span class="status-dot status-win">✓</span> Vitória</span><span><span class="status-dot status-draw">=</span> Empate</span><span><span class="status-dot status-loss">×</span> Derrota</span></div></div>`;return html}
-function renderFase2(){const f=fase2Times(),times=f[grupoFaseAtual]||Object.values(f)[0],nome=grupoFaseAtual||Object.keys(f)[0];document.querySelectorAll("#tabsFase2 button").forEach(b=>b.classList.toggle("active",b.textContent===nomeFase2(nome)));if(!selFase2Rodada.options.length){for(let r=19;r<=24;r++)selFase2Rodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`;selFase2Rodada.value=19}const ate=Number(selFase2Rodada.value||19);const lista=calcGrupoTimesAte(times,19,jogos4,ate);const subt=nome.startsWith("GP")?"2 verdes avançam; 2 amarelos seguem para a repescagem.":"1 verde avança; vermelhos são eliminados.";const nomeVisivel=nomeFase2(nome);boxFase2Detalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${nomeVisivel}</h3><p class="small">${subt}</p></div><span class="badge future">R19-R24</span></div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>statusFase2(nome,pos))}<div class="legend"><span><i class="pos-dot dot-ok"></i>Classificado</span>${nome.startsWith("GP")?`<span><i class="pos-dot dot-rep"></i>Repescagem</span>`:`<span><i class="pos-dot dot-bad"></i>Eliminado</span>`}</div>${!temRodada(19)?'<div class="muted-card">Ainda sem resultados da Fase 2. Quando o JSON tiver as rodadas 19 a 24, a classificação será atualizada pela rodada escolhida.</div>':''}${renderConfrontosRodada(times,19,jogos4,ate,"Jogos da rodada")}<div class="box origin-final-box"><h3>Origem dos participantes</h3><p class="small">Veja a colocação de onde cada time veio na fase anterior.</p>${listaOrigem(times,nome)}</div>`}
+function renderFase2(){const f=fase2Times(),times=f[grupoFaseAtual]||Object.values(f)[0],nome=grupoFaseAtual||Object.keys(f)[0];document.querySelectorAll("#tabsFase2 button").forEach(b=>b.classList.toggle("active",b.textContent===nomeFase2(nome)));if(!selFase2Rodada.options.length){for(let r=19;r<=24;r++)selFase2Rodada.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;const atualF2=rodadaCompeticaoAtual();selFase2Rodada.value=(atualF2>=19&&atualF2<=24)?atualF2:19}const ate=Number(selFase2Rodada.value||19);const lista=calcGrupoTimesAte(times,19,jogos4,ate);const subt=nome.startsWith("GP")?"2 verdes avançam; 2 amarelos seguem para a repescagem.":"1 verde avança; vermelhos são eliminados.";const nomeVisivel=nomeFase2(nome);boxFase2Detalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${nomeVisivel}</h3><p class="small">${subt}</p></div><span class="badge future">R19-R24</span></div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>statusFase2(nome,pos))}<div class="legend"><span><i class="pos-dot dot-ok"></i>Classificado</span>${nome.startsWith("GP")?`<span><i class="pos-dot dot-rep"></i>Repescagem</span>`:`<span><i class="pos-dot dot-bad"></i>Eliminado</span>`}</div>${!temRodada(19)?'<div class="muted-card">Ainda sem resultados da Fase 2. Quando o JSON tiver as rodadas 19 a 24, a classificação será atualizada pela rodada escolhida.</div>':''}${renderConfrontosRodada(times,19,jogos4,ate,"Jogos da rodada")}<div class="box origin-final-box"><h3>Origem dos participantes</h3><p class="small">Veja a colocação de onde cada time veio na fase anterior.</p>${listaOrigem(times,nome)}</div>`}
 function melhoresSegundos(gruposStand){return Object.values(gruposStand).map(lista=>lista[1]).filter(Boolean).sort((a,b)=>b.pts-a.pts||b.v-a.v||b.saldo-a.saldo||b.pf-a.pf)}
 function fase3Times(){const f2=fase2Times(),st={};Object.keys(f2).forEach(n=>st[n]=calcGrupoTimes(f2[n],19,jogos4));return {
   "Grupo A":[st.GP1[0],st.GP2[1],st.GP3[0],st.GP4[1]],
@@ -1052,7 +1077,7 @@ function statusFinal(nome,pos){return pos===1?["dot-ok","Final"]:pos===2?["dot-r
 function statusGrande(nome,pos){return pos===1?["dot-ok","Vencedor"]:["dot-bad","Perdedor"]}
 const faseConfigs={fase3:{label:"Fase 3",inicio:25,agenda:jogos4,desc:"Caminho dos grupos protegido + Repescagem 2",get:fase3Times,status:statusFase3},fase4:{label:"Fase 4",inicio:31,agenda:jogos4TurnoUnico,desc:"Repescagem Final: últimos 2 lugares na Fase Final",get:fase4Times,status:statusFase4},final:{label:"Fase 5",inicio:35,agenda:jogos3,desc:"4 dos Grupos + 2 da Repescagem",get:faseFinalTimes,status:statusFinal},grande:{label:"Grande Final",inicio:38,agenda:[[[1,2]]],desc:"Final e disputa de 3º lugar",get:finalTimes,status:statusGrande}};
 function montarTabsFases(){Object.entries(faseConfigs).forEach(([k,c],i)=>{const b=document.createElement("button");b.textContent=c.label;b.onclick=()=>{faseSelecionada=k;grupoFaseAtual="";renderFases()};tabsFases.appendChild(b)})}
-function renderFases(){if(!historico)return;renderFluxoFases();document.querySelectorAll("#tabsFases button").forEach(b=>b.classList.toggle("active",b.textContent===faseConfigs[faseSelecionada].label));const cfg=faseConfigs[faseSelecionada],grps=cfg.get(),nomes=Object.keys(grps);if(!grupoFaseAtual||!grps[grupoFaseAtual])grupoFaseAtual=nomes[0];tabsFaseGrupos.innerHTML="";nomes.forEach(n=>{const b=document.createElement("button");b.textContent=n;b.classList.toggle("active",n===grupoFaseAtual);b.onclick=()=>{grupoFaseAtual=n;renderFases()};tabsFaseGrupos.appendChild(b)});const fim=cfg.inicio+cfg.agenda.length-1;const atual=Number(selFaseRodada.value||cfg.inicio);selFaseRodada.innerHTML="";for(let r=cfg.inicio;r<=fim;r++)selFaseRodada.innerHTML+=`<option value="${r}">Rodada ${r}</option>`;selFaseRodada.value=(atual>=cfg.inicio&&atual<=fim)?atual:cfg.inicio;const ate=Number(selFaseRodada.value);const times=grps[grupoFaseAtual];const lista=calcGrupoTimesAte(times,cfg.inicio,cfg.agenda,ate);const legend=grupoFaseAtual.includes("Repescagem")?`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Possível vaga/melhor 2º</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`:`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Repescagem/3º lugar</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`;boxFaseDetalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${cfg.label} · ${grupoFaseAtual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">R${cfg.inicio}${cfg.agenda.length>1?`-R${fim}`:""}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||"A definir"}</span>`).join("")}</div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>cfg.status(grupoFaseAtual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,"Jogos da rodada")}`}
+function renderFases(){if(!historico)return;renderFluxoFases();document.querySelectorAll("#tabsFases button").forEach(b=>b.classList.toggle("active",b.textContent===faseConfigs[faseSelecionada].label));const cfg=faseConfigs[faseSelecionada],grps=cfg.get(),nomes=Object.keys(grps);if(!grupoFaseAtual||!grps[grupoFaseAtual])grupoFaseAtual=nomes[0];tabsFaseGrupos.innerHTML="";nomes.forEach(n=>{const b=document.createElement("button");b.textContent=n;b.classList.toggle("active",n===grupoFaseAtual);b.onclick=()=>{grupoFaseAtual=n;renderFases()};tabsFaseGrupos.appendChild(b)});const fim=cfg.inicio+cfg.agenda.length-1;const atual=Number(selFaseRodada.value||cfg.inicio);selFaseRodada.innerHTML="";for(let r=cfg.inicio;r<=fim;r++)selFaseRodada.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;const rodadaAtual=rodadaCompeticaoAtual();selFaseRodada.value=(rodadaAtual>=cfg.inicio&&rodadaAtual<=fim)?rodadaAtual:((atual>=cfg.inicio&&atual<=fim)?atual:cfg.inicio);const ate=Number(selFaseRodada.value);const times=grps[grupoFaseAtual];const lista=calcGrupoTimesAte(times,cfg.inicio,cfg.agenda,ate);const legend=grupoFaseAtual.includes("Repescagem")?`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Possível vaga/melhor 2º</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`:`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Repescagem/3º lugar</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`;boxFaseDetalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${cfg.label} · ${grupoFaseAtual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">R${cfg.inicio}${cfg.agenda.length>1?`-R${fim}`:""}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||"A definir"}</span>`).join("")}</div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>cfg.status(grupoFaseAtual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,"Jogos da rodada")}`}
 function renderFluxoFases(){if(!document.getElementById("boxFluxoFases"))return;boxFluxoFases.innerHTML=`
   <div class="flow-intro">
     <h3>Visão rápida</h3>
@@ -1157,7 +1182,7 @@ function montarPaginasFases(){
   document.querySelectorAll('.fase-page').forEach(page=>{
     const key=page.dataset.fase,cfg=faseConfigs[key]; if(!cfg)return;
     const sel=page.querySelector('.fase-select-rodada');
-    if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">Rodada ${r}</option>`;sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}
+    if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}
     renderPaginaFase(key);
   })
 }
@@ -2720,10 +2745,10 @@ carregar();
   }
   function marcadores(x,ehReserva=false){
     const itens=[];
-    if(ehReserva)itens.push('<span class="v3-player-badge">R</span>');
+    if(ehReserva)itens.push('🪑');
     if(x?.substituicao_aplicada)itens.push(x.tipo_substituicao==='reserva_luxo'?'⭐':'🔁');
-    else if(x?.reserva_luxo)itens.push('⭐');
-    if(x?.capitao)itens.push('©');
+    else if(x?.reserva_luxo)itens.push('💎');
+    if(x?.capitao)itens.push('Ⓒ');
     return itens.length?` ${itens.join(' ')}`:'';
   }
   function cardAtleta(x,lado,ehReserva=false){
@@ -2731,7 +2756,7 @@ carregar();
     const pos=POS[Number(x.posicao_id)]||'—';
     const jogou=x.entrou_em_campo===true;
     const pontos=jogou?`${fmtBR(x.pontos_computados??x.pontos??0)} pts`:'-';
-    return `<div class="v3-player ${jogou?'played':'pending'} ${lado||''}"><div class="v3-player-name"><span class="v3-player-position">${pos} ·</span>${x.apelido||x.atleta_id}${marcadores(x,ehReserva)}</div><div class="v3-player-line ${jogou?'':'no-score'}">${pontos}</div></div>`;
+    return `<div class="v3-player ${jogou?'played':'pending'} ${lado||''}"><div class="v3-player-name"><span class="v3-player-position">${pos} ·</span>${x.apelido||x.atleta_id}${x.clube_sigla?`<span class="v3-club-badge">${x.clube_sigla}</span>`:''}${marcadores(x,ehReserva)}</div><div class="v3-player-line ${jogou?'':'no-score'}">${pontos}</div></div>`;
   }
   function ordenarLista(lista){
     return [...(lista||[])].sort((a,b)=>{
@@ -2748,7 +2773,7 @@ carregar();
   function comparacao(nome,adv){
     const a=timeAtual(nome),b=timeAtual(adv);
     if(!a||!b||!Array.isArray(a.detalhes_parcial)||!Array.isArray(b.detalhes_parcial))return '';
-    const legenda=`<div class="v3-compare-legend"><span><b>©</b> Capitão</span><span><b>R</b> Reserva</span><span><b>🔁</b> Reserva acionado</span><span><b>⭐</b> Reserva de Luxo</span></div>`;
+    const legenda=`<div class="v3-compare-legend"><span><b>Ⓒ</b> Capitão</span><span><b>🪑</b> Reserva</span><span><b>🔁</b> Reserva acionado</span><span><b>💎</b> Reserva de Luxo</span></div>`;
     return `<div class="v3-compare"><div class="v3-compare-head"><div><div class="v3-side-label">SEU TIME</div><b>${nome}</b><div class="v3-compare-meta">${confirmados(a)}/12</div></div><div style="text-align:right"><div class="v3-side-label">ADVERSÁRIO</div><b>${adv}</b><div class="v3-compare-meta">${confirmados(b)}/12</div></div></div><div class="v3-compare-body">${colunaTime(a,'')}${colunaTime(b,'right')}</div>${legenda}</div>`;
   }
   function cardConfronto(nome){
