@@ -858,6 +858,35 @@ rodada_pontuados = 0
 total_atletas_pontuados = 0
 parciais_disponiveis = False
 
+# O cadastro de mercado também fornece o clube atual e a sigla dos atletas.
+# Ele é consultado em qualquer estado da rodada para que a aba Meu Time
+# consiga mostrar as siglas tanto ao vivo quanto após o fechamento.
+print("Consultando cadastro atual de atletas e clubes...")
+dados_atletas_mercado = buscar_json(
+    URL_ATLETAS_MERCADO,
+    obrigatorio=False,
+)
+if isinstance(dados_atletas_mercado, dict):
+    mapa_atletas_mercado = obter_mapa_atletas_mercado(
+        dados_atletas_mercado
+    )
+    mapa_clubes_mercado = obter_mapa_clubes_mercado(
+        dados_atletas_mercado
+    )
+    print(
+        "Atletas atuais mapeados: "
+        f"{len(mapa_atletas_mercado)}"
+    )
+    print(
+        "Clubes com sigla mapeada: "
+        f"{len(mapa_clubes_mercado)}"
+    )
+else:
+    print(
+        "Cadastro de atletas indisponível. "
+        "Os demais dados serão mantidos com segurança."
+    )
+
 if mercado_aberto:
     print(
         "Mercado aberto: a rodada anterior será "
@@ -913,22 +942,6 @@ else:
             f"{len(mapa_partidas)}"
         )
 
-        print("Consultando cadastro atual de atletas...")
-        dados_atletas_mercado = buscar_json(
-            URL_ATLETAS_MERCADO
-        )
-        mapa_atletas_mercado = (
-            obter_mapa_atletas_mercado(
-                dados_atletas_mercado
-            )
-        )
-        mapa_clubes_mercado = obter_mapa_clubes_mercado(
-            dados_atletas_mercado
-        )
-        print(
-            "Atletas atuais mapeados: "
-            f"{len(mapa_atletas_mercado)}"
-        )
 
     else:
         print(
@@ -1047,6 +1060,7 @@ for indice, (
                 mapa_pontuados,
                 mapa_partidas,
                 mapa_atletas_mercado,
+                mapa_clubes_mercado,
             )
 
             pontos_anteriores = numero(
