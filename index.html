@@ -2732,6 +2732,17 @@ carregar();
 <script id="v3-meu-time-js">
 (function(){
   const POS={1:'GOL',2:'LAT',3:'ZAG',4:'MEI',5:'ATA',6:'TEC'};
+  const CLUBES_SIGLAS={
+    2305:'MIR',262:'FLA',263:'BOT',264:'COR',265:'BAH',266:'FLU',267:'VAS',
+    275:'PAL',276:'SAO',277:'SAN',280:'RBB',282:'CAM',283:'CRU',284:'GRE',
+    285:'INT',287:'VIT',293:'CAP',294:'CFC',315:'CHA',364:'REM'
+  };
+  function siglaClubeAtleta(atleta){
+    const sigla=String(atleta?.clube_sigla||'').trim().toUpperCase();
+    if(sigla)return sigla.slice(0,3);
+    const clubeId=Number(atleta?.clube_id||atleta?.clube_id_original||0);
+    return CLUBES_SIGLAS[clubeId]||'';
+  }
   function timeAtual(nome){return parciaisCartola?.times?.find(t=>String(t.time).trim()===String(nome).trim())||null}
   function confirmados(t){return Array.isArray(t?.detalhes_parcial)?t.detalhes_parcial.filter(x=>x.entrou_em_campo===true).length:Number(t?.atletas_pontuando||0)}
   function confrontoDoTime(nome){return confrontosAtuaisV2().find(j=>j.ta===nome||j.tb===nome)||null}
@@ -2745,8 +2756,11 @@ carregar();
   function marcadores(x,ehReserva=false){
     const itens=[];
     if(ehReserva)itens.push('🪑');
-    if(x?.substituicao_aplicada)itens.push(x.tipo_substituicao==='reserva_luxo'?'⭐':'🔁');
-    else if(x?.reserva_luxo)itens.push('💎');
+    if(x?.substituicao_aplicada){
+      itens.push(x.tipo_substituicao==='reserva_luxo'?'⭐':'🔁');
+    }else if(x?.reserva_luxo){
+      itens.push('⭐');
+    }
     if(x?.capitao)itens.push('👑');
     return itens.length?`<span class="v3-player-markers">${itens.map(item=>`<span>${item}</span>`).join('')}</span>`:'';
   }
@@ -2755,7 +2769,9 @@ carregar();
     const pos=POS[Number(x.posicao_id)]||'—';
     const jogou=x.entrou_em_campo===true;
     const pontos=jogou?`${fmtBR(x.pontos_computados??x.pontos??0)} pts`:'-';
-    return `<div class="v3-player ${jogou?'played':'pending'} ${lado||''}"><div class="v3-player-name"><span class="v3-player-position">${pos} ·</span>${x.apelido||x.atleta_id}${x.clube_sigla?`<span class="v3-club-badge">${x.clube_sigla}</span>`:''}${marcadores(x,ehReserva)}</div><div class="v3-player-line ${jogou?'':'no-score'}">${pontos}</div></div>`;
+    const clubeSigla=siglaClubeAtleta(x);
+    const badgeClube=clubeSigla?`<span class="v3-club-badge">${clubeSigla}</span>`:'';
+    return `<div class="v3-player ${jogou?'played':'pending'} ${lado||''}"><div class="v3-player-name"><span class="v3-player-position">${pos} ·</span>${x.apelido||x.atleta_id}${badgeClube}${marcadores(x,ehReserva)}</div><div class="v3-player-line ${jogou?'':'no-score'}">${pontos}</div></div>`;
   }
   function ordenarLista(lista){
     return [...(lista||[])].sort((a,b)=>{
@@ -2772,7 +2788,7 @@ carregar();
   function comparacao(nome,adv){
     const a=timeAtual(nome),b=timeAtual(adv);
     if(!a||!b||!Array.isArray(a.detalhes_parcial)||!Array.isArray(b.detalhes_parcial))return '';
-    const legenda=`<div class="v3-compare-legend"><span><b>👑</b> Capitão</span><span><b>🪑</b> Reserva</span><span><b>🔁</b> Reserva acionado</span><span><b>💎</b> Reserva de Luxo</span></div>`;
+    const legenda=`<div class="v3-compare-legend"><span><b>👑</b> Capitão</span><span><b>🪑</b> Reserva</span><span><b>🔁</b> Reserva acionado</span><span><b>⭐</b> Reserva de Luxo</span></div>`;
     return `<div class="v3-compare"><div class="v3-compare-head"><div><div class="v3-side-label">SEU TIME</div><b>${nome}</b><div class="v3-compare-meta">${confirmados(a)}/12</div></div><div style="text-align:right"><div class="v3-side-label">ADVERSÁRIO</div><b>${adv}</b><div class="v3-compare-meta">${confirmados(b)}/12</div></div></div><div class="v3-compare-body">${colunaTime(a,'')}${colunaTime(b,'right')}</div>${legenda}</div>`;
   }
   function cardConfronto(nome){
