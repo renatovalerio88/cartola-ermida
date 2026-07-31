@@ -1,6 +1,5 @@
 import json
 import os
-import subprocess
 import time
 import urllib.request
 from datetime import datetime, timedelta
@@ -11,7 +10,6 @@ from zoneinfo import ZoneInfo
 
 ARQUIVO_RODADA_ATUAL = Path("rodada_atual_cartola.json")
 ARQUIVO_PARCIAIS = Path("parciais_cartola.json")
-ARQUIVO_ULTIMA_PARCIAL = Path("ultima_parcial_cartola.json")
 
 URL_STATUS = "https://api.cartola.globo.com/mercado/status"
 URL_PONTUADOS = "https://api.cartola.globo.com/atletas/pontuados"
@@ -166,134 +164,6 @@ def carregar_json(caminho):
         return None
 
 
-
-def carregar_ultima_parcial_com_escalacoes(rodada_dados):
-    """
-    Recupera a última parcial válida da rodada para manter titulares,
-    reservas e marcadores no resultado oficial.
-
-    Primeiro tenta o arquivo atual. Se ele já tiver sido removido na
-    abertura do mercado, procura a versão mais recente no histórico Git.
-    O checkout do workflow usa fetch-depth: 0, portanto os commits
-    anteriores estão disponíveis no runner.
-    """
-    candidatos = []
-
-    # 1) Snapshot permanente da última rodada com escalações.
-    # Esse arquivo não é lido pelo site e permanece no repositório mesmo
-    # depois que parciais_cartola.json é removido ao abrir o mercado.
-    snapshot = carregar_json(ARQUIVO_ULTIMA_PARCIAL)
-    if isinstance(snapshot, dict):
-        candidatos.append(snapshot)
-
-    # 2) Arquivo ao vivo atual, quando ainda existir.
-    atual = carregar_json(ARQUIVO_PARCIAIS)
-    if isinstance(atual, dict):
-        candidatos.append(atual)
-
-    # 3) Recuperação de segurança pelo histórico Git. Não limitamos aos
-    # 30 commits mais recentes, porque um fim de semana com muitas
-    # atualizações pode empurrar a última parcial válida para bem atrás.
-    try:
-        processo = subprocess.run(
-            [
-                "git",
-                "log",
-                "--all",
-                "--format=%H",
-                "--",
-                str(ARQUIVO_PARCIAIS),
-            ],
-            check=False,
-            capture_output=True,
-            text=True,
-            timeout=20,
-        )
-
-        for commit in processo.stdout.splitlines():
-            commit = commit.strip()
-            if not commit:
-                continue
-
-            exibicao = subprocess.run(
-                [
-                    "git",
-                    "show",
-                    f"{commit}:{ARQUIVO_PARCIAIS}",
-                ],
-                check=False,
-                capture_output=True,
-                text=True,
-                timeout=20,
-            )
-
-            if exibicao.returncode != 0 or not exibicao.stdout.strip():
-                continue
-
-            try:
-                dados = json.loads(exibicao.stdout)
-            except json.JSONDecodeError:
-                continue
-
-            if isinstance(dados, dict):
-                candidatos.append(dados)
-    except (OSError, subprocess.SubprocessError):
-        pass
-
-    for dados in candidatos:
-        rodada = inteiro(
-            dados.get("rodada_dados", dados.get("rodada", 0))
-        )
-        times = dados.get("times", [])
-        if rodada != rodada_dados or not isinstance(times, list):
-            continue
-
-        com_escalacao = [
-            time for time in times
-            if isinstance(time, dict)
-            and isinstance(time.get("detalhes_parcial"), list)
-            and len(time.get("detalhes_parcial", [])) > 0
-        ]
-
-        if com_escalacao:
-            print(
-                "Escalações recuperadas da última parcial válida "
-                f"da rodada {rodada_dados}: {len(com_escalacao)} times."
-            )
-
-            # Cria/atualiza o snapshot permanente. Assim, nas próximas
-            # execuções não será necessário percorrer novamente o Git.
-            snapshot_dados = dict(dados)
-            snapshot_dados["fonte"] = "ultima_parcial_cartola.json"
-            salvar_somente_se_mudou(
-                ARQUIVO_ULTIMA_PARCIAL,
-                snapshot_dados,
-            )
-            return dados
-
-    print(
-        "Nenhuma parcial anterior com escalações completas foi encontrada "
-        f"para a rodada {rodada_dados}."
-    )
-    return None
-
-
-def mapa_times_por_id_ou_nome(dados):
-    mapa = {}
-    if not isinstance(dados, dict):
-        return mapa
-
-    for time in dados.get("times", []):
-        if not isinstance(time, dict):
-            continue
-        time_id = inteiro(time.get("time_id", 0))
-        nome = str(time.get("time", "")).strip()
-        if time_id > 0:
-            mapa[("id", time_id)] = time
-        if nome:
-            mapa[("nome", nome)] = time
-    return mapa
-
 def salvar_atomico(caminho, dados):
     caminho.parent.mkdir(
         parents=True,
@@ -388,6 +258,21 @@ def obter_mapa_atletas_mercado(dados):
         atleta_id = inteiro(atleta.get("atleta_id", 0))
         if atleta_id > 0:
             mapa[atleta_id] = atleta
+    return mapa
+
+
+def obter_mapa_clubes_mercado(dados):
+    clubes = dados.get("clubes", {}) if isinstance(dados, dict) else {}
+    if not isinstance(clubes, dict):
+        return {}
+    mapa = {}
+    for chave, clube in clubes.items():
+        if not isinstance(clube, dict):
+            continue
+        clube_id = inteiro(clube.get("id", chave))
+        sigla = str(clube.get("abreviacao") or clube.get("sigla") or "").strip().upper()
+        if clube_id > 0 and sigla:
+            mapa[clube_id] = sigla[:3]
     return mapa
 
 
@@ -633,6 +518,7 @@ def montar_detalhe_atleta(
     mapa_pontuados,
     mapa_partidas,
     mapa_atletas_mercado,
+    mapa_clubes_mercado,
     capitao_id=0,
     reserva_luxo_id=0,
 ):
@@ -651,6 +537,7 @@ def montar_detalhe_atleta(
         "posicao_id": inteiro(atleta.get("posicao_id", 0)),
         "clube_id": clube_id,
         "clube_id_original": clube_id_original,
+        "clube_sigla": mapa_clubes_mercado.get(clube_id, ""),
         "clube_corrigido_pelo_mercado": bool(
             clube_id > 0 and clube_id != clube_id_original
         ),
@@ -686,6 +573,7 @@ def calcular_parcial(
     mapa_pontuados,
     mapa_partidas,
     mapa_atletas_mercado,
+    mapa_clubes_mercado,
 ):
     atletas = dados_time.get("atletas", [])
     reservas = dados_time.get("reservas", [])
@@ -708,6 +596,7 @@ def calcular_parcial(
             mapa_pontuados,
             mapa_partidas,
             mapa_atletas_mercado,
+            mapa_clubes_mercado,
             capitao_id=capitao_id,
             reserva_luxo_id=reserva_luxo_id,
         )
@@ -719,6 +608,7 @@ def calcular_parcial(
             mapa_pontuados,
             mapa_partidas,
             mapa_atletas_mercado,
+            mapa_clubes_mercado,
             capitao_id=0,
             reserva_luxo_id=reserva_luxo_id,
         )
@@ -963,6 +853,7 @@ dados_pontuados = None
 mapa_pontuados = {}
 mapa_partidas = {}
 mapa_atletas_mercado = {}
+mapa_clubes_mercado = {}
 rodada_pontuados = 0
 total_atletas_pontuados = 0
 parciais_disponiveis = False
@@ -1031,6 +922,9 @@ else:
                 dados_atletas_mercado
             )
         )
+        mapa_clubes_mercado = obter_mapa_clubes_mercado(
+            dados_atletas_mercado
+        )
         print(
             "Atletas atuais mapeados: "
             f"{len(mapa_atletas_mercado)}"
@@ -1078,13 +972,6 @@ if rodada_dados <= 0:
         "Não foi possível determinar "
         "a rodada dos dados."
     )
-
-
-parcial_anterior = None
-mapa_parcial_anterior = {}
-if not rodada_em_andamento:
-    parcial_anterior = carregar_ultima_parcial_com_escalacoes(rodada_dados)
-    mapa_parcial_anterior = mapa_times_por_id_ou_nome(parcial_anterior)
 
 
 novos_times = []
@@ -1215,40 +1102,13 @@ for indice, (
                     mapa_oficial_time,
                     mapa_partidas,
                     mapa_atletas_mercado,
+                    mapa_clubes_mercado,
                 )
             else:
                 atletas_pontuando = 0
                 detalhes = []
                 reservas_detalhes = []
                 substituicoes_aplicadas = []
-
-            # O endpoint oficial do time nem sempre devolve a pontuação
-            # individual após a abertura do mercado. Quando isso acontece,
-            # recuperamos a última escalação completa salva durante as
-            # parciais. O total oficial do time permanece vindo da API.
-            anterior = (
-                mapa_parcial_anterior.get(("id", time_id))
-                or mapa_parcial_anterior.get(("nome", nome_time))
-            )
-            if (
-                isinstance(anterior, dict)
-                and isinstance(anterior.get("detalhes_parcial"), list)
-                and anterior.get("detalhes_parcial")
-            ):
-                detalhes = anterior.get("detalhes_parcial", [])
-                reservas_detalhes = anterior.get("reservas_parcial", [])
-                substituicoes_aplicadas = anterior.get(
-                    "substituicoes_aplicadas", []
-                )
-                atletas_pontuando = inteiro(
-                    anterior.get("atletas_pontuando", 0)
-                )
-                if atletas_pontuando <= 0:
-                    atletas_pontuando = sum(
-                        1 for atleta in detalhes
-                        if isinstance(atleta, dict)
-                        and atleta.get("entrou_em_campo") is True
-                    )
 
             fonte_pontos = "api_time_id"
 
@@ -1358,6 +1218,42 @@ else:
     )
 
 
+agora_execucao_iso = agora_iso()
+anterior_rodada = carregar_json(ARQUIVO_RODADA_ATUAL) or {}
+anterior_monitor = anterior_rodada.get("monitoramento", {}) if isinstance(anterior_rodada, dict) else {}
+
+def dados_funcionais(dados):
+    if not isinstance(dados, dict):
+        return {}
+    copia = dict(dados)
+    copia.pop("ultima_atualizacao", None)
+    copia.pop("monitoramento", None)
+    return copia
+
+saida_base_comparacao = {
+    "liga": "Cartola de Ermida",
+    "rodada_cartola": rodada_status,
+    "status_mercado": mercado_status,
+    "mercado_aberto": mercado_aberto,
+    "bola_rolando": bola_rolando_api,
+    "fechamento_mercado": status.get("fechamento"),
+    "rodada_em_andamento": rodada_em_andamento,
+    "rodada_dados": rodada_dados,
+    "rodada_pontuados": rodada_pontuados,
+    "total_atletas_pontuados": total_atletas_pontuados,
+    "observacao": observacao,
+    "fonte": "parciais_cartola.json" if rodada_em_andamento else "rodada_atual_cartola.json",
+    "times": novos_times,
+}
+houve_mudanca_dados = dados_funcionais(anterior_rodada) != dados_funcionais(saida_base_comparacao)
+ultima_mudanca_dados = (
+    agora_execucao_iso
+    if houve_mudanca_dados
+    else anterior_monitor.get("ultima_mudanca_dados")
+    or anterior_rodada.get("ultima_atualizacao")
+    or agora_execucao_iso
+)
+
 saida = {
     "liga": "Cartola de Ermida",
     "rodada_cartola": rodada_status,
@@ -1384,7 +1280,11 @@ saida = {
             else "aguardando_parciais"
         ),
         "consulta_programada_minutos": 10,
-        "ultima_consulta_api": agora_iso(),
+        "ultima_consulta_api": agora_execucao_iso,
+        "ultima_mudanca_dados": ultima_mudanca_dados,
+        "resultado_ultima_consulta": (
+            "dados_novos" if houve_mudanca_dados else "sem_alteracao"
+        ),
         "houve_parciais_validas": bool(parciais_disponiveis),
         "times_processados": len(novos_times),
         "substituicoes_banco": sum(
@@ -1417,16 +1317,6 @@ if rodada_em_andamento:
     salvar_somente_se_mudou(
         ARQUIVO_PARCIAIS,
         parciais,
-    )
-
-    # Mantém uma cópia permanente com as escalações e pontuações
-    # individuais. Ela será usada no Resultado Oficial após a abertura
-    # do mercado da rodada seguinte.
-    snapshot_parciais = dict(parciais)
-    snapshot_parciais["fonte"] = "ultima_parcial_cartola.json"
-    salvar_somente_se_mudou(
-        ARQUIVO_ULTIMA_PARCIAL,
-        snapshot_parciais,
     )
 
 elif mercado_aberto and ARQUIVO_PARCIAIS.exists():
