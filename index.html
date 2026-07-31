@@ -985,8 +985,7 @@ async function atualizarDados(){try{if(document.getElementById("btnAtualizar")){
 function rodadaCompeticaoAtual(){
   const dados=Number(parciaisCartola?.rodada_dados||0);
   if(!dados)return 0;
-  // O campeonato começou uma rodada depois do Cartola: Cartola 20 = competição 19.
-  return Math.max(1,dados-1);
+  return Math.max(1,dados);
 }
 function rotuloRodadaOpcao(r){
   const atual=rodadaCompeticaoAtual();
@@ -2479,7 +2478,7 @@ function painelJogadoresV2(nome){
     if(x.nao_jogou||x.jogo_encerrado)return '<small class="player-live-status-dnp">Não jogou</small>';
     return '<small>Ainda sem atuação confirmada</small>';
   };
-  const htmlTitulares=titulares.map(x=>`<div class="player-live-item"><div><b><span class="player-live-pos">${siglas[Number(x.posicao_id)]||'-'}</span> ${x.apelido||x.atleta_id}${x.capitao?' <span class="player-live-cap">(C)</span>':''}${x.substituicao_aplicada?' <span class="player-live-sub-badge">🔁 ENTROU</span>':''}</b>${statusTitular(x)}</div><span class="player-live-points">${fmtBR(x.pontos_computados)} pts</span></div>`).join('');
+  const htmlTitulares=titulares.map(x=>`<div class="player-live-item"><div><b><span class="player-live-pos">${siglas[Number(x.posicao_id)]||'-'}</span> ${x.apelido||x.atleta_id}${x.capitao?' <span class="player-live-cap">👑</span>':''}${x.substituicao_aplicada?' <span class="player-live-sub-badge">🔁 ENTROU</span>':''}</b>${statusTitular(x)}</div><span class="player-live-points">${fmtBR(x.pontos_computados)} pts</span></div>`).join('');
   const htmlReservas=reservas.length?`<div class="player-live-section-title"><b>Time reserva</b><span>${reservas.length} reservas</span></div><div class="player-live-list">${reservas.map(x=>`<div class="player-live-item player-live-reserve"><div><b><span class="player-live-pos">${siglas[Number(x.posicao_id)]||'-'}</span> ${x.apelido||x.atleta_id}${x.reserva_luxo?' <span class="player-live-rl">RL</span>':''}${x.substituicao_aplicada?' <span class="player-live-out-badge">↩ SAIU</span>':''}</b>${statusReserva(x)}</div><span class="player-live-points">${fmtBR(x.pontos_computados??x.pontos)} pts</span></div>`).join('')}</div>`:'';
   return `<div class="player-live-panel"><div class="player-live-head"><b>Escalação e parciais</b><span>${pontuaram}/${titulares.length} titulares efetivos com dados de jogo</span></div><div class="player-live-section-title"><b>Time titular efetivo</b><span>${titulares.length} jogadores</span></div><div class="player-live-list">${htmlTitulares}</div>${htmlReservas}</div>`;
 }
@@ -2748,7 +2747,7 @@ carregar();
     if(ehReserva)itens.push('🪑');
     if(x?.substituicao_aplicada)itens.push(x.tipo_substituicao==='reserva_luxo'?'⭐':'🔁');
     else if(x?.reserva_luxo)itens.push('💎');
-    if(x?.capitao)itens.push('Ⓒ');
+    if(x?.capitao)itens.push('👑');
     return itens.length?` ${itens.join(' ')}`:'';
   }
   function cardAtleta(x,lado,ehReserva=false){
@@ -2773,7 +2772,7 @@ carregar();
   function comparacao(nome,adv){
     const a=timeAtual(nome),b=timeAtual(adv);
     if(!a||!b||!Array.isArray(a.detalhes_parcial)||!Array.isArray(b.detalhes_parcial))return '';
-    const legenda=`<div class="v3-compare-legend"><span><b>Ⓒ</b> Capitão</span><span><b>🪑</b> Reserva</span><span><b>🔁</b> Reserva acionado</span><span><b>💎</b> Reserva de Luxo</span></div>`;
+    const legenda=`<div class="v3-compare-legend"><span><b>👑</b> Capitão</span><span><b>🪑</b> Reserva</span><span><b>🔁</b> Reserva acionado</span><span><b>💎</b> Reserva de Luxo</span></div>`;
     return `<div class="v3-compare"><div class="v3-compare-head"><div><div class="v3-side-label">SEU TIME</div><b>${nome}</b><div class="v3-compare-meta">${confirmados(a)}/12</div></div><div style="text-align:right"><div class="v3-side-label">ADVERSÁRIO</div><b>${adv}</b><div class="v3-compare-meta">${confirmados(b)}/12</div></div></div><div class="v3-compare-body">${colunaTime(a,'')}${colunaTime(b,'right')}</div>${legenda}</div>`;
   }
   function cardConfronto(nome){
