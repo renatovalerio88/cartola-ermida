@@ -103,6 +103,10 @@ jobs:
 
           status = buscar_status()
 
+          execucao_manual = (
+              os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+          )
+
           rodada = int(
               status.get("rodada_atual", 0)
               or 0
@@ -156,10 +160,9 @@ jobs:
               mercado_aberto
               and rodada_fechada > 0
               and (
-                  ultima_fechada
-                  < rodada_fechada
-                  or len(registros)
-                  != TOTAL_TIMES
+                  execucao_manual
+                  or ultima_fechada < rodada_fechada
+                  or len(registros) != TOTAL_TIMES
               )
           )
 
@@ -170,12 +173,17 @@ jobs:
           dados_local = int(rodada_atual_local.get("rodada_dados", 0) or 0)
           mercado_local = bool(rodada_atual_local.get("mercado_aberto", False))
           precisa_atualizar_atual = (
-              not mercado_aberto
+              execucao_manual
+              or not mercado_aberto
               or rodada_local != rodada
               or dados_local != rodada_fechada
               or mercado_local is not True
           )
 
+          print(
+              "Execução manual: "
+              f"{execucao_manual}"
+          )
           print(
               f"Rodada Cartola: {rodada}"
           )
