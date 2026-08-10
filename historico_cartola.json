@@ -1,6 +1,6 @@
 {
   "liga": "Cartola de Ermida",
-  "ultima_atualizacao": "10/08/2026 11:43:56",
+  "ultima_atualizacao": "10/08/2026 18:33:04",
   "rodadas": {
     "1": [
       {
@@ -5486,8 +5486,9 @@
         "time": "Forward F. Club",
         "cartoleiro": "Valcard",
         "rodada": 22,
-        "pontos": 69.49,
-        "patrimonio": 157.85
+        "pontos": 70.21,
+        "patrimonio": 156.58,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 40995,
@@ -5495,7 +5496,8 @@
         "cartoleiro": "Renato Valerio",
         "rodada": 22,
         "pontos": 71.41,
-        "patrimonio": 138.53
+        "patrimonio": 138.53,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 6074454,
@@ -5503,7 +5505,8 @@
         "cartoleiro": "Álvaro Firmino",
         "rodada": 22,
         "pontos": 83.31,
-        "patrimonio": 169.36
+        "patrimonio": 169.36,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 385413,
@@ -5511,15 +5514,17 @@
         "cartoleiro": "Lucas Mão",
         "rodada": 22,
         "pontos": 83.81,
-        "patrimonio": 167.22
+        "patrimonio": 167.22,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 8976743,
         "time": "MT10M1T0",
         "cartoleiro": "Marco Tulio",
         "rodada": 22,
-        "pontos": 88.48,
-        "patrimonio": 155.68
+        "pontos": 73.56,
+        "patrimonio": 152.74,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 50252506,
@@ -5527,7 +5532,8 @@
         "cartoleiro": "Roger Nunes",
         "rodada": 22,
         "pontos": 66.01,
-        "patrimonio": 138.53
+        "patrimonio": 138.53,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 195382,
@@ -5535,15 +5541,17 @@
         "cartoleiro": "André Camarasso",
         "rodada": 22,
         "pontos": 72.31,
-        "patrimonio": 152.9
+        "patrimonio": 152.9,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 60383,
         "time": "RJ Clube",
         "cartoleiro": "Ricardo Júdice",
         "rodada": 22,
-        "pontos": 84.4,
-        "patrimonio": 144.81
+        "pontos": 77.2,
+        "patrimonio": 143.96,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 19198951,
@@ -5551,7 +5559,8 @@
         "cartoleiro": "Renato Do SANTOS",
         "rodada": 22,
         "pontos": 78.96,
-        "patrimonio": 156.41
+        "patrimonio": 156.41,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 25588958,
@@ -5559,15 +5568,17 @@
         "cartoleiro": "AMARILO JUNIOR",
         "rodada": 22,
         "pontos": 70.46,
-        "patrimonio": 159.9
+        "patrimonio": 159.9,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 654232,
         "time": "D1OS",
         "cartoleiro": "10inho",
         "rodada": 22,
-        "pontos": 74.1,
-        "patrimonio": 143.95
+        "pontos": 73.0,
+        "patrimonio": 141.29,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 974057,
@@ -5575,7 +5586,8 @@
         "cartoleiro": "Lucas Guedes",
         "rodada": 22,
         "pontos": 74.61,
-        "patrimonio": 149.4
+        "patrimonio": 149.4,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 2745059,
@@ -5583,7 +5595,8 @@
         "cartoleiro": "Jorge Queiroz",
         "rodada": 22,
         "pontos": 89.96,
-        "patrimonio": 163.84
+        "patrimonio": 163.84,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 91357,
@@ -5591,7 +5604,8 @@
         "cartoleiro": "D Pedro",
         "rodada": 22,
         "pontos": 68.21,
-        "patrimonio": 155.53
+        "patrimonio": 155.53,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 29565271,
@@ -5599,15 +5613,17 @@
         "cartoleiro": "Arthur Godioso",
         "rodada": 22,
         "pontos": 77.3,
-        "patrimonio": 147.3
+        "patrimonio": 147.3,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 28538913,
         "time": "Maria Gol De Costas",
         "cartoleiro": "Rafa Palhares",
         "rodada": 22,
-        "pontos": 86.0,
-        "patrimonio": 140.08
+        "pontos": 65.2,
+        "patrimonio": 135.74,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 178173,
@@ -5615,15 +5631,17 @@
         "cartoleiro": "Dourado",
         "rodada": 22,
         "pontos": 64.7,
-        "patrimonio": 139.83
+        "patrimonio": 139.83,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 21141036,
         "time": "Ardam Cabubu",
         "cartoleiro": "Guizoba",
         "rodada": 22,
-        "pontos": 68.73,
-        "patrimonio": 175.62
+        "pontos": 75.31,
+        "patrimonio": 177.54,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 50327258,
@@ -5631,7 +5649,8 @@
         "cartoleiro": "DigdigieCabuloso",
         "rodada": 22,
         "pontos": 74.21,
-        "patrimonio": 162.92
+        "patrimonio": 162.92,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 18434405,
@@ -5639,7 +5658,8 @@
         "cartoleiro": "Wendell Costa",
         "rodada": 22,
         "pontos": 78.06,
-        "patrimonio": 157.99
+        "patrimonio": 157.99,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 1193651,
@@ -5647,7 +5667,8 @@
         "cartoleiro": "André Pitanga",
         "rodada": 22,
         "pontos": 89.71,
-        "patrimonio": 164.14
+        "patrimonio": 164.14,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 25565544,
@@ -5655,15 +5676,17 @@
         "cartoleiro": "Charles Duek",
         "rodada": 22,
         "pontos": 79.91,
-        "patrimonio": 150.73
+        "patrimonio": 150.73,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 28604976,
         "time": "Galo de Rio Doce FC",
         "cartoleiro": "Pedro Natali",
         "rodada": 22,
-        "pontos": 29.1,
-        "patrimonio": 136.59
+        "pontos": 55.4,
+        "patrimonio": 136.42,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 14705949,
@@ -5671,15 +5694,17 @@
         "cartoleiro": "Xande Costa",
         "rodada": 22,
         "pontos": 73.06,
-        "patrimonio": 149.96
+        "patrimonio": 149.96,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 214265,
         "time": "Framos F.C",
         "cartoleiro": "Fernando Ramos",
         "rodada": 22,
-        "pontos": 76.15,
-        "patrimonio": 141.55
+        "pontos": 72.1,
+        "patrimonio": 140.14,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 186377,
@@ -5687,7 +5712,8 @@
         "cartoleiro": "Juca Barros",
         "rodada": 22,
         "pontos": 64.5,
-        "patrimonio": 144.35
+        "patrimonio": 144.35,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 51042838,
@@ -5695,7 +5721,8 @@
         "cartoleiro": "Alan Guimarães",
         "rodada": 22,
         "pontos": 78.7,
-        "patrimonio": 147.96
+        "patrimonio": 147.96,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 285883,
@@ -5703,7 +5730,8 @@
         "cartoleiro": "Pedro Kayser",
         "rodada": 22,
         "pontos": 60.0,
-        "patrimonio": 134.96
+        "patrimonio": 134.96,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 3128927,
@@ -5711,7 +5739,8 @@
         "cartoleiro": "Henrique Jafeth",
         "rodada": 22,
         "pontos": 82.63,
-        "patrimonio": 129.46
+        "patrimonio": 129.46,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 25937153,
@@ -5719,7 +5748,8 @@
         "cartoleiro": "Gabriel Carvalho",
         "rodada": 22,
         "pontos": 86.21,
-        "patrimonio": 147.19
+        "patrimonio": 147.19,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 1005072,
@@ -5727,7 +5757,8 @@
         "cartoleiro": "WAGNER",
         "rodada": 22,
         "pontos": 88.9,
-        "patrimonio": 132.52
+        "patrimonio": 132.52,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 49415297,
@@ -5735,7 +5766,8 @@
         "cartoleiro": "LEANDRO CAMPOS GIANI",
         "rodada": 22,
         "pontos": 62.19,
-        "patrimonio": 127.74
+        "patrimonio": 127.74,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 103947,
@@ -5743,7 +5775,8 @@
         "cartoleiro": "Rafael Abrantes",
         "rodada": 22,
         "pontos": 58.9,
-        "patrimonio": 130.5
+        "patrimonio": 130.5,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 24449,
@@ -5751,7 +5784,8 @@
         "cartoleiro": "Giovanni Guedes",
         "rodada": 22,
         "pontos": 73.5,
-        "patrimonio": 135.43
+        "patrimonio": 135.43,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 25889523,
@@ -5759,7 +5793,8 @@
         "cartoleiro": "Betinho Valerio",
         "rodada": 22,
         "pontos": 57.0,
-        "patrimonio": 134.78
+        "patrimonio": 134.78,
+        "fonte_pontos": "rodada_atual_cartola"
       },
       {
         "time_id": 596168,
@@ -5767,7 +5802,8 @@
         "cartoleiro": "Lucas Real",
         "rodada": 22,
         "pontos": 54.3,
-        "patrimonio": 117.14
+        "patrimonio": 117.14,
+        "fonte_pontos": "rodada_atual_cartola"
       }
     ]
   },
