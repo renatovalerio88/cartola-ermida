@@ -1,6 +1,6 @@
 {
   "liga": "Cartola de Ermida",
-  "ultima_atualizacao": "18/08/2026 11:56:42",
+  "ultima_atualizacao": "20/08/2026 12:33:30",
   "rodadas": {
     "1": [
       {
@@ -5812,9 +5812,9 @@
         "time": "Forward F. Club",
         "cartoleiro": "Valcard",
         "rodada": 23,
-        "pontos": 70.21,
+        "pontos": 62.35,
         "patrimonio": 156.58,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 40995,
@@ -5822,8 +5822,8 @@
         "cartoleiro": "Renato Valerio",
         "rodada": 23,
         "pontos": 73.55,
-        "patrimonio": 133.61,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 138.53,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 6074454,
@@ -5831,8 +5831,8 @@
         "cartoleiro": "Álvaro Firmino",
         "rodada": 23,
         "pontos": 80.51,
-        "patrimonio": 167.86,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 169.36,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 385413,
@@ -5840,17 +5840,17 @@
         "cartoleiro": "Lucas Mão",
         "rodada": 23,
         "pontos": 84.87,
-        "patrimonio": 167.43,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 167.22,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 8976743,
         "time": "MT10M1T0",
         "cartoleiro": "Marco Tulio",
         "rodada": 23,
-        "pontos": 73.56,
+        "pontos": 62.31,
         "patrimonio": 152.74,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 50252506,
@@ -5858,8 +5858,8 @@
         "cartoleiro": "Roger Nunes",
         "rodada": 23,
         "pontos": 66.77,
-        "patrimonio": 135.86,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 138.53,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 195382,
@@ -5867,8 +5867,8 @@
         "cartoleiro": "André Camarasso",
         "rodada": 23,
         "pontos": 84.95,
-        "patrimonio": 150.42,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 152.9,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 60383,
@@ -5876,17 +5876,17 @@
         "cartoleiro": "Ricardo Júdice",
         "rodada": 23,
         "pontos": 79.35,
-        "patrimonio": 139.95,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 143.96,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 19198951,
         "time": "SANTASTICO GLORIOSO I",
         "cartoleiro": "Renato Do SANTOS",
         "rodada": 23,
-        "pontos": 78.96,
+        "pontos": 83.07,
         "patrimonio": 156.41,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 25588958,
@@ -5894,26 +5894,26 @@
         "cartoleiro": "AMARILO JUNIOR",
         "rodada": 23,
         "pontos": 56.41,
-        "patrimonio": 153.01,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 159.9,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 654232,
         "time": "D1OS",
         "cartoleiro": "10inho",
         "rodada": 23,
-        "pontos": 73.0,
+        "pontos": 84.01,
         "patrimonio": 141.29,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 974057,
         "time": "S.C. Finha Paulista",
         "cartoleiro": "Lucas Guedes",
         "rodada": 23,
-        "pontos": 74.61,
+        "pontos": 83.77,
         "patrimonio": 149.4,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 2745059,
@@ -5921,26 +5921,26 @@
         "cartoleiro": "Jorge Queiroz",
         "rodada": 23,
         "pontos": 50.67,
-        "patrimonio": 156.19,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 163.84,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 91357,
         "time": "DP-SC",
         "cartoleiro": "D Pedro",
         "rodada": 23,
-        "pontos": 68.21,
+        "pontos": 73.97,
         "patrimonio": 155.53,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 29565271,
         "time": "Legione Romanista",
         "cartoleiro": "Arthur Godioso",
         "rodada": 23,
-        "pontos": 77.3,
+        "pontos": 65.85,
         "patrimonio": 147.3,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 28538913,
@@ -5948,8 +5948,8 @@
         "cartoleiro": "Rafa Palhares",
         "rodada": 23,
         "pontos": 65.47,
-        "patrimonio": 128.4,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 135.74,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 178173,
@@ -5957,8 +5957,8 @@
         "cartoleiro": "Dourado",
         "rodada": 23,
         "pontos": 65.95,
-        "patrimonio": 133.02,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 139.83,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 21141036,
@@ -5966,8 +5966,8 @@
         "cartoleiro": "Guizoba",
         "rodada": 23,
         "pontos": 78.84,
-        "patrimonio": 175.98,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 177.54,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 50327258,
@@ -5975,17 +5975,17 @@
         "cartoleiro": "DigdigieCabuloso",
         "rodada": 23,
         "pontos": 54.55,
-        "patrimonio": 159.81,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 162.92,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 18434405,
         "time": "Gabiru cabuloso",
         "cartoleiro": "Wendell Costa",
         "rodada": 23,
-        "pontos": 78.06,
+        "pontos": 51.45,
         "patrimonio": 157.99,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 1193651,
@@ -5993,8 +5993,8 @@
         "cartoleiro": "André Pitanga",
         "rodada": 23,
         "pontos": 52.51,
-        "patrimonio": 155.91,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 164.14,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 25565544,
@@ -6002,8 +6002,8 @@
         "cartoleiro": "Charles Duek",
         "rodada": 23,
         "pontos": 74.15,
-        "patrimonio": 146.55,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 150.73,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 28604976,
@@ -6011,44 +6011,44 @@
         "cartoleiro": "Pedro Natali",
         "rodada": 23,
         "pontos": 63.31,
-        "patrimonio": 134.48,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 136.42,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 14705949,
         "time": "Seu Cuca Futebol",
         "cartoleiro": "Xande Costa",
         "rodada": 23,
-        "pontos": 73.06,
+        "pontos": 75.44,
         "patrimonio": 149.96,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 214265,
         "time": "Framos F.C",
         "cartoleiro": "Fernando Ramos",
         "rodada": 23,
-        "pontos": 72.1,
+        "pontos": 49.95,
         "patrimonio": 140.14,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 186377,
         "time": "JACB FC",
         "cartoleiro": "Juca Barros",
         "rodada": 23,
-        "pontos": 64.5,
+        "pontos": 68.05,
         "patrimonio": 144.35,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 51042838,
         "time": "A76 FC",
         "cartoleiro": "Alan Guimarães",
         "rodada": 23,
-        "pontos": 78.7,
+        "pontos": 70.97,
         "patrimonio": 147.96,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 285883,
@@ -6056,8 +6056,8 @@
         "cartoleiro": "Pedro Kayser",
         "rodada": 23,
         "pontos": 88.57,
-        "patrimonio": 138.85,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 134.96,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 3128927,
@@ -6065,8 +6065,8 @@
         "cartoleiro": "Henrique Jafeth",
         "rodada": 23,
         "pontos": 74.15,
-        "patrimonio": 126.55,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 129.46,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 25937153,
@@ -6074,8 +6074,8 @@
         "cartoleiro": "Gabriel Carvalho",
         "rodada": 23,
         "pontos": 84.65,
-        "patrimonio": 143.16,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 147.19,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 1005072,
@@ -6083,26 +6083,26 @@
         "cartoleiro": "WAGNER",
         "rodada": 23,
         "pontos": 113.87,
-        "patrimonio": 138.22,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 132.52,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 49415297,
         "time": "SemFreio LEFC1988",
         "cartoleiro": "LEANDRO CAMPOS GIANI",
         "rodada": 23,
-        "pontos": 62.19,
+        "pontos": 63.91,
         "patrimonio": 127.74,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 103947,
         "time": "Campista F. C",
         "cartoleiro": "Rafael Abrantes",
         "rodada": 23,
-        "pontos": 58.9,
+        "pontos": 70.75,
         "patrimonio": 130.5,
-        "fonte_pontos": "rodada_atual_cartola"
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 24449,
@@ -6110,8 +6110,8 @@
         "cartoleiro": "Giovanni Guedes",
         "rodada": 23,
         "pontos": 71.05,
-        "patrimonio": 133.05,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 135.43,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 25889523,
@@ -6119,8 +6119,8 @@
         "cartoleiro": "Betinho Valerio",
         "rodada": 23,
         "pontos": 86.37,
-        "patrimonio": 135.87,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 134.78,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       },
       {
         "time_id": 596168,
@@ -6128,10 +6128,20 @@
         "cartoleiro": "Lucas Real",
         "rodada": 23,
         "pontos": 49.81,
-        "patrimonio": 115.07,
-        "fonte_pontos": "rodada_atual_cartola"
+        "patrimonio": 117.14,
+        "fonte_pontos": "atletas_pontuados_recuperado"
       }
     ]
   },
-  "ultima_rodada_fechada": 23
+  "ultima_rodada_fechada": 23,
+  "ultima_recuperacao_historica": {
+    "rodada": 23,
+    "data": "20/08/2026 12:33:30",
+    "commit_snapshot": "992d5f4",
+    "arquivo_snapshot": "parciais_cartola.json",
+    "fonte_pontos": "atletas_pontuados",
+    "times_validados": 36,
+    "times_com_pontos_corrigidos": 14,
+    "times_com_patrimonio_corrigido": 22
+  }
 }
