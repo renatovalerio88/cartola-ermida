@@ -549,6 +549,91 @@ def mapa_historico_rodada(
     return mapa
 
 
+def rodada_historica_completa(
+    historico,
+    rodada,
+):
+    """
+    Verifica se uma rodada já está consolidada no histórico.
+
+    Uma rodada somente é considerada consolidada quando:
+
+    - existe como lista;
+    - possui exatamente 36 registros;
+    - todos os registros são objetos válidos;
+    - todos possuem time_id válido;
+    - não existem time_ids duplicados;
+    - os 36 IDs correspondem exatamente aos times da liga.
+
+    Quando essa condição é atendida, a rodada passa a ser
+    IMUTÁVEL para a automação normal.
+
+    Correções históricas devem ser feitas exclusivamente
+    por um processo controlado de recuperação.
+    """
+
+    rodadas = historico.get(
+        "rodadas",
+        {},
+    )
+
+    if not isinstance(
+        rodadas,
+        dict,
+    ):
+        return False
+
+    registros = rodadas.get(
+        str(rodada),
+        [],
+    )
+
+    if not isinstance(
+        registros,
+        list,
+    ):
+        return False
+
+    if len(registros) != TOTAL_TIMES:
+        return False
+
+    ids_encontrados = []
+
+    for item in registros:
+        if not isinstance(
+            item,
+            dict,
+        ):
+            return False
+
+        time_id = inteiro(
+            item.get(
+                "time_id",
+                0,
+            )
+        )
+
+        if time_id <= 0:
+            return False
+
+        ids_encontrados.append(
+            time_id
+        )
+
+    if len(set(ids_encontrados)) != TOTAL_TIMES:
+        return False
+
+    ids_esperados = {
+        time_id
+        for time_id, _, _ in TIMES
+    }
+
+    if set(ids_encontrados) != ids_esperados:
+        return False
+
+    return True
+
+
 def auditar_repeticoes_rodada_anterior(
     mapa_snapshot,
     historico,
@@ -814,15 +899,8 @@ if rodada_para_salvar <= 0:
 print()
 
 print(
-    "Consolidando a rodada fechada "
+    "Verificando a rodada fechada "
     f"{rodada_para_salvar}..."
-)
-
-print(
-    "A consolidação usará somente "
-    "rodada_atual_cartola.json previamente "
-    "validado. /time/id não será usado como "
-    "fallback para o histórico."
 )
 
 
@@ -835,6 +913,84 @@ historico["liga"] = (
 historico.setdefault(
     "rodadas",
     {},
+)
+
+
+# ==========================================================
+# PROTEÇÃO DEFINITIVA DO HISTÓRICO
+# ==========================================================
+#
+# Uma rodada que já esteja consolidada com os 36 times
+# válidos não pode ser alterada pela automação normal.
+#
+# Isso impede que uma resposta posterior, atrasada,
+# inconsistente ou diferente da API sobrescreva um
+# resultado histórico que já foi consolidado.
+#
+# Correções excepcionais devem ocorrer somente através
+# do processo controlado de recuperação histórica.
+# ==========================================================
+
+if rodada_historica_completa(
+    historico,
+    rodada_para_salvar,
+):
+    print()
+    print(
+        f"Rodada {rodada_para_salvar} "
+        "já consolidada no histórico."
+    )
+
+    print(
+        f"Registros encontrados: "
+        f"{TOTAL_TIMES}/{TOTAL_TIMES}."
+    )
+
+    print()
+
+    print(
+        "PROTEÇÃO DO HISTÓRICO: ATIVA."
+    )
+
+    print(
+        "A rodada existente é imutável e "
+        "NÃO será sobrescrita."
+    )
+
+    print(
+        "Para corrigir uma rodada histórica, "
+        "utilize recuperação controlada."
+    )
+
+    print()
+
+    print(
+        "Nenhuma alteração realizada em "
+        "historico_cartola.json."
+    )
+
+    raise SystemExit(0)
+
+
+print()
+
+print(
+    "A rodada ainda não possui uma consolidação "
+    "completa e protegida."
+)
+
+print(
+    "Iniciando validação antes da primeira "
+    "gravação definitiva."
+)
+
+print()
+
+print(
+    "A consolidação usará somente "
+    "rodada_atual_cartola.json previamente "
+    "validado. /time/id não será usado como "
+    "fallback para o histórico."
 )
 
 
@@ -878,6 +1034,25 @@ if len(novos_registros) != TOTAL_TIMES:
     )
 
 
+# ==========================================================
+# ÚLTIMA BARREIRA ANTES DA GRAVAÇÃO
+# ==========================================================
+#
+# Fazemos novamente a verificação imediatamente antes
+# da escrita. É uma defesa adicional para garantir que
+# uma rodada completa jamais seja substituída.
+# ==========================================================
+
+if rodada_historica_completa(
+    historico,
+    rodada_para_salvar,
+):
+    raise RuntimeError(
+        "GRAVAÇÃO BLOQUEADA: a rodada passou a constar "
+        "como consolidada antes da escrita."
+    )
+
+
 rodada_existente = (
     historico["rodadas"].get(
         str(rodada_para_salvar),
@@ -886,141 +1061,19 @@ rodada_existente = (
 )
 
 
-if (
-    isinstance(
-        rodada_existente,
-        list,
+if rodada_existente:
+    print()
+
+    print(
+        "ATENÇÃO: existe uma versão incompleta da rodada "
+        "no histórico."
     )
-    and rodada_existente
-):
-    mapa_existente = {}
 
-    for item in rodada_existente:
-        if not isinstance(
-            item,
-            dict,
-        ):
-            continue
-
-        time_id = inteiro(
-            item.get(
-                "time_id",
-                0,
-            )
-        )
-
-        if time_id > 0:
-            mapa_existente[
-                time_id
-            ] = item
-
-    diferencas = []
-
-    for novo in novos_registros:
-        time_id = novo[
-            "time_id"
-        ]
-
-        antigo = mapa_existente.get(
-            time_id
-        )
-
-        if not antigo:
-            diferencas.append(
-                (
-                    novo["time"],
-                    "registro inexistente",
-                )
-            )
-
-            continue
-
-        pontos_antigos = round(
-            numero(
-                antigo.get(
-                    "pontos",
-                    0,
-                )
-            ),
-            2,
-        )
-
-        pontos_novos = round(
-            numero(
-                novo.get(
-                    "pontos",
-                    0,
-                )
-            ),
-            2,
-        )
-
-        patrimonio_antigo = round(
-            numero(
-                antigo.get(
-                    "patrimonio",
-                    0,
-                )
-            ),
-            2,
-        )
-
-        patrimonio_novo = round(
-            numero(
-                novo.get(
-                    "patrimonio",
-                    0,
-                )
-            ),
-            2,
-        )
-
-        if (
-            pontos_antigos
-            != pontos_novos
-            or patrimonio_antigo
-            != patrimonio_novo
-        ):
-            diferencas.append(
-                (
-                    novo["time"],
-                    (
-                        f"{pontos_antigos:.2f} -> "
-                        f"{pontos_novos:.2f} pts | "
-                        f"C$ {patrimonio_antigo:.2f} -> "
-                        f"C$ {patrimonio_novo:.2f}"
-                    ),
-                )
-            )
-
-    if diferencas:
-        print()
-        print(
-            "A rodada já existia no histórico, "
-            "mas o novo snapshot validado possui "
-            "diferenças:"
-        )
-
-        for (
-            nome,
-            descricao,
-        ) in diferencas:
-            print(
-                f" - {nome}: {descricao}"
-            )
-
-        print(
-            "Como a nova fonte passou por todas "
-            "as validações, ela poderá corrigir "
-            "um registro histórico anteriormente "
-            "contaminado."
-        )
-
-    else:
-        print(
-            "A rodada já existe e os valores "
-            "validados são idênticos."
-        )
+    print(
+        "Como ela não possui os 36 registros válidos, "
+        "será substituída somente após todas as "
+        "validações terem sido aprovadas."
+    )
 
 
 historico[
@@ -1030,31 +1083,12 @@ historico[
 ] = novos_registros
 
 
-for rodada_texto in list(
-    historico["rodadas"]
-):
-    try:
-        numero_rodada = int(
-            rodada_texto
-        )
-
-    except ValueError:
-        continue
-
-    if (
-        numero_rodada
-        > rodada_para_salvar
-    ):
-        print(
-            "Removendo rodada futura inválida: "
-            f"{rodada_texto}"
-        )
-
-        del historico[
-            "rodadas"
-        ][
-            rodada_texto
-        ]
+# Não apagamos automaticamente rodadas históricas.
+#
+# Uma automação de atualização nunca deve remover
+# resultados já armazenados. Caso exista alguma rodada
+# futura inválida, a correção deve ser feita por processo
+# controlado e auditável.
 
 
 historico[
@@ -1064,6 +1098,19 @@ historico[
 historico[
     "ultima_atualizacao"
 ] = agora_texto()
+
+
+# Validação final em memória antes de escrever no disco.
+
+if not rodada_historica_completa(
+    historico,
+    rodada_para_salvar,
+):
+    raise RuntimeError(
+        "VALIDAÇÃO FINAL REPROVADA: "
+        "a rodada montada não possui os "
+        "36 registros válidos esperados."
+    )
 
 
 salvar_atomico(
@@ -1095,4 +1142,13 @@ print(
 
 print(
     "Proteção contra respostas defasadas: ATIVA."
+)
+
+print(
+    "Proteção contra sobrescrita histórica: ATIVA."
+)
+
+print(
+    f"Rodada {rodada_para_salvar} agora está "
+    "protegida contra alterações automáticas."
 )
