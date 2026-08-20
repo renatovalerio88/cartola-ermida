@@ -1,10 +1,28 @@
 import json
 import os
+import time
 import urllib.request
 from datetime import datetime
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from zoneinfo import ZoneInfo
+
+
+# ============================================================
+# CARTOLA DE ERMIDA
+# Consolidação segura do histórico de rodadas fechadas
+#
+# OBJETIVOS:
+# - nunca sobrescrever automaticamente uma rodada consolidada;
+# - nunca gravar rodada incompleta;
+# - nunca aceitar resposta de /time/id de outra rodada;
+# - validar os 36 times antes de alterar o histórico;
+# - usar rodada_atual_cartola.json somente quando o snapshot
+#   estiver completo, consistente e corresponder à rodada;
+# - permitir /time/id apenas como fonte validada;
+# - salvar o histórico de forma atômica;
+# - preservar todo o histórico anterior.
+# ============================================================
 
 
 ARQUIVO_HISTORICO = Path("historico_cartola.json")
@@ -13,14 +31,8 @@ ARQUIVO_RODADA_ATUAL = Path("rodada_atual_cartola.json")
 URL_STATUS = "https://api.cartola.globo.com/mercado/status"
 
 TOTAL_TIMES = 36
-FUSO = ZoneInfo("America/Sao_Paulo")
 
-# Quantidade mínima de repetições exatas de pontos + patrimônio
-# entre duas rodadas consecutivas para bloquear a consolidação.
-#
-# Uma coincidência isolada pode acontecer.
-# Várias coincidências simultâneas são assinatura de dado defasado.
-LIMITE_REPETICOES_SUSPEITAS = 3
+FUSO = ZoneInfo("America/Sao_Paulo")
 
 
 TIMES = [
@@ -63,22 +75,34 @@ TIMES = [
 ]
 
 
+IDS_ESPERADOS = {time_id for time_id, _, _ in TIMES}
+
+
 def agora_texto():
     return datetime.now(FUSO).strftime("%d/%m/%Y %H:%M:%S")
 
 
-def numero(valor, padrao=0.0):
+def numero(valor, padrao=None):
     try:
-        return float(valor)
+        numero_convertido = float(valor)
+
+        if numero_convertido != numero_convertido:
+            return padrao
+
+        if numero_convertido in (float("inf"), float("-inf")):
+            return padrao
+
+        return numero_convertido
+
     except (TypeError, ValueError):
-        return float(padrao)
+        return padrao
 
 
 def inteiro(valor, padrao=0):
     try:
         return int(valor)
     except (TypeError, ValueError):
-        return int(padrao)
+        return padrao
 
 
 def buscar_json(url, tentativas=3):
@@ -91,16 +115,14 @@ def buscar_json(url, tentativas=3):
                 headers={
                     "Accept": "application/json",
                     "User-Agent": "Mozilla/5.0",
-                    "Cache-Control": "no-cache",
                 },
             )
 
-            with urllib.request.urlopen(req, timeout=25) as resposta:
-                conteudo = resposta.read().decode("utf-8").strip()
-
-                if not conteudo:
-                    raise ValueError("A API respondeu sem conteúdo.")
-
+            with urllib.request.urlopen(
+                req,
+                timeout=25,
+            ) as resposta:
+                conteudo = resposta.read().decode("utf-8")
                 dados = json.loads(conteudo)
 
                 if not isinstance(dados, dict):
@@ -119,7 +141,6 @@ def buscar_json(url, tentativas=3):
             )
 
             if tentativa < tentativas:
-                import time
                 time.sleep(tentativa * 2)
 
     raise RuntimeError(
@@ -135,28 +156,39 @@ def carregar_historico():
         ) as arquivo:
             dados = json.load(arquivo)
 
-            if not isinstance(dados, dict):
-                raise ValueError(
-                    "O histórico não contém um objeto JSON."
-                )
-
-            dados.setdefault(
-                "liga",
-                "Cartola de Ermida",
-            )
-
-            dados.setdefault(
-                "rodadas",
-                {},
-            )
-
-            return dados
-
     except FileNotFoundError:
         return {
             "liga": "Cartola de Ermida",
             "rodadas": {},
         }
+
+    except json.JSONDecodeError as erro:
+        raise RuntimeError(
+            f"{ARQUIVO_HISTORICO} contém JSON inválido: {erro}"
+        )
+
+    if not isinstance(dados, dict):
+        raise RuntimeError(
+            "historico_cartola.json não contém "
+            "um objeto JSON válido."
+        )
+
+    rodadas = dados.get("rodadas")
+
+    if rodadas is None:
+        dados["rodadas"] = {}
+
+    elif not isinstance(rodadas, dict):
+        raise RuntimeError(
+            "O campo 'rodadas' do histórico não é um objeto."
+        )
+
+    dados.setdefault(
+        "liga",
+        "Cartola de Ermida",
+    )
+
+    return dados
 
 
 def carregar_rodada_atual():
@@ -167,16 +199,13 @@ def carregar_rodada_atual():
         ) as arquivo:
             dados = json.load(arquivo)
 
-            if isinstance(dados, dict):
-                return dados
-
-            return {}
-
-    except (
-        FileNotFoundError,
-        json.JSONDecodeError,
-    ):
+    except FileNotFoundError:
         return {}
+
+    except json.JSONDecodeError:
+        return {}
+
+    return dados if isinstance(dados, dict) else {}
 
 
 def salvar_atomico(caminho, dados):
@@ -185,677 +214,511 @@ def salvar_atomico(caminho, dados):
         exist_ok=True,
     )
 
-    with NamedTemporaryFile(
-        "w",
-        encoding="utf-8",
-        dir=caminho.parent,
-        delete=False,
-        suffix=".tmp",
-    ) as temporario:
-        json.dump(
-            dados,
-            temporario,
-            ensure_ascii=False,
-            indent=2,
+    nome_temporario = None
+
+    try:
+        with NamedTemporaryFile(
+            "w",
+            encoding="utf-8",
+            dir=caminho.parent,
+            delete=False,
+            suffix=".tmp",
+        ) as temporario:
+            json.dump(
+                dados,
+                temporario,
+                ensure_ascii=False,
+                indent=2,
+            )
+
+            temporario.write("\n")
+
+            nome_temporario = temporario.name
+
+        os.replace(
+            nome_temporario,
+            caminho,
         )
 
-        temporario.write("\n")
-        nome_temporario = temporario.name
-
-    os.replace(
-        nome_temporario,
-        caminho,
-    )
-
-
-def soma_detalhes(item):
-    detalhes = item.get(
-        "detalhes_parcial",
-        [],
-    )
-
-    if not isinstance(
-        detalhes,
-        list,
-    ) or not detalhes:
-        return None
-
-    total = 0.0
-
-    for atleta in detalhes:
-        if not isinstance(
-            atleta,
-            dict,
+    except Exception:
+        if (
+            nome_temporario
+            and os.path.exists(nome_temporario)
         ):
-            continue
+            os.unlink(nome_temporario)
 
-        total += numero(
-            atleta.get(
-                "pontos_computados",
-                0,
-            )
-        )
-
-    return round(
-        total,
-        2,
-    )
+        raise
 
 
-def validar_registro_snapshot(
-    item,
+def validar_registros_rodada(
+    registros,
     rodada,
+    origem,
 ):
     """
-    Valida individualmente um time antes de permitir
-    que ele seja promovido ao histórico definitivo.
+    Validação estrutural antes de qualquer consolidação.
 
-    A falha identificada na rodada 23 tinha a seguinte
-    assinatura:
-
-    - pontos agregados > 0;
-    - patrimônio reaproveitado da rodada anterior;
-    - atletas da suposta rodada fechada todos zerados.
-
-    Por isso, quando existe detalhamento, a soma dos
-    pontos computados precisa ser compatível com o
-    total informado para o time.
+    Retorna:
+        (True, []) quando tudo estiver correto
+        (False, [erros]) quando houver qualquer inconsistência
     """
 
-    if not isinstance(
-        item,
-        dict,
-    ):
-        return (
-            False,
-            "registro inválido",
-        )
-
-    rodada_item = inteiro(
-        item.get(
-            "rodada_dados",
-            0,
-        )
-    )
-
-    if rodada_item != inteiro(rodada):
-        return (
-            False,
-            (
-                f"rodada_dados={rodada_item}; "
-                f"esperada={rodada}"
-            ),
-        )
-
-    time_id = inteiro(
-        item.get(
-            "time_id",
-            0,
-        )
-    )
-
-    if time_id <= 0:
-        return (
-            False,
-            "time_id inválido",
-        )
-
-    pontos = round(
-        numero(
-            item.get(
-                "pontos",
-                0,
-            )
-        ),
-        2,
-    )
-
-    soma = soma_detalhes(item)
-
-    if soma is None:
-        return (
-            False,
-            "registro sem detalhamento verificável",
-        )
-
-    if abs(soma - pontos) > 0.11:
-        return (
-            False,
-            (
-                f"total do time {pontos:.2f} "
-                f"incompatível com soma dos atletas "
-                f"{soma:.2f}"
-            ),
-        )
-
-    fonte = str(
-        item.get(
-            "fonte_pontos",
-            "",
-        )
-    ).strip()
-
-    fontes_aceitas = {
-        "api_time_id_validado",
-        "snapshot_ao_vivo_validado",
-        "parciais_finais_validadas",
-        "atletas_pontuados",
-    }
-
-    if fonte not in fontes_aceitas:
-        return (
-            False,
-            (
-                "fonte não validada para consolidação: "
-                f"{fonte or 'vazia'}"
-            ),
-        )
-
-    return (
-        True,
-        "ok",
-    )
-
-
-def mapa_rodada_atual_validado(
-    rodada,
-):
-    dados = carregar_rodada_atual()
-
-    rodada_snapshot = inteiro(
-        dados.get(
-            "rodada_dados",
-            0,
-        )
-    )
-
-    if rodada_snapshot != inteiro(rodada):
-        raise RuntimeError(
-            "rodada_atual_cartola.json não corresponde "
-            "à rodada que precisa ser consolidada. "
-            f"Snapshot={rodada_snapshot}; "
-            f"esperada={rodada}."
-        )
-
-    times = dados.get(
-        "times",
-        [],
-    )
-
-    if not isinstance(
-        times,
-        list,
-    ):
-        raise RuntimeError(
-            "rodada_atual_cartola.json não contém "
-            "uma lista válida de times."
-        )
-
-    if len(times) != TOTAL_TIMES:
-        raise RuntimeError(
-            "rodada_atual_cartola.json está incompleto. "
-            f"Times encontrados: {len(times)}/{TOTAL_TIMES}."
-        )
-
-    mapa = {}
     erros = []
 
-    for item in times:
-        time_id = inteiro(
-            item.get(
-                "time_id",
-                0,
-            )
-        ) if isinstance(item, dict) else 0
-
-        valido, motivo = validar_registro_snapshot(
-            item,
-            rodada,
-        )
-
-        if not valido:
-            nome = (
-                item.get(
-                    "time",
-                    str(time_id),
-                )
-                if isinstance(item, dict)
-                else "registro desconhecido"
-            )
-
-            erros.append(
-                f"{nome}: {motivo}"
-            )
-
-            continue
-
-        if time_id in mapa:
-            erros.append(
-                f"time_id duplicado: {time_id}"
-            )
-
-            continue
-
-        mapa[time_id] = item
-
-    if erros:
-        print()
-        print(
-            "SNAPSHOT REPROVADO. "
-            "Nenhum dado será gravado no histórico."
-        )
-
-        for erro in erros:
-            print(
-                f" - {erro}"
-            )
-
-        raise RuntimeError(
-            "rodada_atual_cartola.json contém "
-            "dados inconsistentes."
-        )
-
-    if len(mapa) != TOTAL_TIMES:
-        raise RuntimeError(
-            "O snapshot não possui os 36 times "
-            "válidos e únicos."
-        )
-
-    ids_esperados = {
-        time_id
-        for time_id, _, _ in TIMES
-    }
-
-    ids_snapshot = set(
-        mapa.keys()
-    )
-
-    faltantes = (
-        ids_esperados
-        - ids_snapshot
-    )
-
-    extras = (
-        ids_snapshot
-        - ids_esperados
-    )
-
-    if faltantes or extras:
-        if faltantes:
-            print(
-                "Times ausentes no snapshot:",
-                sorted(faltantes),
-            )
-
-        if extras:
-            print(
-                "Times inesperados no snapshot:",
-                sorted(extras),
-            )
-
-        raise RuntimeError(
-            "A composição da liga no snapshot "
-            "não corresponde aos 36 times esperados."
-        )
-
-    return mapa
-
-
-def mapa_historico_rodada(
-    historico,
-    rodada,
-):
-    rodadas = historico.get(
-        "rodadas",
-        {},
-    )
-
-    if not isinstance(
-        rodadas,
-        dict,
-    ):
-        return {}
-
-    registros = rodadas.get(
-        str(rodada),
-        [],
-    )
-
-    if not isinstance(
-        registros,
-        list,
-    ):
-        return {}
-
-    mapa = {}
-
-    for item in registros:
-        if not isinstance(
-            item,
-            dict,
-        ):
-            continue
-
-        time_id = inteiro(
-            item.get(
-                "time_id",
-                0,
-            )
-        )
-
-        if time_id > 0:
-            mapa[time_id] = item
-
-    return mapa
-
-
-def rodada_historica_completa(
-    historico,
-    rodada,
-):
-    """
-    Verifica se uma rodada já está consolidada no histórico.
-
-    Uma rodada somente é considerada consolidada quando:
-
-    - existe como lista;
-    - possui exatamente 36 registros;
-    - todos os registros são objetos válidos;
-    - todos possuem time_id válido;
-    - não existem time_ids duplicados;
-    - os 36 IDs correspondem exatamente aos times da liga.
-
-    Quando essa condição é atendida, a rodada passa a ser
-    IMUTÁVEL para a automação normal.
-
-    Correções históricas devem ser feitas exclusivamente
-    por um processo controlado de recuperação.
-    """
-
-    rodadas = historico.get(
-        "rodadas",
-        {},
-    )
-
-    if not isinstance(
-        rodadas,
-        dict,
-    ):
-        return False
-
-    registros = rodadas.get(
-        str(rodada),
-        [],
-    )
-
-    if not isinstance(
-        registros,
-        list,
-    ):
-        return False
+    if not isinstance(registros, list):
+        return False, [
+            f"{origem}: lista de times inválida."
+        ]
 
     if len(registros) != TOTAL_TIMES:
-        return False
+        erros.append(
+            f"{origem}: encontrados {len(registros)} times; "
+            f"esperados {TOTAL_TIMES}."
+        )
 
     ids_encontrados = []
+    ids_duplicados = set()
 
-    for item in registros:
-        if not isinstance(
-            item,
-            dict,
-        ):
-            return False
+    for indice, item in enumerate(
+        registros,
+        start=1,
+    ):
+        if not isinstance(item, dict):
+            erros.append(
+                f"{origem}: registro {indice} "
+                "não é um objeto JSON."
+            )
+            continue
 
         time_id = inteiro(
-            item.get(
-                "time_id",
-                0,
-            )
+            item.get("time_id"),
+            0,
         )
 
         if time_id <= 0:
-            return False
-
-        ids_encontrados.append(
-            time_id
-        )
-
-    if len(set(ids_encontrados)) != TOTAL_TIMES:
-        return False
-
-    ids_esperados = {
-        time_id
-        for time_id, _, _ in TIMES
-    }
-
-    if set(ids_encontrados) != ids_esperados:
-        return False
-
-    return True
-
-
-def auditar_repeticoes_rodada_anterior(
-    mapa_snapshot,
-    historico,
-    rodada,
-):
-    """
-    Segunda barreira de segurança.
-
-    Se vários times repetirem exatamente pontos E
-    patrimônio da rodada anterior, interrompemos a
-    consolidação.
-
-    Foi exatamente esse padrão que revelou os
-    14 registros contaminados da rodada 23.
-    """
-
-    rodada_anterior = inteiro(
-        rodada
-    ) - 1
-
-    if rodada_anterior <= 0:
-        return
-
-    mapa_anterior = mapa_historico_rodada(
-        historico,
-        rodada_anterior,
-    )
-
-    if len(mapa_anterior) != TOTAL_TIMES:
-        print(
-            "Auditoria de repetição ignorada: "
-            "a rodada anterior não possui os "
-            "36 registros completos."
-        )
-
-        return
-
-    repetidos = []
-
-    for (
-        time_id,
-        nome_time,
-        _cartoleiro,
-    ) in TIMES:
-        atual = mapa_snapshot.get(
-            time_id,
-            {},
-        )
-
-        anterior = mapa_anterior.get(
-            time_id,
-            {},
-        )
-
-        if not atual or not anterior:
+            erros.append(
+                f"{origem}: registro {indice} "
+                "sem time_id válido."
+            )
             continue
 
-        pontos_atual = round(
-            numero(
-                atual.get(
-                    "pontos",
-                    0,
-                )
+        if time_id in ids_encontrados:
+            ids_duplicados.add(time_id)
+
+        ids_encontrados.append(time_id)
+
+        rodada_item = inteiro(
+            item.get(
+                "rodada",
+                item.get(
+                    "rodada_dados",
+                    rodada,
+                ),
             ),
-            2,
+            rodada,
         )
 
-        pontos_anterior = round(
-            numero(
-                anterior.get(
-                    "pontos",
-                    0,
-                )
-            ),
-            2,
+        if rodada_item != rodada:
+            erros.append(
+                f"{origem}: time {time_id} "
+                f"pertence à rodada {rodada_item}; "
+                f"esperada {rodada}."
+            )
+
+        pontos = numero(
+            item.get("pontos"),
+            None,
         )
 
-        patrimonio_atual = round(
-            numero(
-                atual.get(
-                    "patrimonio",
-                    0,
-                )
-            ),
-            2,
+        if pontos is None:
+            erros.append(
+                f"{origem}: time {time_id} "
+                "sem pontuação válida."
+            )
+
+        patrimonio = numero(
+            item.get("patrimonio"),
+            None,
         )
 
-        patrimonio_anterior = round(
-            numero(
-                anterior.get(
-                    "patrimonio",
-                    0,
-                )
-            ),
-            2,
+        if patrimonio is None:
+            erros.append(
+                f"{origem}: time {time_id} "
+                "sem patrimônio válido."
+            )
+
+    ids_encontrados_set = set(
+        ids_encontrados
+    )
+
+    faltantes = sorted(
+        IDS_ESPERADOS - ids_encontrados_set
+    )
+
+    extras = sorted(
+        ids_encontrados_set - IDS_ESPERADOS
+    )
+
+    if ids_duplicados:
+        erros.append(
+            f"{origem}: IDs duplicados: "
+            + ", ".join(
+                str(time_id)
+                for time_id in sorted(ids_duplicados)
+            )
+        )
+
+    if faltantes:
+        erros.append(
+            f"{origem}: IDs ausentes: "
+            + ", ".join(
+                str(time_id)
+                for time_id in faltantes
+            )
+        )
+
+    if extras:
+        erros.append(
+            f"{origem}: IDs inesperados: "
+            + ", ".join(
+                str(time_id)
+                for time_id in extras
+            )
+        )
+
+    return len(erros) == 0, erros
+
+
+def mapa_snapshot_validado(rodada):
+    """
+    Tenta usar rodada_atual_cartola.json como fonte.
+
+    O snapshot só será aceito se:
+    - corresponder exatamente à rodada desejada;
+    - possuir os 36 times;
+    - possuir exatamente os IDs esperados;
+    - todos tiverem pontuação válida;
+    - todos tiverem patrimônio válido.
+    """
+
+    dados = carregar_rodada_atual()
+
+    if not dados:
+        return {}
+
+    rodada_dados = inteiro(
+        dados.get("rodada_dados"),
+        0,
+    )
+
+    if rodada_dados != rodada:
+        print(
+            "Snapshot ignorado: "
+            f"rodada_dados={rodada_dados}; "
+            f"esperada={rodada}."
+        )
+
+        return {}
+
+    times = dados.get("times")
+
+    valido, erros = validar_registros_rodada(
+        times,
+        rodada,
+        "rodada_atual_cartola.json",
+    )
+
+    if not valido:
+        print(
+            "Snapshot ignorado por inconsistência:"
+        )
+
+        for erro in erros:
+            print(f" - {erro}")
+
+        return {}
+
+    mapa = {}
+
+    for item in times:
+        time_id = inteiro(
+            item.get("time_id"),
+            0,
+        )
+
+        mapa[time_id] = item
+
+    if set(mapa) != IDS_ESPERADOS:
+        return {}
+
+    return mapa
+
+
+def validar_resposta_time_id(
+    dados,
+    time_id,
+    rodada_esperada,
+):
+    """
+    Validação rigorosa da resposta de /time/id.
+
+    O principal problema que originou esta correção era
+    aceitar dados potencialmente defasados como se fossem
+    da rodada solicitada.
+
+    Portanto, quando a API informar explicitamente a rodada
+    dos dados, ela precisa corresponder à rodada esperada.
+    """
+
+    if not isinstance(dados, dict):
+        return False, "resposta não é um objeto JSON"
+
+    time_api = dados.get("time")
+
+    if isinstance(time_api, dict):
+        time_id_api = inteiro(
+            time_api.get("time_id"),
+            0,
         )
 
         if (
-            pontos_atual
-            == pontos_anterior
-            and patrimonio_atual
-            == patrimonio_anterior
+            time_id_api > 0
+            and time_id_api != time_id
         ):
-            repetidos.append(
-                {
-                    "time_id": time_id,
-                    "time": nome_time,
-                    "pontos": pontos_atual,
-                    "patrimonio": patrimonio_atual,
-                }
+            return (
+                False,
+                f"time_id retornado {time_id_api}; "
+                f"esperado {time_id}",
             )
 
-    if repetidos:
-        print()
-        print(
-            "Auditoria de repetição entre rodadas:"
+    campos_rodada = [
+        "rodada_atual",
+        "rodada_dados",
+        "rodada",
+    ]
+
+    rodadas_informadas = []
+
+    for campo in campos_rodada:
+        if campo not in dados:
+            continue
+
+        valor = inteiro(
+            dados.get(campo),
+            0,
         )
 
-        for item in repetidos:
-            print(
-                f" - {item['time']}: "
-                f"{item['pontos']:.2f} pts / "
-                f"C$ {item['patrimonio']:.2f}"
+        if valor > 0:
+            rodadas_informadas.append(
+                (campo, valor)
             )
 
-    if (
-        len(repetidos)
-        >= LIMITE_REPETICOES_SUSPEITAS
-    ):
-        raise RuntimeError(
-            "CONSOLIDAÇÃO BLOQUEADA: "
-            f"{len(repetidos)} times repetiram "
-            "simultaneamente pontos e patrimônio "
-            "da rodada anterior. "
-            "O padrão é compatível com resposta "
-            "defasada da API."
+    for campo, rodada_api in rodadas_informadas:
+        if rodada_api != rodada_esperada:
+            return (
+                False,
+                f"{campo}={rodada_api}; "
+                f"esperada {rodada_esperada}",
+            )
+
+    pontos = numero(
+        dados.get("pontos"),
+        None,
+    )
+
+    if pontos is None:
+        return (
+            False,
+            "pontuação ausente ou inválida",
         )
 
+    patrimonio = numero(
+        dados.get("patrimonio"),
+        None,
+    )
 
-def montar_registros_historico(
-    mapa_snapshot,
+    if patrimonio is None:
+        return (
+            False,
+            "patrimônio ausente ou inválido",
+        )
+
+    return True, "OK"
+
+
+def registro_do_snapshot(
+    snapshot,
+    time_id,
+    nome_time,
+    cartoleiro,
     rodada,
 ):
-    registros = []
+    pontos = numero(
+        snapshot.get("pontos"),
+        None,
+    )
 
-    for (
+    patrimonio = numero(
+        snapshot.get("patrimonio"),
+        None,
+    )
+
+    if pontos is None:
+        raise ValueError(
+            "snapshot sem pontuação válida"
+        )
+
+    if patrimonio is None:
+        raise ValueError(
+            "snapshot sem patrimônio válido"
+        )
+
+    return {
+        "time_id": time_id,
+        "time": nome_time,
+        "cartoleiro": cartoleiro,
+        "rodada": rodada,
+        "pontos": round(pontos, 2),
+        "patrimonio": round(
+            patrimonio,
+            2,
+        ),
+        "fonte_pontos": (
+            "rodada_atual_cartola_validado"
+        ),
+    }
+
+
+def registro_da_api(
+    dados,
+    time_id,
+    nome_time,
+    cartoleiro,
+    rodada,
+):
+    valido, motivo = validar_resposta_time_id(
+        dados,
         time_id,
-        nome_time,
-        cartoleiro,
-    ) in TIMES:
-        snapshot = mapa_snapshot.get(
-            time_id,
+        rodada,
+    )
+
+    if not valido:
+        raise ValueError(
+            f"resposta /time/id rejeitada: {motivo}"
         )
 
-        if not snapshot:
-            raise RuntimeError(
-                f"Snapshot ausente para {nome_time}."
-            )
+    pontos = numero(
+        dados.get("pontos"),
+        None,
+    )
 
-        registro = {
-            "time_id": time_id,
-            "time": nome_time,
-            "cartoleiro": cartoleiro,
-            "rodada": rodada,
-            "pontos": round(
-                numero(
-                    snapshot.get(
-                        "pontos",
-                        0,
-                    )
-                ),
-                2,
-            ),
-            "patrimonio": round(
-                numero(
-                    snapshot.get(
-                        "patrimonio",
-                        0,
-                    )
-                ),
-                2,
-            ),
-            "fonte_pontos": str(
-                snapshot.get(
-                    "fonte_pontos",
-                    "snapshot_validado",
-                )
-            ),
-        }
+    patrimonio = numero(
+        dados.get("patrimonio"),
+        None,
+    )
 
-        registros.append(
-            registro
-        )
-
-    return registros
+    return {
+        "time_id": time_id,
+        "time": nome_time,
+        "cartoleiro": cartoleiro,
+        "rodada": rodada,
+        "pontos": round(
+            pontos,
+            2,
+        ),
+        "patrimonio": round(
+            patrimonio,
+            2,
+        ),
+        "fonte_pontos": (
+            "api_time_id_validado"
+        ),
+    }
 
 
-print(
-    "Consultando o status do Cartola..."
-)
+def rodada_ja_consolidada(
+    historico,
+    rodada,
+):
+    registros = historico.get(
+        "rodadas",
+        {},
+    ).get(
+        str(rodada)
+    )
+
+    if registros is None:
+        return False
+
+    valido, erros = validar_registros_rodada(
+        registros,
+        rodada,
+        (
+            f"historico_cartola.json "
+            f"rodada {rodada}"
+        ),
+    )
+
+    if valido:
+        return True
+
+    print()
+    print(
+        "ATENÇÃO: a rodada já existe no histórico, "
+        "mas não passou na validação estrutural."
+    )
+
+    for erro in erros:
+        print(f" - {erro}")
+
+    print()
+    print(
+        "PROTEÇÃO DO HISTÓRICO: a rodada NÃO será "
+        "sobrescrita automaticamente."
+    )
+
+    print(
+        "Use o processo de recuperação controlada "
+        "para qualquer correção histórica."
+    )
+
+    raise RuntimeError(
+        f"Rodada {rodada} existente, porém inconsistente."
+    )
+
+
+# ============================================================
+# INÍCIO
+# ============================================================
+
+
+print("=" * 72)
+print("CARTOLA DE ERMIDA - CONSOLIDAÇÃO SEGURA DO HISTÓRICO")
+print("=" * 72)
+
+print()
+print("Consultando o status do Cartola...")
+
 
 status = buscar_json(
     URL_STATUS
 )
 
+
 rodada_status = inteiro(
-    status.get(
-        "rodada_atual",
-        0,
-    )
+    status.get("rodada_atual"),
+    0,
 )
 
 mercado_status = inteiro(
-    status.get(
-        "status_mercado",
-        0,
-    )
+    status.get("status_mercado"),
+    0,
 )
 
 mercado_aberto = (
     mercado_status == 1
 )
+
 
 print(
     f"Rodada Cartola: {rodada_status}"
@@ -872,22 +735,32 @@ print(
 
 if rodada_status <= 0:
     raise RuntimeError(
-        "Não foi possível determinar "
-        "a rodada atual."
+        "A API não informou uma rodada atual válida."
     )
 
 
 if not mercado_aberto:
-    raise RuntimeError(
-        "O mercado não está aberto. "
-        "Nenhuma parcial será gravada "
-        "como resultado definitivo."
+    print()
+    print(
+        "Mercado ainda não está aberto."
     )
+
+    print(
+        "Nenhuma rodada será consolidada neste momento."
+    )
+
+    print(
+        "Isso evita gravar uma parcial como "
+        "resultado definitivo."
+    )
+
+    raise SystemExit(0)
 
 
 rodada_para_salvar = (
     rodada_status - 1
 )
+
 
 if rodada_para_salvar <= 0:
     raise RuntimeError(
@@ -897,44 +770,31 @@ if rodada_para_salvar <= 0:
 
 
 print()
-
 print(
-    "Verificando a rodada fechada "
+    f"Verificando a rodada fechada "
     f"{rodada_para_salvar}..."
 )
 
 
 historico = carregar_historico()
 
-historico["liga"] = (
-    "Cartola de Ermida"
-)
 
-historico.setdefault(
-    "rodadas",
-    {},
-)
+# ============================================================
+# PROTEÇÃO 1
+# RODADAS CONSOLIDADAS SÃO IMUTÁVEIS
+# ============================================================
 
 
-# ==========================================================
-# PROTEÇÃO DEFINITIVA DO HISTÓRICO
-# ==========================================================
-#
-# Uma rodada que já esteja consolidada com os 36 times
-# válidos não pode ser alterada pela automação normal.
-#
-# Isso impede que uma resposta posterior, atrasada,
-# inconsistente ou diferente da API sobrescreva um
-# resultado histórico que já foi consolidado.
-#
-# Correções excepcionais devem ocorrer somente através
-# do processo controlado de recuperação histórica.
-# ==========================================================
-
-if rodada_historica_completa(
+if rodada_ja_consolidada(
     historico,
     rodada_para_salvar,
 ):
+    registros_existentes = (
+        historico["rodadas"][
+            str(rodada_para_salvar)
+        ]
+    )
+
     print()
     print(
         f"Rodada {rodada_para_salvar} "
@@ -943,18 +803,17 @@ if rodada_historica_completa(
 
     print(
         f"Registros encontrados: "
-        f"{TOTAL_TIMES}/{TOTAL_TIMES}."
+        f"{len(registros_existentes)}/{TOTAL_TIMES}."
     )
 
     print()
-
     print(
         "PROTEÇÃO DO HISTÓRICO: ATIVA."
     )
 
     print(
-        "A rodada existente é imutável e "
-        "NÃO será sobrescrita."
+        "A rodada existente é imutável "
+        "e NÃO será sobrescrita."
     )
 
     print(
@@ -963,154 +822,327 @@ if rodada_historica_completa(
     )
 
     print()
-
     print(
-        "Nenhuma alteração realizada em "
-        "historico_cartola.json."
+        "Nenhuma alteração realizada "
+        "em historico_cartola.json."
     )
 
     raise SystemExit(0)
 
 
-print()
+# ============================================================
+# PROTEÇÃO 2
+# TENTAR SNAPSHOT JÁ VALIDADO
+# ============================================================
 
-print(
-    "A rodada ainda não possui uma consolidação "
-    "completa e protegida."
-)
-
-print(
-    "Iniciando validação antes da primeira "
-    "gravação definitiva."
-)
 
 print()
-
 print(
-    "A consolidação usará somente "
-    "rodada_atual_cartola.json previamente "
-    "validado. /time/id não será usado como "
-    "fallback para o histórico."
+    "Procurando snapshot validado da rodada..."
 )
 
 
 mapa_snapshot = (
-    mapa_rodada_atual_validado(
+    mapa_snapshot_validado(
         rodada_para_salvar
     )
 )
 
+
+if mapa_snapshot:
+    print(
+        "Snapshot completo e consistente encontrado."
+    )
+
+    print(
+        "Fonte preferencial: "
+        "rodada_atual_cartola.json validado."
+    )
+
+else:
+    print(
+        "Snapshot validado não disponível."
+    )
+
+    print(
+        "Será utilizada a API /time/id "
+        "com validação rigorosa."
+    )
+
+
+# ============================================================
+# MONTAGEM DA NOVA RODADA
+# ============================================================
+
+
+novos_registros = []
+erros = []
+
+
+print()
 print(
-    "Snapshot aprovado: "
-    f"{len(mapa_snapshot)}/{TOTAL_TIMES} "
-    "times validados."
+    f"Preparando os {TOTAL_TIMES} registros "
+    f"da rodada {rodada_para_salvar}..."
 )
 
 
-auditar_repeticoes_rodada_anterior(
-    mapa_snapshot,
-    historico,
-    rodada_para_salvar,
-)
+for indice, (
+    time_id,
+    nome_time,
+    cartoleiro,
+) in enumerate(
+    TIMES,
+    start=1,
+):
+    try:
+        # ----------------------------------------------------
+        # FONTE 1: SNAPSHOT VALIDADO
+        # ----------------------------------------------------
 
-print(
-    "Auditoria contra a rodada anterior: "
-    "APROVADA."
-)
+        if time_id in mapa_snapshot:
+            snapshot = (
+                mapa_snapshot[time_id]
+            )
+
+            registro = registro_do_snapshot(
+                snapshot,
+                time_id,
+                nome_time,
+                cartoleiro,
+                rodada_para_salvar,
+            )
+
+        # ----------------------------------------------------
+        # FONTE 2: /time/id VALIDADO
+        # ----------------------------------------------------
+
+        else:
+            url = (
+                "https://api.cartola.globo.com"
+                f"/time/id/{time_id}/"
+                f"{rodada_para_salvar}"
+            )
+
+            dados = buscar_json(
+                url
+            )
+
+            registro = registro_da_api(
+                dados,
+                time_id,
+                nome_time,
+                cartoleiro,
+                rodada_para_salvar,
+            )
+
+            time.sleep(0.12)
+
+        novos_registros.append(
+            registro
+        )
+
+        print(
+            f"[{indice:02d}/{TOTAL_TIMES}] "
+            f"OK - {nome_time}: "
+            f"{registro['pontos']:.2f} "
+            f"[{registro['fonte_pontos']}]"
+        )
+
+    except Exception as erro:
+        mensagem = (
+            f"{nome_time}: {erro}"
+        )
+
+        erros.append(
+            mensagem
+        )
+
+        print(
+            f"[{indice:02d}/{TOTAL_TIMES}] "
+            f"ERRO - {mensagem}"
+        )
 
 
-novos_registros = (
-    montar_registros_historico(
-        mapa_snapshot,
+# ============================================================
+# PROTEÇÃO 3
+# NADA É GRAVADO SE UM ÚNICO TIME FALHAR
+# ============================================================
+
+
+if erros:
+    print()
+    print("=" * 72)
+    print("CONSOLIDAÇÃO CANCELADA")
+    print("=" * 72)
+
+    print()
+    print(
+        f"Falhas encontradas: {len(erros)}"
+    )
+
+    for mensagem in erros:
+        print(
+            f" - {mensagem}"
+        )
+
+    print()
+    print(
+        "Nenhum dado foi gravado."
+    )
+
+    print(
+        "O histórico anterior permanece intacto."
+    )
+
+    raise RuntimeError(
+        "A rodada não passou na validação "
+        "dos 36 times."
+    )
+
+
+# ============================================================
+# PROTEÇÃO 4
+# AUDITORIA FINAL DO BLOCO ANTES DE GRAVAR
+# ============================================================
+
+
+valido, erros_validacao = (
+    validar_registros_rodada(
+        novos_registros,
         rodada_para_salvar,
+        (
+            f"nova rodada "
+            f"{rodada_para_salvar}"
+        ),
     )
 )
+
+
+if not valido:
+    print()
+    print("=" * 72)
+    print("CONSOLIDAÇÃO BLOQUEADA")
+    print("=" * 72)
+
+    print()
+
+    for erro in erros_validacao:
+        print(
+            f" - {erro}"
+        )
+
+    print()
+    print(
+        "Nenhum dado foi gravado."
+    )
+
+    raise RuntimeError(
+        "A rodada montada não passou "
+        "na validação final."
+    )
 
 
 if len(novos_registros) != TOTAL_TIMES:
     raise RuntimeError(
-        "A consolidação não produziu "
-        "os 36 registros esperados."
+        f"Validação interna falhou: "
+        f"{len(novos_registros)}/"
+        f"{TOTAL_TIMES} registros."
     )
 
 
-# ==========================================================
-# ÚLTIMA BARREIRA ANTES DA GRAVAÇÃO
-# ==========================================================
-#
-# Fazemos novamente a verificação imediatamente antes
-# da escrita. É uma defesa adicional para garantir que
-# uma rodada completa jamais seja substituída.
-# ==========================================================
+ids_novos = {
+    inteiro(
+        item.get("time_id"),
+        0,
+    )
+    for item in novos_registros
+}
 
-if rodada_historica_completa(
-    historico,
-    rodada_para_salvar,
-):
+
+if ids_novos != IDS_ESPERADOS:
     raise RuntimeError(
-        "GRAVAÇÃO BLOQUEADA: a rodada passou a constar "
-        "como consolidada antes da escrita."
+        "Validação interna falhou: "
+        "a relação de times não corresponde "
+        "aos 36 participantes oficiais."
     )
 
 
-rodada_existente = (
-    historico["rodadas"].get(
-        str(rodada_para_salvar),
-        [],
-    )
+# ============================================================
+# PROTEÇÃO 5
+# NUNCA APAGAR OU REESCREVER RODADAS ANTIGAS
+# ============================================================
+
+
+historico.setdefault(
+    "rodadas",
+    {},
 )
 
 
-if rodada_existente:
-    print()
-
-    print(
-        "ATENÇÃO: existe uma versão incompleta da rodada "
-        "no histórico."
-    )
-
-    print(
-        "Como ela não possui os 36 registros válidos, "
-        "será substituída somente após todas as "
-        "validações terem sido aprovadas."
+if str(rodada_para_salvar) in historico["rodadas"]:
+    raise RuntimeError(
+        "Proteção final acionada: "
+        "a rodada apareceu no histórico "
+        "durante a execução."
     )
 
 
-historico[
-    "rodadas"
-][
+historico["rodadas"][
     str(rodada_para_salvar)
 ] = novos_registros
 
 
-# Não apagamos automaticamente rodadas históricas.
-#
-# Uma automação de atualização nunca deve remover
-# resultados já armazenados. Caso exista alguma rodada
-# futura inválida, a correção deve ser feita por processo
-# controlado e auditável.
+# Não removemos rodadas anteriores.
+# Não reescrevemos rodadas anteriores.
+# Não fazemos limpeza automática de histórico.
 
 
-historico[
-    "ultima_rodada_fechada"
-] = rodada_para_salvar
+rodadas_validas = []
+
+
+for chave in historico["rodadas"]:
+    try:
+        numero_rodada = int(chave)
+
+        if numero_rodada > 0:
+            rodadas_validas.append(
+                numero_rodada
+            )
+
+    except (TypeError, ValueError):
+        continue
+
+
+if rodadas_validas:
+    historico[
+        "ultima_rodada_fechada"
+    ] = max(rodadas_validas)
+
+else:
+    historico[
+        "ultima_rodada_fechada"
+    ] = rodada_para_salvar
+
 
 historico[
     "ultima_atualizacao"
 ] = agora_texto()
 
 
-# Validação final em memória antes de escrever no disco.
+# ============================================================
+# GRAVAÇÃO ATÔMICA
+# ============================================================
 
-if not rodada_historica_completa(
-    historico,
-    rodada_para_salvar,
-):
-    raise RuntimeError(
-        "VALIDAÇÃO FINAL REPROVADA: "
-        "a rodada montada não possui os "
-        "36 registros válidos esperados."
-    )
+
+print()
+print(
+    "Todas as validações foram aprovadas."
+)
+
+print(
+    "Gravando historico_cartola.json "
+    "de forma atômica..."
+)
 
 
 salvar_atomico(
@@ -1119,36 +1151,124 @@ salvar_atomico(
 )
 
 
-print()
+# ============================================================
+# CONFIRMAÇÃO PÓS-GRAVAÇÃO
+# ============================================================
 
-print(
-    "historico_cartola.json "
-    "atualizado com segurança."
+
+historico_confirmacao = (
+    carregar_historico()
 )
 
+
+registros_confirmacao = (
+    historico_confirmacao
+    .get("rodadas", {})
+    .get(
+        str(rodada_para_salvar),
+        [],
+    )
+)
+
+
+confirmacao_valida, erros_confirmacao = (
+    validar_registros_rodada(
+        registros_confirmacao,
+        rodada_para_salvar,
+        "verificação pós-gravação",
+    )
+)
+
+
+if not confirmacao_valida:
+    print()
+    print(
+        "ATENÇÃO CRÍTICA:"
+    )
+
+    print(
+        "O arquivo foi salvo, mas falhou "
+        "na leitura de confirmação."
+    )
+
+    for erro in erros_confirmacao:
+        print(
+            f" - {erro}"
+        )
+
+    raise RuntimeError(
+        "Falha na confirmação pós-gravação."
+    )
+
+
+print()
+print("=" * 72)
+print("HISTÓRICO CONSOLIDADO COM SEGURANÇA")
+print("=" * 72)
+
+print()
 print(
-    "Rodada consolidada: "
+    f"Rodada consolidada: "
     f"{rodada_para_salvar}"
 )
 
 print(
-    "Times atualizados: "
-    f"{len(novos_registros)}"
+    f"Times: "
+    f"{len(registros_confirmacao)}/"
+    f"{TOTAL_TIMES}"
+)
+
+if mapa_snapshot:
+    print(
+        "Fonte: snapshot previamente validado "
+        "da rodada fechada."
+    )
+
+else:
+    print(
+        "Fonte: /time/id com validação "
+        "individual da rodada."
+    )
+
+print()
+print(
+    "PROTEÇÕES ATIVAS:"
 )
 
 print(
-    "Fonte: snapshot previamente validado."
+    " - rodada histórica existente "
+    "não pode ser sobrescrita"
 )
 
 print(
-    "Proteção contra respostas defasadas: ATIVA."
+    " - rodada incompleta não pode "
+    "ser consolidada"
 )
 
 print(
-    "Proteção contra sobrescrita histórica: ATIVA."
+    " - IDs ausentes, extras ou duplicados "
+    "bloqueiam a gravação"
 )
 
 print(
-    f"Rodada {rodada_para_salvar} agora está "
-    "protegida contra alterações automáticas."
+    " - pontuação ou patrimônio inválidos "
+    "bloqueiam a gravação"
+)
+
+print(
+    " - respostas incompatíveis de /time/id "
+    "são rejeitadas"
+)
+
+print(
+    " - gravação é realizada de forma atômica"
+)
+
+print(
+    " - histórico anterior é preservado"
+)
+
+print()
+print(
+    "Consolidação concluída."
 )
