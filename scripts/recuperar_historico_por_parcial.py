@@ -1,21 +1,44 @@
 import json
 import os
+import time
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from zoneinfo import ZoneInfo
 
 
+# ============================================================
+# CARTOLA DE ERMIDA
+# Recuperação segura de rodada histórica
+#
+# Fonte imutável:
+# parciais_cartola.json do commit 992d5f4
+#
+# Objetivo:
+# recuperar a rodada 23 do historico_cartola.json usando
+# exclusivamente o último snapshot válido conhecido antes
+# da contaminação causada pela abertura do mercado seguinte.
+# ============================================================
+
+
 ARQUIVO_HISTORICO = Path("historico_cartola.json")
-ARQUIVO_FONTE = Path("parciais_cartola.json")
 
 TOTAL_TIMES = 36
+RODADA_RECUPERACAO = 23
+
+COMMIT_SNAPSHOT = "992d5f4"
+
+URL_SNAPSHOT = (
+    "https://raw.githubusercontent.com/"
+    "renatovalerio88/cartola-ermida/"
+    f"{COMMIT_SNAPSHOT}/parciais_cartola.json"
+)
+
 FUSO = ZoneInfo("America/Sao_Paulo")
 
 FONTES_ACEITAS = {
     "atletas_pontuados",
-    "snapshot_ao_vivo_validado",
-    "parciais_finais_validadas",
 }
 
 
@@ -77,7 +100,7 @@ def inteiro(valor, padrao=0):
         return int(padrao)
 
 
-def carregar_json(caminho):
+def carregar_json_local(caminho):
     if not caminho.exists():
         raise FileNotFoundError(
             f"Arquivo não encontrado: {caminho}"
@@ -95,6 +118,57 @@ def carregar_json(caminho):
         )
 
     return dados
+
+
+def buscar_json(url, tentativas=3):
+    ultimo_erro = None
+
+    for tentativa in range(1, tentativas + 1):
+        try:
+            print(
+                f"Tentativa {tentativa}/{tentativas} "
+                "de baixar o snapshot..."
+            )
+
+            requisicao = urllib.request.Request(
+                url,
+                headers={
+                    "Accept": "application/json",
+                    "User-Agent": "Mozilla/5.0",
+                    "Cache-Control": "no-cache",
+                },
+            )
+
+            with urllib.request.urlopen(
+                requisicao,
+                timeout=30,
+            ) as resposta:
+                conteudo = resposta.read().decode("utf-8")
+
+            dados = json.loads(conteudo)
+
+            if not isinstance(dados, dict):
+                raise ValueError(
+                    "O snapshot baixado não contém "
+                    "um objeto JSON."
+                )
+
+            return dados
+
+        except Exception as erro:
+            ultimo_erro = erro
+
+            print(
+                f"Falha na tentativa {tentativa}: {erro}"
+            )
+
+            if tentativa < tentativas:
+                time.sleep(tentativa * 2)
+
+    raise RuntimeError(
+        "Não foi possível baixar o snapshot histórico "
+        f"do commit {COMMIT_SNAPSHOT}: {ultimo_erro}"
+    )
 
 
 def salvar_atomico(caminho, dados):
@@ -118,6 +192,7 @@ def salvar_atomico(caminho, dados):
         )
 
         temporario.write("\n")
+
         nome_temporario = temporario.name
 
     os.replace(
@@ -132,22 +207,16 @@ def somar_detalhes(item):
         [],
     )
 
-    if not isinstance(
-        detalhes,
-        list,
-    ) or not detalhes:
+    if not isinstance(detalhes, list) or not detalhes:
         raise ValueError(
             f"{item.get('time', 'Time desconhecido')}: "
-            "não possui detalhes_parcial."
+            "detalhes_parcial ausente ou vazio."
         )
 
     total = 0.0
 
     for atleta in detalhes:
-        if not isinstance(
-            atleta,
-            dict,
-        ):
+        if not isinstance(atleta, dict):
             continue
 
         total += numero(
@@ -157,15 +226,14 @@ def somar_detalhes(item):
             )
         )
 
-    return round(
-        total,
-        2,
-    )
+    return round(total, 2)
 
 
-def validar_fonte(fonte):
+def validar_snapshot(fonte):
     print()
-    print("Validando snapshot de recuperação...")
+    print("=" * 70)
+    print("VALIDANDO SNAPSHOT HISTÓRICO")
+    print("=" * 70)
 
     rodada_cartola = inteiro(
         fonte.get(
@@ -188,25 +256,41 @@ def validar_fonte(fonte):
         )
     )
 
-    if rodada_dados <= 0:
-        raise ValueError(
-            "rodada_dados inválida."
+    print(
+        f"Commit fonte: {COMMIT_SNAPSHOT}"
+    )
+
+    print(
+        f"Rodada Cartola no snapshot: {rodada_cartola}"
+    )
+
+    print(
+        f"Rodada dos dados: {rodada_dados}"
+    )
+
+    print(
+        f"Rodada dos pontuados: {rodada_pontuados}"
+    )
+
+    if rodada_cartola != RODADA_RECUPERACAO:
+        raise RuntimeError(
+            "Snapshot rejeitado: rodada_cartola incorreta. "
+            f"Esperada={RODADA_RECUPERACAO}; "
+            f"encontrada={rodada_cartola}."
         )
 
-    if rodada_pontuados != rodada_dados:
-        raise ValueError(
-            "A rodada da API de pontuados não corresponde "
-            "à rodada do snapshot. "
-            f"rodada_dados={rodada_dados}; "
-            f"rodada_pontuados={rodada_pontuados}."
+    if rodada_dados != RODADA_RECUPERACAO:
+        raise RuntimeError(
+            "Snapshot rejeitado: rodada_dados incorreta. "
+            f"Esperada={RODADA_RECUPERACAO}; "
+            f"encontrada={rodada_dados}."
         )
 
-    if rodada_cartola != rodada_dados:
-        raise ValueError(
-            "O snapshot não foi capturado enquanto a própria "
-            "rodada ainda estava ativa. "
-            f"rodada_cartola={rodada_cartola}; "
-            f"rodada_dados={rodada_dados}."
+    if rodada_pontuados != RODADA_RECUPERACAO:
+        raise RuntimeError(
+            "Snapshot rejeitado: rodada_pontuados incorreta. "
+            f"Esperada={RODADA_RECUPERACAO}; "
+            f"encontrada={rodada_pontuados}."
         )
 
     if not bool(
@@ -215,44 +299,9 @@ def validar_fonte(fonte):
             False,
         )
     ):
-        raise ValueError(
-            "O snapshot não está marcado como rodada_em_andamento."
-        )
-
-    monitoramento = fonte.get(
-        "monitoramento",
-        {},
-    )
-
-    if not isinstance(
-        monitoramento,
-        dict,
-    ):
-        raise ValueError(
-            "Bloco monitoramento inválido."
-        )
-
-    if not bool(
-        monitoramento.get(
-            "houve_parciais_validas",
-            False,
-        )
-    ):
-        raise ValueError(
-            "O snapshot informa que não havia parciais válidas."
-        )
-
-    times_processados = inteiro(
-        monitoramento.get(
-            "times_processados",
-            0,
-        )
-    )
-
-    if times_processados != TOTAL_TIMES:
-        raise ValueError(
-            "O snapshot não processou todos os times. "
-            f"Encontrado: {times_processados}/{TOTAL_TIMES}."
+        raise RuntimeError(
+            "Snapshot rejeitado: rodada_em_andamento "
+            "não está marcada como true."
         )
 
     total_atletas = inteiro(
@@ -263,8 +312,45 @@ def validar_fonte(fonte):
     )
 
     if total_atletas <= 0:
-        raise ValueError(
-            "O snapshot não possui atletas pontuados."
+        raise RuntimeError(
+            "Snapshot rejeitado: nenhum atleta pontuado."
+        )
+
+    monitoramento = fonte.get(
+        "monitoramento",
+        {},
+    )
+
+    if not isinstance(monitoramento, dict):
+        raise RuntimeError(
+            "Snapshot rejeitado: monitoramento inválido."
+        )
+
+    houve_parciais_validas = bool(
+        monitoramento.get(
+            "houve_parciais_validas",
+            False,
+        )
+    )
+
+    if not houve_parciais_validas:
+        raise RuntimeError(
+            "Snapshot rejeitado: não havia "
+            "parciais válidas."
+        )
+
+    times_processados = inteiro(
+        monitoramento.get(
+            "times_processados",
+            0,
+        )
+    )
+
+    if times_processados != TOTAL_TIMES:
+        raise RuntimeError(
+            "Snapshot rejeitado: quantidade incorreta "
+            "de times processados. "
+            f"{times_processados}/{TOTAL_TIMES}."
         )
 
     times = fonte.get(
@@ -272,18 +358,15 @@ def validar_fonte(fonte):
         [],
     )
 
-    if not isinstance(
-        times,
-        list,
-    ):
-        raise ValueError(
-            "O snapshot não contém uma lista válida de times."
+    if not isinstance(times, list):
+        raise RuntimeError(
+            "Snapshot rejeitado: bloco times inválido."
         )
 
     if len(times) != TOTAL_TIMES:
-        raise ValueError(
-            "Quantidade incorreta de times no snapshot. "
-            f"Encontrados: {len(times)}/{TOTAL_TIMES}."
+        raise RuntimeError(
+            "Snapshot rejeitado: quantidade incorreta "
+            f"de times. {len(times)}/{TOTAL_TIMES}."
         )
 
     ids_esperados = {
@@ -295,10 +378,7 @@ def validar_fonte(fonte):
     erros = []
 
     for item in times:
-        if not isinstance(
-            item,
-            dict,
-        ):
+        if not isinstance(item, dict):
             erros.append(
                 "Registro de time inválido."
             )
@@ -314,7 +394,7 @@ def validar_fonte(fonte):
         nome_time = str(
             item.get(
                 "time",
-                time_id,
+                f"time_id={time_id}",
             )
         )
 
@@ -337,10 +417,11 @@ def validar_fonte(fonte):
             )
         )
 
-        if rodada_item != rodada_dados:
+        if rodada_item != RODADA_RECUPERACAO:
             erros.append(
-                f"{nome_time}: rodada_dados={rodada_item}, "
-                f"esperada={rodada_dados}."
+                f"{nome_time}: rodada_dados "
+                f"{rodada_item}, esperada "
+                f"{RODADA_RECUPERACAO}."
             )
             continue
 
@@ -353,12 +434,13 @@ def validar_fonte(fonte):
 
         if fonte_pontos not in FONTES_ACEITAS:
             erros.append(
-                f"{nome_time}: fonte_pontos não confiável: "
+                f"{nome_time}: fonte_pontos "
+                f"não confiável: "
                 f"{fonte_pontos or 'vazia'}."
             )
             continue
 
-        pontos = round(
+        pontos_time = round(
             numero(
                 item.get(
                     "pontos",
@@ -369,7 +451,7 @@ def validar_fonte(fonte):
         )
 
         try:
-            soma = somar_detalhes(
+            pontos_atletas = somar_detalhes(
                 item
             )
         except Exception as erro:
@@ -378,12 +460,18 @@ def validar_fonte(fonte):
             )
             continue
 
-        if abs(
-            soma - pontos
-        ) > 0.11:
+        diferenca = round(
+            pontos_time - pontos_atletas,
+            2,
+        )
+
+        if abs(diferenca) > 0.11:
             erros.append(
-                f"{nome_time}: pontos do time {pontos:.2f} "
-                f"não batem com soma dos atletas {soma:.2f}."
+                f"{nome_time}: total do time "
+                f"{pontos_time:.2f} não bate com "
+                f"a soma atleta a atleta "
+                f"{pontos_atletas:.2f}. "
+                f"Diferença={diferenca:.2f}."
             )
             continue
 
@@ -405,29 +493,25 @@ def validar_fonte(fonte):
 
     if faltantes:
         erros.append(
-            "Times ausentes: "
+            "Times esperados ausentes: "
             + ", ".join(
-                str(item)
-                for item in sorted(
-                    faltantes
-                )
+                str(time_id)
+                for time_id in sorted(faltantes)
             )
         )
 
     if extras:
         erros.append(
-            "Times inesperados: "
+            "Times inesperados no snapshot: "
             + ", ".join(
-                str(item)
-                for item in sorted(
-                    extras
-                )
+                str(time_id)
+                for time_id in sorted(extras)
             )
         )
 
     if erros:
         print()
-        print("SNAPSHOT REPROVADO:")
+        print("SNAPSHOT REPROVADO")
 
         for erro in erros:
             print(
@@ -435,46 +519,36 @@ def validar_fonte(fonte):
             )
 
         raise RuntimeError(
-            "A recuperação foi cancelada. "
-            "Nenhum dado foi alterado."
+            "Recuperação cancelada. "
+            "historico_cartola.json NÃO foi alterado."
         )
 
-    print(
-        f"Rodada validada: {rodada_dados}"
-    )
-
+    print()
+    print("SNAPSHOT APROVADO")
     print(
         f"Times validados: {len(mapa)}/{TOTAL_TIMES}"
     )
-
     print(
-        f"Atletas pontuados na API: {total_atletas}"
+        f"Atletas pontuados: {total_atletas}"
     )
-
     print(
-        "Fonte atleta a atleta: APROVADA"
+        "Fonte dos pontos: atletas_pontuados"
+    )
+    print(
+        "Soma atleta a atleta: validada para os 36 times"
     )
 
-    return (
-        rodada_dados,
-        mapa,
-    )
+    return mapa
 
 
 def mapa_historico(registros):
     mapa = {}
 
-    if not isinstance(
-        registros,
-        list,
-    ):
+    if not isinstance(registros, list):
         return mapa
 
     for item in registros:
-        if not isinstance(
-            item,
-            dict,
-        ):
+        if not isinstance(item, dict):
             continue
 
         time_id = inteiro(
@@ -490,10 +564,46 @@ def mapa_historico(registros):
     return mapa
 
 
-def montar_rodada_recuperada(
-    rodada,
-    mapa_fonte,
-):
+def validar_rodada_existente(registros):
+    if not isinstance(registros, list):
+        raise RuntimeError(
+            f"A rodada {RODADA_RECUPERACAO} "
+            "não existe no histórico."
+        )
+
+    if len(registros) != TOTAL_TIMES:
+        raise RuntimeError(
+            f"A rodada {RODADA_RECUPERACAO} "
+            "existente não possui os "
+            f"{TOTAL_TIMES} registros esperados."
+        )
+
+    mapa = mapa_historico(
+        registros
+    )
+
+    if len(mapa) != TOTAL_TIMES:
+        raise RuntimeError(
+            f"A rodada {RODADA_RECUPERACAO} "
+            "possui IDs ausentes ou duplicados."
+        )
+
+    ids_esperados = {
+        time_id
+        for time_id, _, _ in TIMES
+    }
+
+    if set(mapa.keys()) != ids_esperados:
+        raise RuntimeError(
+            f"A rodada {RODADA_RECUPERACAO} "
+            "não contém exatamente os 36 times "
+            "esperados da liga."
+        )
+
+    return mapa
+
+
+def montar_rodada_recuperada(mapa_fonte):
     novos_registros = []
 
     for (
@@ -509,7 +619,7 @@ def montar_rodada_recuperada(
             "time_id": time_id,
             "time": nome_time,
             "cartoleiro": cartoleiro,
-            "rodada": rodada,
+            "rodada": RODADA_RECUPERACAO,
             "pontos": round(
                 numero(
                     origem.get(
@@ -528,7 +638,9 @@ def montar_rodada_recuperada(
                 ),
                 2,
             ),
-            "fonte_pontos": "atletas_pontuados_recuperado",
+            "fonte_pontos": (
+                "atletas_pontuados_recuperado"
+            ),
         }
 
         novos_registros.append(
@@ -538,41 +650,38 @@ def montar_rodada_recuperada(
     return novos_registros
 
 
-def mostrar_comparacao(
+def comparar_rodadas(
     registros_antigos,
     registros_novos,
 ):
-    antigos = mapa_historico(
+    mapa_antigo = validar_rodada_existente(
         registros_antigos
     )
 
-    novos = mapa_historico(
+    mapa_novo = mapa_historico(
         registros_novos
     )
 
-    diferencas = []
+    diferencas_pontos = []
+    diferencas_patrimonio = []
 
     print()
-    print(
-        "Comparação entre histórico atual "
-        "e snapshot validado:"
-    )
+    print("=" * 70)
+    print("COMPARAÇÃO")
+    print("=" * 70)
 
     for (
         time_id,
         nome_time,
         _cartoleiro,
     ) in TIMES:
-        antigo = antigos.get(
+        antigo = mapa_antigo[
             time_id
-        )
+        ]
 
-        novo = novos.get(
+        novo = mapa_novo[
             time_id
-        )
-
-        if not antigo or not novo:
-            continue
+        ]
 
         pontos_antigos = round(
             numero(
@@ -624,16 +733,19 @@ def mostrar_comparacao(
             != patrimonio_novo
         )
 
-        if (
-            mudou_pontos
-            or mudou_patrimonio
-        ):
-            diferencas.append(
+        if mudou_pontos:
+            diferencas_pontos.append(
                 nome_time
             )
 
+        if mudou_patrimonio:
+            diferencas_patrimonio.append(
+                nome_time
+            )
+
+        if mudou_pontos or mudou_patrimonio:
             print(
-                f" - {nome_time}: "
+                f"{nome_time}: "
                 f"{pontos_antigos:.2f} -> "
                 f"{pontos_novos:.2f} pts | "
                 f"C$ {patrimonio_antigo:.2f} -> "
@@ -642,38 +754,45 @@ def mostrar_comparacao(
 
     print()
     print(
-        f"Registros diferentes: "
-        f"{len(diferencas)}/{TOTAL_TIMES}"
+        "Times com diferença de pontuação: "
+        f"{len(diferencas_pontos)}/{TOTAL_TIMES}"
     )
 
-    return diferencas
+    print(
+        "Times com diferença de patrimônio: "
+        f"{len(diferencas_patrimonio)}/{TOTAL_TIMES}"
+    )
+
+    return (
+        diferencas_pontos,
+        diferencas_patrimonio,
+    )
 
 
-def validar_historico_apos_recuperacao(
+def validar_resultado_final(
     historico,
-    rodada,
     registros_esperados,
 ):
-    registros = historico.get(
+    rodadas = historico.get(
         "rodadas",
         {},
-    ).get(
-        str(rodada),
+    )
+
+    registros = rodadas.get(
+        str(RODADA_RECUPERACAO),
         [],
     )
 
-    if not isinstance(
-        registros,
-        list,
-    ):
+    if not isinstance(registros, list):
         raise RuntimeError(
-            "A rodada recuperada não existe "
-            "no histórico após a substituição."
+            "Falha na validação final: "
+            "rodada recuperada ausente."
         )
 
     if len(registros) != TOTAL_TIMES:
         raise RuntimeError(
-            "A rodada recuperada ficou incompleta."
+            "Falha na validação final: "
+            "rodada recuperada incompleta."
         )
 
     mapa_atual = mapa_historico(
@@ -684,14 +803,12 @@ def validar_historico_apos_recuperacao(
         registros_esperados
     )
 
-    if set(
-        mapa_atual.keys()
-    ) != set(
+    if set(mapa_atual.keys()) != set(
         mapa_esperado.keys()
     ):
         raise RuntimeError(
-            "Os IDs da rodada recuperada "
-            "não correspondem aos esperados."
+            "Falha na validação final: "
+            "IDs dos times divergentes."
         )
 
     for time_id in mapa_esperado:
@@ -743,109 +860,113 @@ def validar_historico_apos_recuperacao(
             2,
         )
 
-        if (
-            pontos_atual
-            != pontos_esperado
-            or patrimonio_atual
-            != patrimonio_esperado
-        ):
+        if pontos_atual != pontos_esperado:
             raise RuntimeError(
-                "Falha na validação final do histórico "
-                f"para time_id {time_id}."
+                "Falha na validação final de pontos "
+                f"para time_id={time_id}."
+            )
+
+        if patrimonio_atual != patrimonio_esperado:
+            raise RuntimeError(
+                "Falha na validação final de patrimônio "
+                f"para time_id={time_id}."
             )
 
 
 def main():
     print("=" * 70)
     print("CARTOLA DE ERMIDA")
-    print("RECUPERAÇÃO SEGURA DE RODADA HISTÓRICA")
+    print("RECUPERAÇÃO SEGURA DO HISTÓRICO")
     print("=" * 70)
 
-    fonte = carregar_json(
-        ARQUIVO_FONTE
+    print()
+    print(
+        f"Rodada a recuperar: {RODADA_RECUPERACAO}"
     )
 
-    historico = carregar_json(
+    print(
+        f"Commit imutável da fonte: {COMMIT_SNAPSHOT}"
+    )
+
+    print()
+    print(
+        "Baixando parciais_cartola.json "
+        "diretamente do histórico do GitHub..."
+    )
+
+    snapshot = buscar_json(
+        URL_SNAPSHOT
+    )
+
+    mapa_snapshot = validar_snapshot(
+        snapshot
+    )
+
+    print()
+    print(
+        "Carregando historico_cartola.json atual..."
+    )
+
+    historico = carregar_json_local(
         ARQUIVO_HISTORICO
     )
 
-    if not isinstance(
-        historico.get(
-            "rodadas",
-            {},
-        ),
-        dict,
-    ):
+    rodadas = historico.get(
+        "rodadas",
+        {}
+    )
+
+    if not isinstance(rodadas, dict):
         raise RuntimeError(
             "historico_cartola.json não possui "
-            "o bloco rodadas corretamente."
+            "um bloco rodadas válido."
         )
-
-    rodada, mapa_fonte = (
-        validar_fonte(
-            fonte
-        )
-    )
 
     chave_rodada = str(
-        rodada
+        RODADA_RECUPERACAO
     )
 
-    registros_antigos = (
-        historico[
-            "rodadas"
-        ].get(
-            chave_rodada
-        )
+    registros_antigos = rodadas.get(
+        chave_rodada
     )
 
-    if not isinstance(
-        registros_antigos,
-        list,
-    ):
-        raise RuntimeError(
-            f"A rodada {rodada} não existe "
-            "no histórico atual."
-        )
-
-    if len(
+    validar_rodada_existente(
         registros_antigos
-    ) != TOTAL_TIMES:
-        raise RuntimeError(
-            f"A rodada {rodada} existente "
-            "não possui os 36 registros esperados."
-        )
-
-    registros_novos = (
-        montar_rodada_recuperada(
-            rodada,
-            mapa_fonte,
-        )
     )
 
-    diferencas = mostrar_comparacao(
+    registros_novos = montar_rodada_recuperada(
+        mapa_snapshot
+    )
+
+    (
+        diferencas_pontos,
+        diferencas_patrimonio,
+    ) = comparar_rodadas(
         registros_antigos,
         registros_novos,
     )
 
-    if not diferencas:
+    if not diferencas_pontos and not diferencas_patrimonio:
         print()
-        print(
-            "Nenhuma diferença encontrada."
-        )
+        print("=" * 70)
+        print("NENHUMA RECUPERAÇÃO NECESSÁRIA")
+        print("=" * 70)
 
         print(
-            "O histórico já corresponde "
-            "ao snapshot validado."
+            "A rodada 23 do histórico já corresponde "
+            "integralmente ao snapshot validado."
         )
 
         return
 
     print()
+    print("=" * 70)
+    print("RECUPERANDO RODADA")
+    print("=" * 70)
+
     print(
-        "Substituindo a rodada inteira "
-        f"{rodada} por uma única fonte "
-        "homogênea e validada..."
+        "A rodada inteira será substituída por "
+        "uma única fonte homogênea e validada."
     )
 
     historico[
@@ -861,19 +982,22 @@ def main():
     historico[
         "ultima_recuperacao_historica"
     ] = {
-        "rodada": rodada,
+        "rodada": RODADA_RECUPERACAO,
         "data": agora_texto(),
-        "fonte": "parciais_cartola.json",
+        "commit_snapshot": COMMIT_SNAPSHOT,
+        "arquivo_snapshot": "parciais_cartola.json",
         "fonte_pontos": "atletas_pontuados",
         "times_validados": TOTAL_TIMES,
-        "registros_alterados": len(
-            diferencas
+        "times_com_pontos_corrigidos": len(
+            diferencas_pontos
+        ),
+        "times_com_patrimonio_corrigido": len(
+            diferencas_patrimonio
         ),
     }
 
-    validar_historico_apos_recuperacao(
+    validar_resultado_final(
         historico,
-        rodada,
         registros_novos,
     )
 
@@ -884,20 +1008,29 @@ def main():
 
     print()
     print("=" * 70)
-    print("RECUPERAÇÃO CONCLUÍDA")
+    print("RECUPERAÇÃO CONCLUÍDA COM SUCESSO")
     print("=" * 70)
 
     print(
-        f"Rodada recuperada: {rodada}"
+        f"Rodada recuperada: {RODADA_RECUPERACAO}"
     )
 
     print(
-        f"Times validados: {TOTAL_TIMES}"
+        f"Times validados: {TOTAL_TIMES}/{TOTAL_TIMES}"
     )
 
     print(
-        f"Registros que divergiam: "
-        f"{len(diferencas)}"
+        "Times com pontuação corrigida: "
+        f"{len(diferencas_pontos)}"
+    )
+
+    print(
+        "Times com patrimônio corrigido: "
+        f"{len(diferencas_patrimonio)}"
+    )
+
+    print(
+        f"Snapshot utilizado: commit {COMMIT_SNAPSHOT}"
     )
 
     print(
@@ -905,11 +1038,11 @@ def main():
     )
 
     print(
-        "historico_cartola.json atualizado."
+        "Rodadas anteriores não foram modificadas."
     )
 
     print(
-        "Nenhuma outra rodada foi modificada."
+        "historico_cartola.json salvo atomicamente."
     )
 
 
