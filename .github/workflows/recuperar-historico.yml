@@ -1,0 +1,190 @@
+name: Recuperar Histórico Cartola
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: recuperar-historico-cartola
+  cancel-in-progress: false
+
+jobs:
+  recuperar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Mostrar situação antes da recuperação
+        run: |
+          echo "=========================================="
+          echo "CARTOLA DE ERMIDA"
+          echo "RECUPERAÇÃO CONTROLADA DO HISTÓRICO"
+          echo "=========================================="
+          echo ""
+          echo "Commit atual:"
+          git rev-parse --short HEAD
+          echo ""
+          echo "Arquivo histórico:"
+          ls -lh historico_cartola.json
+          echo ""
+          echo "Script:"
+          ls -lh scripts/recuperar_historico_por_parcial.py
+
+      - name: Executar recuperação da rodada 23
+        run: |
+          python scripts/recuperar_historico_por_parcial.py
+
+      - name: Validar JSON após recuperação
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          caminho = Path("historico_cartola.json")
+
+          with caminho.open("r", encoding="utf-8") as arquivo:
+              historico = json.load(arquivo)
+
+          rodadas = historico.get("rodadas", {})
+          rodada_23 = rodadas.get("23", [])
+
+          if not isinstance(rodada_23, list):
+              raise RuntimeError(
+                  "Rodada 23 não é uma lista válida."
+              )
+
+          if len(rodada_23) != 36:
+              raise RuntimeError(
+                  f"Rodada 23 possui {len(rodada_23)} times; "
+                  "esperados: 36."
+              )
+
+          ids = []
+
+          for item in rodada_23:
+              if not isinstance(item, dict):
+                  raise RuntimeError(
+                      "Registro inválido encontrado na rodada 23."
+                  )
+
+              time_id = int(item.get("time_id", 0) or 0)
+
+              if time_id <= 0:
+                  raise RuntimeError(
+                      "time_id inválido encontrado na rodada 23."
+                  )
+
+              ids.append(time_id)
+
+          if len(set(ids)) != 36:
+              raise RuntimeError(
+                  "Existem time_ids duplicados na rodada 23."
+              )
+
+          recuperacao = historico.get(
+              "ultima_recuperacao_historica"
+          )
+
+          if not isinstance(recuperacao, dict):
+              raise RuntimeError(
+                  "Metadados da recuperação não foram gravados."
+              )
+
+          if int(recuperacao.get("rodada", 0) or 0) != 23:
+              raise RuntimeError(
+                  "Metadados apontam para rodada incorreta."
+              )
+
+          if recuperacao.get("commit_snapshot") != "992d5f4":
+              raise RuntimeError(
+                  "Commit do snapshot não corresponde "
+                  "ao snapshot validado."
+              )
+
+          print("Validação estrutural: APROVADA")
+          print("Rodada 23: 36/36 times")
+          print(
+              "Snapshot:",
+              recuperacao.get("commit_snapshot")
+          )
+          print(
+              "Fonte:",
+              recuperacao.get("fonte_pontos")
+          )
+          PY
+
+      - name: Mostrar alterações
+        run: |
+          echo "=========================================="
+          echo "ARQUIVOS ALTERADOS"
+          echo "=========================================="
+
+          git status --short
+
+          echo ""
+          echo "=========================================="
+          echo "RESUMO DO DIFF"
+          echo "=========================================="
+
+          git diff --stat
+
+      - name: Garantir que somente o histórico foi alterado
+        run: |
+          ALTERADOS="$(git diff --name-only)"
+
+          if [ -z "$ALTERADOS" ]; then
+            echo "Nenhuma alteração pendente."
+            echo "O histórico pode já estar recuperado."
+            exit 0
+          fi
+
+          INVALIDOS="$(echo "$ALTERADOS" | grep -v '^historico_cartola\.json$' || true)"
+
+          if [ -n "$INVALIDOS" ]; then
+            echo "ERRO: arquivos inesperados foram alterados:"
+            echo "$INVALIDOS"
+            exit 1
+          fi
+
+          echo "Segurança aprovada."
+          echo "Somente historico_cartola.json foi alterado."
+
+      - name: Commit da recuperação
+        run: |
+          if git diff --quiet -- historico_cartola.json; then
+            echo "historico_cartola.json não possui alterações."
+            echo "Nenhum commit será criado."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add historico_cartola.json
+
+          git commit -m "Recupera rodada 23 do histórico"
+
+          git push
+
+      - name: Resumo final
+        run: |
+          echo "=========================================="
+          echo "RECUPERAÇÃO FINALIZADA"
+          echo "=========================================="
+          echo ""
+          echo "Se todas as etapas anteriores ficaram verdes:"
+          echo "- snapshot histórico foi validado"
+          echo "- rodada 23 possui 36 times"
+          echo "- somente historico_cartola.json foi alterado"
+          echo "- recuperação foi commitada no repositório"
