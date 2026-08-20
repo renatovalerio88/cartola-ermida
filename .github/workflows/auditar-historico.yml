@@ -1,0 +1,52 @@
+name: Auditar Histórico Cartola
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auditar:
+    name: Auditar histórico
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Mostrar situação do histórico
+        run: |
+          echo "=========================================="
+          echo "AUDITORIA DO HISTÓRICO - CARTOLA DE ERMIDA"
+          echo "=========================================="
+          echo
+          echo "Arquivo:"
+          ls -lh historico_cartola.json
+          echo
+          echo "Esta Action é somente leitura."
+          echo "Nenhum arquivo será modificado."
+
+      - name: Executar auditoria completa
+        run: python scripts/auditar_historico.py
+
+      - name: Confirmar que nenhum arquivo foi alterado
+        run: |
+          echo
+          echo "=========================================="
+          echo "VERIFICAÇÃO FINAL DO REPOSITÓRIO"
+          echo "=========================================="
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "ERRO: a auditoria modificou arquivos:"
+            git status --short
+            exit 1
+          fi
+
+          echo "OK - nenhum arquivo foi alterado."
+          echo "Auditoria executada somente em modo leitura."
