@@ -695,7 +695,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   <div class="nav">
     <button class="active" onclick="abrirAba('meutime',this)">Meu Time</button>
     <button id="navAoVivo" onclick="abrirAba('aovivo',this)"><span id="navAoVivoDot" class="live-v2-dot"></span><span id="navAoVivoLabel">Ao Vivo</span></button>
-    <button data-nav-fases="1" onclick="abrirAba('fase2',this)">Fases</button>
+    <button data-nav-fases="1" onclick="abrirFaseAtual(this)">Fases</button>
     <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
     <button onclick="abrirAba('ligareal',this)">Liga Real</button>
     <button onclick="abrirAba('premiacao',this)">Premiação</button>
@@ -1310,14 +1310,36 @@ function limparMeuTimeSalvo(){
 }
 
 function faseAtualNumero(){
-  const r = Number(parciaisCartola?.rodada_cartola || parciaisCartola?.rodada || 18);
+  // A fase acompanha a rodada oficial atual do Cartola.
+  // Ex.: mercado da R25 aberto + dados oficiais ainda da R24 = Fase 3.
+  // rodada_dados continua sendo usada apenas para resultados/classificações já consolidados.
+  const rodadaCartola = Number(
+    parciaisCartola?.rodada_cartola ||
+    parciaisCartola?.rodada ||
+    parciaisCartola?.rodada_dados ||
+    18
+  );
 
-  if(r <= 18) return 1;
-  if(r <= 24) return 2;
-  if(r <= 30) return 3;
-  if(r <= 34) return 4;
-  if(r <= 37) return 5;
+  if(rodadaCartola <= 18) return 1;
+  if(rodadaCartola <= 24) return 2;
+  if(rodadaCartola <= 30) return 3;
+  if(rodadaCartola <= 34) return 4;
+  if(rodadaCartola <= 37) return 5;
   return 6;
+}
+
+function chaveFaseAtual(){
+  const fase = faseAtualNumero();
+  if(fase === 1) return 'rodadas';
+  if(fase === 2) return 'fase2';
+  if(fase === 3) return 'fase3';
+  if(fase === 4) return 'fase4';
+  if(fase === 5) return 'fasefinal';
+  return 'grandefinal';
+}
+
+function abrirFaseAtual(btn){
+  abrirAba(chaveFaseAtual(), btn || document.querySelector('[data-nav-fases="1"]'));
 }
 
 function faseEstaAberta(chave){
@@ -2082,13 +2104,15 @@ function renderMeuTime(){
    V12: ajustes finos preservando a v7
    ========================= */
 function navFasesSelect(valor){
+  const atual = chaveFaseAtual();
+  const rotulo = (chave, texto) => `${texto}${chave===atual?' — atual':''}`;
   return `<div class="phase-filter fase-master fase-master-global"><label>Ver fase:</label><select onchange="mudarAbaFases(this)">
-    <option value="rodadas" ${valor==='rodadas'?'selected':''}>Fase 1</option>
-    <option value="fase2" ${valor==='fase2'?'selected':''}>Fase 2 — atual</option>
-    <option value="fase3" ${valor==='fase3'?'selected':''}>Fase 3</option>
-    <option value="fase4" ${valor==='fase4'?'selected':''}>Fase 4</option>
-    <option value="fasefinal" ${valor==='fasefinal'?'selected':''}>Fase 5</option>
-    <option value="grandefinal" ${valor==='grandefinal'?'selected':''}>Grande Final</option>
+    <option value="rodadas" ${valor==='rodadas'?'selected':''}>${rotulo('rodadas','Fase 1')}</option>
+    <option value="fase2" ${valor==='fase2'?'selected':''}>${rotulo('fase2','Fase 2')}</option>
+    <option value="fase3" ${valor==='fase3'?'selected':''}>${rotulo('fase3','Fase 3')}</option>
+    <option value="fase4" ${valor==='fase4'?'selected':''}>${rotulo('fase4','Fase 4')}</option>
+    <option value="fasefinal" ${valor==='fasefinal'?'selected':''}>${rotulo('fasefinal','Fase 5')}</option>
+    <option value="grandefinal" ${valor==='grandefinal'?'selected':''}>${rotulo('grandefinal','Grande Final')}</option>
   </select></div>`;
 }
 function garantirSeletorFases(nome){
@@ -2100,8 +2124,10 @@ function garantirSeletorFases(nome){
   if(!master){
     card.insertAdjacentHTML('afterbegin', navFasesSelect(nome));
   }else{
-    const sel=master.querySelector('select');
-    if(sel)sel.value=nome;
+    const novo=document.createElement('div');
+    novo.innerHTML=navFasesSelect(nome);
+    const atualizado=novo.firstElementChild;
+    if(atualizado)master.replaceWith(atualizado);
   }
 }
 const abrirAbaOriginalV7=abrirAba;
