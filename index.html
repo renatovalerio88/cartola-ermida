@@ -695,7 +695,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   <div class="nav">
     <button class="active" onclick="abrirAba('meutime',this)">Meu Time</button>
     <button id="navAoVivo" onclick="abrirAba('aovivo',this)"><span id="navAoVivoDot" class="live-v2-dot"></span><span id="navAoVivoLabel">Ao Vivo</span></button>
-    <button data-nav-fases="1" onclick="abrirFaseAtual(this)">Fases</button>
+    <button data-nav-fases="1" onclick="abrirAba('fase2',this)">Fases</button>
     <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
     <button onclick="abrirAba('ligareal',this)">Liga Real</button>
     <button onclick="abrirAba('premiacao',this)">Premiação</button>
@@ -1064,6 +1064,52 @@ function fase3Times(){const f2=fase2Times(),st={};Object.keys(f2).forEach(n=>st[
   "Repescagem B":[st.GP1[3],st.GP2[2],st.GP4[2],st.RP2[0]],
   "Repescagem C":[st.GP3[3],st.GP4[3],st.RP3[0],st.RP4[0]]
 }}
+
+function origemFase3(nome,idx){
+  const map={
+    "Grupo A":[
+      "1º Grupo A da Fase 2",
+      "2º Grupo B da Fase 2",
+      "1º Grupo C da Fase 2",
+      "2º Grupo D da Fase 2"
+    ],
+    "Grupo B":[
+      "2º Grupo A da Fase 2",
+      "1º Grupo B da Fase 2",
+      "2º Grupo C da Fase 2",
+      "1º Grupo D da Fase 2"
+    ],
+    "Repescagem A":[
+      "3º Grupo A da Fase 2",
+      "4º Grupo B da Fase 2",
+      "3º Grupo C da Fase 2",
+      "1º Repescagem A da Fase 2"
+    ],
+    "Repescagem B":[
+      "4º Grupo A da Fase 2",
+      "3º Grupo B da Fase 2",
+      "3º Grupo D da Fase 2",
+      "1º Repescagem B da Fase 2"
+    ],
+    "Repescagem C":[
+      "4º Grupo C da Fase 2",
+      "4º Grupo D da Fase 2",
+      "1º Repescagem C da Fase 2",
+      "1º Repescagem D da Fase 2"
+    ]
+  };
+  return (map[nome]||[])[idx]||"Origem a definir";
+}
+
+function listaOrigemFase3(times,nome){
+  return `<div class="origin-compact">${times.map((t,i)=>`
+    <div class="origin-compact-row">
+      <div>
+        <div class="origin-compact-name">${t?.time||"A definir"}</div>
+        <div class="origin-compact-meta">veio de: <b>${origemFase3(nome,i)}</b></div>
+      </div>
+    </div>`).join("")}</div>`;
+}
 function fase4Times(){const f3=fase3Times(),st={};Object.keys(f3).forEach(n=>st[n]=calcGrupoTimes(f3[n],25,jogos4));const ca=st["Grupo A"],cb=st["Grupo B"];const repSt={"Repescagem A":st["Repescagem A"],"Repescagem B":st["Repescagem B"],"Repescagem C":st["Repescagem C"]};const repQual=[st["Repescagem A"][0],st["Repescagem B"][0],st["Repescagem C"][0],melhoresSegundos(repSt)[0]].filter(Boolean);return {
   "Repescagem Final A":[ca[2],cb[3],repQual[0],repQual[3]],
   "Repescagem Final B":[ca[3],cb[2],repQual[1],repQual[2]]
@@ -1076,7 +1122,7 @@ function statusFinal(nome,pos){return pos===1?["dot-ok","Final"]:pos===2?["dot-r
 function statusGrande(nome,pos){return pos===1?["dot-ok","Vencedor"]:["dot-bad","Perdedor"]}
 const faseConfigs={fase3:{label:"Fase 3",inicio:25,agenda:jogos4,desc:"Caminho dos grupos protegido + Repescagem 2",get:fase3Times,status:statusFase3},fase4:{label:"Fase 4",inicio:31,agenda:jogos4TurnoUnico,desc:"Repescagem Final: últimos 2 lugares na Fase Final",get:fase4Times,status:statusFase4},final:{label:"Fase 5",inicio:35,agenda:jogos3,desc:"4 dos Grupos + 2 da Repescagem",get:faseFinalTimes,status:statusFinal},grande:{label:"Grande Final",inicio:38,agenda:[[[1,2]]],desc:"Final e disputa de 3º lugar",get:finalTimes,status:statusGrande}};
 function montarTabsFases(){Object.entries(faseConfigs).forEach(([k,c],i)=>{const b=document.createElement("button");b.textContent=c.label;b.onclick=()=>{faseSelecionada=k;grupoFaseAtual="";renderFases()};tabsFases.appendChild(b)})}
-function renderFases(){if(!historico)return;renderFluxoFases();document.querySelectorAll("#tabsFases button").forEach(b=>b.classList.toggle("active",b.textContent===faseConfigs[faseSelecionada].label));const cfg=faseConfigs[faseSelecionada],grps=cfg.get(),nomes=Object.keys(grps);if(!grupoFaseAtual||!grps[grupoFaseAtual])grupoFaseAtual=nomes[0];tabsFaseGrupos.innerHTML="";nomes.forEach(n=>{const b=document.createElement("button");b.textContent=n;b.classList.toggle("active",n===grupoFaseAtual);b.onclick=()=>{grupoFaseAtual=n;renderFases()};tabsFaseGrupos.appendChild(b)});const fim=cfg.inicio+cfg.agenda.length-1;const atual=Number(selFaseRodada.value||cfg.inicio);selFaseRodada.innerHTML="";for(let r=cfg.inicio;r<=fim;r++)selFaseRodada.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;const rodadaAtual=rodadaCompeticaoAtual();selFaseRodada.value=(rodadaAtual>=cfg.inicio&&rodadaAtual<=fim)?rodadaAtual:((atual>=cfg.inicio&&atual<=fim)?atual:cfg.inicio);const ate=Number(selFaseRodada.value);const times=grps[grupoFaseAtual];const lista=calcGrupoTimesAte(times,cfg.inicio,cfg.agenda,ate);const legend=grupoFaseAtual.includes("Repescagem")?`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Possível vaga/melhor 2º</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`:`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Repescagem/3º lugar</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`;boxFaseDetalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${cfg.label} · ${grupoFaseAtual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">R${cfg.inicio}${cfg.agenda.length>1?`-R${fim}`:""}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||"A definir"}</span>`).join("")}</div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>cfg.status(grupoFaseAtual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,"Jogos da rodada")}`}
+function renderFases(){if(!historico)return;renderFluxoFases();document.querySelectorAll("#tabsFases button").forEach(b=>b.classList.toggle("active",b.textContent===faseConfigs[faseSelecionada].label));const cfg=faseConfigs[faseSelecionada],grps=cfg.get(),nomes=Object.keys(grps);if(!grupoFaseAtual||!grps[grupoFaseAtual])grupoFaseAtual=nomes[0];tabsFaseGrupos.innerHTML="";nomes.forEach(n=>{const b=document.createElement("button");b.textContent=n;b.classList.toggle("active",n===grupoFaseAtual);b.onclick=()=>{grupoFaseAtual=n;renderFases()};tabsFaseGrupos.appendChild(b)});const fim=cfg.inicio+cfg.agenda.length-1;const atual=Number(selFaseRodada.value||cfg.inicio);selFaseRodada.innerHTML="";for(let r=cfg.inicio;r<=fim;r++)selFaseRodada.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;const rodadaAtual=rodadaCompeticaoAtual();selFaseRodada.value=(rodadaAtual>=cfg.inicio&&rodadaAtual<=fim)?rodadaAtual:((atual>=cfg.inicio&&atual<=fim)?atual:cfg.inicio);const ate=Number(selFaseRodada.value);const times=grps[grupoFaseAtual];const lista=calcGrupoTimesAte(times,cfg.inicio,cfg.agenda,ate);const legend=grupoFaseAtual.includes("Repescagem")?`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Possível vaga/melhor 2º</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`:`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Repescagem/3º lugar</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`;const origem=(faseSelecionada==="fase3")?`<div class="box origin-final-box"><h3>Origem dos participantes</h3><p class="small">Veja exatamente de qual colocação da Fase 2 cada time veio.</p>${listaOrigemFase3(times,grupoFaseAtual)}</div>`:"";boxFaseDetalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${cfg.label} · ${grupoFaseAtual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">R${cfg.inicio}${cfg.agenda.length>1?`-R${fim}`:""}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||"A definir"}</span>`).join("")}</div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>cfg.status(grupoFaseAtual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,"Jogos da rodada")}${origem}`}
 function renderFluxoFases(){if(!document.getElementById("boxFluxoFases"))return;boxFluxoFases.innerHTML=`
   <div class="flow-intro">
     <h3>Visão rápida</h3>
@@ -1310,36 +1356,14 @@ function limparMeuTimeSalvo(){
 }
 
 function faseAtualNumero(){
-  // A fase acompanha a rodada oficial atual do Cartola.
-  // Ex.: mercado da R25 aberto + dados oficiais ainda da R24 = Fase 3.
-  // rodada_dados continua sendo usada apenas para resultados/classificações já consolidados.
-  const rodadaCartola = Number(
-    parciaisCartola?.rodada_cartola ||
-    parciaisCartola?.rodada ||
-    parciaisCartola?.rodada_dados ||
-    18
-  );
+  const r = Number(parciaisCartola?.rodada_cartola || parciaisCartola?.rodada || 18);
 
-  if(rodadaCartola <= 18) return 1;
-  if(rodadaCartola <= 24) return 2;
-  if(rodadaCartola <= 30) return 3;
-  if(rodadaCartola <= 34) return 4;
-  if(rodadaCartola <= 37) return 5;
+  if(r <= 18) return 1;
+  if(r <= 24) return 2;
+  if(r <= 30) return 3;
+  if(r <= 34) return 4;
+  if(r <= 37) return 5;
   return 6;
-}
-
-function chaveFaseAtual(){
-  const fase = faseAtualNumero();
-  if(fase === 1) return 'rodadas';
-  if(fase === 2) return 'fase2';
-  if(fase === 3) return 'fase3';
-  if(fase === 4) return 'fase4';
-  if(fase === 5) return 'fasefinal';
-  return 'grandefinal';
-}
-
-function abrirFaseAtual(btn){
-  abrirAba(chaveFaseAtual(), btn || document.querySelector('[data-nav-fases="1"]'));
 }
 
 function faseEstaAberta(chave){
@@ -2104,15 +2128,13 @@ function renderMeuTime(){
    V12: ajustes finos preservando a v7
    ========================= */
 function navFasesSelect(valor){
-  const atual = chaveFaseAtual();
-  const rotulo = (chave, texto) => `${texto}${chave===atual?' — atual':''}`;
   return `<div class="phase-filter fase-master fase-master-global"><label>Ver fase:</label><select onchange="mudarAbaFases(this)">
-    <option value="rodadas" ${valor==='rodadas'?'selected':''}>${rotulo('rodadas','Fase 1')}</option>
-    <option value="fase2" ${valor==='fase2'?'selected':''}>${rotulo('fase2','Fase 2')}</option>
-    <option value="fase3" ${valor==='fase3'?'selected':''}>${rotulo('fase3','Fase 3')}</option>
-    <option value="fase4" ${valor==='fase4'?'selected':''}>${rotulo('fase4','Fase 4')}</option>
-    <option value="fasefinal" ${valor==='fasefinal'?'selected':''}>${rotulo('fasefinal','Fase 5')}</option>
-    <option value="grandefinal" ${valor==='grandefinal'?'selected':''}>${rotulo('grandefinal','Grande Final')}</option>
+    <option value="rodadas" ${valor==='rodadas'?'selected':''}>Fase 1</option>
+    <option value="fase2" ${valor==='fase2'?'selected':''}>Fase 2 — atual</option>
+    <option value="fase3" ${valor==='fase3'?'selected':''}>Fase 3</option>
+    <option value="fase4" ${valor==='fase4'?'selected':''}>Fase 4</option>
+    <option value="fasefinal" ${valor==='fasefinal'?'selected':''}>Fase 5</option>
+    <option value="grandefinal" ${valor==='grandefinal'?'selected':''}>Grande Final</option>
   </select></div>`;
 }
 function garantirSeletorFases(nome){
@@ -2124,10 +2146,8 @@ function garantirSeletorFases(nome){
   if(!master){
     card.insertAdjacentHTML('afterbegin', navFasesSelect(nome));
   }else{
-    const novo=document.createElement('div');
-    novo.innerHTML=navFasesSelect(nome);
-    const atualizado=novo.firstElementChild;
-    if(atualizado)master.replaceWith(atualizado);
+    const sel=master.querySelector('select');
+    if(sel)sel.value=nome;
   }
 }
 const abrirAbaOriginalV7=abrirAba;
