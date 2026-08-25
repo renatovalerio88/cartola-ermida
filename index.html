@@ -695,7 +695,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   <div class="nav">
     <button class="active" onclick="abrirAba('meutime',this)">Meu Time</button>
     <button id="navAoVivo" onclick="abrirAba('aovivo',this)"><span id="navAoVivoDot" class="live-v2-dot"></span><span id="navAoVivoLabel">Ao Vivo</span></button>
-    <button data-nav-fases="1" onclick="abrirAba('fase2',this)">Fases</button>
+    <button data-nav-fases="1" onclick="abrirFaseAtual(this)">Fases</button>
     <button onclick="abrirAba('estatisticas',this)">Estatísticas</button>
     <button onclick="abrirAba('ligareal',this)">Liga Real</button>
     <button onclick="abrirAba('premiacao',this)">Premiação</button>
@@ -731,23 +731,23 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
   <section id="aba-rodadas" class="aba hidden"><div class="card"><h2>Fase 1 - Grupo e Rodada</h2><div class="livebar"><div><strong id="statusAtualizacao">Dados carregados</strong><br><small id="ultimaAtualizacao">Clique para buscar a versão mais nova do JSON.</small></div><button class="refresh-btn" id="btnAtualizar" onclick="atualizarDados()">🔄 Atualizar</button></div><div class="tabs" id="tabsGruposRodadas"></div><div class="phase-filter"><label>Rodada:</label><select id="selRodada" onchange="mostrarRodada()"></select></div><div class="info-block"><h3>Classificação do grupo</h3><table class="clean-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th class="hide-mobile">PF</th><th>Saldo</th></tr></thead><tbody id="tbodyFase1Rodada"></tbody></table><div class="legend"><span><i class="pos-dot dot-ok"></i>Grupos</span><span><i class="pos-dot dot-rep"></i>Repescagem</span><span><i class="pos-dot dot-bad"></i>Eliminado</span></div></div><div class="info-block light"><h3>Jogos da rodada</h3><div id="boxRodadas"></div></div></div></section>
 
   <section id="aba-fase2" class="aba hidden">
-    <div class="card"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2" selected>Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 2</h2><p class="small">Escolha um grupo. A classificação fica primeiro; os confrontos ficam embaixo.</p></div><span class="badge future">R19 a R24</span></div><div class="tabs" id="tabsFase2"></div><div class="phase-filter"><label>Mostrar após:</label><select id="selFase2Rodada" onchange="renderFase2()"></select></div><div id="boxFase2Detalhe"></div></div>
+    <div class="card"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2" selected>Fase 2</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 2</h2><p class="small">Escolha um grupo. A classificação fica primeiro; os confrontos ficam embaixo.</p></div><span class="badge future">R19 a R24</span></div><div class="tabs" id="tabsFase2"></div><div class="phase-filter"><label>Mostrar após:</label><select id="selFase2Rodada" onchange="renderFase2()"></select></div><div id="boxFase2Detalhe"></div></div>
   </section>
 
   <section id="aba-fase3" class="aba hidden">
-    <div class="card fase-page" data-fase="fase3"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2 — atual</option><option value="fase3" selected>Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 3</h2><p class="small">Caminho dos grupos separado da repescagem. Escolha o grupo e veja classificação + jogos.</p></div><span class="badge future">R25 a R30</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+    <div class="card fase-page" data-fase="fase3"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2</option><option value="fase3" selected>Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 3</h2><p class="small">Caminho dos grupos separado da repescagem. Escolha o grupo e veja classificação + jogos.</p></div><span class="badge future">R25 a R30</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-fase4" class="aba hidden">
-    <div class="card fase-page" data-fase="fase4"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4" selected>Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 4 · Repescagem Final</h2><p class="small">Os classificados dos grupos ficam esperando. A repescagem decide as últimas 2 vagas.</p></div><span class="badge future">R31 a R34</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+    <div class="card fase-page" data-fase="fase4"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2</option><option value="fase3">Fase 3</option><option value="fase4" selected>Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 4 · Repescagem Final</h2><p class="small">Os classificados dos grupos ficam esperando. A repescagem decide as últimas 2 vagas.</p></div><span class="badge future">R31 a R34</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-fasefinal" class="aba hidden">
-    <div class="card fase-page" data-fase="final"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal" selected>Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 5 · Fase Final</h2><p class="small">Aqui os caminhos se misturam: 4 vindos dos grupos + 2 vindos da repescagem.</p></div><span class="badge future">R35 a R37</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+    <div class="card fase-page" data-fase="final"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal" selected>Fase 5</option><option value="grandefinal">Grande Final</option></select></div><div class="phase-title"><div><h2>Fase 5 · Fase Final</h2><p class="small">Aqui os caminhos se misturam: 4 vindos dos grupos + 2 vindos da repescagem.</p></div><span class="badge future">R35 a R37</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar após:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-grandefinal" class="aba hidden">
-    <div class="card fase-page" data-fase="grande"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2 — atual</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal" selected>Grande Final</option></select></div><div class="phase-title"><div><h2>Grande Final</h2><p class="small">Rodada 38: decisão do título e disputa de 3º lugar.</p></div><span class="badge future">R38</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
+    <div class="card fase-page" data-fase="grande"><div class="phase-filter fase-master"><label>Ver fase:</label><select onchange="mudarAbaFases(this)"><option value="rodadas">Fase 1</option><option value="fase2">Fase 2</option><option value="fase3">Fase 3</option><option value="fase4">Fase 4</option><option value="fasefinal">Fase 5</option><option value="grandefinal" selected>Grande Final</option></select></div><div class="phase-title"><div><h2>Grande Final</h2><p class="small">Rodada 38: decisão do título e disputa de 3º lugar.</p></div><span class="badge future">R38</span></div><div class="tabs fase-tabs-grupos"></div><div class="phase-filter"><label>Mostrar:</label><select class="fase-select-rodada"></select></div><div class="fase-box-detalhe"></div></div>
   </section>
 
   <section id="aba-fluxograma" class="aba hidden">
@@ -2127,42 +2127,98 @@ function renderMeuTime(){
 /* =========================
    V12: ajustes finos preservando a v7
    ========================= */
+function chaveFaseAtual(){
+  const fase=faseAtualNumero();
+  if(fase===1)return "rodadas";
+  if(fase===2)return "fase2";
+  if(fase===3)return "fase3";
+  if(fase===4)return "fase4";
+  if(fase===5)return "fasefinal";
+  return "grandefinal";
+}
+
+function nomeOpcaoFase(chave){
+  const nomes={
+    rodadas:"Fase 1",
+    fase2:"Fase 2",
+    fase3:"Fase 3",
+    fase4:"Fase 4",
+    fasefinal:"Fase 5",
+    grandefinal:"Grande Final"
+  };
+  const atual=chaveFaseAtual();
+  return `${nomes[chave]}${chave===atual?" — atual":""}`;
+}
+
+function atualizarRotulosSeletorFases(select){
+  if(!select)return;
+  Array.from(select.options).forEach(op=>{
+    op.textContent=nomeOpcaoFase(op.value);
+  });
+}
+
 function navFasesSelect(valor){
   return `<div class="phase-filter fase-master fase-master-global"><label>Ver fase:</label><select onchange="mudarAbaFases(this)">
-    <option value="rodadas" ${valor==='rodadas'?'selected':''}>Fase 1</option>
-    <option value="fase2" ${valor==='fase2'?'selected':''}>Fase 2 — atual</option>
-    <option value="fase3" ${valor==='fase3'?'selected':''}>Fase 3</option>
-    <option value="fase4" ${valor==='fase4'?'selected':''}>Fase 4</option>
-    <option value="fasefinal" ${valor==='fasefinal'?'selected':''}>Fase 5</option>
-    <option value="grandefinal" ${valor==='grandefinal'?'selected':''}>Grande Final</option>
+    <option value="rodadas" ${valor==='rodadas'?'selected':''}>${nomeOpcaoFase('rodadas')}</option>
+    <option value="fase2" ${valor==='fase2'?'selected':''}>${nomeOpcaoFase('fase2')}</option>
+    <option value="fase3" ${valor==='fase3'?'selected':''}>${nomeOpcaoFase('fase3')}</option>
+    <option value="fase4" ${valor==='fase4'?'selected':''}>${nomeOpcaoFase('fase4')}</option>
+    <option value="fasefinal" ${valor==='fasefinal'?'selected':''}>${nomeOpcaoFase('fasefinal')}</option>
+    <option value="grandefinal" ${valor==='grandefinal'?'selected':''}>${nomeOpcaoFase('grandefinal')}</option>
   </select></div>`;
 }
+
 function garantirSeletorFases(nome){
   const section=document.getElementById('aba-'+nome);
   if(!section)return;
   const card=section.querySelector('.card');
   if(!card)return;
+
   let master=card.querySelector('.fase-master');
+
   if(!master){
-    card.insertAdjacentHTML('afterbegin', navFasesSelect(nome));
-  }else{
-    const sel=master.querySelector('select');
-    if(sel)sel.value=nome;
+    card.insertAdjacentHTML('afterbegin',navFasesSelect(nome));
+    master=card.querySelector('.fase-master');
+  }
+
+  const sel=master?.querySelector('select');
+  if(sel){
+    atualizarRotulosSeletorFases(sel);
+    sel.value=nome;
   }
 }
+
+function abrirFaseAtual(btn){
+  const fase=chaveFaseAtual();
+  abrirAba(fase,btn);
+
+  const aberta=document.getElementById('aba-'+fase);
+  const sel=aberta?.querySelector('.fase-master select');
+
+  if(sel){
+    atualizarRotulosSeletorFases(sel);
+    sel.value=fase;
+  }
+}
+
 const abrirAbaOriginalV7=abrirAba;
 abrirAba=function(nome,btn){
   document.querySelectorAll('.aba').forEach(a=>a.classList.add('hidden'));
+
   const alvo=document.getElementById('aba-'+nome);
   if(alvo)alvo.classList.remove('hidden');
+
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
+
   if(['rodadas','fase2','fase3','fase4','fasefinal','grandefinal'].includes(nome)){
     garantirSeletorFases(nome);
+
     const nav=document.querySelector('[data-nav-fases="1"]');
     if(nav)nav.classList.add('active');
   }
 }
+
 mudarAbaFases=function(sel){
   const btn=document.querySelector('[data-nav-fases="1"]');
   abrirAba(sel.value,btn);
@@ -2430,7 +2486,8 @@ const renderTudoOriginalV7=renderTudo;
 renderTudo=function(){
   renderTudoOriginalV7();
   regulamentoDetalhadoV11();
-  garantirSeletorFases('fase2');
+
+  document.querySelectorAll('.fase-master select').forEach(atualizarRotulosSeletorFases);
 }
 
 
