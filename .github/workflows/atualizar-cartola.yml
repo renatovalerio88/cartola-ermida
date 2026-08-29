@@ -42,7 +42,6 @@ jobs:
 
           def buscar_status():
               ultimo_erro = None
-
               for tentativa in range(1, 4):
                   try:
                       req = urllib.request.Request(
@@ -50,34 +49,17 @@ jobs:
                           headers={
                               "Accept": "application/json",
                               "User-Agent": "Mozilla/5.0",
+                              "Cache-Control": "no-cache",
                           },
                       )
-
-                      with urllib.request.urlopen(
-                          req,
-                          timeout=20,
-                      ) as resposta:
-                          return json.loads(
-                              resposta
-                              .read()
-                              .decode("utf-8")
-                          )
-
+                      with urllib.request.urlopen(req, timeout=20) as resposta:
+                          return json.loads(resposta.read().decode("utf-8"))
                   except Exception as erro:
                       ultimo_erro = erro
-
-                      print(
-                          f"Tentativa "
-                          f"{tentativa}/3 falhou: "
-                          f"{erro}"
-                      )
-
-                      time.sleep(tentativa * 2)
-
-              raise RuntimeError(
-                  "Não foi possível consultar "
-                  f"o status: {ultimo_erro}"
-              )
+                      print(f"Tentativa {tentativa}/3 falhou: {erro}")
+                      if tentativa < 3:
+                          time.sleep(tentativa * 2)
+              raise RuntimeError(f"Não foi possível consultar o status: {ultimo_erro}")
 
           def carregar_json_local(caminho):
               try:
@@ -88,70 +70,27 @@ jobs:
 
           def carregar_historico():
               try:
-                  with open(
-                      "historico_cartola.json",
-                      "r",
-                      encoding="utf-8",
-                  ) as arquivo:
+                  with open("historico_cartola.json", "r", encoding="utf-8") as arquivo:
                       return json.load(arquivo)
-
-              except (
-                  FileNotFoundError,
-                  json.JSONDecodeError,
-              ):
+              except (FileNotFoundError, json.JSONDecodeError):
                   return {}
 
           status = buscar_status()
+          execucao_manual = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
 
-          execucao_manual = (
-              os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
-          )
-
-          rodada = int(
-              status.get("rodada_atual", 0)
-              or 0
-          )
-
-          status_mercado = int(
-              status.get("status_mercado", 0)
-              or 0
-          )
-
-          mercado_aberto = (
-              status_mercado == 1
-          )
-
-          bola_rolando = bool(
-              status.get(
-                  "bola_rolando",
-                  False,
-              )
-          )
-
-          rodada_fechada = (
-              rodada - 1
-              if mercado_aberto
-              else 0
-          )
+          rodada = int(status.get("rodada_atual", 0) or 0)
+          status_mercado = int(status.get("status_mercado", 0) or 0)
+          mercado_aberto = status_mercado == 1
+          bola_rolando = bool(status.get("bola_rolando", False))
 
           historico = carregar_historico()
           rodada_atual_local = carregar_json_local("rodada_atual_cartola.json")
 
-          ultima_fechada = int(
-              historico.get(
-                  "ultima_rodada_fechada",
-                  0,
-              )
-              or 0
-          )
+          ultima_fechada = int(historico.get("ultima_rodada_fechada", 0) or 0)
+          rodada_fechada = rodada - 1 if mercado_aberto else 0
 
           registros = (
-              historico
-              .get("rodadas", {})
-              .get(
-                  str(rodada_fechada),
-                  [],
-              )
+              historico.get("rodadas", {}).get(str(rodada_fechada), [])
               if rodada_fechada > 0
               else []
           )
@@ -166,87 +105,48 @@ jobs:
               )
           )
 
-          # Fora dos jogos, evita consultar os 36 times a cada 10 minutos.
-          # Faz uma atualização completa apenas quando o estado mudou ou
-          # quando a rodada anterior ainda não foi registrada no JSON atual.
+          # REGRA PRINCIPAL:
+          # mercado fechado (status != 1) = rodada em andamento ou transição.
+          # Nessa situação SEMPRE executamos atualizar_rodada_atual.py,
+          # para buscar /atletas/pontuados e recalcular as parciais dos 36 times.
+          # Quando o mercado está aberto, só atualizamos se houver mudança de estado.
           rodada_local = int(rodada_atual_local.get("rodada_cartola", 0) or 0)
           dados_local = int(rodada_atual_local.get("rodada_dados", 0) or 0)
           mercado_local = bool(rodada_atual_local.get("mercado_aberto", False))
-          precisa_atualizar_atual = (
-              execucao_manual
-              or not mercado_aberto
-              or rodada_local != rodada
-              or dados_local != rodada_fechada
-              or mercado_local is not True
+          rodada_em_andamento_local = bool(
+              rodada_atual_local.get("rodada_em_andamento", False)
           )
 
-          print(
-              "Execução manual: "
-              f"{execucao_manual}"
-          )
-          print(
-              f"Rodada Cartola: {rodada}"
-          )
-          print(
-              "Status mercado: "
-              f"{status_mercado}"
-          )
-          print(
-              "Mercado aberto: "
-              f"{mercado_aberto}"
-          )
-          print(
-              "Bola rolando: "
-              f"{bola_rolando}"
-          )
-          print(
-              "Última rodada fechada "
-              "registrada: "
-              f"{ultima_fechada}"
-          )
-          print(
-              "Rodada a consolidar: "
-              f"{rodada_fechada}"
-          )
-          print(
-              "Precisa atualizar histórico: "
-              f"{precisa_historico}"
-          )
-          print(
-              "Precisa atualizar dados atuais: "
-              f"{precisa_atualizar_atual}"
-          )
+          if not mercado_aberto:
+              precisa_atualizar_atual = True
+          else:
+              precisa_atualizar_atual = (
+                  execucao_manual
+                  or rodada_local != rodada
+                  or dados_local != rodada_fechada
+                  or mercado_local is not True
+                  or rodada_em_andamento_local
+              )
 
-          with open(
-              os.environ["GITHUB_OUTPUT"],
-              "a",
-              encoding="utf-8",
-          ) as out:
+          print(f"Execução manual: {execucao_manual}")
+          print(f"Rodada Cartola: {rodada}")
+          print(f"Status mercado: {status_mercado}")
+          print(f"Mercado aberto: {mercado_aberto}")
+          print(f"Bola rolando: {bola_rolando}")
+          print(f"Última rodada fechada registrada: {ultima_fechada}")
+          print(f"Rodada a consolidar: {rodada_fechada}")
+          print(f"Precisa atualizar histórico: {precisa_historico}")
+          print(f"Precisa atualizar dados atuais: {precisa_atualizar_atual}")
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+              out.write(f"rodada={rodada}\n")
+              out.write(f"status={status_mercado}\n")
+              out.write(f"mercado_aberto={'true' if mercado_aberto else 'false'}\n")
+              out.write(f"bola_rolando={'true' if bola_rolando else 'false'}\n")
+              out.write(f"precisa_historico={'true' if precisa_historico else 'false'}\n")
               out.write(
-                  f"rodada={rodada}\n"
-              )
-              out.write(
-                  f"status={status_mercado}\n"
-              )
-              out.write(
-                  "mercado_aberto="
-                  f"{'true' if mercado_aberto else 'false'}"
-                  "\n"
-              )
-              out.write(
-                  "bola_rolando="
-                  f"{'true' if bola_rolando else 'false'}"
-                  "\n"
-              )
-              out.write(
-                  "precisa_historico="
-                  f"{'true' if precisa_historico else 'false'}"
-                  "\n"
-              )
-              out.write(
-                  "precisa_atualizar_atual="
-                  f"{'true' if precisa_atualizar_atual else 'false'}"
-                  "\n"
+                  f"precisa_atualizar_atual="
+                  f"{'true' if precisa_atualizar_atual else 'false'}\n"
               )
           PY
 
@@ -269,11 +169,8 @@ jobs:
       - name: Salvar arquivos atualizados
         shell: bash
         run: |
-          git config user.name \
-            "github-actions[bot]"
-
-          git config user.email \
-            "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add -A
 
@@ -282,14 +179,6 @@ jobs:
             exit 0
           fi
 
-          git commit \
-            -m "Atualiza dados do Cartola"
-
-          git pull \
-            --rebase \
-            origin \
-            "${GITHUB_REF_NAME}"
-
-          git push \
-            origin \
-            "HEAD:${GITHUB_REF_NAME}"
+          git commit -m "Atualiza dados do Cartola"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
