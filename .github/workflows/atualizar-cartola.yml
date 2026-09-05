@@ -105,11 +105,8 @@ jobs:
               )
           )
 
-          # REGRA PRINCIPAL:
-          # mercado fechado (status != 1) = rodada em andamento ou transição.
-          # Nessa situação SEMPRE executamos atualizar_rodada_atual.py,
-          # para buscar /atletas/pontuados e recalcular as parciais dos 36 times.
-          # Quando o mercado está aberto, só atualizamos se houver mudança de estado.
+          # Mercado fechado = rodada em andamento ou transição.
+          # Nessa situação o script atualiza os dados para detectar parciais.
           rodada_local = int(rodada_atual_local.get("rodada_cartola", 0) or 0)
           dados_local = int(rodada_atual_local.get("rodada_dados", 0) or 0)
           mercado_local = bool(rodada_atual_local.get("mercado_aberto", False))
@@ -154,6 +151,18 @@ jobs:
         if: steps.mercado.outputs.precisa_atualizar_atual == 'true'
         run: |
           python scripts/atualizar_rodada_atual.py
+
+      - name: Remover parcial antiga com mercado aberto
+        if: steps.mercado.outputs.mercado_aberto == 'true'
+        shell: bash
+        run: |
+          if [ -f parciais_cartola.json ]; then
+            echo "Mercado aberto: parciais ao vivo encerradas."
+            echo "Removendo parciais_cartola.json para o site usar rodada_atual_cartola.json."
+            rm -f parciais_cartola.json
+          else
+            echo "Nenhuma parcial antiga para remover."
+          fi
 
       - name: Execução leve sem alterações
         if: steps.mercado.outputs.precisa_atualizar_atual != 'true' && steps.mercado.outputs.precisa_historico != 'true'
