@@ -15,6 +15,7 @@ concurrency:
 jobs:
   atualizar:
     runs-on: ubuntu-latest
+    timeout-minutes: 210
 
     steps:
       - name: Baixar repositório
@@ -147,8 +148,73 @@ jobs:
               )
           PY
 
+      - name: Monitorar parciais ao vivo a cada 10 minutos
+        if: steps.mercado.outputs.bola_rolando == 'true'
+        shell: bash
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          INTERVALO_SEGUNDOS=600
+          MAX_CICLOS=16
+
+          echo "Modo AO VIVO ativado."
+          echo "As parciais serão consultadas a cada 10 minutos dentro desta mesma execução."
+          echo "Isso evita depender da pontualidade do agendador do GitHub Actions."
+
+          for CICLO in $(seq 1 "$MAX_CICLOS"); do
+            echo ""
+            echo "============================================================"
+            echo "Ciclo ao vivo ${CICLO}/${MAX_CICLOS}"
+            echo "============================================================"
+
+            # Mantém o checkout sincronizado caso exista alguma alteração externa.
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+
+            python scripts/atualizar_rodada_atual.py
+
+            git add rodada_atual_cartola.json
+            if [ -f parciais_cartola.json ]; then
+              git add parciais_cartola.json
+            fi
+
+            if ! git diff --cached --quiet; then
+              git commit -m "Atualiza parciais ao vivo da Rodada ${{ steps.mercado.outputs.rodada }}"
+              git pull --rebase origin "${GITHUB_REF_NAME}"
+              git push origin "HEAD:${GITHUB_REF_NAME}"
+              echo "Novas parciais enviadas ao GitHub Pages."
+            else
+              echo "API consultada, mas nenhuma pontuação mudou neste ciclo."
+            fi
+
+            # O próprio script acabou de consultar a API. Usamos o JSON recém-gerado
+            # para decidir se ainda vale a pena manter o monitor ao vivo rodando.
+            CONTINUA=$(python - <<'PY'
+          import json
+          try:
+              with open("rodada_atual_cartola.json", "r", encoding="utf-8") as f:
+                  dados = json.load(f)
+              print("true" if bool(dados.get("bola_rolando", False)) else "false")
+          except Exception:
+              print("true")
+          PY
+            )
+
+            if [ "$CONTINUA" != "true" ]; then
+              echo "A API não informa mais bola rolando. Encerrando monitor ao vivo."
+              break
+            fi
+
+            if [ "$CICLO" -lt "$MAX_CICLOS" ]; then
+              echo "Próxima consulta em 10 minutos."
+              sleep "$INTERVALO_SEGUNDOS"
+            fi
+          done
+
       - name: Atualizar status e dados da rodada atual
-        if: steps.mercado.outputs.precisa_atualizar_atual == 'true'
+        if: steps.mercado.outputs.bola_rolando != 'true' && steps.mercado.outputs.precisa_atualizar_atual == 'true'
         run: |
           python scripts/atualizar_rodada_atual.py
 
@@ -165,7 +231,7 @@ jobs:
           fi
 
       - name: Execução leve sem alterações
-        if: steps.mercado.outputs.precisa_atualizar_atual != 'true' && steps.mercado.outputs.precisa_historico != 'true'
+        if: steps.mercado.outputs.bola_rolando != 'true' && steps.mercado.outputs.precisa_atualizar_atual != 'true' && steps.mercado.outputs.precisa_historico != 'true'
         run: |
           echo "Mercado aberto e dados oficiais já consolidados."
           echo "Nenhuma consulta aos 36 times foi necessária nesta execução."
@@ -175,7 +241,8 @@ jobs:
         run: |
           python scripts/atualizar_cartola.py
 
-      - name: Salvar arquivos atualizados
+      - name: Salvar arquivos atualizados fora do modo ao vivo
+        if: steps.mercado.outputs.bola_rolando != 'true'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
