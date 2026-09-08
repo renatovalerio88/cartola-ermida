@@ -1227,7 +1227,7 @@ function montarPaginasFases(){
   document.querySelectorAll('.fase-page').forEach(page=>{
     const key=page.dataset.fase,cfg=faseConfigs[key]; if(!cfg)return;
     const sel=page.querySelector('.fase-select-rodada');
-    if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}
+    if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;sel.value=String(rodadaMaisRecente);sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}
     renderPaginaFase(key);
   })
 }
