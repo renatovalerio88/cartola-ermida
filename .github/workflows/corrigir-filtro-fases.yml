@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Corrigir filtro para ultima rodada disponivel
+      - name: Corrigir filtro usado nas paginas de fases
         shell: bash
         run: |
           set -e
@@ -32,49 +32,56 @@ jobs:
           caminho = Path('index.html')
           texto = caminho.read_text(encoding='utf-8')
 
-          antigo_atual = 'const atual=Number(selFaseRodada.value||cfg.inicio);'
-          novo_atual = 'const atual=Number(selFaseRodada.value||0);'
+          antigo = '''    if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}'''
 
-          antigo_selecao = 'const rodadaAtual=rodadaCompeticaoAtual();selFaseRodada.value=(rodadaAtual>=cfg.inicio&&rodadaAtual<=fim)?rodadaAtual:((atual>=cfg.inicio&&atual<=fim)?atual:cfg.inicio);'
-          nova_selecao = 'const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;selFaseRodada.value=(atual>=cfg.inicio&&atual<=fim)?atual:rodadaMaisRecente;'
+          novo = '''    if(!sel.dataset.montado){
+      const fim=cfg.inicio+cfg.agenda.length-1;
+      for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;
+      const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);
+      const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;
+      sel.value=String(rodadaMaisRecente);
+      sel.onchange=()=>renderPaginaFase(key);
+      sel.dataset.montado='1';
+    }'''
 
-          if novo_atual in texto and nova_selecao in texto:
-              print('Correcao ja aplicada.')
-          else:
-              if antigo_atual not in texto:
-                  raise SystemExit('ERRO: inicializacao atual do filtro nao encontrada.')
-              if antigo_selecao not in texto:
-                  raise SystemExit('ERRO: selecao atual do filtro nao encontrada.')
-              texto = texto.replace(antigo_atual, novo_atual, 1)
-              texto = texto.replace(antigo_selecao, nova_selecao, 1)
+          if novo in texto:
+              print('Correcao correta ja estava aplicada.')
+          elif antigo in texto:
+              texto = texto.replace(antigo, novo, 1)
               caminho.write_text(texto, encoding='utf-8')
-              print('Filtro corrigido: abre na ultima rodada fechada e preserva escolha manual.')
+              print('Filtro real das paginas de fases corrigido.')
+          else:
+              raise SystemExit('ERRO: bloco ativo do filtro nao encontrado; nenhuma alteracao feita.')
           PY
 
       - name: Validar correcao
         shell: bash
         run: |
+          set -e
           python - <<'PY'
           from pathlib import Path
           texto = Path('index.html').read_text(encoding='utf-8')
-          assert 'const atual=Number(selFaseRodada.value||0);' in texto
           assert 'const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);' in texto
           assert 'const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;' in texto
-          print('Validacao OK.')
+          assert 'sel.value=String(rodadaMaisRecente);' in texto
+          assert "sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key)" not in texto
+          print('Validacao OK: Fase 3 abrira na rodada fechada mais recente.')
           PY
 
-      - name: Publicar correcao
+      - name: Publicar e remover workflow temporario
         shell: bash
         run: |
+          set -e
+          rm -f .github/workflows/corrigir-filtro-fases.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          git add index.html .github/workflows/corrigir-filtro-fases.yml
 
           if git diff --cached --quiet; then
             echo "Nenhuma alteracao pendente."
             exit 0
           fi
 
-          git commit -m "Deixa filtro de rodada das fases automatico"
+          git commit -m "Corrige filtro automatico da Fase 3"
           git pull --rebase origin main
           git push origin HEAD:main
