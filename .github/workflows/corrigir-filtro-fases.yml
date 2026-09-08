@@ -1,12 +1,17 @@
 name: Corrigir filtro automatico das fases
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
-  schedule:
-    - cron: "3 * * * *"
 
 permissions:
   contents: write
+
+concurrency:
+  group: corrigir-filtro-fases
+  cancel-in-progress: true
 
 jobs:
   corrigir:
@@ -17,50 +22,59 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Corrigir filtro e publicar
+      - name: Corrigir filtro para ultima rodada disponivel
         shell: bash
         run: |
           set -e
           python - <<'PY'
           from pathlib import Path
 
-          caminho = Path("index.html")
-          texto = caminho.read_text(encoding="utf-8")
+          caminho = Path('index.html')
+          texto = caminho.read_text(encoding='utf-8')
 
-          antigo = '''    if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}'''
+          antigo_atual = 'const atual=Number(selFaseRodada.value||cfg.inicio);'
+          novo_atual = 'const atual=Number(selFaseRodada.value||0);'
 
-          novo = '''    if(!sel.dataset.montado){
-      const fim=cfg.inicio+cfg.agenda.length-1;
-      for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;
-      const rodadaReferencia=Number(historico?.ultima_rodada_fechada||parciaisCartola?.rodada_dados||cfg.inicio);
-      const rodadaInicial=Math.max(cfg.inicio,Math.min(fim,rodadaReferencia));
-      sel.value=rodadaInicial;
-      sel.onchange=()=>renderPaginaFase(key);
-      sel.dataset.montado='1';
-    }'''
+          antigo_selecao = 'const rodadaAtual=rodadaCompeticaoAtual();selFaseRodada.value=(rodadaAtual>=cfg.inicio&&rodadaAtual<=fim)?rodadaAtual:((atual>=cfg.inicio&&atual<=fim)?atual:cfg.inicio);'
+          nova_selecao = 'const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;selFaseRodada.value=(atual>=cfg.inicio&&atual<=fim)?atual:rodadaMaisRecente;'
 
-          if novo in texto:
-              print("Correcao ja estava aplicada.")
-          elif antigo in texto:
-              texto = texto.replace(antigo, novo, 1)
-              caminho.write_text(texto, encoding="utf-8")
-              print("Filtro corrigido para usar automaticamente a ultima rodada fechada da fase.")
+          if novo_atual in texto and nova_selecao in texto:
+              print('Correcao ja aplicada.')
           else:
-              raise SystemExit("Trecho esperado nao encontrado; nenhuma alteracao foi feita por seguranca.")
+              if antigo_atual not in texto:
+                  raise SystemExit('ERRO: inicializacao atual do filtro nao encontrada.')
+              if antigo_selecao not in texto:
+                  raise SystemExit('ERRO: selecao atual do filtro nao encontrada.')
+              texto = texto.replace(antigo_atual, novo_atual, 1)
+              texto = texto.replace(antigo_selecao, nova_selecao, 1)
+              caminho.write_text(texto, encoding='utf-8')
+              print('Filtro corrigido: abre na ultima rodada fechada e preserva escolha manual.')
           PY
 
-          # Este workflow e temporario: remove a si proprio depois de aplicar a correcao.
-          rm -f .github/workflows/corrigir-filtro-fases.yml
+      - name: Validar correcao
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          texto = Path('index.html').read_text(encoding='utf-8')
+          assert 'const atual=Number(selFaseRodada.value||0);' in texto
+          assert 'const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);' in texto
+          assert 'const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;' in texto
+          print('Validacao OK.')
+          PY
 
+      - name: Publicar correcao
+        shell: bash
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html .github/workflows/corrigir-filtro-fases.yml
+          git add index.html
 
           if git diff --cached --quiet; then
-            echo "Nada para publicar."
+            echo "Nenhuma alteracao pendente."
             exit 0
           fi
 
-          git commit -m "Corrige filtro automatico de rodada nas fases"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git commit -m "Deixa filtro de rodada das fases automatico"
+          git pull --rebase origin main
+          git push origin HEAD:main
