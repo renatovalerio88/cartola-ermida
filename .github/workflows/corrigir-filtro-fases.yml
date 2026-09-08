@@ -2,86 +2,49 @@ name: Corrigir filtro automatico das fases
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: write
 
-concurrency:
-  group: corrigir-filtro-fases
-  cancel-in-progress: true
-
 jobs:
   corrigir:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar repositorio
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Corrigir filtro usado nas paginas de fases
+      - name: Aplicar correcao
         shell: bash
         run: |
           set -e
           python - <<'PY'
           from pathlib import Path
-
-          caminho = Path('index.html')
-          texto = caminho.read_text(encoding='utf-8')
-
-          antigo = '''    if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}'''
-
-          novo = '''    if(!sel.dataset.montado){
-      const fim=cfg.inicio+cfg.agenda.length-1;
-      for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;
-      const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);
-      const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;
-      sel.value=String(rodadaMaisRecente);
-      sel.onchange=()=>renderPaginaFase(key);
-      sel.dataset.montado='1';
-    }'''
-
-          if novo in texto:
-              print('Correcao correta ja estava aplicada.')
-          elif antigo in texto:
-              texto = texto.replace(antigo, novo, 1)
-              caminho.write_text(texto, encoding='utf-8')
-              print('Filtro real das paginas de fases corrigido.')
-          else:
-              raise SystemExit('ERRO: bloco ativo do filtro nao encontrado; nenhuma alteracao feita.')
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = "if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value=\"${r}\">${rotuloRodadaOpcao(r)}</option>`;sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}"
+          new = "if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value=\"${r}\">${rotuloRodadaOpcao(r)}</option>`;const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;sel.value=String(rodadaMaisRecente);sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}"
+          if old in s:
+              s = s.replace(old, new, 1)
+              p.write_text(s, encoding='utf-8')
+          elif new not in s:
+              raise SystemExit('Trecho do filtro nao encontrado')
+          assert new in p.read_text(encoding='utf-8')
           PY
 
-      - name: Validar correcao
+      - name: Publicar
         shell: bash
         run: |
           set -e
-          python - <<'PY'
-          from pathlib import Path
-          texto = Path('index.html').read_text(encoding='utf-8')
-          assert 'const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);' in texto
-          assert 'const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;' in texto
-          assert 'sel.value=String(rodadaMaisRecente);' in texto
-          assert "sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key)" not in texto
-          print('Validacao OK: Fase 3 abrira na rodada fechada mais recente.')
-          PY
-
-      - name: Publicar e remover workflow temporario
-        shell: bash
-        run: |
-          set -e
-          rm -f .github/workflows/corrigir-filtro-fases.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html .github/workflows/corrigir-filtro-fases.yml
-
+          git add index.html
           if git diff --cached --quiet; then
-            echo "Nenhuma alteracao pendente."
+            echo "Sem alteracoes"
             exit 0
           fi
-
           git commit -m "Corrige filtro automatico da Fase 3"
           git pull --rebase origin main
           git push origin HEAD:main
