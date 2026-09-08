@@ -1,0 +1,66 @@
+name: Corrigir filtro automatico das fases
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "3 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  corrigir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Corrigir filtro e publicar
+        shell: bash
+        run: |
+          set -e
+          python - <<'PY'
+          from pathlib import Path
+
+          caminho = Path("index.html")
+          texto = caminho.read_text(encoding="utf-8")
+
+          antigo = '''    if(!sel.dataset.montado){const fim=cfg.inicio+cfg.agenda.length-1;for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;sel.value=cfg.inicio;sel.onchange=()=>renderPaginaFase(key);sel.dataset.montado='1'}'''
+
+          novo = '''    if(!sel.dataset.montado){
+      const fim=cfg.inicio+cfg.agenda.length-1;
+      for(let r=cfg.inicio;r<=fim;r++)sel.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;
+      const rodadaReferencia=Number(historico?.ultima_rodada_fechada||parciaisCartola?.rodada_dados||cfg.inicio);
+      const rodadaInicial=Math.max(cfg.inicio,Math.min(fim,rodadaReferencia));
+      sel.value=rodadaInicial;
+      sel.onchange=()=>renderPaginaFase(key);
+      sel.dataset.montado='1';
+    }'''
+
+          if novo in texto:
+              print("Correcao ja estava aplicada.")
+          elif antigo in texto:
+              texto = texto.replace(antigo, novo, 1)
+              caminho.write_text(texto, encoding="utf-8")
+              print("Filtro corrigido para usar automaticamente a ultima rodada fechada da fase.")
+          else:
+              raise SystemExit("Trecho esperado nao encontrado; nenhuma alteracao foi feita por seguranca.")
+          PY
+
+          # Este workflow e temporario: remove a si proprio depois de aplicar a correcao.
+          rm -f .github/workflows/corrigir-filtro-fases.yml
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html .github/workflows/corrigir-filtro-fases.yml
+
+          if git diff --cached --quiet; then
+            echo "Nada para publicar."
+            exit 0
+          fi
+
+          git commit -m "Corrige filtro automatico de rodada nas fases"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
