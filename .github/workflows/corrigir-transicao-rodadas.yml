@@ -1,0 +1,75 @@
+name: Corrigir transicao automatica das rodadas
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: corrigir-transicao-rodadas
+  cancel-in-progress: false
+
+jobs:
+  corrigir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar protecao contra atraso do status da API
+        shell: bash
+        run: |
+          set -e
+          python - <<'PY'
+          from pathlib import Path
+
+          # 1) O script de dados passa a considerar o horario oficial de fechamento.
+          p = Path('scripts/atualizar_rodada_atual.py')
+          s = p.read_text(encoding='utf-8')
+          old = '''mercado_aberto = (\n    mercado_status == 1\n)\n\nbola_rolando_api = bool('''
+          new = '''mercado_aberto_api = (\n    mercado_status == 1\n)\n\n# A API /mercado/status pode demorar alguns minutos para virar o estado\n# depois do horario oficial de fechamento. O horario de fechamento e uma\n# segunda fonte oficial e impede o site de ficar preso na rodada anterior.\nfechamento_status = status.get("fechamento", {}) or {}\nfechamento_timestamp = inteiro(fechamento_status.get("timestamp", 0))\nagora_timestamp = inteiro(datetime.now(FUSO).timestamp())\nfechamento_passou = bool(\n    fechamento_timestamp > 0\n    and agora_timestamp >= fechamento_timestamp\n)\nmercado_aberto = bool(mercado_aberto_api and not fechamento_passou)\n\nbola_rolando_api = bool('''
+          if new not in s:
+              if old not in s:
+                  raise SystemExit('Trecho de mercado em atualizar_rodada_atual.py nao encontrado.')
+              s = s.replace(old, new, 1)
+              p.write_text(s, encoding='utf-8')
+              print('atualizar_rodada_atual.py protegido pelo horario de fechamento.')
+          else:
+              print('atualizar_rodada_atual.py ja estava corrigido.')
+
+          # 2) O workflow tambem usa o fechamento para entrar no modo ao vivo,
+          # mesmo quando status_mercado/bola_rolando chegam atrasados.
+          p = Path('.github/workflows/atualizar-cartola.yml')
+          s = p.read_text(encoding='utf-8')
+          old = '''          mercado_aberto = status_mercado == 1\n          bola_rolando = bool(status.get("bola_rolando", False))\n\n          historico = carregar_historico()'''
+          new = '''          mercado_aberto_api = status_mercado == 1\n          bola_rolando_api = bool(status.get("bola_rolando", False))\n\n          # Nao dependemos apenas da virada de status da API. Em algumas rodadas\n          # ela permanece como mercado aberto por alguns minutos apos o fechamento.\n          fechamento = status.get("fechamento", {}) or {}\n          fechamento_timestamp = int(fechamento.get("timestamp", 0) or 0)\n          agora_timestamp = int(time.time())\n          fechamento_passou = bool(\n              fechamento_timestamp > 0\n              and agora_timestamp >= fechamento_timestamp\n          )\n          mercado_aberto = bool(mercado_aberto_api and not fechamento_passou)\n          bola_rolando = bool(bola_rolando_api or fechamento_passou)\n\n          historico = carregar_historico()'''
+          if new not in s:
+              if old not in s:
+                  raise SystemExit('Trecho de status em atualizar-cartola.yml nao encontrado.')
+              s = s.replace(old, new, 1)
+              p.write_text(s, encoding='utf-8')
+              print('Workflow protegido pelo horario de fechamento.')
+          else:
+              print('Workflow ja estava corrigido.')
+          PY
+
+          # Workflow temporario: remove a si mesmo apos aplicar a migracao.
+          rm -f .github/workflows/corrigir-transicao-rodadas.yml
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/atualizar_rodada_atual.py .github/workflows/atualizar-cartola.yml .github/workflows/corrigir-transicao-rodadas.yml
+
+          if git diff --cached --quiet; then
+            echo 'Nada para publicar.'
+            exit 0
+          fi
+
+          git commit -m "Corrige transicao automatica entre rodadas"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
