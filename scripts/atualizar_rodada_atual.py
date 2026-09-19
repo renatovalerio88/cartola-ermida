@@ -80,8 +80,11 @@ def buscar_json(
 
     for tentativa in range(1, tentativas + 1):
         try:
+            separador = "&" if "?" in url else "?"
+            url_consulta = f"{url}{separador}_ts={int(time.time())}"
+
             requisicao = urllib.request.Request(
-                url,
+                url_consulta,
                 headers={
                     "Accept": "application/json",
                     "User-Agent": "Mozilla/5.0",
