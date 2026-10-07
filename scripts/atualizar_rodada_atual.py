@@ -11,10 +11,10 @@ from zoneinfo import ZoneInfo
 ARQUIVO_RODADA_ATUAL = Path("rodada_atual_cartola.json")
 ARQUIVO_PARCIAIS = Path("parciais_cartola.json")
 
-URL_STATUS = "https://api.cartola.globo.com/mercado/status"
-URL_PONTUADOS = "https://api.cartola.globo.com/atletas/pontuados"
-URL_PARTIDAS = "https://api.cartola.globo.com/partidas"
-URL_ATLETAS_MERCADO = "https://api.cartola.globo.com/atletas/mercado"
+URL_STATUS = "https://api.cartolafc.globo.com/mercado/status"
+URL_PONTUADOS = "https://api.cartolafc.globo.com/atletas/pontuados"
+URL_PARTIDAS = "https://api.cartolafc.globo.com/partidas"
+URL_ATLETAS_MERCADO = "https://api.cartolafc.globo.com/atletas/mercado"
 
 TOTAL_TIMES = 36
 MULTIPLICADOR_CAPITAO = 1.5
@@ -1986,7 +1986,7 @@ for indice, (
     start=1,
 ):
     url = (
-        "https://api.cartola.globo.com/"
+        "https://api.cartolafc.globo.com/"
         f"time/id/{time_id}/{rodada_dados}"
     )
 
