@@ -38,7 +38,7 @@ jobs:
           import time
           import urllib.request
 
-          URL = "https://api.cartola.globo.com/mercado/status"
+          URL = "https://api.cartolafc.globo.com/mercado/status"
           TOTAL_TIMES = 36
 
           def buscar_status():
