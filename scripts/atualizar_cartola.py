@@ -28,7 +28,7 @@ from zoneinfo import ZoneInfo
 ARQUIVO_HISTORICO = Path("historico_cartola.json")
 ARQUIVO_RODADA_ATUAL = Path("rodada_atual_cartola.json")
 
-URL_STATUS = "https://api.cartola.globo.com/mercado/status"
+URL_STATUS = "https://api.cartolafc.globo.com/mercado/status"
 
 TOTAL_TIMES = 36
 
@@ -918,7 +918,7 @@ for indice, (
 
         else:
             url = (
-                "https://api.cartola.globo.com"
+                "https://api.cartolafc.globo.com"
                 f"/time/id/{time_id}/"
                 f"{rodada_para_salvar}"
             )
