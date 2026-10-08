@@ -157,7 +157,7 @@ jobs:
           PY
 
       - name: Monitorar parciais ao vivo a cada 10 minutos
-        if: steps.mercado.outputs.bola_rolando == 'true'
+        if: steps.mercado.outputs.mercado_aberto == 'false'
         shell: bash
         run: |
           set -e
@@ -204,14 +204,14 @@ jobs:
           try:
               with open("rodada_atual_cartola.json", "r", encoding="utf-8") as f:
                   dados = json.load(f)
-              print("true" if bool(dados.get("bola_rolando", False)) else "false")
+              print("true" if not bool(dados.get("mercado_aberto", True)) else "false")
           except Exception:
               print("true")
           PY
             )
 
             if [ "$CONTINUA" != "true" ]; then
-              echo "A API não informa mais bola rolando. Encerrando monitor ao vivo."
+              echo "Mercado aberto: encerrando monitoramento contínuo."
               break
             fi
 
@@ -222,7 +222,7 @@ jobs:
           done
 
       - name: Atualizar status e dados da rodada atual
-        if: steps.mercado.outputs.bola_rolando != 'true' && steps.mercado.outputs.precisa_atualizar_atual == 'true'
+        if: steps.mercado.outputs.mercado_aberto == 'true' && steps.mercado.outputs.precisa_atualizar_atual == 'true'
         run: |
           python scripts/atualizar_rodada_atual.py
 
@@ -239,7 +239,7 @@ jobs:
           fi
 
       - name: Execução leve sem alterações
-        if: steps.mercado.outputs.bola_rolando != 'true' && steps.mercado.outputs.precisa_atualizar_atual != 'true' && steps.mercado.outputs.precisa_historico != 'true'
+        if: steps.mercado.outputs.mercado_aberto == 'true' && steps.mercado.outputs.precisa_atualizar_atual != 'true' && steps.mercado.outputs.precisa_historico != 'true'
         run: |
           echo "Mercado aberto e dados oficiais já consolidados."
           echo "Nenhuma consulta aos 36 times foi necessária nesta execução."
@@ -250,7 +250,7 @@ jobs:
           python scripts/atualizar_cartola.py
 
       - name: Salvar arquivos atualizados fora do modo ao vivo
-        if: steps.mercado.outputs.bola_rolando != 'true'
+        if: steps.mercado.outputs.mercado_aberto == 'true'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
