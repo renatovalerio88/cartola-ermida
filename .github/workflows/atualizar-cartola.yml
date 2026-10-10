@@ -86,6 +86,15 @@ jobs:
 
           status = buscar_status()
           execucao_manual = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+          # Revalidar periodicamente mesmo se a API indicar mercado aberto.
+          # Evita que o snapshot fique congelado durante toda a rodada.
+          from datetime import datetime, timezone
+          ultima_consulta = carregar_json_local("rodada_atual_cartola.json").get("monitoramento", {}).get("ultima_consulta_api")
+          try:
+              idade_consulta = (datetime.now(timezone.utc) - datetime.fromisoformat(ultima_consulta.replace("Z", "+00:00"))).total_seconds()
+          except (ValueError, AttributeError, TypeError):
+              idade_consulta = float("inf")
+          revalidacao_vencida = idade_consulta >= 1800
 
           rodada = int(status.get("rodada_atual", 0) or 0)
           status_mercado = int(status.get("status_mercado", 0) or 0)
@@ -128,6 +137,7 @@ jobs:
           else:
               precisa_atualizar_atual = (
                   execucao_manual
+                  or revalidacao_vencida
                   or rodada_local != rodada
                   or dados_local != rodada_fechada
                   or mercado_local is not True
@@ -135,6 +145,7 @@ jobs:
               )
 
           print(f"Execução manual: {execucao_manual}")
+          print(f"Revalidação vencida: {revalidacao_vencida}")
           print(f"Rodada Cartola: {rodada}")
           print(f"Status mercado: {status_mercado}")
           print(f"Mercado aberto: {mercado_aberto}")
