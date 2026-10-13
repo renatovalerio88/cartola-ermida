@@ -1602,6 +1602,36 @@ function proximoJogoTexto(prox,meuTime){
 }
 
 function diagnosticarTimeForaDaFase(meuTime,fase){
+  // Percorre o caminho real do time, da fase mais recente à mais antiga.
+  // Não confundir ausência na fase atual com eliminação na Fase 1.
+  const etapas=[
+    {n:6, mapa:finalTimes, inicio:38, agenda:[[[1,2]]], fim:38, status:statusGrande},
+    {n:5, mapa:faseFinalTimes, inicio:35, agenda:jogos3, fim:37, status:statusFinal},
+    {n:4, mapa:fase4Times, inicio:31, agenda:jogos4TurnoUnico, fim:34, status:statusFase4},
+    {n:3, mapa:fase3Times, inicio:25, agenda:jogos4, fim:30, status:statusFase3},
+    {n:2, mapa:fase2Times, inicio:19, agenda:jogos4, fim:24, status:(grupo,pos)=>statusFase2(grupo,pos)}
+  ];
+  for(const etapa of etapas){
+    if(etapa.n>=fase)continue;
+    const mapa=etapa.mapa();
+    const grupo=acharGrupoEmMapa(meuTime,mapa);
+    if(!grupo)continue;
+    const lista=calcGrupoTimesAte(mapa[grupo],etapa.inicio,etapa.agenda,etapa.fim);
+    const pos=localizarPosicao(lista,meuTime);
+    const nomeGrupo=etapa.n===2?nomeFase2(grupo):grupo;
+    return {
+      titulo:`Situação do ${meuTime}`,
+      faseAtual:"Eliminado",
+      grupoAtual:`Fase ${etapa.n} · ${nomeGrupo}`,
+      status:`Eliminado na Fase ${etapa.n}`,
+      posicao:pos?`${pos}º em ${nomeGrupo}`:"-",
+      prox:null,
+      faseOrigem:etapa.n,
+      listaOrigem:lista,
+      statusOrigem:p=>etapa.status(grupo,p),
+      jogosOrigem:jogosDoMeuTime(mapa[grupo],etapa.inicio,etapa.agenda,meuTime,`Jogos do ${meuTime} na Fase ${etapa.n}`)
+    };
+  }
   const grupoF1=acharGrupoFase1(meuTime);
   if(!grupoF1)return null;
   const listaF1=calcularGrupo(grupoF1,FASE1_FINAL);
@@ -1612,10 +1642,13 @@ function diagnosticarTimeForaDaFase(meuTime,fase){
     grupoAtual:`Fase 1 · Grupo ${grupoF1}`,
     status:"Eliminado na Fase 1",
     posicao:posF1?`${posF1}º no Grupo ${grupoF1}`:"-",
-    prox:null
+    prox:null,
+    faseOrigem:1,
+    listaOrigem:listaF1,
+    statusOrigem:statusInfo,
+    jogosOrigem:jogosDoMeuTime(Object.values(grupos[grupoF1]).map(time=>({time})),1,Object.values(jogosFase1),meuTime,`Jogos do ${meuTime} na Fase 1`)
   };
 }
-
 
 function configFaseMeuTime(fase, grupoNome){
   if(fase===1)return {inicio:1, agenda:Object.values(jogosFase1), times:Object.values(grupos[grupoNome]||{}).map(time=>({time})), fim:18};
@@ -2088,12 +2121,12 @@ function renderMeuTime(){
           </div>
         </div>
         <div class="info-block">
-          <h3>Classificação final da Fase 1</h3>
-          ${renderTabelaMeuTime(calcularGrupo(acharGrupoFase1(meuTime),FASE1_FINAL), meuTime, statusInfo)}
+          <h3>Classificação da Fase ${diag.faseOrigem}</h3>
+          ${renderTabelaMeuTime(diag.listaOrigem, meuTime, diag.statusOrigem)}
         </div>
         <div class="info-block light">
-          <h3>Jogos do ${meuTime} na Fase 1</h3>
-          ${jogosDoMeuTime(Object.values(grupos[acharGrupoFase1(meuTime)]).map(time=>({time})),1,Object.values(jogosFase1),meuTime,`Todos os jogos do ${meuTime} da Fase 1`)}
+          <h3>Jogos do ${meuTime} na Fase ${diag.faseOrigem}</h3>
+          ${diag.jogosOrigem}
         </div>
         ${renderPremiacaoMeuTime(meuTime)}
       `;
