@@ -1619,11 +1619,19 @@ function diagnosticarTimeForaDaFase(meuTime,fase){
     const lista=calcGrupoTimesAte(mapa[grupo],etapa.inicio,etapa.agenda,etapa.fim);
     const pos=localizarPosicao(lista,meuTime);
     const nomeGrupo=etapa.n===2?nomeFase2(grupo):grupo;
+    // Os dois primeiros dos grupos principais da Fase 3 saltam a
+    // repescagem da Fase 4 e aguardam a Fase 5. Não estão eliminados.
+    const aguardandoFinal=etapa.n===3 && fase===4 &&
+      grupo.startsWith("Grupo ") && pos!==null && pos<=2;
+    const faseAtual=aguardandoFinal?"Classificado para a Fase 5":"Eliminado";
+    const statusAtual=aguardandoFinal?"Classificado diretamente para a Fase Final":`Eliminado na Fase ${etapa.n}`;
     return {
       titulo:`Situação do ${meuTime}`,
-      faseAtual:"Eliminado",
+      faseAtual,
       grupoAtual:`Fase ${etapa.n} · ${nomeGrupo}`,
-      status:`Eliminado na Fase ${etapa.n}`,
+      status:statusAtual,
+      classStatus:aguardandoFinal?"status-ok":"status-bad",
+      proximoTexto:aguardandoFinal?"Fase 5 · rodada 35 (aguardando definição dos confrontos)":"sem jogo previsto",
       posicao:pos?`${pos}º em ${nomeGrupo}`:"-",
       prox:null,
       faseOrigem:etapa.n,
@@ -2113,9 +2121,9 @@ function renderMeuTime(){
             <div class="situation-lines">
               <span>Fase atual: <b>${diag.faseAtual}</b></span>
               <span>Grupo atual: <b>${diag.grupoAtual}</b></span>
-              <span>Status: <b class="status-bad">${diag.status}</b></span>
+              <span>Status: <b class="${diag.classStatus || "status-bad"}">${diag.status}</b></span>
               <span>Posição final no grupo: <b>${diag.posicao}</b></span>
-              <span>Próximo jogo: <b>sem jogo previsto</b></span>
+              <span>Próximo jogo: <b>${diag.proximoTexto || "sem jogo previsto"}</b></span>
             </div>
             ${renderUltimasCinco(meuTime)}
           </div>
