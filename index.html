@@ -1870,10 +1870,24 @@ function premioLigaRealTime(nome){
   const r=rankingLigaReal().find(t=>t.time===nome);
   return r?Number(r.premio||0):0;
 }
+// Calendário oficial de 2026: setembro teve rodadas 26 (05/09),
+// 27 (11/09) e 28 (19/09). A rodada 25 começou em agosto e a 29 em outubro.
+// Preservar meses futuros sem premiação até confirmação de suas datas.
+const PREMIACAO_MENSAL_CONFIRMADA=[
+  {mes:"Setembro",inicio:26,fim:28,valor:50}
+];
+function lideresMensaisConfirmados(){
+  return PREMIACAO_MENSAL_CONFIRMADA.map(p=>{
+    const completas=Array.from({length:p.fim-p.inicio+1},(_,i)=>p.inicio+i)
+      .every(r=>Array.isArray(historico?.rodadas?.[String(r)]) &&
+        historico.rodadas[String(r)].length===36);
+    const ranking=completas?rankingSomaRodadas(p.inicio,p.fim):[];
+    return {...p, lider:ranking[0]||null, completo:completas};
+  });
+}
 function premioMensalTime(nome){
-  // Preparado para quando o JSON tiver data do primeiro jogo da rodada.
-  // Sem calendário/data confiável no histórico atual, fica zerado para não mostrar prêmio falso.
-  return 0;
+  return lideresMensaisConfirmados().reduce((total,p)=>
+    total+(p.completo&&p.lider?.time===nome?p.valor:0),0);
 }
 function premioMataMataTime(nome){
   // Entra somente quando a última fase terminar.
@@ -1951,7 +1965,7 @@ function renderPremiacao(){
   box.innerHTML=`
     <div class="prize-grid">
       <div class="prize-card"><h3>Turnos</h3><div class="money-row"><b>1º Turno</b><span>R$ 100,00</span></div><div class="money-row"><b>2º Turno</b><span>R$ 100,00</span></div></div>
-      <div class="prize-card"><h3>Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div><div class="warn-mini">Será calculado automaticamente pela data do primeiro jogo da rodada quando a informação estiver disponível.</div></div>
+      <div class="prize-card"><h3>Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div><div class="warn-mini">Setembro: rodadas 26–28, confirmado pelo calendário. Outros meses aguardam confirmação.</div></div>
       <div class="prize-card"><h3>Mata-mata</h3>${premiosMata.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}<div class="warn-mini">Será incluído quando terminar a última fase.</div></div>
       <div class="prize-card"><h3>Tradicional</h3>${premiosTrad.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}</div>
       <div class="prize-card"><h3>Liga Real</h3><div class="money-row"><b>38 rodadas</b><span>${dinheiro(2660)}</span></div><p class="small">R$ 70 para o maior pontuador de cada rodada.</p></div>
@@ -1961,6 +1975,12 @@ function renderPremiacao(){
       <table class="table-mini"><thead><tr><th>Premiação</th><th>Líder atual</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
         <tr><td>1º Turno</td><td><b>${turno1[0]?.time||'-'}</b></td><td>${turno1[0]?fmt(turno1[0].total):'-'}</td><td>${dinheiro(turno1[0]?100:0)}</td></tr>
         <tr><td>2º Turno</td><td><b>${turno2[0]?.time||'Aguardando'}</b></td><td>${turno2[0]?fmt(turno2[0].total):'-'}</td><td>${dinheiro(turno2[0]?100:0)}</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="info-block light"><h3>Mensais confirmados</h3>
+      <table class="table-mini"><thead><tr><th>Mês</th><th>Líder</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
+      ${lideresMensaisConfirmados().map(p=>`<tr><td>${p.mes} (R${p.inicio}–R${p.fim})</td><td><b>${p.lider?.time||"Aguardando"}</b></td><td>${p.lider?fmt(p.lider.total):"-"}</td><td>${dinheiro(p.lider?p.valor:0)}</td></tr>`).join("")}
       </tbody></table>
     </div>
 
@@ -1978,7 +1998,7 @@ function renderPremiacao(){
       <table class="table-mini"><thead><tr><th>Time</th><th>Trad.</th><th>Liga Real</th><th>Turnos</th><th>Mensal</th><th>Mata</th><th>Total</th></tr></thead><tbody>
       ${participantes.map(t=>`<tr><td><b>${t.time}</b></td><td>${dinheiro(t.tradicional)}</td><td>${dinheiro(t.ligaReal)}</td><td>${dinheiro(t.turnos)}</td><td>${dinheiro(t.mensais)}</td><td>${dinheiro(t.mata)}</td><td><b>${dinheiro(t.totalPremio)}</b></td></tr>`).join('')}
       </tbody></table>
-      <div class="warn-mini">Mata-mata será incluído quando terminar a última fase. Mensais serão calculados pela data do primeiro jogo da rodada quando a informação estiver disponível.</div>
+      <div class="warn-mini">Mata-mata será incluído quando terminar a última fase. Setembro confirmado pelas rodadas 26 a 28; demais meses aguardam confirmação de calendário.</div>
     </div>`;
 }
 
