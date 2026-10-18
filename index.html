@@ -1977,6 +1977,17 @@ function renderPremiacao(){
   const participantes=tabelaPremiacaoParticipantes();
 
   box.innerHTML=`
+    <div class="info-block light">
+      <h3>Resumo financeiro da liga</h3>
+      <div class="money-row"><b>Participantes</b><span>36 times</span></div>
+      <div class="money-row"><b>Pagantes</b><span>35 × R$ 176,00</span></div>
+      <div class="money-row"><b>Organizador</b><span>Isento</span></div>
+      <div class="money-row"><b>Arrecadação total</b><span>${dinheiro(35*176)}</span></div>
+      <div class="money-row"><b>Premiação prevista</b><span>${dinheiro(premiosTrad.reduce((a,b)=>a+b,0)+premiosMata.reduce((a,b)=>a+b,0)+200+200+38*70)}</span></div>
+      <div class="money-row"><b>Saldo previsto</b><span>${dinheiro(35*176-(premiosTrad.reduce((a,b)=>a+b,0)+premiosMata.reduce((a,b)=>a+b,0)+200+200+38*70))}</span></div>
+      <p class="small">Distribuição integral da arrecadação em prêmios. Valores previstos; resultados e vencedores seguem a apuração automática.</p>
+    </div>
+
     <div class="prize-grid">
       <div class="prize-card"><h3>Turnos</h3><div class="money-row"><b>1º Turno</b><span>R$ 100,00</span></div><div class="money-row"><b>2º Turno</b><span>R$ 100,00</span></div></div>
       <div class="prize-card"><h3>Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div><div class="warn-mini">Setembro: rodadas 26–28, confirmado pelo calendário. Outros meses aguardam confirmação.</div></div>
