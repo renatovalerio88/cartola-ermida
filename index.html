@@ -1887,7 +1887,10 @@ function statusTopoMeuTime(nome){
   if(fase<=1)return '';
   const mapas={2:fase2Times,3:fase3Times,4:fase4Times,5:faseFinalTimes,6:finalTimes};
   const fn=mapas[fase];
-  if(fn && !acharGrupoEmMapa(nome, fn()))return ' · Eliminado';
+  if(fn && !acharGrupoEmMapa(nome, fn())){
+    const diag=diagnosticarTimeForaDaFase(nome,fase);
+    return diag?.classStatus==='status-ok'?' · Classificado para a Fase 5':' · Eliminado';
+  }
   return '';
 }
 function atualizarLinhaMeuTimeTopo(){
