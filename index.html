@@ -634,6 +634,20 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .live-cycle-note{margin-top:10px;color:#cbd5e1;font-size:13px}
 @media(max-width:700px){.live-cycle-grid{grid-template-columns:1fr}.live-cycle-card{padding:13px}}
 
+
+/* Premiação por participante: cartões compactos e legíveis no celular */
+.prize-participant-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px;margin-top:14px}
+.prize-participant{background:linear-gradient(145deg,#0b1528,#101d32);border:1px solid #334155;border-radius:18px;padding:16px;min-width:0}
+.prize-participant:first-child{border-color:#22c55e}
+.prize-participant-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.prize-participant-name{font-size:15px;font-weight:750;line-height:1.35;overflow-wrap:anywhere}
+.prize-participant-rank{color:#94a3b8;font-size:12px;margin-bottom:5px}
+.prize-participant-total{color:#fde68a;font-size:25px;font-weight:800;white-space:nowrap;letter-spacing:-.04em}
+.prize-participant-breakdown{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.prize-participant-chip{font-size:12px;color:#cbd5e1;background:#17243a;border:1px solid #334155;border-radius:9px;padding:6px 9px}
+.prize-participant-chip b{color:#f8fafc}
+.prize-participant-caption{color:#94a3b8;font-size:12px;margin-top:5px}
+@media(max-width:430px){.prize-participant{padding:13px}.prize-participant-total{font-size:23px}.prize-participant-head{gap:8px}}
 </style>
 
 <style id="v3-meu-time-css">
@@ -1995,10 +2009,21 @@ function renderPremiacao(){
     </div>
 
     <div class="info-block"><h3>Premiação atual por participante</h3>
-      <table class="table-mini"><thead><tr><th>Time</th><th>Trad.</th><th>Liga Real</th><th>Turnos</th><th>Mensal</th><th>Mata</th><th>Total</th></tr></thead><tbody>
-      ${participantes.map(t=>`<tr><td><b>${t.time}</b></td><td>${dinheiro(t.tradicional)}</td><td>${dinheiro(t.ligaReal)}</td><td>${dinheiro(t.turnos)}</td><td>${dinheiro(t.mensais)}</td><td>${dinheiro(t.mata)}</td><td><b>${dinheiro(t.totalPremio)}</b></td></tr>`).join('')}
-      </tbody></table>
-      <div class="warn-mini">Mata-mata será incluído quando terminar a última fase. Setembro confirmado pelas rodadas 26 a 28; demais meses aguardam confirmação de calendário.</div>
+      <p class="small">Valores parciais, organizados por maior premiação. Toque nas categorias para conferir a composição de cada total.</p>
+      <div class="prize-participant-list">
+        ${participantes.map((t,i)=>`<div class="prize-participant">
+          <div class="prize-participant-rank">#${i+1} · Premiação acumulada</div>
+          <div class="prize-participant-head">
+            <div class="prize-participant-name">${t.time}</div>
+            <div class="prize-participant-total">${dinheiro(t.totalPremio)}</div>
+          </div>
+          <div class="prize-participant-breakdown">
+            ${[["Tradicional",t.tradicional],["Liga Real",t.ligaReal],["Turnos",t.turnos],["Mensais",t.mensais],["Mata-mata",t.mata]].filter(([,valor])=>valor>0).map(([nome,valor])=>`<span class="prize-participant-chip">${nome} <b>${dinheiro(valor)}</b></span>`).join("")}
+          </div>
+          ${t.totalPremio===0?'<div class="prize-participant-caption">Nenhum prêmio contabilizado até agora</div>':''}
+        </div>`).join("")}
+      </div>
+      <div class="warn-mini">Valores parciais: o mata-mata será incluído após a última fase. Setembro já está contabilizado; os demais meses aguardam confirmação.</div>
     </div>`;
 }
 
