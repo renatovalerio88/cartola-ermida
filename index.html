@@ -2003,10 +2003,26 @@ function renderPremiacao(){
       </tbody></table>
     </div>
 
-    <div class="info-block light"><h3>Mensais confirmados</h3>
-      <table class="table-mini"><thead><tr><th>Mês</th><th>Líder</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
-      ${lideresMensaisConfirmados().map(p=>`<tr><td>${p.mes} (R${p.inicio}–R${p.fim})</td><td><b>${p.lider?.time||"Aguardando"}</b></td><td>${p.lider?fmt(p.lider.total):"-"}</td><td>${dinheiro(p.lider?p.valor:0)}</td></tr>`).join("")}
-      </tbody></table>
+    <div class="info-block light" id="vencedores-mensais">
+      <h3>🏆 Vencedores por mês</h3>
+      <p class="small">Apuração transparente: somatório das pontuações das rodadas de cada mês. Somente meses concluídos e validados recebem um vencedor.</p>
+      ${lideresMensaisConfirmados().map(p=>`<div class="prize-participant" style="margin:12px 0;border-color:#22c55e">
+        <div class="prize-participant-rank">${p.mes} · Rodadas ${p.inicio} a ${p.fim}</div>
+        <div class="prize-participant-head">
+          <div>
+            <div class="prize-participant-name">${p.lider?.time||"Aguardando apuração"}</div>
+            <div class="prize-participant-caption">${p.lider?`Total: ${fmt(p.lider.total)} pontos`:"Ainda não concluído"}</div>
+          </div>
+          <div class="prize-participant-total">${dinheiro(p.lider?p.valor:0)}</div>
+        </div>
+        ${p.lider?`<div class="prize-participant-breakdown">
+          ${Array.from({length:p.fim-p.inicio+1},(_,i)=>p.inicio+i).map(r=>{
+            const t=(historico.rodadas[String(r)]||[]).find(t=>t.time===p.lider.time);
+            return `<span class="prize-participant-chip">R${r} <b>${fmt(Number(t?.pontos||0))} pts</b></span>`;
+          }).join("")}
+        </div>`:""}
+      </div>`).join("")}
+      <p class="small">Prêmio mensal: R$ 50,00. Outubro, novembro e dezembro serão exibidos quando suas rodadas e resultados estiverem confirmados.</p>
     </div>
 
     <div class="info-block"><h3>Top 6 Tradicional</h3>
