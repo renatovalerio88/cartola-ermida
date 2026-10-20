@@ -1,6 +1,6 @@
 {
   "liga": "Cartola de Ermida",
-  "ultima_atualizacao": "13/10/2026 13:07:25",
+  "ultima_atualizacao": "20/10/2026 14:19:51",
   "rodadas": {
     "1": [
       {
@@ -8413,9 +8413,335 @@
         "patrimonio": 118.81,
         "fonte_pontos": "rodada_atual_cartola_validado"
       }
+    ],
+    "31": [
+      {
+        "time_id": 3619967,
+        "time": "Forward F. Club",
+        "cartoleiro": "Valcard",
+        "rodada": 31,
+        "pontos": 85.69,
+        "patrimonio": 147.39,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 40995,
+        "time": "WECAM",
+        "cartoleiro": "Renato Valerio",
+        "rodada": 31,
+        "pontos": 106.64,
+        "patrimonio": 138.83,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 6074454,
+        "time": "SardoGalo 13",
+        "cartoleiro": "Álvaro Firmino",
+        "rodada": 31,
+        "pontos": 68.44,
+        "patrimonio": 163.09,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 385413,
+        "time": "Mão C.F",
+        "cartoleiro": "Lucas Mão",
+        "rodada": 31,
+        "pontos": 93.44,
+        "patrimonio": 170.69,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 8976743,
+        "time": "MT10M1T0",
+        "cartoleiro": "Marco Tulio",
+        "rodada": 31,
+        "pontos": 101.59,
+        "patrimonio": 147.71,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 50252506,
+        "time": "Branes25",
+        "cartoleiro": "Roger Nunes",
+        "rodada": 31,
+        "pontos": 65.34,
+        "patrimonio": 140.42,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 195382,
+        "time": "CAMARASSO",
+        "cartoleiro": "André Camarasso",
+        "rodada": 31,
+        "pontos": 84.64,
+        "patrimonio": 154.2,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 60383,
+        "time": "RJ Clube",
+        "cartoleiro": "Ricardo Júdice",
+        "rodada": 31,
+        "pontos": 96.51,
+        "patrimonio": 135.5,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 19198951,
+        "time": "SANTASTICO GLORIOSO I",
+        "cartoleiro": "Renato Do SANTOS",
+        "rodada": 31,
+        "pontos": 84.89,
+        "patrimonio": 161.33,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 25588958,
+        "time": "JUNA FUTEBOL CLUBE",
+        "cartoleiro": "AMARILO JUNIOR",
+        "rodada": 31,
+        "pontos": 94.99,
+        "patrimonio": 154.78,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 654232,
+        "time": "D1OS",
+        "cartoleiro": "10inho",
+        "rodada": 31,
+        "pontos": 66.19,
+        "patrimonio": 136.82,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 974057,
+        "time": "S.C. Finha Paulista",
+        "cartoleiro": "Lucas Guedes",
+        "rodada": 31,
+        "pontos": 90.59,
+        "patrimonio": 149.04,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 2745059,
+        "time": "Epidemia Sport Clube",
+        "cartoleiro": "Jorge Queiroz",
+        "rodada": 31,
+        "pontos": 105.04,
+        "patrimonio": 171.89,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 91357,
+        "time": "DP-SC",
+        "cartoleiro": "D Pedro",
+        "rodada": 31,
+        "pontos": 94.04,
+        "patrimonio": 168.51,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 29565271,
+        "time": "Legione Romanista",
+        "cartoleiro": "Arthur Godioso",
+        "rodada": 31,
+        "pontos": 92.79,
+        "patrimonio": 151.73,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 28538913,
+        "time": "Maria Gol De Costas",
+        "cartoleiro": "Rafa Palhares",
+        "rodada": 31,
+        "pontos": 92.39,
+        "patrimonio": 127.48,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 178173,
+        "time": "Jack Golden",
+        "cartoleiro": "Dourado",
+        "rodada": 31,
+        "pontos": 79.11,
+        "patrimonio": 146.86,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 21141036,
+        "time": "Ardam Cabubu",
+        "cartoleiro": "Guizoba",
+        "rodada": 31,
+        "pontos": 102.43,
+        "patrimonio": 177.4,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 50327258,
+        "time": "Digdigie94",
+        "cartoleiro": "DigdigieCabuloso",
+        "rodada": 31,
+        "pontos": 63.21,
+        "patrimonio": 177.01,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 18434405,
+        "time": "Gabiru cabuloso",
+        "cartoleiro": "Wendell Costa",
+        "rodada": 31,
+        "pontos": 111.39,
+        "patrimonio": 167.87,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 1193651,
+        "time": "CruzeiroKiller",
+        "cartoleiro": "André Pitanga",
+        "rodada": 31,
+        "pontos": 68.81,
+        "patrimonio": 150.33,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 25565544,
+        "time": "CHARLLOTTTE F.C.",
+        "cartoleiro": "Charles Duek",
+        "rodada": 31,
+        "pontos": 77.04,
+        "patrimonio": 153.27,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 28604976,
+        "time": "Galo de Rio Doce FC",
+        "cartoleiro": "Pedro Natali",
+        "rodada": 31,
+        "pontos": 82.21,
+        "patrimonio": 146.25,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 14705949,
+        "time": "Seu Cuca Futebol",
+        "cartoleiro": "Xande Costa",
+        "rodada": 31,
+        "pontos": 89.49,
+        "patrimonio": 149.35,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 214265,
+        "time": "Framos F.C",
+        "cartoleiro": "Fernando Ramos",
+        "rodada": 31,
+        "pontos": 85.04,
+        "patrimonio": 137.75,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 186377,
+        "time": "JACB FC",
+        "cartoleiro": "Juca Barros",
+        "rodada": 31,
+        "pontos": 105.54,
+        "patrimonio": 152.5,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 51042838,
+        "time": "A76 FC",
+        "cartoleiro": "Alan Guimarães",
+        "rodada": 31,
+        "pontos": 76.61,
+        "patrimonio": 156.28,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 285883,
+        "time": "Kayser Football",
+        "cartoleiro": "Pedro Kayser",
+        "rodada": 31,
+        "pontos": 71.61,
+        "patrimonio": 156.47,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 3128927,
+        "time": "Jafeth G.D.F.C.",
+        "cartoleiro": "Henrique Jafeth",
+        "rodada": 31,
+        "pontos": 90.14,
+        "patrimonio": 125.68,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 25937153,
+        "time": "GALOBERA F.C",
+        "cartoleiro": "Gabriel Carvalho",
+        "rodada": 31,
+        "pontos": 84.54,
+        "patrimonio": 136.82,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 1005072,
+        "time": "PELUDÃO13",
+        "cartoleiro": "WAGNER",
+        "rodada": 31,
+        "pontos": 95.74,
+        "patrimonio": 134.58,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 49415297,
+        "time": "SemFreio LEFC1988",
+        "cartoleiro": "LEANDRO CAMPOS GIANI",
+        "rodada": 31,
+        "pontos": 80.88,
+        "patrimonio": 129.07,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 103947,
+        "time": "Campista F. C",
+        "cartoleiro": "Rafael Abrantes",
+        "rodada": 31,
+        "pontos": 94.81,
+        "patrimonio": 129.75,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 24449,
+        "time": "Sport Club Prexeca Bangers",
+        "cartoleiro": "Giovanni Guedes",
+        "rodada": 31,
+        "pontos": 61.14,
+        "patrimonio": 136.23,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 25889523,
+        "time": "Clube de Regatas Sô",
+        "cartoleiro": "Betinho Valerio",
+        "rodada": 31,
+        "pontos": 93.03,
+        "patrimonio": 148.15,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      },
+      {
+        "time_id": 596168,
+        "time": "Galo Doido BH 93",
+        "cartoleiro": "Lucas Real",
+        "rodada": 31,
+        "pontos": 89.58,
+        "patrimonio": 122.73,
+        "fonte_pontos": "rodada_atual_cartola_validado"
+      }
     ]
   },
-  "ultima_rodada_fechada": 30,
+  "ultima_rodada_fechada": 31,
   "ultima_recuperacao_historica": {
     "rodada": 23,
     "data": "20/08/2026 12:33:30",
