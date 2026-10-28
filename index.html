@@ -870,14 +870,14 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
       </div><br>
       <div class="box">
         <h3>Fase 5 · Rodadas 34 a 36</h3>
-        <p><b>6 times</b> em <b>2 grupos de 3</b>.</p>
+        <p><b>6 times</b> em <b>2 grupos de 3</b>, turno único: cada time faz 2 jogos e folga 1 rodada.</p>
         <p>Agora sim mistura tudo: <b>4 classificados dos grupos</b> + <b>2 classificados da repescagem</b>.</p>
         <p>🟢 1º de cada grupo vai para a Grande Final.<br>🟡 2º de cada grupo disputa o 3º lugar.<br>🔴 3º é eliminado.</p>
       </div><br>
       <div class="box">
         <h3>Grande Final · Rodadas 37 e 38</h3>
         <p><b>Final:</b> 1º Grupo Final A x 1º Grupo Final B.</p>
-        <p><b>3º lugar:</b> 2º Grupo Final A x 2º Grupo Final B.</p>
+        <p><b>3º lugar:</b> 2º Grupo Final A x 2º Grupo Final B.</p><p>Decisões em ida e volta (R37 e R38). Vence a maior soma de pontos Cartola; empate é decidido pela melhor campanha no Tradicional.</p>
       </div><br>
       <div class="box">
         <h3>Critérios de desempate</h3>
@@ -1040,7 +1040,29 @@ function aplicaJogo(stats,ta,tb,pa,pb){const dif=Math.abs(pa-pb);stats[ta].j++;s
 function ordenar(lista){return lista.map(t=>{t.saldo=t.pf-t.pc;return t}).sort((a,b)=>b.pts-a.pts||b.v-a.v||b.saldo-a.saldo||b.pf-a.pf)}
 function calcularGrupo(g,ate){const stats={};Object.values(grupos[g]).forEach(nome=>stats[nome]=base(nome));Object.entries(jogosFase1).forEach(([rodada,partidas])=>{rodada=Number(rodada);if(rodada>ate)return;partidas.forEach(([a,b])=>{const ta=grupos[g][a],tb=grupos[g][b];aplicaJogo(stats,ta,tb,pontosTime(ta,rodada),pontosTime(tb,rodada))})});return ordenar(Object.values(stats))}
 function calcGrupoTimes(times,inicio,agenda){return calcGrupoTimesAte(times,inicio,agenda,inicio+agenda.length-1)}
-function calcGrupoTimesAte(times,inicio,agenda,ateRodada){const stats={};times.forEach(t=>{if(t&&t.time)stats[t.time]=base(t.time)});agenda.forEach((rodada,idx)=>{const r=inicio+idx;if(r>ateRodada||!temRodada(r))return;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time,tb=times[b-1]?.time;if(ta&&tb)aplicaJogo(stats,ta,tb,pontosTime(ta,r),pontosTime(tb,r))})});return ordenar(Object.values(stats))}
+function desempateTradicional(nome){return rankingTradicional().find(t=>t.time===nome)?.total??0}
+function decisaoAgregada(times,ateRodada=38){
+ const nomes=times.map(t=>t?.time).filter(Boolean);if(nomes.length!==2)return [];
+ const [a,b]=nomes,st={[a]:base(a),[b]:base(b)};
+ for(const r of [37,38]){if(r>ateRodada||!temRodada(r))continue;const pa=pontosTime(a,r),pb=pontosTime(b,r);st[a].j++;st[b].j++;st[a].pf+=pa;st[b].pf+=pb;st[a].pc+=pb;st[b].pc+=pa}
+ st[a].saldo=st[a].pf-st[b].pf;st[b].saldo=-st[a].saldo;
+ const dif=Math.round((st[a].pf-st[b].pf)*100),trad=Math.round((desempateTradicional(a)-desempateTradicional(b))*100);
+ const lista=[st[a],st[b]];if(dif<0||(dif===0&&trad<0))lista.reverse();
+ if(st[a].j===2){if(dif||trad){lista[0].pts=3;lista[0].v=1;lista[1].d=1}else{lista.forEach(t=>{t.pts=1;t.e=1})}}
+ return lista;
+}
+function decisaoConcluida(){return Array.isArray(historico?.rodadas?.["38"])&&historico.rodadas["38"].length>=36&&!rodadaEstaAoVivo(38)}
+function renderResumoDecisao(times,ate){
+ const lista=decisaoAgregada(times,ate);if(lista.length!==2)return "";
+ const [a,b]=lista,legs=[37,38].filter(r=>r<=ate&&temRodada(r));
+ if(!legs.length)return '<div class="muted-card">Aguardando a rodada 37.</div>';
+ const empate=Math.round((a.pf-b.pf)*100)===0,tradEmpatado=empate&&Math.round((desempateTradicional(a.time)-desempateTradicional(b.time))*100)===0;
+ const fim=decisaoConcluida()&&legs.length===2,final=fim&&!tradEmpatado;
+ return `<div class="info-block light"><h3>${final?"Resultado final":"Agregado provisório"} · R37 + R38</h3><p><b>${a.time}</b>: ${fmtBR(a.pf)} pts · <b>${b.time}</b>: ${fmtBR(b.pf)} pts</p><p class="small">${empate?(tradEmpatado?"Empate também no Tradicional: desempate pendente.":"Desempate pela melhor campanha no Tradicional."):"Vence a maior soma de pontos Cartola."}</p><p>${final?`<b>Vencedor: ${a.time}</b>`:"Aguardando encerramento e consolidação da R38."}</p></div>`;
+}
+function calcGrupoTimesAte(times,inicio,agenda,ateRodada){
+ if(inicio===37&&agenda.length===2)return decisaoAgregada(times,ateRodada);
+const stats={};times.forEach(t=>{if(t&&t.time)stats[t.time]=base(t.time)});agenda.forEach((rodada,idx)=>{const r=inicio+idx;if(r>ateRodada||!temRodada(r))return;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time,tb=times[b-1]?.time;if(ta&&tb)aplicaJogo(stats,ta,tb,pontosTime(ta,r),pontosTime(tb,r))})});return ordenar(Object.values(stats))}
 function statusInfo(pos){if(pos<=4)return["dot-ok","Grupo"];if(pos<=8)return["dot-rep","Repescagem"];return["dot-bad","Eliminado"]}
 function renderTudo(){
   mostrarRodada();
@@ -1133,7 +1155,7 @@ function finalTimes(){const ff=faseFinalTimes(),s={};Object.keys(ff).forEach(n=>
 function statusFase3(nome,pos){if(nome.startsWith("Grupo"))return pos<=2?["dot-ok","Fase Final"]:["dot-rep","Repescagem Final"];return pos===1?["dot-ok","Avança"]:pos===2?["dot-rep","Briga melhor 2º"]:["dot-bad","Eliminado"]}
 function statusFase4(nome,pos){return pos===1?["dot-ok","Fase Final"]:["dot-bad","Eliminado"]}
 function statusFinal(nome,pos){return pos===1?["dot-ok","Final"]:pos===2?["dot-rep","3º lugar"]:["dot-bad","Eliminado"]}
-function statusGrande(nome,pos){return pos===1?["dot-ok","Vencedor"]:["dot-bad","Perdedor"]}
+function statusGrande(nome,pos){const l=decisaoAgregada(finalTimes()[nome]||[],38);const empate=l.length===2&&Math.round((l[0].pf-l[1].pf)*100)===0&&Math.round((desempateTradicional(l[0].time)-desempateTradicional(l[1].time))*100)===0;if(!decisaoConcluida()||empate)return ["dot-rep","Em disputa"];return pos===1?["dot-ok","Vencedor"]:["dot-bad","Perdedor"]}
 const faseConfigs={fase3:{label:"Fase 3",inicio:25,agenda:jogos4,desc:"Caminho dos grupos protegido + Repescagem 2",get:fase3Times,status:statusFase3},fase4:{label:"Fase 4",inicio:31,agenda:jogos4TurnoUnico,desc:"Repescagem Final: últimos 2 lugares na Fase Final",get:fase4Times,status:statusFase4},final:{label:"Fase 5",inicio:34,agenda:jogos3,desc:"4 dos Grupos + 2 da Repescagem",get:faseFinalTimes,status:statusFinal},grande:{label:"Grande Final",inicio:37,agenda:[[[1,2]],[[2,1]]],desc:"Final e disputa de 3º lugar",get:finalTimes,status:statusGrande}};
 function montarTabsFases(){Object.entries(faseConfigs).forEach(([k,c],i)=>{const b=document.createElement("button");b.textContent=c.label;b.onclick=()=>{faseSelecionada=k;grupoFaseAtual="";renderFases()};tabsFases.appendChild(b)})}
 function renderFases(){if(!historico)return;renderFluxoFases();document.querySelectorAll("#tabsFases button").forEach(b=>b.classList.toggle("active",b.textContent===faseConfigs[faseSelecionada].label));const cfg=faseConfigs[faseSelecionada],grps=cfg.get(),nomes=Object.keys(grps);if(!grupoFaseAtual||!grps[grupoFaseAtual])grupoFaseAtual=nomes[0];tabsFaseGrupos.innerHTML="";nomes.forEach(n=>{const b=document.createElement("button");b.textContent=n;b.classList.toggle("active",n===grupoFaseAtual);b.onclick=()=>{grupoFaseAtual=n;renderFases()};tabsFaseGrupos.appendChild(b)});const fim=cfg.inicio+cfg.agenda.length-1;const atual=Number(selFaseRodada.value||0);selFaseRodada.innerHTML="";for(let r=cfg.inicio;r<=fim;r++)selFaseRodada.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;const rodadasDaFase=rodadasRegistradas().filter(r=>r>=cfg.inicio&&r<=fim);const rodadaMaisRecente=rodadasDaFase.length?Math.max(...rodadasDaFase):cfg.inicio;selFaseRodada.value=(atual>=cfg.inicio&&atual<=fim)?atual:rodadaMaisRecente;const ate=Number(selFaseRodada.value);const times=grps[grupoFaseAtual];const lista=calcGrupoTimesAte(times,cfg.inicio,cfg.agenda,ate);const legend=grupoFaseAtual.includes("Repescagem")?`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Possível vaga/melhor 2º</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`:`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Repescagem/3º lugar</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`;const origem=(faseSelecionada==="fase3")?`<div class="box origin-final-box"><h3>Origem dos participantes</h3><p class="small">Veja exatamente de qual colocação da Fase 2 cada time veio.</p>${listaOrigemFase3(times,grupoFaseAtual)}</div>`:"";boxFaseDetalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${cfg.label} · ${grupoFaseAtual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">R${cfg.inicio}${cfg.agenda.length>1?`-R${fim}`:""}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||"A definir"}</span>`).join("")}</div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>cfg.status(grupoFaseAtual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,"Jogos da rodada")}${origem}`}
@@ -1261,7 +1283,7 @@ function renderPaginaFase(key){
   const sel=page.querySelector('.fase-select-rodada'), ate=Number(sel.value||cfg.inicio), times=grps[atual], lista=calcGrupoTimesAte(times,cfg.inicio,cfg.agenda,ate);
   const legend=atual.includes('Repescagem')?`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Possível vaga/melhor 2º</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`:`<span><i class="pos-dot dot-ok"></i>Classificado</span><span><i class="pos-dot dot-rep"></i>Repescagem/3º lugar</span><span><i class="pos-dot dot-bad"></i>Eliminado</span>`;
   const origem=(key==='fase3')?`<div class="info-block origin-final-box"><h3>Origem dos participantes</h3><p class="small">Veja exatamente de qual colocação da Fase 2 cada time veio.</p>${listaOrigemFase3(times,atual)}</div>`:'';
-  page.querySelector('.fase-box-detalhe').innerHTML=`<div class="info-block"><div class="phase-title"><div><h3>${cfg.label} · ${atual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">${cfgRodadasLabel(cfg)}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||'A definir'}</span>`).join('')}</div></div><div class="info-block"><h3>Classificação</h3>${renderMiniClassificacao(lista,'',pos=>cfg.status(atual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}</div><div class="info-block light">${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,'Jogos da rodada')}</div>${origem}`;
+  page.querySelector('.fase-box-detalhe').innerHTML=`<div class="info-block"><div class="phase-title"><div><h3>${cfg.label} · ${atual}</h3><p class="small">${cfg.desc}</p></div><span class="badge future">${cfgRodadasLabel(cfg)}</span></div><div class="pill-line">${times.map((t,i)=>`<span class="mini-pill">${i+1}. ${t?.time||'A definir'}</span>`).join('')}</div></div><div class="info-block"><h3>Classificação</h3>${renderMiniClassificacao(lista,'',pos=>cfg.status(atual,pos))}<div class="legend">${legend}</div>${!temRodada(cfg.inicio)?'<div class="muted-card">Projeção visual. Depois organizamos os cruzamentos e os classificados definitivos.</div>':''}</div><div class="info-block light">${renderConfrontosRodada(times,cfg.inicio,cfg.agenda,ate,'Jogos da rodada')}</div>${key==='grande'?renderResumoDecisao(times,ate):''}${origem}`;
 }
 function renderGrandeFinalExtra(){
   const box=document.getElementById('boxGrandeFinalExtra'); if(!box||!historico)return; const grps=finalTimes();
@@ -1319,7 +1341,7 @@ function renderFluxogramaNovo(){
     </div>
 
     <div class="bracket-col">
-      <div class="bracket-title">Rodada 38</div>
+      <div class="bracket-title">Rodadas 37 e 38</div>
       <div class="bracket-node final"><h4>Grande Final</h4><p>Os 2 campeões dos grupos finais decidem o título.</p></div>
       <div class="bracket-node"><h4>3º lugar</h4><p>Os 2 segundos colocados fazem a disputa de 3º.</p></div>
       <div class="bracket-node final"><h4>🏆 Campeão</h4><p>Vencedor da Grande Final.</p></div>
@@ -1392,7 +1414,7 @@ function avisoFaseFechada(key){
     fase3:["Fase 3 ainda não começou","Será aberta após a conclusão da Fase 2.","Prevista: rodadas 25 a 30."],
     fase4:["Fase 4 ainda não começou","Será aberta após a conclusão da Fase 3.","Prevista: rodadas 31 a 33."],
     final:["Fase 5 ainda não começou","Será aberta após a conclusão da Fase 4.","Prevista: rodadas 34 a 36."],
-    grande:["Grande Final ainda não começou","Será aberta após a conclusão da Fase 5.","Prevista: rodada 38."]
+    grande:["Grande Final ainda não começou","Será aberta após a conclusão da Fase 5.","Prevista: rodadas 37 e 38."]
   };
 
   const t = textos[key];
@@ -1554,7 +1576,7 @@ function textoSituacao(pos, grupoNome, fase){
   }
   if(fase===4)return pos===1?"Avançando no caminho da repescagem":"Eliminado no momento";
   if(fase===5)return pos===1?"Avançando para a Grande Final":pos===2?"Avançando para disputa de 3º lugar":"Eliminado no momento";
-  return pos===1?"Campeão do confronto":"Disputa final";
+  return !decisaoConcluida()?"Decisão em andamento":pos===1?"Vencedor da decisão":"Vice da decisão";
 }
 
 function localizarPosicao(lista, meuTime){
@@ -2597,7 +2619,7 @@ function renderPremiacaoLegadoNaoUtilizar(){
 function regulamentoDetalhadoV11(){
   const sec=document.getElementById('aba-regulamento'); if(!sec)return;
   const card=sec.querySelector('.card'); if(!card)return;
-  card.innerHTML=`<h2>Regulamento detalhado</h2><div class="box"><h3>Regras gerais</h3><p><b>Valor da inscrição:</b> R$ 176,00, dando direito a participar dos 3 campeonatos: Tradicional, Mata-mata e Liga Real.</p><p><b>Pagamento da premiação:</b> será realizado após a última rodada, com todos os resultados conferidos.</p><p><b>Polêmicas:</b> qualquer caso não previsto será decidido por votação no grupo em até 24 horas. A maioria vence. Quem não votar terá voto considerado nulo.</p><p><b>Zoeira:</b> a brincadeira está liberada, mas não pode zuar os times reais dos cartoleiros.</p></div><br><div class="box"><h3>Campeonato Tradicional</h3><p>Soma simples dos pontos oficiais do Cartola em todas as rodadas.</p><p><b>Premiação:</b> Top 6 geral, vencedores de turno e vencedores mensais conforme a aba Premiação.</p><p>Times eliminados do mata-mata continuam disputando normalmente Tradicional e Liga Real.</p></div><br><div class="box"><h3>Campeonato Mata-mata</h3><p><b>Fase 1:</b> 36 times em 4 grupos de 9. Do 1º ao 4º seguem para os grupos; do 5º ao 8º vão para a repescagem; 9º é eliminado do mata-mata.</p><p><b>Fase 2:</b> caminho dos grupos e repescagem separados. Nos grupos, 1º e 2º avançam; 3º e 4º caem para repescagem. Na repescagem, só o campeão continua.</p><p><b>Fase 3:</b> 8 times seguem no caminho dos grupos e 12 disputam a Repescagem 2. Os melhores do caminho principal garantem vaga na Fase Final; outros ainda podem passar pela repescagem.</p><p><b>Fase 4:</b> Repescagem Final. Os classificados do caminho dos grupos aguardam, enquanto a repescagem define as últimas vagas.</p><p><b>Fase 5:</b> rodadas 34 a 36, 6 times em 2 grupos de 3, turno único. O 1º de cada grupo vai para a Grande Final. O 2º disputa 3º lugar.</p><p><b>Grande Final:</b> rodadas 37 e 38, ida e volta, para decidir campeão e 3º lugar. Vence quem somar mais pontos Cartola nas duas rodadas; empate no agregado é decidido pela melhor campanha no Campeonato Tradicional.</p><p><b>Regra dos confrontos:</b> vitória vale 3 pontos, empate vale 1, derrota vale 0. Diferença de até 5 pontos Cartola é empate. Diferença maior que 5 define vencedor.</p><p><b>Desempate:</b> pontos, vitórias, saldo de pontos Cartola, pontos Cartola feitos.</p></div><br><div class="box"><h3>Liga Real</h3><p>Em cada rodada, o maior pontuador da liga vence a Liga Real da rodada.</p><p>O prêmio por rodada é de R$ 70,00. Em caso de empate na maior pontuação, o prêmio será dividido.</p><p>O pagamento será feito ao final do campeonato.</p></div>`;
+  card.innerHTML=`<h2>Regulamento detalhado</h2><div class="box"><h3>Regras gerais</h3><p><b>Valor da inscrição:</b> R$ 176,00, dando direito a participar dos 3 campeonatos: Tradicional, Mata-mata e Liga Real.</p><p><b>Pagamento da premiação:</b> será realizado após a última rodada, com todos os resultados conferidos.</p><p><b>Polêmicas:</b> qualquer caso não previsto será decidido por votação no grupo em até 24 horas. A maioria vence. Quem não votar terá voto considerado nulo.</p><p><b>Zoeira:</b> a brincadeira está liberada, mas não pode zuar os times reais dos cartoleiros.</p></div><br><div class="box"><h3>Campeonato Tradicional</h3><p>Soma simples dos pontos oficiais do Cartola em todas as rodadas.</p><p><b>Premiação:</b> Top 6 geral, vencedores de turno e vencedores mensais conforme a aba Premiação.</p><p>Times eliminados do mata-mata continuam disputando normalmente Tradicional e Liga Real.</p></div><br><div class="box"><h3>Campeonato Mata-mata</h3><p><b>Fase 1:</b> 36 times em 4 grupos de 9. Do 1º ao 4º seguem para os grupos; do 5º ao 8º vão para a repescagem; 9º é eliminado do mata-mata.</p><p><b>Fase 2:</b> caminho dos grupos e repescagem separados. Nos grupos, 1º e 2º avançam; 3º e 4º caem para repescagem. Na repescagem, só o campeão continua.</p><p><b>Fase 3:</b> 8 times seguem no caminho dos grupos e 12 disputam a Repescagem 2. Os melhores do caminho principal garantem vaga na Fase Final; outros ainda podem passar pela repescagem.</p><p><b>Fase 4:</b> rodadas 31 a 33, Repescagem Final em turno único. Os classificados do caminho dos grupos aguardam, enquanto a repescagem define as últimas vagas.</p><p><b>Fase 5:</b> rodadas 34 a 36, 6 times em 2 grupos de 3, turno único. O 1º de cada grupo vai para a Grande Final. O 2º disputa 3º lugar.</p><p><b>Grande Final:</b> rodadas 37 e 38, ida e volta, para decidir campeão e 3º lugar. Vence quem somar mais pontos Cartola nas duas rodadas; empate no agregado é decidido pela melhor campanha no Campeonato Tradicional.</p><p><b>Regra dos confrontos nas fases de grupos:</b> vitória vale 3 pontos, empate vale 1, derrota vale 0. Diferença de até 5 pontos Cartola é empate. Diferença maior que 5 define vencedor. <b>Exceção:</b> final e 3º lugar usam a soma exata dos pontos R37+R38, sem margem de empate de 5 pontos.</p><p><b>Desempate dos grupos:</b> pontos, vitórias, saldo de pontos Cartola, pontos Cartola feitos. <b>Desempate das decisões:</b> melhor campanha no Campeonato Tradicional se o agregado empatar.</p></div><br><div class="box"><h3>Liga Real</h3><p>Em cada rodada, o maior pontuador da liga vence a Liga Real da rodada.</p><p>O prêmio por rodada é de R$ 70,00. Em caso de empate na maior pontuação, o prêmio será dividido.</p><p>O pagamento será feito ao final do campeonato.</p></div>`;
 }
 const renderTudoOriginalV7=renderTudo;
 renderTudo=function(){
@@ -2717,9 +2739,9 @@ function confrontosAtuaisV2(){
   if(r<=18){mapa=grupos; inicio=1; agenda=Object.values(jogosFase1);}
   else if(r<=24){mapa=fase2Times();inicio=19;agenda=jogos4;}
   else if(r<=30){mapa=fase3Times();inicio=25;agenda=jogos4;}
-  else if(r<=34){mapa=fase4Times();inicio=31;agenda=jogos4TurnoUnico;}
-  else if(r<=37){mapa=faseFinalTimes();inicio=35;agenda=jogos3;}
-  else{mapa=finalTimes();inicio=38;agenda=[[[1,2]]];}
+  else if(r<=33){mapa=fase4Times();inicio=31;agenda=jogos4TurnoUnico;}
+  else if(r<=36){mapa=faseFinalTimes();inicio=34;agenda=jogos3;}
+  else{mapa=finalTimes();inicio=37;agenda=[[[1,2]],[[2,1]]];}
   const idx=r-inicio, jogos=[];
   Object.entries(mapa||{}).forEach(([grupo,timesObj])=>{
     const times=Array.isArray(timesObj)?timesObj:Object.values(timesObj).map(time=>({time}));
