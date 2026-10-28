@@ -1707,9 +1707,32 @@ mercado_status = inteiro(
     )
 )
 
-mercado_aberto = (
-    mercado_status == 1
+# A API pode atrasar a troca de status depois do fechamento oficial.
+# O horario oficial so antecipa o modo de consulta; pontuacoes continuam
+# dependendo de parciais validas da rodada correta.
+fechamento = status.get("fechamento") or {}
+fechamento_oficial = None
+try:
+    if isinstance(fechamento, dict):
+        timestamp = fechamento.get("timestamp")
+        if timestamp is not None:
+            fechamento_oficial = datetime.fromtimestamp(float(timestamp), FUSO)
+        elif all(chave in fechamento for chave in ("ano", "mes", "dia", "hora", "minuto")):
+            fechamento_oficial = datetime(
+                int(fechamento["ano"]), int(fechamento["mes"]),
+                int(fechamento["dia"]), int(fechamento["hora"]),
+                int(fechamento["minuto"]), tzinfo=FUSO,
+            )
+except (TypeError, ValueError, OverflowError):
+    fechamento_oficial = None
+
+prazo_encerrado = (
+    fechamento_oficial is not None
+    and datetime.now(FUSO) >= fechamento_oficial
 )
+mercado_aberto = mercado_status == 1 and not prazo_encerrado
+if prazo_encerrado and mercado_status == 1:
+    print("API ainda indica mercado aberto apos o fechamento oficial; consultando parciais.")
 
 bola_rolando_api = bool(
     status.get(
