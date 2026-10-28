@@ -826,7 +826,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
       <div class="box">
         <h3>Resumo do caminho</h3>
         <p><b>36 times</b> começam. O campeonato vai afunilando até sobrar o campeão na rodada 38.</p>
-        <p><b>36 → 32 → 20 → 12 → 6 → 2 → Campeão</b></p>
+        <p><b>36 → 32 → 20 → 12 → 6 → Final e disputa de 3º → Campeão</b></p>
         <p class="small">A vantagem de quem vai bem nos grupos é clara: o caminho dos grupos fica separado da repescagem até a Fase Final.</p>
       </div><br>
       <div class="box">
@@ -864,8 +864,8 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
       </div><br>
       <div class="box">
         <h3>Fase 4 · Rodadas 31 a 33</h3>
-        <p><b>8 times</b> disputam a Repescagem Final. Os 4 melhores do caminho dos grupos já estão esperando na Fase Final.</p>
-        <p>São <b>2 grupos de 4</b>. Apenas o campeão de cada grupo avança.</p>
+        <p><b>8 times</b> disputam a Repescagem Final em turno único. Os 4 melhores do caminho dos grupos já estão esperando na Fase Final.</p>
+        <p>São <b>2 grupos de 4</b>, em turno único (3 jogos por time). Apenas o campeão de cada grupo avança.</p>
         <p class="small">Depois da Fase 4, sobram 6 times: 4 vindos dos grupos + 2 da repescagem.</p>
       </div><br>
       <div class="box">
@@ -1254,7 +1254,7 @@ function renderFluxoFases(){if(!document.getElementById("boxFluxoFases"))return;
   <div class="merge-card">
     <h3>Grande Final · Rodadas 37 e 38</h3>
     <p>Final: campeão do Grupo Final A x campeão do Grupo Final B.</p>
-    <p class="small">Também pode aparecer a disputa de 3º lugar entre os segundos colocados.</p>
+    <p class="small">Os segundos colocados disputam o 3º lugar. Ambas as decisões são em ida e volta (R37 e R38), pelo agregado; empate é decidido pelo Tradicional.</p>
   </div>`}
 function renderStats(){const todos=[];Object.keys(grupos).forEach(g=>calcularGrupo(g,FASE1_FINAL).forEach(t=>todos.push({...t,grupo:g})));const melhorCampanha=[...todos].sort((a,b)=>b.pts-a.pts||b.saldo-a.saldo)[0],melhorAtaque=[...todos].sort((a,b)=>b.pf-a.pf)[0],melhorDefesa=[...todos].sort((a,b)=>a.pc-b.pc)[0],maiorSaldo=[...todos].sort((a,b)=>b.saldo-a.saldo)[0];boxStats.innerHTML=`<div class="box kpi"><span class="small">🏆 Melhor campanha</span><br><b>${melhorCampanha.time}</b><p>${melhorCampanha.pts} pts - Grupo ${melhorCampanha.grupo}</p></div><div class="box kpi"><span class="small">🔥 Melhor ataque</span><br><b>${melhorAtaque.time}</b><p>${fmt(melhorAtaque.pf)} pontos feitos</p></div><div class="box kpi"><span class="small">🛡️ Melhor defesa</span><br><b>${melhorDefesa.time}</b><p>${fmt(melhorDefesa.pc)} pontos sofridos</p></div><div class="box kpi"><span class="small">📈 Maior saldo</span><br><b>${maiorSaldo.time}</b><p>${fmt(maiorSaldo.saldo)}</p></div>`}
 function cfgRodadasLabel(cfg){const fim=cfg.inicio+cfg.agenda.length-1;return `R${cfg.inicio}${cfg.agenda.length>1?`-R${fim}`:""}`}
@@ -1287,8 +1287,8 @@ function renderPaginaFase(key){
 }
 function renderGrandeFinalExtra(){
   const box=document.getElementById('boxGrandeFinalExtra'); if(!box||!historico)return; const grps=finalTimes();
-  let html='<div class="info-block light"><h3>Rodada 38 · Decisões</h3><p class="small">A Grande Final e a disputa de 3º lugar aparecem aqui quando a Fase Final estiver definida.</p>';
-  Object.entries(grps).forEach(([nome,times])=>{html+=`<div class="box" style="margin-top:8px"><h3>${nome}</h3>${renderConfrontosRodada(times,38,[[[1,2]]],38,'Confronto')}</div>`});
+  let html='<div class="info-block light"><h3>Rodadas 37 e 38 · Decisões</h3><p class="small">Final e disputa de 3º lugar em ida e volta, pelo agregado.</p>';
+  Object.entries(grps).forEach(([nome,times])=>{html+=`<div class="box" style="margin-top:8px"><h3>${nome}</h3>${renderConfrontosRodada(times,37,[[[1,2]],[[2,1]]],37,'Ida')}${renderConfrontosRodada(times,37,[[[1,2]],[[2,1]]],38,'Volta')}${renderResumoDecisao(times,38)}</div>`});
   box.innerHTML=html+'</div>';
 }
 function renderFluxogramaNovo(){
@@ -1342,8 +1342,8 @@ function renderFluxogramaNovo(){
 
     <div class="bracket-col">
       <div class="bracket-title">Rodadas 37 e 38</div>
-      <div class="bracket-node final"><h4>Grande Final</h4><p>Os 2 campeões dos grupos finais decidem o título.</p></div>
-      <div class="bracket-node"><h4>3º lugar</h4><p>Os 2 segundos colocados fazem a disputa de 3º.</p></div>
+      <div class="bracket-node final"><h4>Grande Final</h4><p>Os 2 campeões dos grupos finais decidem o título em ida e volta.</p></div>
+      <div class="bracket-node"><h4>3º lugar</h4><p>Os 2 segundos colocados disputam o 3º lugar em ida e volta.</p></div>
       <div class="bracket-node final"><h4>🏆 Campeão</h4><p>Vencedor da Grande Final.</p></div>
     </div>
   </div></div>
@@ -2250,6 +2250,7 @@ function renderMeuTime(){
     <div class="info-block">
       <h3>Classificação</h3>
       ${renderTabelaMeuTime(lista, meuTime, statusFn)}
+      ${fase===6?renderResumoDecisao(finalTimes()[grupoNome]||[],38):''}
     </div>
 
     <div class="info-block light">
@@ -2619,7 +2620,7 @@ function renderPremiacaoLegadoNaoUtilizar(){
 function regulamentoDetalhadoV11(){
   const sec=document.getElementById('aba-regulamento'); if(!sec)return;
   const card=sec.querySelector('.card'); if(!card)return;
-  card.innerHTML=`<h2>Regulamento detalhado</h2><div class="box"><h3>Regras gerais</h3><p><b>Valor da inscrição:</b> R$ 176,00, dando direito a participar dos 3 campeonatos: Tradicional, Mata-mata e Liga Real.</p><p><b>Pagamento da premiação:</b> será realizado após a última rodada, com todos os resultados conferidos.</p><p><b>Polêmicas:</b> qualquer caso não previsto será decidido por votação no grupo em até 24 horas. A maioria vence. Quem não votar terá voto considerado nulo.</p><p><b>Zoeira:</b> a brincadeira está liberada, mas não pode zuar os times reais dos cartoleiros.</p></div><br><div class="box"><h3>Campeonato Tradicional</h3><p>Soma simples dos pontos oficiais do Cartola em todas as rodadas.</p><p><b>Premiação:</b> Top 6 geral, vencedores de turno e vencedores mensais conforme a aba Premiação.</p><p>Times eliminados do mata-mata continuam disputando normalmente Tradicional e Liga Real.</p></div><br><div class="box"><h3>Campeonato Mata-mata</h3><p><b>Fase 1:</b> 36 times em 4 grupos de 9. Do 1º ao 4º seguem para os grupos; do 5º ao 8º vão para a repescagem; 9º é eliminado do mata-mata.</p><p><b>Fase 2:</b> caminho dos grupos e repescagem separados. Nos grupos, 1º e 2º avançam; 3º e 4º caem para repescagem. Na repescagem, só o campeão continua.</p><p><b>Fase 3:</b> 8 times seguem no caminho dos grupos e 12 disputam a Repescagem 2. Os melhores do caminho principal garantem vaga na Fase Final; outros ainda podem passar pela repescagem.</p><p><b>Fase 4:</b> rodadas 31 a 33, Repescagem Final em turno único. Os classificados do caminho dos grupos aguardam, enquanto a repescagem define as últimas vagas.</p><p><b>Fase 5:</b> rodadas 34 a 36, 6 times em 2 grupos de 3, turno único. O 1º de cada grupo vai para a Grande Final. O 2º disputa 3º lugar.</p><p><b>Grande Final:</b> rodadas 37 e 38, ida e volta, para decidir campeão e 3º lugar. Vence quem somar mais pontos Cartola nas duas rodadas; empate no agregado é decidido pela melhor campanha no Campeonato Tradicional.</p><p><b>Regra dos confrontos nas fases de grupos:</b> vitória vale 3 pontos, empate vale 1, derrota vale 0. Diferença de até 5 pontos Cartola é empate. Diferença maior que 5 define vencedor. <b>Exceção:</b> final e 3º lugar usam a soma exata dos pontos R37+R38, sem margem de empate de 5 pontos.</p><p><b>Desempate dos grupos:</b> pontos, vitórias, saldo de pontos Cartola, pontos Cartola feitos. <b>Desempate das decisões:</b> melhor campanha no Campeonato Tradicional se o agregado empatar.</p></div><br><div class="box"><h3>Liga Real</h3><p>Em cada rodada, o maior pontuador da liga vence a Liga Real da rodada.</p><p>O prêmio por rodada é de R$ 70,00. Em caso de empate na maior pontuação, o prêmio será dividido.</p><p>O pagamento será feito ao final do campeonato.</p></div>`;
+  card.innerHTML=`<h2>Regulamento detalhado</h2><div class="box"><h3>Regras gerais</h3><p><b>Valor da inscrição:</b> R$ 176,00, dando direito a participar dos 3 campeonatos: Tradicional, Mata-mata e Liga Real.</p><p><b>Pagamento da premiação:</b> será realizado após a última rodada, com todos os resultados conferidos.</p><p><b>Polêmicas:</b> qualquer caso não previsto será decidido por votação no grupo em até 24 horas. A maioria vence. Quem não votar terá voto considerado nulo.</p><p><b>Zoeira:</b> a brincadeira está liberada, mas não pode zuar os times reais dos cartoleiros.</p></div><br><div class="box"><h3>Campeonato Tradicional</h3><p>Soma simples dos pontos oficiais do Cartola em todas as rodadas.</p><p><b>Premiação:</b> Top 6 geral, vencedores de turno e vencedores mensais conforme a aba Premiação.</p><p>Times eliminados do mata-mata continuam disputando normalmente Tradicional e Liga Real.</p></div><br><div class="box"><h3>Campeonato Mata-mata</h3><p><b>Fase 1:</b> 36 times em 4 grupos de 9. Do 1º ao 4º seguem para os grupos; do 5º ao 8º vão para a repescagem; 9º é eliminado do mata-mata.</p><p><b>Fase 2:</b> caminho dos grupos e repescagem separados. Nos grupos, 1º e 2º avançam; 3º e 4º caem para repescagem. Na repescagem, só o campeão continua.</p><p><b>Fase 3:</b> 8 times seguem no caminho dos grupos e 12 disputam a Repescagem 2. Os melhores do caminho principal garantem vaga na Fase Final; outros ainda podem passar pela repescagem.</p><p><b>Fase 4:</b> rodadas 31 a 33, Repescagem Final em turno único. Os classificados do caminho dos grupos aguardam, enquanto a repescagem define as últimas vagas.</p><p><b>Fase 5:</b> rodadas 34 a 36, 6 times em 2 grupos de 3, turno único (2 jogos por time, uma folga). O 1º de cada grupo vai para a Grande Final. O 2º disputa 3º lugar.</p><p><b>Grande Final:</b> rodadas 37 e 38, ida e volta, para decidir campeão e 3º lugar. Vence quem somar mais pontos Cartola nas duas rodadas; empate no agregado é decidido pela melhor campanha no Campeonato Tradicional.</p><p><b>Regra dos confrontos nas fases de grupos:</b> vitória vale 3 pontos, empate vale 1, derrota vale 0. Diferença de até 5 pontos Cartola é empate. Diferença maior que 5 define vencedor. <b>Exceção:</b> final e 3º lugar usam a soma exata dos pontos R37+R38, sem margem de empate de 5 pontos.</p><p><b>Desempate dos grupos:</b> pontos, vitórias, saldo de pontos Cartola, pontos Cartola feitos. <b>Desempate das decisões:</b> melhor campanha no Campeonato Tradicional se o agregado empatar.</p></div><br><div class="box"><h3>Liga Real</h3><p>Em cada rodada, o maior pontuador da liga vence a Liga Real da rodada.</p><p>O prêmio por rodada é de R$ 70,00. Em caso de empate na maior pontuação, o prêmio será dividido.</p><p>O pagamento será feito ao final do campeonato.</p></div>`;
 }
 const renderTudoOriginalV7=renderTudo;
 renderTudo=function(){
