@@ -831,8 +831,8 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
       </div><br>
       <div class="box">
         <h3>Como funciona cada confronto?</h3>
-        <p>Vitória vale <b>3 pontos</b>. Empate vale <b>1 ponto</b>. Derrota vale <b>0</b>.</p>
-        <p>Diferença de até <b>5 pontos Cartola</b> é empate. Diferença maior que 5 define vencedor.</p>
+        <p>Nas fases de grupos: vitória vale <b>3 pontos</b>, empate <b>1</b> e derrota <b>0</b>.</p>
+        <p>Nas fases de grupos, diferença de até <b>5 pontos Cartola</b> é empate. Nas decisões R37–R38 vale a <b>soma exata dos dois jogos</b>, sem margem de 5 pontos.</p>
         <p><b>Exemplo de empate:</b> Time A 80,00 x 76,50 Time B. Diferença 3,50. Como ficou dentro de 5 pontos, cada um ganha 1 ponto.</p>
         <p><b>Exemplo de vitória:</b> Time A 90,00 x 82,00 Time B. Diferença 8,00. Como passou de 5 pontos, Time A ganha 3 pontos.</p>
         <p><span class="status-dot status-win">✓</span> Vitória &nbsp; <span class="status-dot status-draw">=</span> Empate &nbsp; <span class="status-dot status-loss">×</span> Derrota</p>
@@ -881,7 +881,7 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
       </div><br>
       <div class="box">
         <h3>Critérios de desempate</h3>
-        <p>1. Pontos<br>2. Vitórias<br>3. Saldo de pontos Cartola<br>4. Pontos Cartola feitos</p>
+        <p><b>Grupos:</b> 1. Pontos<br>2. Vitórias<br>3. Saldo de pontos Cartola<br>4. Pontos Cartola feitos<br><b>Decisões:</b> soma dos pontos das rodadas 37 e 38; em empate, melhor campanha no Tradicional.</p>
       </div>
     </div>
   </section>
@@ -1090,7 +1090,7 @@ function montarTabsFase2(){Object.keys(fase2Times()).forEach((nome,i)=>{const b=
 function renderMiniClassificacao(lista,titulo,statusFn){return `<h3>${titulo}</h3><table class="phase-table"><thead><tr><th>#</th><th>Time</th><th>Pts</th><th>J</th><th>V</th><th>PF</th><th>Saldo</th></tr></thead><tbody>${lista.map((t,i)=>{const pos=i+1;const st=statusFn?statusFn(pos):["",""];return `<tr><td><span class="rank-cell">${st[0]?`<span class="pos-dot ${st[0]}"></span>`:""}<span>${pos}</span></span></td><td><b>${t.time}</b></td><td><b>${t.pts}</b></td><td>${t.j}</td><td>${t.v}</td><td>${fmt(t.pf)}</td><td>${fmt(t.saldo)}</td></tr>`}).join("")}</tbody></table>`}
 function statusFase2(nome,pos){if(nome.startsWith("GP"))return pos<=2?["dot-ok","Avança"]:["dot-rep","Vai para repescagem"];return pos===1?["dot-ok","Avança"]:["dot-bad","Eliminado"]}
 function statusPadrao(pos){return pos<=2?["dot-ok","Avança"]:["dot-bad","Eliminado"]}
-function renderConfrontosRodada(times,inicio,agenda,rodadaEscolhida,titulo){const idx=rodadaEscolhida-inicio;const rodada=agenda[idx]||[];let html=`<div class="section-gap"></div><h3>${titulo}</h3><div class="scoreboard"><div class="scoreboard-title">⚽ Rodada ${rodadaEscolhida}</div>`;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time||"A definir",tb=times[b-1]?.time||"A definir",tem=temRodada(rodadaEscolhida);const pa=tem?pontosTime(ta,rodadaEscolhida):0,pb=tem?pontosTime(tb,rodadaEscolhida):0;let st=tem?simbolosJogo(pa,pb):{a:"draw",b:"draw",res:"A jogar"};const centro=tem?`${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}`:'<span class="score-x">x</span>';html+=`<div class="score-game-wrap"><div class="score-game" title="${st.res}">${tem?dotStatus(st.a):'<span></span>'}<span class="score-team ${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${centro}</span><span class="score-team right ${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${tem?dotStatus(st.b):'<span></span>'}</div>${tem?`<div class="score-note">${notaJogo(ta,tb,pa,pb)}</div>`:`<div class="score-note">(jogo ainda não disputado)</div>`}</div>`});html+=`<div class="legend"><span><span class="status-dot status-win">✓</span> Vitória</span><span><span class="status-dot status-draw">=</span> Empate</span><span><span class="status-dot status-loss">×</span> Derrota</span></div></div>`;return html}
+function renderConfrontosRodada(times,inicio,agenda,rodadaEscolhida,titulo){const idx=rodadaEscolhida-inicio;const rodada=agenda[idx]||[];let html=`<div class="section-gap"></div><h3>${titulo}</h3><div class="scoreboard"><div class="scoreboard-title">⚽ Rodada ${rodadaEscolhida}</div>`;rodada.forEach(([a,b])=>{const ta=times[a-1]?.time||"A definir",tb=times[b-1]?.time||"A definir",tem=temRodada(rodadaEscolhida);const pa=tem?pontosTime(ta,rodadaEscolhida):0,pb=tem?pontosTime(tb,rodadaEscolhida):0;let st=rodadaEscolhida>=37?{a:"draw",b:"draw",res:"Decisão pelo agregado R37+R38"}:tem?simbolosJogo(pa,pb):{a:"draw",b:"draw",res:"A jogar"};const centro=tem?`${fmt(pa)} <span class="score-x">x</span> ${fmt(pb)}`:'<span class="score-x">x</span>';html+=`<div class="score-game-wrap"><div class="score-game" title="${st.res}">${tem?dotStatus(st.a):'<span></span>'}<span class="score-team ${st.a==='win'?'winner':st.a==='loss'?'loser':'draw'}">${ta}</span><span class="score-center">${centro}</span><span class="score-team right ${st.b==='win'?'winner':st.b==='loss'?'loser':'draw'}">${tb}</span>${tem?dotStatus(st.b):'<span></span>'}</div>${tem?`<div class="score-note">${rodadaEscolhida>=37?"Pontuação da ida/volta · decisão pela soma R37+R38":notaJogo(ta,tb,pa,pb)}</div>`:`<div class="score-note">(jogo ainda não disputado)</div>`}</div>`});html+=`<div class="legend"><span><span class="status-dot status-win">✓</span> Vitória</span><span><span class="status-dot status-draw">=</span> Empate</span><span><span class="status-dot status-loss">×</span> Derrota</span></div></div>`;return html}
 function renderFase2(){const f=fase2Times(),times=f[grupoFaseAtual]||Object.values(f)[0],nome=grupoFaseAtual||Object.keys(f)[0];document.querySelectorAll("#tabsFase2 button").forEach(b=>b.classList.toggle("active",b.textContent===nomeFase2(nome)));if(!selFase2Rodada.options.length){for(let r=19;r<=24;r++)selFase2Rodada.innerHTML+=`<option value="${r}">${rotuloRodadaOpcao(r)}</option>`;const atualF2=rodadaCompeticaoAtual();selFase2Rodada.value=(atualF2>=19&&atualF2<=24)?atualF2:19}const ate=Number(selFase2Rodada.value||19);const lista=calcGrupoTimesAte(times,19,jogos4,ate);const subt=nome.startsWith("GP")?"2 verdes avançam; 2 amarelos seguem para a repescagem.":"1 verde avança; vermelhos são eliminados.";const nomeVisivel=nomeFase2(nome);boxFase2Detalhe.innerHTML=`<div class="box"><div class="phase-title"><div><h3>${nomeVisivel}</h3><p class="small">${subt}</p></div><span class="badge future">R19-R24</span></div></div><div class="section-gap"></div>${renderMiniClassificacao(lista,"Classificação",pos=>statusFase2(nome,pos))}<div class="legend"><span><i class="pos-dot dot-ok"></i>Classificado</span>${nome.startsWith("GP")?`<span><i class="pos-dot dot-rep"></i>Repescagem</span>`:`<span><i class="pos-dot dot-bad"></i>Eliminado</span>`}</div>${!temRodada(19)?'<div class="muted-card">Ainda sem resultados da Fase 2. Quando o JSON tiver as rodadas 19 a 24, a classificação será atualizada pela rodada escolhida.</div>':''}${renderConfrontosRodada(times,19,jogos4,ate,"Jogos da rodada")}<div class="box origin-final-box"><h3>Origem dos participantes</h3><p class="small">Veja a colocação de onde cada time veio na fase anterior.</p>${listaOrigem(times,nome)}</div>`}
 function melhoresSegundos(gruposStand){return Object.values(gruposStand).map(lista=>lista[1]).filter(Boolean).sort((a,b)=>b.pts-a.pts||b.v-a.v||b.saldo-a.saldo||b.pf-a.pf)}
 function fase3Times(){const f2=fase2Times(),st={};Object.keys(f2).forEach(n=>st[n]=calcGrupoTimes(f2[n],19,jogos4));return {
@@ -1758,6 +1758,7 @@ function confrontoDoTimeNaRodada(meuTime,rodada){
 
 function resultadoDoMeuTime(meuTime,rodada,pontos){
   const jogo=confrontoDoTimeNaRodada(meuTime,rodada);
+  if(rodada>=37&&rodada<=38)return jogo?{tipo:"draw",label:"Decisão pelo agregado"}:{tipo:"bye",label:"Folga"};
   if(!jogo)return {tipo:"bye",label:"Folga"};
   const adv=jogo.ta===meuTime?jogo.tb:jogo.ta;
   const pa=Number(pontos||0), pb=Number(pontosTime(adv,rodada)||0);
@@ -2370,8 +2371,8 @@ function resultadoDoMeuTime(meuTime,rodada,pontos){
   const adv=jogo.ta===meuTime?jogo.tb:jogo.ta;
   const pa=Number(pontos||0), pb=Number(pontosTime(adv,rodada)||0);
   const dif=pa-pb, abs=Math.abs(dif);
-  let tipo='draw', label='Empate';
-  if(abs>LIMITE_EMPATE){tipo=pa>pb?'win':'loss'; label=pa>pb?'Vitória':'Derrota';}
+  let tipo='draw', label=rodada>=37?'Ida/volta · vale o agregado':'Empate';
+  if(rodada<37&&abs>LIMITE_EMPATE){tipo=pa>pb?'win':'loss'; label=pa>pb?'Vitória':'Derrota';}
   return {tipo,label,adv,placar:`${fmtBR(pa)} x ${fmtBR(pb)}`,saldo:`${dif>=0?'+':''}${fmtBR(dif)}`};
 }
 function renderUltimasCinco(meuTime){
@@ -2808,7 +2809,7 @@ function renderAoVivo(){
   if(navDot)navDot.style.display=vivo?'inline-block':'none';
   const grupos={};
   jogos.forEach(j=>{const chave=nomeGrupoV2(j.grupo);(grupos[chave]||(grupos[chave]=[])).push(j);});
-  const htmlGrupos=Object.entries(grupos).map(([grupo,lista])=>{const rep=/repescagem|^RP\d+$/i.test(grupo);return `<div class="live-v2-group ${rep?'live-v2-group-rep':''}"><div class="live-v2-group-title">${grupo}</div>${lista.map(j=>{const dif=Math.abs(Number(j.pa)-Number(j.pb));const empate=dif<=LIMITE_EMPATE;const aVence=!empate&&Number(j.pa)>Number(j.pb);const bVence=!empate&&Number(j.pb)>Number(j.pa);const nota=empate?(vivo?'Empate no momento':'Empate'):`${aVence?j.ta:j.tb} ${vivo?'está vencendo':'venceu'} · saldo ${fmtBR(dif)}`;return `<div class="live-v2-match"><span class="live-v2-team ${empate?'is-draw':aVence?'is-winning':'is-losing'}"><span class="live-result-dot ${empate?'draw':aVence?'win':'loss'}"></span>${j.ta}</span><span class="live-v2-score">${fmtBR(j.pa)} x ${fmtBR(j.pb)}</span><span class="live-v2-team right ${empate?'is-draw':bVence?'is-winning':'is-losing'}">${j.tb}<span class="live-result-dot ${empate?'draw':bVence?'win':'loss'}" style="margin-left:6px;margin-right:0"></span></span><div class="live-v2-note"><strong>${nota}</strong></div></div>`}).join('')}</div>`}).join('');
+  const htmlGrupos=Object.entries(grupos).map(([grupo,lista])=>{const rep=/repescagem|^RP\d+$/i.test(grupo);return `<div class="live-v2-group ${rep?'live-v2-group-rep':''}"><div class="live-v2-group-title">${grupo}</div>${lista.map(j=>{const dif=Math.abs(Number(j.pa)-Number(j.pb));const empate=dif<=LIMITE_EMPATE;const aVence=!empate&&Number(j.pa)>Number(j.pb);const bVence=!empate&&Number(j.pb)>Number(j.pa);const nota=r>=37?'Pontuação da ida/volta · decisão pela soma R37+R38':empate?(vivo?'Empate no momento':'Empate'):`${aVence?j.ta:j.tb} ${vivo?'está vencendo':'venceu'} · saldo ${fmtBR(dif)}`;return `<div class="live-v2-match"><span class="live-v2-team ${empate?'is-draw':aVence?'is-winning':'is-losing'}"><span class="live-result-dot ${empate?'draw':aVence?'win':'loss'}"></span>${j.ta}</span><span class="live-v2-score">${fmtBR(j.pa)} x ${fmtBR(j.pb)}</span><span class="live-v2-team right ${empate?'is-draw':bVence?'is-winning':'is-losing'}">${j.tb}<span class="live-result-dot ${empate?'draw':bVence?'win':'loss'}" style="margin-left:6px;margin-right:0"></span></span><div class="live-v2-note"><strong>${nota}</strong></div></div>`}).join('')}</div>`}).join('');
   let ciclo='';
   if(entreRodadas){
     const fechamento=fechamentoMercadoV2();
