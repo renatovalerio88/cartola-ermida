@@ -98,7 +98,22 @@ jobs:
 
           rodada = int(status.get("rodada_atual", 0) or 0)
           status_mercado = int(status.get("status_mercado", 0) or 0)
-          mercado_aberto = status_mercado == 1
+          # O horario de fechamento oficial prevalece sobre status atrasado da API.
+          fechamento = status.get("fechamento") or {}
+          prazo_encerrado = False
+          if isinstance(fechamento, dict):
+              try:
+                  from datetime import datetime as dt
+                  from zoneinfo import ZoneInfo
+                  fuso = ZoneInfo("America/Sao_Paulo")
+                  if fechamento.get("timestamp") is not None:
+                      limite = dt.fromtimestamp(float(fechamento["timestamp"]), fuso)
+                  else:
+                      limite = dt(int(fechamento["ano"]), int(fechamento["mes"]), int(fechamento["dia"]), int(fechamento["hora"]), int(fechamento["minuto"]), tzinfo=fuso)
+                  prazo_encerrado = dt.now(fuso) >= limite
+              except (KeyError, TypeError, ValueError, OverflowError):
+                  pass
+          mercado_aberto = status_mercado == 1 and not prazo_encerrado
           bola_rolando = bool(status.get("bola_rolando", False))
 
           historico = carregar_historico()
