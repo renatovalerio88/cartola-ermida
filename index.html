@@ -996,6 +996,29 @@ function marcarAtualizacao(txt){
 }
 async function atualizarDados(){try{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.add("loading");btnAtualizar.textContent="Atualizando..."}historico=await buscarHistorico();parciaisCartola=await buscarParciais();renderTudo();marcarAtualizacao("Dados atualizados")}catch(e){if(document.getElementById("statusAtualizacao"))statusAtualizacao.textContent="Não foi possível atualizar"}finally{if(document.getElementById("btnAtualizar")){btnAtualizar.classList.remove("loading");btnAtualizar.textContent="🔄 Atualizar"}}}
 
+
+/* AUTO_REFRESH_CARTOLA_60S: atualização silenciosa da página aberta, sem depender do botão. */
+let atualizacaoAutomaticaEmCurso=false;
+async function atualizarAutomaticamenteCartola(){
+  if(atualizacaoAutomaticaEmCurso || document.hidden) return;
+  atualizacaoAutomaticaEmCurso=true;
+  try {
+    const [novoHistorico,novasParciais]=await Promise.all([buscarHistorico(),buscarParciais()]);
+    historico=novoHistorico;
+    parciaisCartola=novasParciais;
+    renderTudo();
+    marcarAtualizacao("Dados atualizados automaticamente");
+  } catch(erro) {
+    console.warn("Atualização automática Cartola falhou; mantendo dados anteriores.",erro);
+  } finally {
+    atualizacaoAutomaticaEmCurso=false;
+  }
+}
+setInterval(atualizarAutomaticamenteCartola,60000);
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden) atualizarAutomaticamenteCartola();
+});
+
 function rodadaCompeticaoAtual(){
   const dados=Number(parciaisCartola?.rodada_dados||0);
   if(!dados)return 0;
