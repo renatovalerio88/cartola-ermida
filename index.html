@@ -1932,19 +1932,25 @@ function premioLigaRealTime(nome){
   const r=rankingLigaReal().find(t=>t.time===nome);
   return r?Number(r.premio||0):0;
 }
-// Calendário oficial de 2026: setembro teve rodadas 26 (05/09),
-// 27 (11/09) e 28 (19/09). A rodada 25 começou em agosto e a 29 em outubro.
-// Preservar meses futuros sem premiação até confirmação de suas datas.
+// Meses definidos pelas rodadas do calendario oficial de 2026.
+// Mes corrente: lider provisório somente das rodadas encerradas; premio
+// contabilizado apenas quando todas as rodadas do mes estiverem completas.
 const PREMIACAO_MENSAL_CONFIRMADA=[
-  {mes:"Setembro",inicio:26,fim:28,valor:50}
+  {mes:"Setembro",inicio:26,fim:28,valor:50},
+  {mes:"Outubro",inicio:29,fim:33,valor:50},
+  {mes:"Novembro",inicio:34,fim:36,valor:50},
+  {mes:"Dezembro",inicio:37,fim:38,valor:50}
 ];
 function lideresMensaisConfirmados(){
+  const ultima=Number(historico?.ultima_rodada_fechada||0);
   return PREMIACAO_MENSAL_CONFIRMADA.map(p=>{
-    const completas=Array.from({length:p.fim-p.inicio+1},(_,i)=>p.inicio+i)
-      .every(r=>Array.isArray(historico?.rodadas?.[String(r)]) &&
-        historico.rodadas[String(r)].length===36);
-    const ranking=completas?rankingSomaRodadas(p.inicio,p.fim):[];
-    return {...p, lider:ranking[0]||null, completo:completas};
+    const rodadas=Array.from({length:p.fim-p.inicio+1},(_,i)=>p.inicio+i);
+    const validas=rodadas.filter(r=>r<=ultima &&
+      Array.isArray(historico?.rodadas?.[String(r)]) &&
+      historico.rodadas[String(r)].length===36);
+    const completo=validas.length===rodadas.length;
+    const ranking=validas.length?rankingSomaRodadas(validas[0],validas[validas.length-1]):[];
+    return {...p,lider:ranking[0]||null,completo,rodadasValidas:validas};
   });
 }
 function premioMensalTime(nome){
@@ -2052,25 +2058,12 @@ function renderPremiacao(){
     </div>
 
     <div class="info-block light" id="vencedores-mensais">
-      <h3>🏆 Vencedores por mês</h3>
-      <p class="small">Apuração transparente: somatório das pontuações das rodadas de cada mês. Somente meses concluídos e validados recebem um vencedor.</p>
-      ${lideresMensaisConfirmados().map(p=>`<div class="prize-participant" style="margin:12px 0;border-color:#22c55e">
-        <div class="prize-participant-rank">${p.mes} · Rodadas ${p.inicio} a ${p.fim}</div>
-        <div class="prize-participant-head">
-          <div>
-            <div class="prize-participant-name">${p.lider?.time||"Aguardando apuração"}</div>
-            <div class="prize-participant-caption">${p.lider?`Total: ${fmt(p.lider.total)} pontos`:"Ainda não concluído"}</div>
-          </div>
-          <div class="prize-participant-total">${dinheiro(p.lider?p.valor:0)}</div>
-        </div>
-        ${p.lider?`<div class="prize-participant-breakdown">
-          ${Array.from({length:p.fim-p.inicio+1},(_,i)=>p.inicio+i).map(r=>{
-            const t=(historico.rodadas[String(r)]||[]).find(t=>t.time===p.lider.time);
-            return `<span class="prize-participant-chip">R${r} <b>${fmt(Number(t?.pontos||0))} pts</b></span>`;
-          }).join("")}
-        </div>`:""}
-      </div>`).join("")}
-      <p class="small">Prêmio mensal: R$ 50,00. Outubro, novembro e dezembro serão exibidos quando suas rodadas e resultados estiverem confirmados.</p>
+      <h3>🏆 Premiação mensal</h3>
+      <p class="small">Meses encerrados: vencedor confirmado. Mês em andamento: líder provisório, sem prêmio contabilizado.</p>
+      <table class="table-mini"><thead><tr><th>Mês / rodadas</th><th>Time</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
+        ${lideresMensaisConfirmados().filter(p=>p.lider && (p.completo || p.rodadasValidas.length>0) && (p.mes!=="Dezembro" || lideresMensaisConfirmados().find(x=>x.mes==="Novembro")?.completo)).map(p=>`<tr><td><b>${p.mes}</b><div class="small">R${p.inicio}–R${p.fim} · ${p.completo?'Confirmado':'Provisório'}</div></td><td><b>${p.lider.time}</b></td><td>${fmt(p.lider.total)}</td><td>${p.completo?dinheiro(p.valor):'Em disputa'}</td></tr>`).join('')}
+      </tbody></table>
+      <p class="small">Prêmio de R$ 50,00 por mês. Dezembro será exibido após o encerramento de novembro e início das rodadas válidas de dezembro.</p>
     </div>
 
     <div class="info-block"><h3>Top 6 Tradicional</h3>
@@ -2084,21 +2077,11 @@ function renderPremiacao(){
     </div>
 
     <div class="info-block"><h3>Premiação atual por participante</h3>
-      <p class="small">Valores parciais, organizados por maior premiação. Toque nas categorias para conferir a composição de cada total.</p>
-      <div class="prize-participant-list">
-        ${participantes.map((t,i)=>`<div class="prize-participant">
-          <div class="prize-participant-rank">#${i+1} · Premiação acumulada</div>
-          <div class="prize-participant-head">
-            <div class="prize-participant-name">${t.time}</div>
-            <div class="prize-participant-total">${dinheiro(t.totalPremio)}</div>
-          </div>
-          <div class="prize-participant-breakdown">
-            ${[["Tradicional",t.tradicional],["Liga Real",t.ligaReal],["Turnos",t.turnos],["Mensais",t.mensais],["Mata-mata",t.mata]].filter(([,valor])=>valor>0).map(([nome,valor])=>`<span class="prize-participant-chip">${nome} <b>${dinheiro(valor)}</b></span>`).join("")}
-          </div>
-          ${t.totalPremio===0?'<div class="prize-participant-caption">Nenhum prêmio contabilizado até agora</div>':''}
-        </div>`).join("")}
-      </div>
-      <div class="warn-mini">Valores parciais: o mata-mata será incluído após a última fase. Setembro já está contabilizado; os demais meses aguardam confirmação.</div>
+      <p class="small">Ranking parcial. Toque em um time para conferir a composição do valor.</p>
+      <table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Prêmio</th></tr></thead><tbody>
+        ${participantes.map((t,i)=>`<tr><td>${i+1}</td><td><details><summary style="cursor:pointer;font-weight:700">${t.time}</summary><div class="small" style="padding:8px 0">${[["Tradicional",t.tradicional],["Liga Real",t.ligaReal],["Turnos",t.turnos],["Mensais",t.mensais],["Mata-mata",t.mata]].filter(([,v])=>v>0).map(([nome,v])=>`${nome}: ${dinheiro(v)}`).join(' · ')||'Nenhum prêmio contabilizado'}</div></details></td><td><b>${dinheiro(t.totalPremio)}</b></td></tr>`).join('')}
+      </tbody></table>
+      <p class="small">Mata-mata será contabilizado após a decisão. Lideranças mensais provisórias não entram nos totais.</p>
     </div>`;
 }
 
