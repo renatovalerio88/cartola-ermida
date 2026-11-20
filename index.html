@@ -689,6 +689,14 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .v3-round-team.right .v3-side-label,.v3-compare-head>div:last-child .v3-side-label{text-align:right}
 @media(max-width:600px){.v3-side-label{font-size:9px}.top-status{line-height:1.35}}
 </style>
+<style>
+/* Premiação compacta: ícone de expansão claro, sem seta nativa. */
+.prize-expand summary{list-style:none;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:8px}
+.prize-expand summary::-webkit-details-marker{display:none}
+.prize-expand-symbol{display:inline-flex;align-items:center;justify-content:center;flex:0 0 19px;width:19px;height:19px;border:1px solid #38bdf8;border-radius:5px;color:#7dd3fc;font-size:17px;line-height:1}
+.prize-expand-symbol::before{content:"+"}
+.prize-expand[open] .prize-expand-symbol::before{content:"−"}
+</style>
 </head>
 <body>
 <header>
@@ -2044,16 +2052,17 @@ function renderPremiacao(){
 
     <div class="prize-grid">
       <div class="prize-card"><h3>Turnos</h3><div class="money-row"><b>1º Turno</b><span>R$ 100,00</span></div><div class="money-row"><b>2º Turno</b><span>R$ 100,00</span></div></div>
-      <div class="prize-card"><h3>Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div><div class="warn-mini">Setembro: rodadas 26–28, confirmado pelo calendário. Outros meses aguardam confirmação.</div></div>
+      <div class="prize-card"><h3>Mensais</h3><div class="money-row"><b>Setembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Outubro</b><span>R$ 50,00</span></div><div class="money-row"><b>Novembro</b><span>R$ 50,00</span></div><div class="money-row"><b>Dezembro</b><span>R$ 50,00</span></div></div>
       <div class="prize-card"><h3>Mata-mata</h3>${premiosMata.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}<div class="warn-mini">Será incluído quando terminar a última fase.</div></div>
       <div class="prize-card"><h3>Tradicional</h3>${premiosTrad.map((v,i)=>`<div class="money-row"><b>${i+1}º lugar</b><span>${dinheiro(v)}</span></div>`).join('')}</div>
       <div class="prize-card"><h3>Liga Real</h3><div class="money-row"><b>38 rodadas</b><span>${dinheiro(2660)}</span></div><p class="small">R$ 70 para o maior pontuador de cada rodada.</p></div>
     </div>
 
     <div class="info-block light"><h3>Turnos</h3>
+      <p class="small">1º turno encerrado. 2º turno em andamento: liderança e pontos provisórios até a rodada 38.</p>
       <table class="table-mini"><thead><tr><th>Premiação</th><th>Líder atual</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
-        <tr><td>1º Turno</td><td><b>${turno1[0]?.time||'-'}</b></td><td>${turno1[0]?fmt(turno1[0].total):'-'}</td><td>${dinheiro(turno1[0]?100:0)}</td></tr>
-        <tr><td>2º Turno</td><td><b>${turno2[0]?.time||'Aguardando'}</b></td><td>${turno2[0]?fmt(turno2[0].total):'-'}</td><td>${dinheiro(turno2[0]?100:0)}</td></tr>
+        <tr><td>1º Turno<div class="small">Confirmado</div></td><td><b>${turno1[0]?.time||'-'}</b></td><td>${turno1[0]?fmt(turno1[0].total):'-'}</td><td>${dinheiro(turno1[0]?100:0)}</td></tr>
+        <tr><td>2º Turno<div class="small">${Number(historico?.ultima_rodada_fechada||0)>=38?'Confirmado':'Em andamento · Provisório'}</div></td><td><b>${turno2[0]?.time||'Aguardando'}</b></td><td>${turno2[0]?fmt(turno2[0].total):'-'}</td><td>${Number(historico?.ultima_rodada_fechada||0)>=38?dinheiro(turno2[0]?100:0):'Em disputa'}</td></tr>
       </tbody></table>
     </div>
 
@@ -2079,7 +2088,7 @@ function renderPremiacao(){
     <div class="info-block"><h3>Premiação atual por participante</h3>
       <p class="small">Ranking parcial. Toque em um time para conferir a composição do valor.</p>
       <table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Prêmio</th></tr></thead><tbody>
-        ${participantes.map((t,i)=>`<tr><td>${i+1}</td><td><details><summary style="cursor:pointer;font-weight:700">${t.time}</summary><div class="small" style="padding:8px 0">${[["Tradicional",t.tradicional],["Liga Real",t.ligaReal],["Turnos",t.turnos],["Mensais",t.mensais],["Mata-mata",t.mata]].filter(([,v])=>v>0).map(([nome,v])=>`${nome}: ${dinheiro(v)}`).join(' · ')||'Nenhum prêmio contabilizado'}</div></details></td><td><b>${dinheiro(t.totalPremio)}</b></td></tr>`).join('')}
+        ${participantes.map((t,i)=>`<tr><td>${i+1}</td><td><details class="prize-expand"><summary><span class="prize-expand-symbol" aria-hidden="true"></span><span>${t.time}</span></summary><div class="small" style="padding:8px 0">${[["Tradicional",t.tradicional],["Liga Real",t.ligaReal],["Turnos",t.turnos],["Mensais",t.mensais],["Mata-mata",t.mata]].filter(([,v])=>v>0).map(([nome,v])=>`${nome}: ${dinheiro(v)}`).join(' · ')||'Nenhum prêmio contabilizado'}</div></details></td><td><b>${dinheiro(t.totalPremio)}</b></td></tr>`).join('')}
       </tbody></table>
       <p class="small">Mata-mata será contabilizado após a decisão. Lideranças mensais provisórias não entram nos totais.</p>
     </div>`;
