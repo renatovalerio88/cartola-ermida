@@ -697,6 +697,14 @@ select{background:#020617;color:var(--text);border:1px solid #334155}
 .prize-expand-symbol::before{content:"+"}
 .prize-expand[open] .prize-expand-symbol::before{content:"−"}
 </style>
+<style>
+/* Premiação: dourado = valores e orçamento; verde = rankings com participantes. */
+#boxPremiacao .prize-card{border-top:4px solid #eabf52}
+#boxPremiacao .prize-gold{border-top:4px solid #eabf52}
+#boxPremiacao .prize-gold h3::before{background:#eabf52}
+#boxPremiacao .prize-green{border-top:4px solid var(--green)}
+#boxPremiacao .prize-green h3::before{background:var(--green)}
+</style>
 </head>
 <body>
 <header>
@@ -2039,14 +2047,12 @@ function renderPremiacao(){
   const participantes=tabelaPremiacaoParticipantes();
 
   box.innerHTML=`
-    <div class="info-block light">
+    <div class="info-block light prize-gold">
       <h3>Resumo financeiro da liga</h3>
       <div class="money-row"><b>Participantes</b><span>36 times</span></div>
       <div class="money-row"><b>Pagantes</b><span>35 × R$ 176,00</span></div>
       <div class="money-row"><b>Organizador</b><span>Isento</span></div>
       <div class="money-row"><b>Arrecadação total</b><span>${dinheiro(35*176)}</span></div>
-      <div class="money-row"><b>Premiação prevista</b><span>${dinheiro(premiosTrad.reduce((a,b)=>a+b,0)+premiosMata.reduce((a,b)=>a+b,0)+200+200+38*70)}</span></div>
-      <div class="money-row"><b>Saldo previsto</b><span>${dinheiro(35*176-(premiosTrad.reduce((a,b)=>a+b,0)+premiosMata.reduce((a,b)=>a+b,0)+200+200+38*70))}</span></div>
       <p class="small">Distribuição integral da arrecadação em prêmios. Valores previstos; resultados e vencedores seguem a apuração automática.</p>
     </div>
 
@@ -2075,7 +2081,7 @@ function renderPremiacao(){
       <p class="small">Prêmio de R$ 50,00 por mês. Dezembro será exibido após o encerramento de novembro e início das rodadas válidas de dezembro.</p>
     </div>
 
-    <div class="info-block"><h3>Top 6 Tradicional</h3>
+    <div class="info-block prize-green"><h3>Top 6 Tradicional</h3>
       <table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Pontos</th><th>Prêmio</th></tr></thead><tbody>
       ${trad.slice(0,6).map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td>${fmt(t.total)}</td><td>${dinheiro(premiosTrad[i])}</td></tr>`).join('')}
       </tbody></table>
@@ -2085,7 +2091,7 @@ function renderPremiacao(){
       ${real.length?`<table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Vitórias</th><th>Prêmio</th></tr></thead><tbody>${real.map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.time}</b></td><td>${t.vitorias}</td><td>${dinheiro(t.premio)}</td></tr>`).join('')}</tbody></table>`:'<div class="muted-card">Ainda sem vencedores de rodada.</div>'}
     </div>
 
-    <div class="info-block"><h3>Premiação atual por participante</h3>
+    <div class="info-block prize-green"><h3>Premiação atual por participante</h3>
       <p class="small">Ranking parcial. Toque em um time para conferir a composição do valor.</p>
       <table class="table-mini"><thead><tr><th>#</th><th>Time</th><th>Prêmio</th></tr></thead><tbody>
         ${participantes.map((t,i)=>`<tr><td>${i+1}</td><td><details class="prize-expand"><summary><span class="prize-expand-symbol" aria-hidden="true"></span><span>${t.time}</span></summary><div class="small" style="padding:8px 0">${[["Tradicional",t.tradicional],["Liga Real",t.ligaReal],["Turnos",t.turnos],["Mensais",t.mensais],["Mata-mata",t.mata]].filter(([,v])=>v>0).map(([nome,v])=>`${nome}: ${dinheiro(v)}`).join(' · ')||'Nenhum prêmio contabilizado'}</div></details></td><td><b>${dinheiro(t.totalPremio)}</b></td></tr>`).join('')}
