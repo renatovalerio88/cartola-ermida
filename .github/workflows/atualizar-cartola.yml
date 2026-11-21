@@ -9,7 +9,8 @@ on:
       - ".github/workflows/atualizar-cartola.yml"
       - "scripts/atualizar_rodada_atual.py"
   schedule:
-    - cron: "3,13,23,33,43,53 * * * *"
+    # Intervalo de 5 minutos; minutos deslocados para reduzir atrasos no topo da hora.
+    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 * * * *"
 
 permissions:
   contents: write
@@ -202,6 +203,44 @@ jobs:
           else
             echo "Sem alteração nas parciais."
           fi
+
+      - name: Verificar atualização após fechamento do mercado
+        if: steps.mercado.outputs.mercado_aberto == 'false'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+
+          with open("rodada_atual_cartola.json", encoding="utf-8") as arquivo:
+              dados = json.load(arquivo)
+
+          rodada_esperada = int("${{ steps.mercado.outputs.rodada }}")
+          if int(dados.get("rodada_cartola", 0)) != rodada_esperada:
+              raise SystemExit("ERRO: rodada publicada diferente da rodada oficial.")
+          if dados.get("mercado_aberto") is True:
+              raise SystemExit("ERRO: mercado permanece aberto no arquivo após o fechamento.")
+
+          if dados.get("rodada_em_andamento"):
+              if int(dados.get("rodada_dados", 0)) != rodada_esperada:
+                  raise SystemExit("ERRO: parciais pertencem a outra rodada.")
+              if not dados.get("monitoramento", {}).get("houve_parciais_validas"):
+                  raise SystemExit("ERRO: modo ao vivo sem parciais validadas.")
+              print("OK: parciais da rodada atual validadas.")
+          else:
+              fechamento = dados.get("fechamento_mercado") or {}
+              ts = fechamento.get("timestamp")
+              if ts is not None:
+                  agora = datetime.now(ZoneInfo("America/Sao_Paulo")).timestamp()
+                  atraso = agora - float(ts)
+                  if atraso > 1800:
+                      raise SystemExit(
+                          "ALERTA: mercado fechou há mais de 30 minutos e "
+                          "ainda não há parciais válidas. Verificar API Cartola."
+                      )
+              print("Mercado fechado; aguardando primeiras parciais oficiais.")
+          PY
 
       - name: Atualizar status e dados da rodada atual
         if: steps.mercado.outputs.mercado_aberto == 'true' && steps.mercado.outputs.precisa_atualizar_atual == 'true'
