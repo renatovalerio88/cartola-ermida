@@ -1916,10 +1916,24 @@ else:
         )
 
 
+# Preservar a rodada atual durante a apuração, sem confundir
+# parciais disponíveis com jogos em andamento.
 rodada_em_andamento = (
     not mercado_aberto
     and parciais_disponiveis
 )
+partidas_validas = [
+    partida for partida in mapa_partidas.values()
+    if partida.get("valida", True)
+]
+rodada_encerrada = (
+    rodada_em_andamento
+    and not bola_rolando_api
+    and bool(partidas_validas)
+    and all(partida.get("encerrada") for partida in partidas_validas)
+)
+ao_vivo = rodada_em_andamento and not rodada_encerrada
+
 
 print(
     "Rodada da API de pontuados: "
@@ -2443,7 +2457,9 @@ if (
     )
 
 
-if rodada_em_andamento:
+if rodada_encerrada:
+    observacao = "Jogos encerrados: pontuações preservadas, aguardando consolidação oficial."
+elif rodada_em_andamento:
     observacao = (
         "Parciais calculadas pelas escalações "
         "dos times e pela API oficial de "
@@ -2517,11 +2533,11 @@ saida_base_comparacao = {
     "rodada_cartola": rodada_status,
     "status_mercado": mercado_status,
     "mercado_aberto": mercado_aberto,
-    "bola_rolando": bola_rolando_api,
+    "bola_rolando": bola_rolando_api and not rodada_encerrada,
     "fechamento_mercado": status.get(
         "fechamento"
     ),
-    "rodada_em_andamento": rodada_em_andamento,
+    "rodada_em_andamento": ao_vivo,
     "rodada_dados": rodada_dados,
     "rodada_pontuados": rodada_pontuados,
     "total_atletas_pontuados": total_atletas_pontuados,
@@ -2563,11 +2579,11 @@ saida = {
     "rodada_cartola": rodada_status,
     "status_mercado": mercado_status,
     "mercado_aberto": mercado_aberto,
-    "bola_rolando": bola_rolando_api,
+    "bola_rolando": bola_rolando_api and not rodada_encerrada,
     "fechamento_mercado": status.get(
         "fechamento"
     ),
-    "rodada_em_andamento": rodada_em_andamento,
+    "rodada_em_andamento": ao_vivo,
     "rodada_dados": rodada_dados,
     "rodada_pontuados": rodada_pontuados,
     "total_atletas_pontuados": (
@@ -2581,15 +2597,17 @@ saida = {
     ),
     "monitoramento": {
         "modo": (
-            "ao_vivo"
-            if rodada_em_andamento
+            "aguardando_consolidacao"
+            if rodada_encerrada
+            else "ao_vivo"
+            if ao_vivo
             else (
                 "mercado_aberto"
                 if mercado_aberto
                 else "aguardando_parciais"
             )
         ),
-        "consulta_programada_minutos": 10,
+        "consulta_programada_minutos": 5,
         "ultima_consulta_api": agora_execucao_iso,
         "ultima_mudanca_dados": ultima_mudanca_dados,
         "resultado_ultima_consulta": (
